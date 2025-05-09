@@ -2,7 +2,7 @@
 
 * [Overview](README.md)
   * [Introduction](overview/introduction.md)
-  * [Key Features](overview/key-features.md)
+  * [Key Features](overview/purpose-and-key-features.md)
   * [Use Case and Applications](overview/use-case-and-applications.md)
   * [System Requirements and Capability](overview/system-requirements-and-capability.md)
 * [Getting Started](getting-started/README.md)
@@ -25,6 +25,8 @@
   * [Setting Up the Development Environment](spx-development-guide/setting-up-the-development-environment.md)
   * [Guidelines for Developing with SPX SDK](spx-development-guide/guidelines-for-developing-with-spx-sdk.md)
   * [Debugging and Troubleshooting Tips](spx-development-guide/debugging-and-troubleshooting-tips.md)
+  * [SPX SDK](spx-development-guide/spx-sdk/README.md)
+    * [SpxContainer](spx-development-guide/spx-sdk/spxcontainer.md)
 * [Integration with Other Systems](integration-with-other-systems/README.md)
   * [IoT Platforms](integration-with-other-systems/iot-platforms.md)
   * [Industrial Standards](integration-with-other-systems/industrial-standards.md)
@@ -45,3 +47,5 @@
   * [Glossary of Terms](appendices/glossary-of-terms.md)
   * [Licensing Information](appendices/licensing-information.md)
   * [Additional Resources and Readings](appendices/additional-resources-and-readings.md)
+
+## Group 1
