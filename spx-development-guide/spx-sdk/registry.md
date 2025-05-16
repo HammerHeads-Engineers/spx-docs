@@ -1,0 +1,6 @@
+---
+icon: cabinet-filing
+---
+
+# Registry
+
