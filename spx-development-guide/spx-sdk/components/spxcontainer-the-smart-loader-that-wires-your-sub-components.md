@@ -1,37 +1,31 @@
 ---
+description: >-
+  If SpxComponent is a node, SpxContainer is a factory that fills the node with
+  the right children the moment it is born.
 icon: warehouse-full
 ---
 
-# SpxContainer
+# SpxContainer – the “smart loader” that wires your sub-components
 
-`SpxContainer` is a powerful helper in the SPX-SDK for bulk-instantiating and organizing child items (anything derived from `SpxItem`) from a single YAML/JSON-style “definition” object. It supports two main modes:
+### 1 · Why do we need a Container?
 
-1.  **Generic mode** (no `type= filter`):
+Most SPX objects are themselves collections:
 
-    Instantiates any registered class it sees in your definition.
-2.  **Filtered mode** (`type=SomeBaseClass`):
+* an attributes block is a set of `SpxAttributes`,
+* an actions block is a set of Actions,
+* a conditions block is a set of Conditions or IfChains,
+* even a high-level device model is “just” a bag of attributes, actions, hooks and nested models.
 
-    Instantiates only subclasses of SomeBaseClass, with sensible fall-back to the base type itself.
+Manually instantiating every child would be tedious and error-prone.
 
-### Concepts
+`SpxContainer` automates that work:
 
-*   Registered classes
+* reads a YAML / dict definition,
+* looks up each key in the registry,
+* instantiates the matching class (or a filtered base type),
+* connects the new instance to the parent tree.
 
-    All instantiable types must be registered via `@register_class` (or `register_class()`), so that `SpxContainer` knows how to look them up by name.
-*   Definition
-
-    A container’s definition can be:
-
-    * A dict: top-level keys map to class-names; values become that child’s .definition.
-    * A list: each entry is either
-      * a single-key dict {ClassName: config}, or
-      * a “raw” scalar (string, number, nested dict with multiple keys) wrapped into a plain `SpxItem`.
-*   Generic vs. Filtered
-
-    * Generic: every key (or list-dict) must correspond to a registered class, otherwise ValueError.
-    * Filtered: you supply type=FooBase; container will only instantiate subclasses of FooBase, for everything else it will fall back to FooBase itself (if registered), or else error.
-
-
+You write concise YAML/JSON/Python Dict; SPX builds a full object graph ready for simulation.
 
 ### Constructor & API
 
