@@ -16,7 +16,7 @@ description: '(file: examples/hello_world_sensor.py)'
 | pip    | 23+        |
 
 ```bash
-pip install spx-sdk      # from PyPI
+pip install --upgrade spx-sdk    # from PyPI
 # or, for local dev
 git clone https://github.com/your-org/spx-sdk.git
 cd spx-sdk && pip install -e .
