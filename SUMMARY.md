@@ -12,9 +12,18 @@
   * [Overview of Architecture](architecture-and-design/overview-of-architecture.md)
   * [Core Components](architecture-and-design/core-components.md)
   * [Design Principles](architecture-and-design/design-principles.md)
-* [API Reference](api-reference/README.md)
-  * [Detailed Description](api-reference/detailed-description.md)
-  * [Code Examples](api-reference/code-examples.md)
+* [API v3 Reference](api-v3-reference/README.md)
+  * ```yaml
+    type: builtin:openapi
+    props:
+      models: true
+    dependencies:
+      spec:
+        ref:
+          kind: openapi
+          spec: hammerheadsengineers-api
+    ```
+  * [Code Examples](api-v3-reference/code-examples.md)
 * [UI Reference](ui-reference/README.md)
   * [General View](ui-reference/general-view.md)
 * [Usage Scenarios and Examples](usage-scenarios-and-examples/README.md)
