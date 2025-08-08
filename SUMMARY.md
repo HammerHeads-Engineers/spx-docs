@@ -32,6 +32,7 @@
   * [Step-by-Step Guides for Typical Scenarios](usage-scenarios-and-examples/step-by-step-guides-for-typical-scenarios.md)
   * [Code Examples and Best Practices](usage-scenarios-and-examples/code-examples-and-best-practices.md)
 * [SPX Development Guide](spx-development-guide/README.md)
+  * [Quick Guide – Connecting VS Code to your running SPX-Server container in 5 minutes](spx-development-guide/quick-guide-connecting-vs-code-to-your-running-spx-server-container-in-5-minutes.md)
   * [Quick Start — SPX-SDK in 5 Minutes](spx-development-guide/quick-start-spx-sdk-in-5-minutes.md)
   * [Setting Up the Development Environment](spx-development-guide/setting-up-the-development-environment.md)
   * [Guidelines for Developing with SPX SDK](spx-development-guide/guidelines-for-developing-with-spx-sdk.md)

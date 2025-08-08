@@ -1,5 +1,6 @@
 ---
 description: '(file: examples/hello_world_sensor.py)'
+icon: code
 ---
 
 # Quick Start — SPX-SDK in 5 Minutes
