@@ -1,2 +1,0 @@
-# Recommended Security Practices
-
