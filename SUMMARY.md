@@ -5,38 +5,39 @@
   * [Key Features](overview/purpose-and-key-features.md)
   * [Use Case and Applications](overview/use-case-and-applications.md)
   * [System Requirements and Capability](overview/system-requirements-and-capability.md)
-* [Getting Started](getting-started/README.md)
+* [Quick Start and Onboarding](getting-started/README.md)
   * [Installation Guide](getting-started/installation-guide.md)
-  * [Quick Start in Python](getting-started/quick-start-in-python.md)
+  * [Build Your First Simulation](simulation-and-modeling/quick-starts/build-your-first-simulation.md)
+  * [Extend with a Custom Component](simulation-and-modeling/quick-starts/extend-with-custom-component.md)
+  * [Run the Extended Simulation](simulation-and-modeling/quick-starts/run-with-spx-python.md)
+  * [Use in Unit Tests (MiL)](simulation-and-modeling/quick-starts/use-in-unit-tests.md)
   * [CI/CD Setup (GitHub Actions)](getting-started/ci-cd-setup-github-actions.md)
-* [Architecture and Design](architecture-and-design/README.md)
-  * [Overview of Architecture](architecture-and-design/overview-of-architecture.md)
-  * [Core Components](architecture-and-design/core-components.md)
-  * [Design Principles](architecture-and-design/design-principles.md)
-* [API v3 Reference](api-v3-reference/README.md)
-  * ```yaml
-    type: builtin:openapi
-    props:
-      models: true
-    dependencies:
-      spec:
-        ref:
-          kind: openapi
-          spec: hammerheadsengineers-api
-    ```
-  * [Code Examples](api-v3-reference/code-examples.md)
-* [UI Reference](ui-reference/README.md)
-  * [General View](ui-reference/general-view.md)
 * [Usage Scenarios and Examples](usage-scenarios-and-examples/README.md)
   * [Common Use Cases](usage-scenarios-and-examples/common-use-cases.md)
   * [Step-by-Step Guides for Typical Scenarios](usage-scenarios-and-examples/step-by-step-guides-for-typical-scenarios.md)
   * [Code Examples and Best Practices](usage-scenarios-and-examples/code-examples-and-best-practices.md)
-* [SPX Development Guide](spx-development-guide/README.md)
+* [Simulation and Modeling](simulation-and-modeling/README.md)
+  * [Core Concepts](simulation-and-modeling/core-concepts.md)
+  * [Model-in-the-Loop (MiL) with SPX](simulation-and-modeling/model-in-the-loop.md)
+  * [Using spx-python for Simulation](simulation-and-modeling/using-spx-python.md)
+  * [Extending Simulations](simulation-and-modeling/extensions/README.md)
+    * [Protocol Adapters](simulation-and-modeling/extensions/protocol-adapters.md)
+    * [Filters & Signal Processing](simulation-and-modeling/extensions/filters-and-signal-processing.md)
+    * [Custom Actions & Logic](simulation-and-modeling/extensions/custom-actions-and-logic.md)
+    * [Hardware Bridges & Backends](simulation-and-modeling/extensions/hardware-bridges-and-backends.md)
+    * [Testing & Hot-Reload](simulation-and-modeling/extensions/testing-and-hot-reload.md)
+* [UI Reference](ui-reference/README.md)
+  * [General View](ui-reference/general-view.md)
+* [Development Guide](spx-development-guide/README.md)
   * [Quick Guide – Connecting VS Code to your running SPX-Server container in 5 minutes](spx-development-guide/quick-guide-connecting-vs-code-to-your-running-spx-server-container-in-5-minutes.md)
-  * [Quick Start — SPX-SDK in 5 Minutes](spx-development-guide/quick-start-spx-sdk-in-5-minutes.md)
+  * [Quick Start — spx-sdk in 5 Minutes](spx-development-guide/quick-start-spx-sdk-in-5-minutes.md)
   * [Setting Up the Development Environment](spx-development-guide/setting-up-the-development-environment.md)
-  * [Guidelines for Developing with SPX SDK](spx-development-guide/guidelines-for-developing-with-spx-sdk.md)
-  * [SPX SDK](spx-development-guide/spx-sdk/README.md)
+  * [Guidelines for Developing with spx-sdk](spx-development-guide/guidelines-for-developing-with-spx-sdk.md)
+  * [Architecture and Design](architecture-and-design/README.md)
+    * [Overview of Architecture](architecture-and-design/overview-of-architecture.md)
+    * [Core Components](architecture-and-design/core-components.md)
+    * [Design Principles](architecture-and-design/design-principles.md)
+  * [spx-sdk](spx-development-guide/spx-sdk/README.md)
     * [Registry](spx-development-guide/spx-sdk/registry.md)
     * [Components](spx-development-guide/spx-sdk/components/README.md)
       * [SpxComponent](spx-development-guide/spx-sdk/components/spxcomponent.md)
@@ -46,11 +47,24 @@
     * [Communication](spx-development-guide/spx-sdk/communication.md)
     * [Imports](spx-development-guide/spx-sdk/imports/README.md)
       * [PythonFile](spx-development-guide/spx-sdk/imports/pythonfile.md)
+  * [spx-python Client (Wrapper)](spx-development-guide/spx-python/README.md)
+    * [Overview & Installation](spx-development-guide/spx-python/overview-and-installation.md)
+    * [Usage & Examples](spx-development-guide/spx-python/usage-and-examples.md)
+    * [MiL Testing Guide](spx-development-guide/spx-python/mil-testing-guide.md)
+    * [Advanced & Best Practices](spx-development-guide/spx-python/advanced-and-best-practices.md)
+  * [Server API](spx-development-guide/server.api/README.md)
+    * [v3 Reference](api-v3-reference/README.md)
+      * ```yaml
+          type: builtin:openapi
+          props:
+            models: true
+          dependencies:
+            spec:
+              ref:
+                kind: openapi
+                spec: hammerheadsengineers-api
+          ```
   * [Debugging and Troubleshooting Tips](spx-development-guide/debugging-and-troubleshooting-tips.md)
-* [Simulation and Modeling](simulation-and-modeling/README.md)
-  * [Core Concepts](simulation-and-modeling/core-concepts.md)
-  * [Model-in-the-Loop (MiL) with SPX](simulation-and-modeling/model-in-the-loop.md)
-  * [Using spx-python for Simulation](simulation-and-modeling/using-spx-python.md)
 * [Troubleshooting and Support](troubleshooting-and-support/README.md)
   * [Common Issues and Solutions](troubleshooting-and-support/common-issues-and-solutions.md)
   * [FAQs](troubleshooting-and-support/faqs.md)
@@ -61,4 +75,3 @@
   * [Licensing Information](appendices/licensing-information.md)
   * [Additional Resources and Readings](appendices/additional-resources-and-readings.md)
 
-## Group 1
