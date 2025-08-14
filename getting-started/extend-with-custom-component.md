@@ -1,4 +1,8 @@
-# Extend with Custom Component
+---
+icon: puzzle-piece-simple
+---
+
+# Extend with a Custom Component
 
 SPX supports custom components to enable extending simulations with new functionalities and behaviors. This flexibility allows users to model complex and realistic scenarios that go beyond the built-in components, enhancing the fidelity and usefulness of simulations.
 
