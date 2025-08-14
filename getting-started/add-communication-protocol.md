@@ -1,11 +1,15 @@
-# Adding a Communication Protocol (Modbus TCP) to Your Simulation
+---
+icon: satellite-dish
+---
 
-Communication protocols are a first‑class part of SPX simulations: they expose your simulated signals to external tools (HMIs, test rigs, PLCs) and let real software interact with the model as if it were physical hardware. In this step we wire our **PT100‑style temperature sensor** from *Build Your First Simulation* to **Modbus TCP** so any Modbus client can read the sensor value and a binary fault flag.
+# Add a Communication Protocol to Your Simulation
+
+Communication protocols are a first‑class part of SPX simulations: they expose your simulated signals to external tools (HMIs, test rigs, PLCs) and let real software interact with the model as if it were physical hardware. In this step we wire our **PT100‑style temperature sensor** from _Build Your First Simulation_ to **Modbus TCP** so any Modbus client can read the sensor value and a binary fault flag.
 
 **What is Modbus TCP?** It is a widely used industrial protocol over TCP/IP. In SPX it ships **natively in the Core library**, so you can enable it directly in your model—no extra installation required.
 
+{% code title="modbus_example.py" %}
 ```python
-# All comments in English only.
 import os
 import yaml
 import spx_python
@@ -48,20 +52,22 @@ print("external temperature:", inst["attributes"]["temperature"].external_value)
 print("sensor_fault:", inst["attributes"]["sensor_fault"].internal_value)
 # A Modbus TCP client can now read temperature at holding registers 0-1 and power at 2-3.
 ```
+{% endcode %}
 
 In this configuration:
 
-- `port` and `host` define where the Modbus TCP server listens. **Defaults:** `port` = **502**, `host` = **127.0.0.1** (or `localhost`). You only need to declare them if you want a custom interface.
-- `data_encoding` defines byte order for values. **Default:** **Big Endian**.
-- `mapping` binds model attributes to Modbus tables and addresses:
-  - `temperature` → `group: h_r` (holding registers), `address: [0, 1]`, `type: uint_32` — the value spans two consecutive 16‑bit registers.
-  - `sensor_fault` → `group: c` (coils), `address: [4]`, `type: uint_16` — a binary 0/1 flag indicating sensor contact fault.
+* `port` and `host` define where the Modbus TCP server listens. **Defaults:** `port` = **502**, `host` = **127.0.0.1** (or `localhost`). You only need to declare them if you want a custom interface.
+* `data_encoding` defines byte order for values. **Default:** **Big Endian**.
+* `mapping` binds model attributes to Modbus tables and addresses:
+  * `temperature` → `group: h_r` (holding registers), `address: [0, 1]`, `type: uint_32` — the value spans two consecutive 16‑bit registers.
+  * `sensor_fault` → `group: c` (coils), `address: [4]`, `type: uint_16` — a binary 0/1 flag indicating sensor contact fault.
 
 **Attributes in this model**
-- `temperature` (float) — internal logic drives the true value; external presentation may include noise.
-- `sensor_fault` (0/1) — a binary flag you can set from the simulation (or a test) to indicate a contact error.
 
-With this setup, any Modbus TCP client can read the **temperature** from holding registers **0–1** and the **sensor_fault** flag from coil **4** in real time while the simulation advances deterministically.
+* `temperature` (float) — internal logic drives the true value; external presentation may include noise.
+* `sensor_fault` (0/1) — a binary flag you can set from the simulation (or a test) to indicate a contact error.
+
+With this setup, any Modbus TCP client can read the **temperature** from holding registers **0–1** and the **sensor\_fault** flag from coil **4** in real time while the simulation advances deterministically.
 
 ## Quick Verification with a Modbus TCP Client
 
@@ -69,8 +75,8 @@ To verify the Modbus TCP server is working correctly, create a simple Python cli
 
 **Note:** Unlike the deterministic stepping shown earlier (where you set `instance["timer"]["time"]` and call `run()`), here we call `start()`, which hands time progression to the server’s internal scheduler. The simulation advances autonomously according to `timer.dt` and the server loop—great for live protocol testing—while deterministic stepping remains preferable for strictly reproducible unit tests.
 
+{% code title="sut_example.py" %}
 ```python
-# All comments in English only.
 import os
 import time
 import matplotlib.pyplot as plt
@@ -159,3 +165,4 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 ```
+{% endcode %}

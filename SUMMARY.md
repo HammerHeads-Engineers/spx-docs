@@ -11,7 +11,7 @@
   * [Add a Communication Protocol to Your Simulation](getting-started/add-communication-protocol.md)
   * [Extend with a Custom Component](getting-started/extend-with-custom-component.md)
   * [Run the Extended Simulation](getting-started/run-with-spx-python.md)
-  * [Use in Unit Tests (MiL)](getting-started/quick-starts/use-in-unit-tests.md)
+  * [Use in Unit Tests (MiL)](getting-started/use-in-unit-tests-mil.md)
   * [CI/CD Setup (GitHub Actions)](getting-started/ci-cd-setup-github-actions.md)
 * [Usage Scenarios and Examples](usage-scenarios-and-examples/README.md)
   * [Common Use Cases](usage-scenarios-and-examples/common-use-cases.md)
@@ -21,12 +21,12 @@
   * [Core Concepts](simulation-and-modeling/core-concepts.md)
   * [Model-in-the-Loop (MiL) with SPX](simulation-and-modeling/model-in-the-loop.md)
   * [Using spx-python for Simulation](simulation-and-modeling/using-spx-python.md)
-  * [Extending Simulations](simulation-and-modeling/extensions/README.md)
-    * [Protocol Adapters](simulation-and-modeling/extensions/protocol-adapters.md)
-    * [Filters & Signal Processing](simulation-and-modeling/extensions/filters-and-signal-processing.md)
-    * [Custom Actions & Logic](simulation-and-modeling/extensions/custom-actions-and-logic.md)
-    * [Hardware Bridges & Backends](simulation-and-modeling/extensions/hardware-bridges-and-backends.md)
-    * [Testing & Hot-Reload](simulation-and-modeling/extensions/testing-and-hot-reload.md)
+  * [Extending Simulations](simulation-and-modeling/extending-simulations/README.md)
+    * [Protocol Adapters](simulation-and-modeling/extending-simulations/protocol-adapters.md)
+    * [Filters & Signal Processing](simulation-and-modeling/extending-simulations/filters-and-signal-processing.md)
+    * [Custom Actions & Logic](simulation-and-modeling/extending-simulations/custom-actions-and-logic.md)
+    * [Hardware Bridges & Backends](simulation-and-modeling/extending-simulations/hardware-bridges-and-backends.md)
+    * [Testing & Hot-Reload](simulation-and-modeling/extending-simulations/testing-and-hot-reload.md)
 * [UI Reference](ui-reference/README.md)
   * [General View](ui-reference/general-view.md)
 * [Development Guide](spx-development-guide/README.md)
@@ -48,23 +48,23 @@
     * [Communication](spx-development-guide/spx-sdk/communication.md)
     * [Imports](spx-development-guide/spx-sdk/imports/README.md)
       * [PythonFile](spx-development-guide/spx-sdk/imports/pythonfile.md)
-  * [spx-python Client (Wrapper)](spx-development-guide/spx-python/README.md)
-    * [Overview & Installation](spx-development-guide/spx-python/overview-and-installation.md)
-    * [Usage & Examples](spx-development-guide/spx-python/usage-and-examples.md)
-    * [MiL Testing Guide](spx-development-guide/spx-python/mil-testing-guide.md)
-    * [Advanced & Best Practices](spx-development-guide/spx-python/advanced-and-best-practices.md)
-  * [Server API](spx-development-guide/server.api/README.md)
+  * [spx-python Client (Wrapper)](spx-development-guide/spx-python-client-wrapper/README.md)
+    * [Overview & Installation](spx-development-guide/spx-python-client-wrapper/overview-and-installation.md)
+    * [Usage & Examples](spx-development-guide/spx-python-client-wrapper/usage-and-examples.md)
+    * [MiL Testing Guide](spx-development-guide/spx-python-client-wrapper/mil-testing-guide.md)
+    * [Advanced & Best Practices](spx-development-guide/spx-python-client-wrapper/advanced-and-best-practices.md)
+  * [Server API](spx-development-guide/server-api/README.md)
     * [v3 Reference](api-v3-reference/README.md)
       * ```yaml
-          type: builtin:openapi
-          props:
-            models: true
-          dependencies:
-            spec:
-              ref:
-                kind: openapi
-                spec: hammerheadsengineers-api
-          ```
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: hammerheadsengineers-api
+        ```
   * [Debugging and Troubleshooting Tips](spx-development-guide/debugging-and-troubleshooting-tips.md)
 * [Troubleshooting and Support](troubleshooting-and-support/README.md)
   * [Common Issues and Solutions](troubleshooting-and-support/common-issues-and-solutions.md)
@@ -75,4 +75,3 @@
   * [Glossary of Terms](appendices/glossary-of-terms.md)
   * [Licensing Information](appendices/licensing-information.md)
   * [Additional Resources and Readings](appendices/additional-resources-and-readings.md)
-
