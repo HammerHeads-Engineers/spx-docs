@@ -8,6 +8,7 @@
 * [Quick Start and Onboarding](getting-started/README.md)
   * [Installation Guide](getting-started/installation-guide.md)
   * [Build Your First Simulation](getting-started/build-your-first-simulation.md)
+  * [Add a Communication Protocol to Your Simulation](getting-started/add-communication-protocol.md)
   * [Extend with a Custom Component](getting-started/extend-with-custom-component.md)
   * [Run the Extended Simulation](getting-started/run-with-spx-python.md)
   * [Use in Unit Tests (MiL)](getting-started/quick-starts/use-in-unit-tests.md)
