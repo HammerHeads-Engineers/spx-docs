@@ -2,7 +2,7 @@
 icon: satellite-dish
 ---
 
-# Add a Communication Protocol to Your Simulation
+# Add a Modbus TCP/IP to Your Simulation
 
 Communication protocols are a first‑class part of SPX simulations: they expose your simulated signals to external tools (HMIs, test rigs, PLCs) and let real software interact with the model as if it were physical hardware. In this step we wire our **PT100‑style temperature sensor** from _Build Your First Simulation_ to **Modbus TCP** so any Modbus client can read the sensor value and a binary fault flag.
 
@@ -11,6 +11,8 @@ Communication protocols are a first‑class part of SPX simulations: they expose
 {% code title="modbus_example.py" %}
 ```python
 import os
+import sys
+import time
 import yaml
 import spx_python
 
@@ -32,24 +34,23 @@ communication:
   - modbus_tcp:
       mapping:
         temperature: {address: [0,1], group: h_r, type: uint_32}
-        sensor_fault: {address: [4], group: c, type: uint_16}
+        sensor_fault: { address: [4,4], group: c_o, type: uint_16 }
 '''
-
 # 3) Register the model and create an instance
 model_def = yaml.safe_load(pt_100_yaml)
 client["models"]["pt_100_modbus"] = model_def
 client["instances"]["pt100_mb_1"] = "pt_100_modbus"
 inst = client["instances"]["pt100_mb_1"]
-
+modbus = inst["communication"]["modbus_tcp"]
+modbus.start()
 # 4) Step deterministically (so external tools see changing readings)
 client.prepare()
 for k in range(1, 51):  # ~5 seconds with dt=0.1
     inst["timer"]["time"] = k * 0.1
     client.run()
-
-print("internal temperature:", inst["attributes"]["temperature"].internal_value)
-print("external temperature:", inst["attributes"]["temperature"].external_value)
-print("sensor_fault:", inst["attributes"]["sensor_fault"].internal_value)
+    print("internal temperature:", inst["attributes"]["temperature"].internal_value)
+    print("external temperature:", inst["attributes"]["temperature"].external_value)
+    print("sensor_fault:", inst["attributes"]["sensor_fault"].internal_value)
 # A Modbus TCP client can now read temperature at holding registers 0-1 and power at 2-3.
 ```
 {% endcode %}
@@ -80,7 +81,10 @@ To verify the Modbus TCP server is working correctly, create a simple Python cli
 import os
 import time
 import matplotlib.pyplot as plt
-from pymodbus.client.sync import ModbusTcpClient
+
+from modbus_tk import modbus_tcp
+from modbus_tk import defines as c
+
 import spx_python
 
 
@@ -88,37 +92,52 @@ class SUTSensor:
     """Software Under Test (SUT): thin Modbus TCP wrapper for reading measurements.
     Hides protocol details from the test/plotting logic.
     """
-    def __init__(self, host="127.0.0.1", port=502, unit=1, scale=100.0):
+    def __init__(self, host="127.0.0.1", port=502, unit=1, scale=100.0, timeout=2.0):
         self.host = host
         self.port = port
         self.unit = unit
         self.scale = scale
+        self.timeout = timeout
         self._mb = None
 
     def connect(self):
-        self._mb = ModbusTcpClient(self.host, port=self.port)
-        assert self._mb.connect(), f"Could not connect to Modbus server at {self.host}:{self.port}"
+        """Create master and validate connectivity with a lightweight probe."""
+        self._mb = modbus_tcp.TcpMaster(host=self.host, port=self.port)
+        self._mb.set_timeout(self.timeout)
+        # # Optional: do a tiny probe read; if server rejects, this will raise.
+        # try:
+        #     # A harmless probe: read 0 registers (some stacks allow count=0, others do not).
+        #     # If your server dislikes count=0, you can skip the probe or read a known-safe address.
+        #     self._mb.execute(self.unit, c.READ_COILS, 0, 1)
+        # except Exception as e:
+        #     raise RuntimeError(f"Could not connect to Modbus server at {self.host}:{self.port} (unit {self.unit})") from e
+
+    @staticmethod
+    def _u32_from_two_u16_be(regs):
+        """Combine two 16-bit registers into one 32-bit unsigned integer (Big Endian)."""
+        if len(regs) != 2:
+            raise ValueError(f"Expected 2 registers, got {len(regs)}")
+        return ((regs[0] & 0xFFFF) << 16) | (regs[1] & 0xFFFF)
 
     def read_temperature_and_fault(self):
         """Temperature from HR 0–1 (uint32 Big Endian), fault flag from coil 4 (0/1)."""
+        if self._mb is None:
+            raise RuntimeError("Modbus master not connected. Call connect() first.")
+
         # Read temperature (two 16-bit holding registers)
-        rr = self._mb.read_holding_registers(0, 2, unit=self.unit)
-        if rr.isError():
-            temp = None
-        else:
-            raw = (rr.registers[0] << 16) + rr.registers[1]
-            temp = raw / self.scale  # adjust scaling to your model if needed
+        hr = self._mb.execute(self.unit, c.READ_HOLDING_REGISTERS, 0, 2)
+        raw_u32 = self._u32_from_two_u16_be(hr)
+        temp = raw_u32 / self.scale  # adjust scaling to your model if needed
 
         # Read fault flag (coil 4)
-        rc = self._mb.read_coils(4, 1, unit=self.unit)
-        fault = None if rc.isError() else int(rc.bits[0])
+        coils = self._mb.execute(self.unit, c.READ_COILS, 4, 1)
+        fault = int(bool(coils[0]))
 
         return temp, fault
 
     def close(self):
-        if self._mb:
-            self._mb.close()
-            self._mb = None
+        """modbus_tk masters close automatically on GC; nothing required here."""
+        self._mb = None
 
 
 # 1) Control channel: connect to the running SPX Server
@@ -129,9 +148,11 @@ spx_client = spx_python.init(
 
 # 2) Get the model instance (created earlier in the guide)
 model = spx_client["instances"]["pt100_mb_1"]  # adjust if you used a different name
+# modbus = inst["communication"]["modbus_tcp"]
+# modbus.start()
 
-# 3) SUT: Modbus client
-sensor = SUTSensor(host="127.0.0.1", port=502, unit=1, scale=100.0)
+# 3) SUT: Modbus client (modbus_tk)
+sensor = SUTSensor(host="127.0.0.1", port=502, unit=1, scale=100.0, timeout=2.0)
 sensor.connect()
 
 temperatures, fault_flags, timestamps = [], [], []
