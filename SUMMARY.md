@@ -11,6 +11,7 @@
   * [Add a Modbus TCP/IP to Your Simulation](getting-started/add-communication-protocol.md)
   * [Extend with a Custom Component](getting-started/extend-with-custom-component.md)
   * [Run the Extended Simulation](getting-started/run-with-spx-python.md)
+  * [Snapshots — Getting Started](getting-started/snapshots-guide.md)
   * [Use in Unit Tests (MiL)](getting-started/use-in-unit-tests-mil.md)
   * [CI/CD Setup (GitHub Actions)](getting-started/ci-cd-setup-github-actions.md)
 * [Usage Scenarios and Examples](usage-scenarios-and-examples/README.md)
