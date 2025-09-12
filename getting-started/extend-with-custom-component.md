@@ -15,14 +15,12 @@ The goal of this extension is to emulate this behavior within a simulation to te
 ```yaml
 models:
   pt100_sensor:
-    type: pt100
-    parameters:
-      resistance_nominal: 100.0
-      temperature_coefficient: 0.00385
+    attributes:
+      temperature: 0.0
     actions:
-      - { ramp: { start_temp: 20.0, end_temp: 100.0, duration: 3600 } }
-      - { noise: { mean: 0.0, stddev: 0.05 } }
-      - { contact_fault: { target: $ext(temperature), probability: 0.01, spike_value: 1000.0 } } # Custom component simulating contact fault
+      - { ramp: $attr(temperature), stop_value: 150, duration: 5, type: overshoot, overshoot: 5 }
+      - { noise: $ext(temperature), std: 0.01, mode: proportional }
+      - { contact_fault: $ext(temperature), spike_value: 500.0 } # custom extension with spike distortions
 ```
 
 The YAML example above shows the configuration of the PT100 sensor model and the sequence of actions applied to it. The custom component `contact_fault` is referenced as an action with parameters specifying the target signal, the probability of fault occurrence, and the spike value to simulate the fault.
@@ -33,6 +31,7 @@ The next step is to implement the `contact_fault` custom component in Python. Th
 
 The implementation of the `contact_fault` action will use the SPX SDK's `Action` class as a base. It will model the intermittent contact fault by occasionally injecting spikes or drops into the target signal according to the specified probability and spike value.
 
+{% code title="./extensions/contact_fault.py" %}
 ```python
 # Minimal implementation of a custom action that simulates intermittent
 # contact faults on a PT100-like sensor. It randomly injects either a
@@ -62,11 +61,13 @@ class ContactFault(Action):
         self.spike_value = 1000.0
         self.drop_ratio = 0.5
         self.seed = None
+        print("Populating ContactFault from definition:", definition)
         # Allow parent class to override from definition (if provided)
         super()._populate(definition)
 
     def prepare(self):
         # Reset any internal state and seed RNG if requested
+        print("Preparing ContactFault with seed:", self.seed)
         super().prepare()
         random.seed(self.seed)
 
@@ -85,4 +86,89 @@ class ContactFault(Action):
                     output.set(float(self.spike_value))
                 faulted = True
         return faulted
+
+```
+{% endcode %}
+
+```python
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025 Hammerheads Engineers sp. z o.o.
+# Author: Aleksander Stanik
+import sys
+import os
+import time
+import yaml
+import json
+import numpy as np
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+current_dir = os.getcwd()
+repo_root = os.path.abspath(os.path.join(current_dir, '..'))
+
+if repo_root not in sys.path:
+    sys.path.append(repo_root)
+
+
+import spx_python
+spx_python.set_global_transparent(False)
+# Initialize HTTP-based SPX client wrapper pointing to local SPX server
+product_key = os.environ['SPX_PRODUCT_KEY']
+wrapper = spx_python.init(address='http://localhost:8000',
+                                product_key=product_key)
+```
+
+```python
+wrapper.reload_modules()
+```
+
+```python
+# Create a new model for the PT100 sensor
+pt_100_yaml = '''
+attributes:
+  temperature: 0.0
+actions:
+  - { saw: $attr(temperature), stop_value: 14, period: 5 }
+  - { ramp: $attr(temperature), stop_value: 150, duration: 5, type: overshoot, overshoot: 5 }
+  - { noise: $ext(temperature), std: 0.01, mode: proportional }
+  - { contact_fault: $ext(temperature), spike_value: 500.0 }
+'''
+
+# Parse YAML and build the model
+data = yaml.safe_load(pt_100_yaml)
+wrapper["models"]["pt_100_1"] = data
+wrapper["instances"]["test_pt_100"] = "pt_100_1"
+
+instance = wrapper["instances"]["test_pt_100"]
+```
+
+```python
+temperatures = []
+temperatures_raw = []
+times = np.linspace(0, 10, 1000)
+
+instance["polling"].disable()
+
+instance.reset()
+instance.prepare()
+
+# Run the instance for each time step
+for t in times:
+    instance["timer"].time = t
+    instance.run()
+    temperatures.append(instance["attributes"]["temperature"].external_value)
+    temperatures_raw.append(instance["attributes"]["temperature"].internal_value)
+    # print (f"Time: {t:.2f}s, Temperature: {temperatures[-1]:.2f}°C, Raw: {temperatures_raw[-1]:.2f}°C")
+
+# Plotting the results
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=times, y=temperatures, mode='lines', name='Temperature'))
+fig.add_trace(go.Scatter(x=times, y=temperatures_raw, mode='lines', name='Temperature Internal'))
+fig.update_layout(
+    title='Change of Temperature Over Time',
+    xaxis_title='Time (s)',
+    yaxis_title='Temperature (°C)',
+    showlegend=True
+)
+
 ```
