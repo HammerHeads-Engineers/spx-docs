@@ -1,24 +1,27 @@
 ---
 title: Code‑Defined Simulations (Load Python Classes as Models)
-description: Build model logic directly in Python and plug it into SPX via YAML/JSON — an alternative to fully declarative models.
+description: >-
+  Build model logic directly in Python and plug it into SPX via YAML/JSON — an
+  alternative to fully declarative models.
+icon: python
 ---
 
-# Code‑Defined Simulations (Load Python Classes as Models)
+# Code-Defined Simulations: Loading Python Classes as Models
 
-Sometimes writing the whole model in YAML/JSON is not the most convenient choice — especially if the core logic is easier to express in Python.  
+Sometimes writing the whole model in YAML/JSON is not the most convenient choice — especially if the core logic is easier to express in Python.\
 With **code‑defined simulations**, you implement your model behavior in a Python class and then **import** it into the SPX graph using a small declarative snippet.
 
 This page shows a compact, end‑to‑end example based on a simple “temperature sensor”.
 
----
+***
 
 ## When to use it
 
-- You prefer Python for complex logic or reuse existing libraries.
-- You want strict typing, tooling, and unit tests around your model logic.
-- You still want the **system structure** (models/instances/connections) to remain declarative and portable.
+* You prefer Python for complex logic or reuse existing libraries.
+* You want strict typing, tooling, and unit tests around your model logic.
+* You still want the **system structure** (models/instances/connections) to remain declarative and portable.
 
----
+***
 
 ## 1) Write the Python class
 
@@ -60,7 +63,7 @@ class PyTempSensor:
 
 > You can pass constructor args later from YAML/JSON (see `init` below).
 
----
+***
 
 ## 2) Declare it in YAML (or JSON)
 
@@ -90,17 +93,17 @@ instances:
 
 **How it works**
 
-- The `import` section uses the path to your `.py` file as a key and provides:
-  - `class`: the class to instantiate from that module
-  - `init`: optional `args/kwargs` passed to `__init__`
-  - `attributes`: mapping of SPX attribute names to either:
-    - `{ property: <python_property_name> }`, or
-    - `{ getter: <method>, setter: <method> }`
-- Under the hood this is handled by the `python_file` component, which loads the module, creates the object, and wires attributes during `prepare()`.
+* The `import` section uses the path to your `.py` file as a key and provides:
+  * `class`: the class to instantiate from that module
+  * `init`: optional `args/kwargs` passed to `__init__`
+  * `attributes`: mapping of SPX attribute names to either:
+    * `{ property: <python_property_name> }`, or
+    * `{ getter: <method>, setter: <method> }`
+* Under the hood this is handled by the `python_file` component, which loads the module, creates the object, and wires attributes during `prepare()`.
 
 > Tip: You can use multiple module entries if you want to import several classes.
 
----
+***
 
 ## 3) Make sure your extension directory is loaded
 
@@ -126,17 +129,16 @@ POST /api/v3/system/method/reload_modules
 }
 ```
 
-> SPX can also scan nested packages; if a package includes a `requirements.txt`,
-> those dependencies can be installed/loaded per your environment policy.
+> SPX can also scan nested packages; if a package includes a `requirements.txt`, those dependencies can be installed/loaded per your environment policy.
 
----
+***
 
 ## 4) Run and inspect
 
 After the import and reload:
 
-- Your instance `sensor` is created from `PySensorModel`.
-- The model’s SPX attribute `temperature` is **linked** to `PyTempSensor.temperature`.
+* Your instance `sensor` is created from `PySensorModel`.
+* The model’s SPX attribute `temperature` is **linked** to `PyTempSensor.temperature`.
 
 You can verify over the generic API:
 
@@ -157,13 +159,14 @@ If you exposed a helper like `tick()`, you can call it via methods:
 POST /api/v3/system/instances/sensor/method/tick
 ```
 
----
+***
+
 ## 5) (Optional) Expose your Python‑backed attributes over Modbus
 
-You can build **hybrid** models: keep the **logic** in Python, while exposing selected attributes via industrial protocols such as **Modbus**.  
+You can build **hybrid** models: keep the **logic** in Python, while exposing selected attributes via industrial protocols such as **Modbus**.\
 Below is a minimal example that starts a Modbus TCP server and publishes `sensor.temperature` as a holding register. Add a `communications` list with a single `modbus_tcp` entry and map the attribute under `mapping`.
 
-> The exact keys may vary across SPX releases; consult the dedicated **Modbus** guide for the full matrix of options.  
+> The exact keys may vary across SPX releases; consult the dedicated **Modbus** guide for the full matrix of options.\
 > This example illustrates the concept and the typical shape of the configuration.
 
 ```yaml
@@ -190,32 +193,30 @@ instances:
 
 **How it works**
 
-- Your instance `sensor` runs Python logic (from `PyTempSensor`), updating `temperature`.
-
+* Your instance `sensor` runs Python logic (from `PyTempSensor`), updating `temperature`.
 
 > Tip: You can export multiple attributes by adding more register entries. It’s common to use `encode/scale` to represent floats in fixed‑point registers.
 
 ## Advanced options
 
-- **Getter/Setter mapping**  
-  Instead of a property you can wire explicit functions:
-  ```yaml
-  attributes:
-    temperature: { getter: read_temp, setter: set_temp }
-  ```
+*   **Getter/Setter mapping**\
+    Instead of a property you can wire explicit functions:
 
-- **Multiple classes**  
+    ```yaml
+    attributes:
+      temperature: { getter: read_temp, setter: set_temp }
+    ```
+* **Multiple classes**\
   Import several classes by listing multiple module entries under `import`.
-
-- **Plain classes vs. SPX components**  
-  The importer supports both plain Python classes and classes derived from `SpxComponent`.  
+* **Plain classes vs. SPX components**\
+  The importer supports both plain Python classes and classes derived from `SpxComponent`.\
   For `SpxComponent` subclasses, the framework passes context automatically.
 
----
+***
 
 ## Summary
 
-- Keep your **structure** declarative in YAML/JSON (models, instances, connections).
-- Put the **behavior** in Python classes when it’s more convenient.
-- Use the `import`/`python_file` component to bridge both worlds.
-- Reload modules and run — you now have a code‑defined simulation that remains portable and testable.
+* Keep your **structure** declarative in YAML/JSON (models, instances, connections).
+* Put the **behavior** in Python classes when it’s more convenient.
+* Use the `import`/`python_file` component to bridge both worlds.
+* Reload modules and run — you now have a code‑defined simulation that remains portable and testable.
