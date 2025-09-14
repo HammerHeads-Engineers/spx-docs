@@ -6,7 +6,7 @@ description: >-
 icon: python
 ---
 
-# Code-Defined Simulations: Loading Python Classes as Models
+# Loading Python Classes as Models
 
 Sometimes writing the whole model in YAML/JSON is not the most convenient choice — especially if the core logic is easier to express in Python.\
 With **code‑defined simulations**, you implement your model behavior in a Python class and then **import** it into the SPX graph using a small declarative snippet.
@@ -74,19 +74,18 @@ Here is a minimal model that exposes one attribute (`temperature`) and **imports
 models:
   PySensorModel:
     attributes:
-      temperature: 25.0
-    import:                          # alias for "python_file"
-      ./extensions/py_temp_sensor.py:
-        class: PyTempSensor
-        # optional constructor parameters
-        init:
-          kwargs:
-            start: 25.0
-            drift: 0.0
-        # map SPX attribute <-> Python property / getters
-        attributes:
-          temperature: { property: temperature }
-
+      temperature: 0.0
+    import:
+        /app/extensions/py_temp_sensor.py:
+            class: PyTempSensor
+            init:
+                kwargs:
+                    start: 25.0
+                    drift: 0.0
+            attributes:
+                temperature: { property: temperature }
+            methods: 
+                run: tick
 instances:
   - sensor: PySensorModel
 ```
@@ -105,58 +104,77 @@ instances:
 
 ***
 
-## 3) Make sure your extension directory is loaded
-
-Point SPX at your extension directory and (re)load modules. Depending on your setup you can do this via API v3 or the Python client.
-
-### Via Python client
+## 3) Code Example
 
 ```python
-from spx_python import SPXPython
+import spx_python
 
-client = SPXPython("http://localhost:8000", product_key="YOUR_KEY")
-
-# Point to the directory that contains your Python files
-client["system"].call("reload_modules", kwargs={"directories": ["./extensions"]})
+# Initialize HTTP-based SPX client wrapper pointing to local SPX server
+product_key = os.environ['SPX_PRODUCT_KEY']
+wrapper = spx_python.init(address='http://localhost:8000',
+                                product_key=product_key)
 ```
 
-### Via API v3 (generic methods)
+```python
+import yaml
 
+# Create a new model for the PT100 sensor
+pt_100_yaml = '''
+attributes:
+  temperature: 0.0
+import:
+    /app/extensions/py_temp_sensor.py:
+        class: PyTempSensor
+        init:
+            kwargs:
+                start: 25.0
+                drift: 0.0
+        attributes:
+            temperature: { property: temperature }
+        methods: 
+            run: tick
+'''
+
+# Parse YAML and build the model
+data = yaml.safe_load(pt_100_yaml)
+wrapper["models"]["pt_100_py"] = data
+wrapper["instances"]["test_pt_100_py"] = "pt_100_py"
+
+instance = wrapper["instances"]["test_pt_100_py"]
+instance["polling"].disable()
+instance.prepare()
+
+print("Available models:", wrapper["models"].keys())
+print("Available instances:", wrapper["instances"].keys())
 ```
-POST /api/v3/system/method/reload_modules
-{
-  "kwargs": { "directories": ["./extensions"] }
-}
-```
 
-> SPX can also scan nested packages; if a package includes a `requirements.txt`, those dependencies can be installed/loaded per your environment policy.
+```python
+import plotly.graph_objects as go
 
-***
+# --- simulation & sampling ---
+STEPS = 1500        # number of ticks
+DT = 0.1           # optional: time step used for the X axis (seconds)
+times, temps = [], []
 
-## 4) Run and inspect
+temp_attr = instance["attributes"]["temperature"]
+temp_attr.internal_value = 50.0  # initial temperature
 
-After the import and reload:
+for step in range(STEPS):
+    instance.run()                 # advance the model by one tick
+    times.append(step * DT)        # time axis (seconds)
+    temps.append(temp_attr.internal_value)  # read current temperature
+    # time.sleep(DT)               # uncomment for real delays
 
-* Your instance `sensor` is created from `PySensorModel`.
-* The model’s SPX attribute `temperature` is **linked** to `PyTempSensor.temperature`.
-
-You can verify over the generic API:
-
-```
-GET /api/v3/system/instances/sensor/attr/temperature
-```
-
-Or adjust it:
-
-```
-PUT /api/v3/system/instances/sensor/attr/temperature
-{ "value": 42.0 }
-```
-
-If you exposed a helper like `tick()`, you can call it via methods:
-
-```
-POST /api/v3/system/instances/sensor/method/tick
+# --- plot with Plotly ---
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=times, y=temps, mode="lines", name="Temperature"))
+fig.update_layout(
+    title="Temperature over Time",
+    xaxis_title="Time [s]",
+    yaxis_title="Temperature",
+    template="plotly_white",
+)
+fig.show()
 ```
 
 ***
@@ -174,14 +192,18 @@ Below is a minimal example that starts a Modbus TCP server and publishes `sensor
 models:
   PySensorModel:
     attributes:
-      temperature: 25.0
+      temperature: 0.0
     import:
-      ./extensions/py_temp_sensor.py:
-        class: PyTempSensor
-        init:
-          kwargs: { start: 25.0, drift: 0.0 }
-        attributes:
-          temperature: { property: temperature }
+        /app/extensions/py_temp_sensor.py:
+            class: PyTempSensor
+            init:
+                kwargs:
+                    start: 25.0
+                    drift: 0.0
+            attributes:
+                temperature: { property: temperature }
+            methods: 
+                run: tick
     communications:
     - modbus_tcp:
         mapping:
