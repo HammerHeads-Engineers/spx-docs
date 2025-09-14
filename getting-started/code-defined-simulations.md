@@ -8,24 +8,23 @@ icon: python
 
 # Loading Python Classes as Models
 
-Sometimes writing the whole model in YAML/JSON is not the most convenient choice — especially if the core logic is easier to express in Python.\
-With **code‑defined simulations**, you implement your model behavior in a Python class and then **import** it into the SPX graph using a small declarative snippet.
+Not every behavior is pleasant to express in YAML/JSON. When the core of your model is easier to write in Python, you can keep the **system structure** (models/instances/connections) declarative, while implementing the **behavior** in a plain Python class and importing it into SPX.  
+This guide walks through a small but complete “temperature sensor” example and shows how the Python class is wired to attributes and methods, and how you can later expose those attributes over Modbus.
 
-This page shows a compact, end‑to‑end example based on a simple “temperature sensor”.
-
-***
+---
 
 ## When to use it
 
-* You prefer Python for complex logic or reuse existing libraries.
-* You want strict typing, tooling, and unit tests around your model logic.
-* You still want the **system structure** (models/instances/connections) to remain declarative and portable.
+- Your logic is complex enough that Python is clearer than a purely declarative spec.
+- You want to reuse existing Python libraries or your own tested code.
+- You still need portable system topology (YAML/JSON) for deployment, tests, and tooling.
 
-***
+---
 
 ## 1) Write the Python class
 
-Create a file (e.g. `extensions/py_temp_sensor.py`) with your model logic:
+Create `extensions/py_temp_sensor.py` and implement the behavior.  
+The class below keeps an internal temperature, exposes it via a `temperature` property, and defines a small `tick()` helper that the model can call on each `run()`.
 
 ```python
 # extensions/py_temp_sensor.py
@@ -61,13 +60,18 @@ class PyTempSensor:
         return self._t
 ```
 
-> You can pass constructor args later from YAML/JSON (see `init` below).
+**What to notice**
 
-***
+- You do **not** need to inherit from any SPX base class. A plain Python class is fine.
+- SPX will bind the model’s attributes to your class’ property/getter/setter.
+- Any public method (like `tick`) can be mapped to SPX lifecycle methods (e.g., `run`).
+
+---
 
 ## 2) Declare it in YAML (or JSON)
 
-Here is a minimal model that exposes one attribute (`temperature`) and **imports** the Python class with `import` (aka `python_file`) to bind that attribute to the class’ property:
+Now reference that Python class from a model definition.  
+The YAML below defines a `PySensorModel` with one attribute and uses `import` to load `PyTempSensor`. It maps the model’s `temperature` attribute to the class’ `temperature` property and maps the model’s `run` method to the class’ `tick` function.
 
 ```yaml
 # system.yaml (snippet)
@@ -90,21 +94,23 @@ instances:
   - sensor: PySensorModel
 ```
 
-**How it works**
+**How the mapping works**
 
-* The `import` section uses the path to your `.py` file as a key and provides:
-  * `class`: the class to instantiate from that module
-  * `init`: optional `args/kwargs` passed to `__init__`
-  * `attributes`: mapping of SPX attribute names to either:
-    * `{ property: <python_property_name> }`, or
-    * `{ getter: <method>, setter: <method> }`
-* Under the hood this is handled by the `python_file` component, which loads the module, creates the object, and wires attributes during `prepare()`.
+- `import` uses the path to the Python file as a key. SPX loads the module and instantiates `class: PyTempSensor`.
+- `init.kwargs` are forwarded to `__init__` (so you can configure defaults from YAML/JSON).
+- Under `attributes` you bind each SPX attribute to either:
+  - a property on your class: `{ property: temperature }`, or
+  - explicit accessors: `{ getter: read_temp, setter: set_temp }`.
+- Under `methods` you can map model methods to your Python methods, e.g., `run: tick`.  
+  When the instance runs, SPX will call `PyTempSensor.tick()`.
 
-> Tip: You can use multiple module entries if you want to import several classes.
+> Internally this is handled by the `python_file` importer. Wiring happens during `prepare()`.
 
-***
+---
 
-## 3) Code Example
+## 3) Create a model and instance, then run
+
+The next snippet shows how to use the HTTP wrapper to push the YAML to the server and create a running instance. We also disable background polling to keep the sample deterministic and call `prepare()` to ensure the importer wires up the attributes/methods before use.
 
 ```python
 import spx_python
@@ -148,6 +154,21 @@ print("Available models:", wrapper["models"].keys())
 print("Available instances:", wrapper["instances"].keys())
 ```
 
+**What happens here**
+
+1. The model is created with the `import` block as defined above.
+2. The instance `test_pt_100_py` is added, referencing that model.
+3. `prepare()` loads the Python file, instantiates `PyTempSensor`, and connects:
+   - the model’s `temperature` attribute ⇄ the `temperature` property,
+   - the model’s `run` method ⇄ the `tick()` function.
+4. From now on, each `instance.run()` calls `PyTempSensor.tick()`.
+
+---
+
+## 4) Sample and visualize the signal
+
+This final code collects samples by repeatedly calling `run()` (therefore invoking `tick()` under the hood) and plots `temperature` over time with Plotly.
+
 ```python
 import plotly.graph_objects as go
 
@@ -177,15 +198,20 @@ fig.update_layout(
 fig.show()
 ```
 
-***
+**Key takeaways**
+
+- `instance.run()` → mapped to `PyTempSensor.tick()`.
+- The `temperature` attribute you read is the property on your class.
+- You can choose your own update cadence and time base.
+
+---
 
 ## 5) (Optional) Expose your Python‑backed attributes over Modbus
 
-You can build **hybrid** models: keep the **logic** in Python, while exposing selected attributes via industrial protocols such as **Modbus**.\
-Below is a minimal example that starts a Modbus TCP server and publishes `sensor.temperature` as a holding register. Add a `communications` list with a single `modbus_tcp` entry and map the attribute under `mapping`.
+You can build **hybrid** models: keep the logic in Python, and expose selected attributes via industrial protocols such as **Modbus**.  
+The YAML below adds a `communications` section to the same model and publishes `temperature` as a holding register with `modbus_tcp`.
 
-> The exact keys may vary across SPX releases; consult the dedicated **Modbus** guide for the full matrix of options.\
-> This example illustrates the concept and the typical shape of the configuration.
+> Exact keys and encoding options may vary across SPX releases. See the dedicated Modbus guide for full details. The snippet demonstrates the typical shape.
 
 ```yaml
 # Add to your system.yaml
@@ -213,32 +239,33 @@ instances:
   - sensor: PySensorModel
 ```
 
-**How it works**
+**What this adds**
 
-* Your instance `sensor` runs Python logic (from `PyTempSensor`), updating `temperature`.
+- A Modbus TCP server is started for the instance.
+- The `temperature` attribute is mapped to a pair of holding registers.
+- You can extend the mapping with more attributes or different encodings.
 
-> Tip: You can export multiple attributes by adding more register entries. It’s common to use `encode/scale` to represent floats in fixed‑point registers.
+---
 
 ## Advanced options
 
-*   **Getter/Setter mapping**\
-    Instead of a property you can wire explicit functions:
-
-    ```yaml
-    attributes:
-      temperature: { getter: read_temp, setter: set_temp }
-    ```
-* **Multiple classes**\
+- **Getter/Setter mapping**  
+  Prefer explicit functions instead of a property:
+  ```yaml
+  attributes:
+    temperature: { getter: read_temp, setter: set_temp }
+  ```
+- **Multiple classes**  
   Import several classes by listing multiple module entries under `import`.
-* **Plain classes vs. SPX components**\
-  The importer supports both plain Python classes and classes derived from `SpxComponent`.\
-  For `SpxComponent` subclasses, the framework passes context automatically.
+- **Plain classes vs. `SpxComponent`**  
+  The importer supports both. For `SpxComponent` subclasses, SPX passes context automatically.
 
-***
+---
 
 ## Summary
 
-* Keep your **structure** declarative in YAML/JSON (models, instances, connections).
-* Put the **behavior** in Python classes when it’s more convenient.
-* Use the `import`/`python_file` component to bridge both worlds.
-* Reload modules and run — you now have a code‑defined simulation that remains portable and testable.
+- Keep topology in YAML/JSON (models, instances, connections), but implement behavior in Python where it’s more natural.
+- Use the `import`/`python_file` bridge to map **attributes** and **methods** to your class.
+- Call `prepare()` before use so the importer wires everything up.
+- (Optional) Expose the same attributes over Modbus or other protocols for integration.
+
