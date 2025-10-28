@@ -15,9 +15,7 @@
   * [Use in Unit Tests (MiL)](getting-started/use-in-unit-tests-mil.md)
   * [CI/CD Setup (GitHub Actions)](getting-started/ci-cd-setup-github-actions.md)
 * [Usage Scenarios and Examples](usage-scenarios-and-examples/README.md)
-  * [Common Use Cases](usage-scenarios-and-examples/common-use-cases.md)
-  * [Step-by-Step Guides for Typical Scenarios](usage-scenarios-and-examples/step-by-step-guides-for-typical-scenarios.md)
-  * [Code Examples and Best Practices](usage-scenarios-and-examples/code-examples-and-best-practices.md)
+  * [Guided Use Cases & Scenarios](usage-scenarios-and-examples/common-use-cases.md)
 * [Simulation and Modeling](simulation-and-modeling/README.md)
   * [Core Concepts](simulation-and-modeling/core-concepts.md)
   * [Model-in-the-Loop (MiL) with SPX](simulation-and-modeling/model-in-the-loop.md)
@@ -41,12 +39,12 @@
     * [Attributes](spx-development-guide/spx-sdk/attributes.md)
     * [Logic](spx-development-guide/spx-sdk/logic.md)
     * [Communication](spx-development-guide/spx-sdk/communication.md)
+    * [Best Practices](spx-development-guide/spx-sdk/best-practices.md)
     * [Imports](spx-development-guide/spx-sdk/imports/README.md)
       * [PythonFile](spx-development-guide/spx-sdk/imports/pythonfile.md)
   * [SPX-PYTHON Client](spx-development-guide/spx-python-client-wrapper/README.md)
     * [Overview & Installation](spx-development-guide/spx-python-client-wrapper/overview-and-installation.md)
     * [Usage & Examples](spx-development-guide/spx-python-client-wrapper/usage-and-examples.md)
-    * [MiL Testing Guide](spx-development-guide/spx-python-client-wrapper/mil-testing-guide.md)
     * [Advanced & Best Practices](spx-development-guide/spx-python-client-wrapper/advanced-and-best-practices.md)
   * [SPX-SERVER](spx-development-guide/server-api/README.md)
     * [API v3 Reference](api-v3-reference/README.md)
@@ -60,7 +58,6 @@
               kind: openapi
               spec: hammerheadsengineers-api
         ```
-  * [Debugging and Troubleshooting Tips](spx-development-guide/debugging-and-troubleshooting-tips.md)
 * [Troubleshooting and Support](troubleshooting-and-support/README.md)
   * [Common Issues and Solutions](troubleshooting-and-support/common-issues-and-solutions.md)
   * [FAQs](troubleshooting-and-support/faqs.md)
