@@ -4,7 +4,7 @@ description: >-
   press Run, and your virtual device comes alive.”
 ---
 
-# SPX Development Guide
+# Build Simulations with SPX
 
 ### 1. What is SPX‑SDK?
 
