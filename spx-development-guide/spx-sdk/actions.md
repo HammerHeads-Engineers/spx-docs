@@ -6,6 +6,8 @@ Actions transform attribute values and push results back into the simulation. Ea
 
 The `actions` container expects a list of mappings. The first key in each mapping selects the action class (for example `set`, `function`, or a custom name). The value of that key points to the target attribute(s). Additional keys configure parameters.
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 actions:
   - function: "#attr(apparent_power)"
@@ -18,22 +20,9 @@ actions:
       - "#attr(alarm_active)"
     value: "RUNNING"
 ```
+{% endtab %}
 
-During loading the SDK turns this into action components named `function` and `set`. If you reuse the same action name multiple times, the container suffices by appending counters (`set_1`, `set_2`).
-
-Attribute references accept prefixes `#attr`, `#internal`, `#external`, `#in`, `#out`, or `#ext` (aliases for the same wrappers). The hash `#` marker is optional; `$` or `@` also work, but `#` keeps YAML tidy.
-
-## The actions container
-
-Class: `spx_sdk.actions.actions.Actions`
-
-- Registered as `actions` / `Actions` so you can embed it anywhere a container is allowed.
-- Validates the list structure via `@definition_schema`, catching typos like integers in place of mappings (`tests/test_actions/test_actions_validation.py`).
-- Automatically instantiates subclasses of `Action` registered in the component registry; if no specific class is registered for a name the base `Action` type is used.
-- Creates unique child names per action (`dup`, `dup_1`, ...) and preserves the original mapping as `action.definition`.
-
-### JSON equivalent
-
+{% tab title="JSON" %}
 ```json
 {
   "actions": [
@@ -54,13 +43,28 @@ Class: `spx_sdk.actions.actions.Actions`
   ]
 }
 ```
+{% endtab %}
+{% endtabs %}
 
-## Built-in `set` action
+During loading the SDK turns this into action components named `function` and `set`. If you reuse the same action name multiple times, the container suffices by appending counters (`set_1`, `set_2`).
+
+Attribute references accept prefixes `#attr`, `#internal`, `#external`, `#in`, `#out`, or `#ext` (aliases for the same wrappers). The hash `#` marker is optional; `$` or `@` also work, but `#` keeps YAML tidy.
+
+## The actions container
+
+Class: `spx_sdk.actions.actions.Actions`
+
+- Registered as `actions` / `Actions` so you can embed it anywhere a container is allowed.
+- Validates the list structure via `@definition_schema`, catching typos like integers in place of mappings (`tests/test_actions/test_actions_validation.py`).
+- Automatically instantiates subclasses of `Action` registered in the component registry; if no specific class is registered for a name the base `Action` type is used.
+- Creates unique child names per action (`dup`, `dup_1`, ...) and preserves the original mapping as `action.definition`.
 
 Class: `spx_sdk.actions.set_action.SetAction`
 
 Use `set` to assign a literal value to one or more attributes. The schema enforces the presence of `set` and `value`.
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 actions:
   - set: "#attr(transfer_in_progress)"
@@ -71,7 +75,9 @@ actions:
       - "#attr(display_message)"
     value: "Calibrating"
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "actions": [
@@ -86,6 +92,8 @@ actions:
   ]
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 Behaviour highlights:
 
@@ -98,6 +106,8 @@ Class: `spx_sdk.actions.function_action.FunctionAction`
 
 `function` evaluates an expression and writes the result to the configured outputs. The `call` string is executed with Python's `eval`, so stick to safe expressions and control inputs through the registry.
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 actions:
   - function: "#attr(apparent_power)"
@@ -110,7 +120,9 @@ actions:
     params:
       idle_offset: 15.0
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "actions": [
@@ -129,6 +141,8 @@ actions:
   ]
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 Features covered by `tests/test_actions/test_function_action.py`:
 
@@ -167,6 +181,8 @@ class RampAction(Action):
 
 With the registration in place you can declare:
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 actions:
   - ramp: "#attr(progress)"
@@ -174,7 +190,9 @@ actions:
     stop_value: 100
     step: 5
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "actions": [
@@ -187,6 +205,8 @@ actions:
   ]
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 
 ## Validation workflow

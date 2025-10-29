@@ -8,6 +8,8 @@
 
 ## YAML structure
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 model:
   name: plant
@@ -27,7 +29,9 @@ model:
   actions: [ ... ]
   communication: { ... }
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "model": {
@@ -58,6 +62,8 @@ model:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Key behaviors
 

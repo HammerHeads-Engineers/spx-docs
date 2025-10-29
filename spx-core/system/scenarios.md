@@ -4,6 +4,8 @@ Scenarios (`spx_core/system/scenarios.py`) let you script temporary changes to y
 
 ## YAML structure
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 scenarios:
   voltage_spike:
@@ -24,6 +26,9 @@ scenarios:
       stop_path: communication.ascii.attach
 ```
 
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "scenarios": {
@@ -54,6 +59,8 @@ scenarios:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Configuration fields
 

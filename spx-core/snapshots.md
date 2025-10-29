@@ -14,13 +14,17 @@ The core implements snapshots in `spx_core/snapshots/snapshot_manager.py` and `s
 
 Snapshots are usually triggered via API (`POST /snapshots`). YAML controls defaults:
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 snapshots:
   directory: /var/spx/snapshots
   auto_on_shutdown: true
   retention: 5
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "snapshots": {
@@ -30,6 +34,8 @@ snapshots:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 Fields:
 

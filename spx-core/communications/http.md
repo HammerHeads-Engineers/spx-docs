@@ -2,8 +2,10 @@
 
 The HTTP adapter exposes REST endpoints backed by your simulation. It builds on FastAPI inside the server core.
 
-## YAML structure
+## Configuration example
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 communication:
   http_api:
@@ -18,7 +20,9 @@ communication:
         handler:
           path: system.controllers.pid.update_setpoint
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "communication": {
@@ -41,6 +45,8 @@ communication:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Key fields
 
@@ -56,11 +62,15 @@ communication:
 
 Use `headers` to add fixed headers; integrate with server middleware for auth (`spx_server` provides plugins for API keys, tokens).
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 headers:
   Access-Control-Allow-Origin: "*"
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "headers": {
@@ -68,6 +78,8 @@ headers:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Streaming / SSE
 
@@ -75,6 +87,8 @@ For high-frequency data, use MQTT or WebSockets. The HTTP adapter suits control 
 
 ### Scenarios
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 scenarios:
   http_503:
@@ -82,7 +96,9 @@ scenarios:
     overrides:
       communication.http_api.status_override: 503
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "scenarios": {
@@ -95,6 +111,8 @@ scenarios:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Tips
 

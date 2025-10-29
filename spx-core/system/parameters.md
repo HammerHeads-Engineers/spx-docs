@@ -4,6 +4,8 @@ The `Parameters` container (`spx_core/system/parameters.py`) is the simplest way
 
 ## YAML structure
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 parameters:
   attributes.voltage.default: 230.0
@@ -11,6 +13,9 @@ parameters:
   instances.controller.parameters.gain: 1.2
 ```
 
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "parameters": {
@@ -20,6 +25,8 @@ parameters:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### How it works
 

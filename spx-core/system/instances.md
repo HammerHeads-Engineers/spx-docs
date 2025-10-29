@@ -4,6 +4,8 @@ The `Instances` container (`spx_core/system/instances.py`) creates and manages n
 
 ## YAML structure
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 instances:
   - sensor:
@@ -20,7 +22,9 @@ instances:
         - node:
             type: library/edge_node
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "instances": [
@@ -55,6 +59,8 @@ instances:
   ]
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Configuration options
 
@@ -74,6 +80,8 @@ instances:
 
 ### Example: updating an instance at runtime
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 instances:
   - sensor:
@@ -82,7 +90,9 @@ instances:
       calibration:
         offset: 0.5
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "instances": [
@@ -101,6 +111,8 @@ instances:
   ]
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 The second entry finds the existing `sensor` child and applies the `calibration` block without recreating the object.
 

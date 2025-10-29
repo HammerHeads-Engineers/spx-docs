@@ -17,6 +17,8 @@ Each action consumes a YAML block in the `actions:` list. Parameters are evaluat
 
 ### Ramp example
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 actions:
   - ramp:
@@ -26,6 +28,9 @@ actions:
       duration: 5.0
 ```
 
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "actions": [
@@ -40,9 +45,13 @@ actions:
   ]
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### PID example
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 actions:
   - pid:
@@ -55,6 +64,9 @@ actions:
       sample_time: 0.1
 ```
 
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "actions": [
@@ -72,9 +84,13 @@ actions:
   ]
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Noise injection
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 actions:
   - noise:
@@ -83,6 +99,9 @@ actions:
       mode: proportional
 ```
 
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "actions": [
@@ -96,9 +115,13 @@ actions:
   ]
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Overrides and suspend
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 actions:
   - override:
@@ -110,6 +133,9 @@ actions:
       duration: 1.0
 ```
 
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "actions": [
@@ -129,6 +155,8 @@ actions:
   ]
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ## Best practices
 

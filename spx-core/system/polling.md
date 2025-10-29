@@ -4,6 +4,8 @@
 
 ## YAML structure
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 polling:
   interval: 0.05   # seconds between iterations
@@ -11,6 +13,9 @@ polling:
   max_iterations: 0  # 0 or inf = run forever
 ```
 
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "polling": {
@@ -20,6 +25,8 @@ polling:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Configuration fields
 

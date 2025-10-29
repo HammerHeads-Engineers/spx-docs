@@ -4,6 +4,8 @@ The MQTT adapter publishes telemetry and consumes commands via MQTT topics. It r
 
 ## YAML structure
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 communication:
   mqtt:
@@ -22,7 +24,9 @@ communication:
           handler:
             path: system.controllers.pid.update_setpoint
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "communication": {
@@ -53,6 +57,8 @@ communication:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Key fields
 
@@ -87,6 +93,8 @@ payload: |
 
 ### Scenarios
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 scenarios:
   mqtt_disconnect:
@@ -99,7 +107,9 @@ scenarios:
     overrides:
       communication.mqtt.publish_delay: 2.0
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "scenarios": {
@@ -119,6 +129,8 @@ scenarios:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Tips
 

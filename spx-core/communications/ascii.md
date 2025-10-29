@@ -54,12 +54,16 @@ communication:
 
 Commands may include placeholders (`{mode}`) that the adapter passes into the mapping as variables. You can write them back to attributes or use them in responses.
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 "CONF:VOLT {value}":
   "#attr(voltage_setpoint)": "value"
   response: "VOLT {value}"
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "CONF:VOLT {value}": {
@@ -68,11 +72,15 @@ Commands may include placeholders (`{mode}`) that the adapter passes into the ma
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Scenarios
 
 Use scenarios to simulate link issues:
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 scenarios:
   ascii_disconnect:
@@ -85,7 +93,9 @@ scenarios:
     overrides:
       communication.ascii.response_delay: 10.0
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "scenarios": {
@@ -105,6 +115,8 @@ scenarios:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Tips
 

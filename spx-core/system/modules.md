@@ -4,6 +4,8 @@ Modules (`spx_core/system/modules.py`) let you include reusable subsystems that 
 
 ## YAML structure
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 modules:
   - power_stage: library/power_stage
@@ -15,6 +17,9 @@ modules:
             value: 1
 ```
 
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "modules": [
@@ -37,6 +42,8 @@ modules:
   ]
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Configuration options
 

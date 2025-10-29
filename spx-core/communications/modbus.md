@@ -4,6 +4,8 @@ The Modbus adapter presents registers and coils so external PLCs or software mas
 
 ## YAML structure
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 communication:
   modbus_tcp:
@@ -20,7 +22,9 @@ communication:
         address: 10
         type: bool
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "communication": {
@@ -44,6 +48,8 @@ communication:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Key fields
 
@@ -67,6 +73,8 @@ The adapter supports standard Modbus packing. For custom packing, implement a sm
 
 ### Scenarios
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 scenarios:
   modbus_disconnect:
@@ -79,7 +87,9 @@ scenarios:
     overrides:
       communication.modbus_tcp.response_delay: 0.5
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "scenarios": {
@@ -99,6 +109,8 @@ scenarios:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Tips
 

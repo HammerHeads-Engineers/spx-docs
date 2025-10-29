@@ -4,6 +4,8 @@ Templates (`spx_core/system/templates.py`) let you package reusable model fragme
 
 ## YAML structure
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 templates:
   multimeter:
@@ -17,6 +19,9 @@ templates:
           "MEAS:VOLT?": "#out(voltage)"
 ```
 
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "templates": {
@@ -37,6 +42,8 @@ templates:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### What happens under the hood
 

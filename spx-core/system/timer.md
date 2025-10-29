@@ -4,6 +4,8 @@ The `Timer` component (`spx_core/system/timer.py`) keeps track of simulated time
 
 ## YAML structure
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 timer:
   step: 0.1          # seconds added each run when in manual mode
@@ -14,6 +16,9 @@ timer:
   decimal_places: 3
 ```
 
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "timer": {
@@ -26,6 +31,8 @@ timer:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Configuration fields
 
