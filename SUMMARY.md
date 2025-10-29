@@ -64,7 +64,7 @@
       * [MQTT](spx-core/communications/mqtt.md)
     * [Snapshots](spx-core/snapshots.md)
     * [Extending the Core](spx-core/extending.md)
-  * [SPX-PYTHON Client](spx-development-guide/spx-python-client-wrapper/README.md)
+  * [SPX-PYTHON](spx-development-guide/spx-python-client-wrapper/README.md)
     * [Overview & Installation](spx-development-guide/spx-python-client-wrapper/overview-and-installation.md)
     * [Usage & Examples](spx-development-guide/spx-python-client-wrapper/usage-and-examples.md)
     * [Advanced & Best Practices](spx-development-guide/spx-python-client-wrapper/advanced-and-best-practices.md)
