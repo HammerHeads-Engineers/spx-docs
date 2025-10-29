@@ -18,6 +18,28 @@ communication:
         response: "ACK"
 ```
 
+### JSON structure
+
+```json
+{
+  "communication": {
+    "ascii": {
+      "port": 5025,
+      "terminator": "\n",
+      "response_delay": 0.01,
+      "response_jitter": 0.0,
+      "mappings": {
+        "MEAS:VOLT?": "#out(voltage)",
+        "CONF:MODE {mode}": {
+          "#attr(measurement_mode)": "mode",
+          "response": "ACK"
+        }
+      }
+    }
+  }
+}
+```
+
 ### Key fields
 
 - `port`: TCP port, default 5025.
@@ -38,6 +60,15 @@ Commands may include placeholders (`{mode}`) that the adapter passes into the ma
   response: "VOLT {value}"
 ```
 
+```json
+{
+  "CONF:VOLT {value}": {
+    "#attr(voltage_setpoint)": "value",
+    "response": "VOLT {value}"
+  }
+}
+```
+
 ### Scenarios
 
 Use scenarios to simulate link issues:
@@ -53,6 +84,26 @@ scenarios:
     duration: 5.0
     overrides:
       communication.ascii.response_delay: 10.0
+```
+
+```json
+{
+  "scenarios": {
+    "ascii_disconnect": {
+      "duration": 2.0,
+      "call": {
+        "path": "communication.ascii.detach",
+        "stop_path": "communication.ascii.attach"
+      }
+    },
+    "ascii_delay_spike": {
+      "duration": 5.0,
+      "overrides": {
+        "communication.ascii.response_delay": 10.0
+      }
+    }
+  }
+}
 ```
 
 ### Tips

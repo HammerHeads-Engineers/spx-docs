@@ -14,6 +14,19 @@ timer:
   decimal_places: 3
 ```
 
+```json
+{
+  "timer": {
+    "step": 0.1,
+    "initial_time": 0.0,
+    "max_duration": 3600,
+    "auto_reset": false,
+    "resolution": 0.01,
+    "decimal_places": 3
+  }
+}
+```
+
 ### Configuration fields
 
 | Field | Description |

@@ -17,6 +17,27 @@ templates:
           "MEAS:VOLT?": "#out(voltage)"
 ```
 
+```json
+{
+  "templates": {
+    "multimeter": {
+      "attributes": {
+        "voltage": { "default": 0.0 },
+        "current": { "default": 0.0 }
+      },
+      "communication": {
+        "ascii": {
+          "port": 0,
+          "mappings": {
+            "MEAS:VOLT?": "#out(voltage)"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
 ### What happens under the hood
 
 - Each entry is validated against the `Model` schema using the same validation engine as the SDK.

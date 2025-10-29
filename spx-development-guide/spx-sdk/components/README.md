@@ -66,6 +66,16 @@ children:
     std: 0.05
 ```
 
+```json
+{
+  "children": {
+    "PIDController": { "kp": 1.2 },
+    "NoiseAction": { "std": 0.05 }
+  }
+}
+```
+
+
 * Each key is treated as a class name registered with `@register_class`.
 * Instances are created automatically; nested dicts or single‑key list items are supported.
 
@@ -99,6 +109,21 @@ Actions:
     m:          0.8
     c:          0.05
 ```
+```json
+{
+  "Actions": [
+    {
+      "spring_mass_damper": "$attr(acc)",
+      "input": "#attr(position)",
+      "velocity": "#attr(speed)",
+      "k": 15.0,
+      "m": 0.8,
+      "c": 0.05
+    }
+  ]
+}
+```
+
 
 * During model load a `SpxContainer` called Actions scans the list, spots spring\_mass\_damper, pulls the matching class from the registry, and instantiates it under the parent.
 * The new Action inherits lifecycle and hooks from `SpxComponent`; parameters are auto‑hydrated; outputs are resolved to real `SpxAttribute` objects.

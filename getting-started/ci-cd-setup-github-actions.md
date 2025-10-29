@@ -54,12 +54,12 @@ jobs:
         run: |
           for i in {1..20}; do
             if curl -fsS http://localhost:8000/ >/dev/null; then
-              echo "SPX server is up"; exit 0
+              echo 'SPX server is up'; exit 0
             fi
-            echo "Waiting for SPX server..."
+            echo 'Waiting for SPX server...'
             sleep 3
           done
-          echo "SPX server failed to start" >&2
+          echo 'SPX server failed to start' >&2
           exit 1
 
       - name: Run unit tests
@@ -69,6 +69,59 @@ jobs:
       - name: Stop SPX server
         if: always()
         run: docker compose down
+```
+{% endcode %}
+
+{% code title=".github/workflows/ci.json" %}
+```json
+{
+  "name": "CI",
+  "on": [
+    "push",
+    "pull_request"
+  ],
+  "jobs": {
+    "tests": {
+      "runs-on": "ubuntu-latest",
+      "env": {
+        "SPX_PRODUCT_KEY": "${{ secrets.SPX_PRODUCT_KEY }}"
+      },
+      "steps": [
+        {
+          "uses": "actions/checkout@v4"
+        },
+        {
+          "name": "Set up Python",
+          "uses": "actions/setup-python@v5",
+          "with": {
+            "python-version": "3.10"
+          }
+        },
+        {
+          "name": "Install dependencies",
+          "run": "python -m pip install --upgrade pip\npip install -r requirements.txt"
+        },
+        {
+          "name": "Start SPX server",
+          "run": "docker compose up -d"
+        },
+        {
+          "name": "Wait for SPX server",
+          "run": "for i in {1..20}; do\n  if curl -fsS http://localhost:8000/ >/dev/null; then\n    echo 'SPX server is up'; exit 0\n  fi\n  echo 'Waiting for SPX server...'\n  sleep 3\ndone\necho 'SPX server failed to start' >&2\nexit 1"
+        },
+        {
+          "name": "Run unit tests",
+          "run": "python -m unittest discover -s tests -v"
+        },
+        {
+          "name": "Stop SPX server",
+          "if": "always()",
+          "run": "docker compose down"
+        }
+      ]
+    }
+  }
+}
 ```
 {% endcode %}
 

@@ -175,6 +175,20 @@ actions:
     step: 5
 ```
 
+```json
+{
+  "actions": [
+    {
+      "ramp": "#attr(progress)",
+      "start_value": 0,
+      "stop_value": 100,
+      "step": 5
+    }
+  ]
+}
+```
+
+
 ## Validation workflow
 
 - The actions container schema (`Actions`) ensures each entry is an object and the first key targets a recognised attribute reference pattern (`tests/test_actions/test_actions_validation.py`).

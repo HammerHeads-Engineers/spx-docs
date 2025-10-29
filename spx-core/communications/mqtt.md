@@ -23,6 +23,37 @@ communication:
             path: system.controllers.pid.update_setpoint
 ```
 
+```json
+{
+  "communication": {
+    "mqtt": {
+      "broker": "mqtt://localhost:1883",
+      "client_id": "spx-sim",
+      "topics": {
+        "publish": [
+          {
+            "topic": "spx/sim/temperature",
+            "payload": "#out(attributes.temperature)",
+            "qos": 1,
+            "retain": false,
+            "period": 1.0
+          }
+        ],
+        "subscribe": [
+          {
+            "topic": "spx/sim/setpoint",
+            "qos": 1,
+            "handler": {
+              "path": "system.controllers.pid.update_setpoint"
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
 ### Key fields
 
 - `broker`: URI (`mqtt://host:port` or `mqtts://` for TLS).
@@ -48,6 +79,12 @@ payload: |
   }
 ```
 
+```json
+{
+  "payload": "{\n  \"voltage\": #out(attributes.voltage),\n  \"current\": #out(attributes.current)\n}"
+}
+```
+
 ### Scenarios
 
 ```yaml
@@ -61,6 +98,26 @@ scenarios:
     duration: 6.0
     overrides:
       communication.mqtt.publish_delay: 2.0
+```
+
+```json
+{
+  "scenarios": {
+    "mqtt_disconnect": {
+      "duration": 4.0,
+      "call": {
+        "path": "communication.mqtt.disconnect",
+        "stop_path": "communication.mqtt.connect"
+      }
+    },
+    "mqtt_latency": {
+      "duration": 6.0,
+      "overrides": {
+        "communication.mqtt.publish_delay": 2.0
+      }
+    }
+  }
+}
 ```
 
 ### Tips

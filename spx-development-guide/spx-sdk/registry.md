@@ -61,6 +61,18 @@ heater_instance:
     parent: !python/object:spx_sdk.components.SpxComponent { name: "root" }
 ```
 
+```json
+{
+  "heater_instance": {
+    "class": "heater_device",
+    "parameters": {
+      "name": "heater_instance",
+      "parent": "!python/object:spx_sdk.components.SpxComponent { name: \"root\" }"
+    }
+  }
+}
+```
+
 Use `load_instances_from_yaml(path)` or `load_instances_from_yaml_data(yaml_string)`. Each entry must include a registered `class` plus any constructor parameters. The helper stores the created objects in `instance_registry` so you can fetch them with `get_instance("heater_instance")`.
 
 ## Discovering classes

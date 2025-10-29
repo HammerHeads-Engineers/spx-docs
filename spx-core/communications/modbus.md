@@ -21,6 +21,30 @@ communication:
         type: bool
 ```
 
+```json
+{
+  "communication": {
+    "modbus_tcp": {
+      "host": "0.0.0.0",
+      "port": 502,
+      "unit_id": 1,
+      "mapping": {
+        "voltage": {
+          "group": "holding",
+          "address": 0,
+          "type": "float"
+        },
+        "heater_on": {
+          "group": "coils",
+          "address": 10,
+          "type": "bool"
+        }
+      }
+    }
+  }
+}
+```
+
 ### Key fields
 
 - `host` / `port`: bind address, default 0.0.0.0:502.
@@ -54,6 +78,26 @@ scenarios:
     duration: 5.0
     overrides:
       communication.modbus_tcp.response_delay: 0.5
+```
+
+```json
+{
+  "scenarios": {
+    "modbus_disconnect": {
+      "duration": 3.0,
+      "call": {
+        "path": "communication.modbus_tcp.detach",
+        "stop_path": "communication.modbus_tcp.attach"
+      }
+    },
+    "modbus_noise": {
+      "duration": 5.0,
+      "overrides": {
+        "communication.modbus_tcp.response_delay": 0.5
+      }
+    }
+  }
+}
 ```
 
 ### Tips

@@ -46,6 +46,36 @@ python_file:
         setter: "write_output"
 ```
 
+```json
+{
+  "python_file": {
+    "/path/to/mod1.py": {
+      "class": "FakeItemClass",
+      "attributes": {
+        "voltage": {
+          "property": "voltage"
+        }
+      }
+    },
+    "/path/to/mod2.py": {
+      "class": "ControlBlock",
+      "init": {
+        "args": [42],
+        "kwargs": {
+          "gain": 1.5
+        }
+      },
+      "attributes": {
+        "output": {
+          "getter": "read_output",
+          "setter": "write_output"
+        }
+      }
+    }
+  }
+}
+```
+
 * Key: module file path (absolute or relative).
 * class: name of the class inside that module to instantiate.
 * init (optional): extra constructor parameters for plain (non-Item) classes:

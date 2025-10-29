@@ -21,6 +21,41 @@ instances:
             type: library/edge_node
 ```
 
+```json
+{
+  "instances": [
+    {
+      "sensor": {
+        "type": "library/temperature_sensor",
+        "parameters": {
+          "attributes.temperature.default": 25.0
+        }
+      }
+    },
+    {
+      "controller": {
+        "type": "library/pid_controller",
+        "parameters": {
+          "parameters.setpoint": 80.0
+        }
+      }
+    },
+    {
+      "fleet": {
+        "type": "library/device_cluster",
+        "instances": [
+          {
+            "node": {
+              "type": "library/edge_node"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
 ### Configuration options
 
 | Field | Description |
@@ -46,6 +81,25 @@ instances:
   - sensor:
       calibration:
         offset: 0.5
+```
+
+```json
+{
+  "instances": [
+    {
+      "sensor": {
+        "type": "library/temperature_sensor"
+      }
+    },
+    {
+      "sensor": {
+        "calibration": {
+          "offset": 0.5
+        }
+      }
+    }
+  ]
+}
 ```
 
 The second entry finds the existing `sensor` child and applies the `calibration` block without recreating the object.

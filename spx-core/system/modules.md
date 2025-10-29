@@ -8,11 +8,34 @@ Modules (`spx_core/system/modules.py`) let you include reusable subsystems that 
 modules:
   - power_stage: library/power_stage
   - ui_panel:
-      library/ui_panel
+      type: library/ui_panel
       actions:
         - override:
             target: "#attr(backlight)"
             value: 1
+```
+
+```json
+{
+  "modules": [
+    {
+      "power_stage": "library/power_stage"
+    },
+    {
+      "ui_panel": {
+        "type": "library/ui_panel",
+        "actions": [
+          {
+            "override": {
+              "target": "#attr(backlight)",
+              "value": 1
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
 ```
 
 ### Configuration options

@@ -28,6 +28,37 @@ model:
   communication: { ... }
 ```
 
+```json
+{
+  "model": {
+    "name": "plant",
+    "timer": {
+      "step": 0.1
+    },
+    "polling": {
+      "interval": 0.05
+    },
+    "scenarios": {
+      "voltage_drift": {
+        "enabled": true,
+        "duration": 5.0,
+        "actions": [
+          {
+            "noise": {
+              "output": "#attr(voltage)",
+              "std": 0.01
+            }
+          }
+        ]
+      }
+    },
+    "attributes": { "...": "..." },
+    "actions": [ "..." ],
+    "communication": { "...": "..." }
+  }
+}
+```
+
 ### Key behaviors
 
 - **Automatic extraction**: The loader pulls `timer`, `polling`, and `scenarios` from the model definition before instantiating other containers. This keeps the YAML tidy—no need to declare those sections separately.

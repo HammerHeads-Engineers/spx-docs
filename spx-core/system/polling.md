@@ -11,6 +11,16 @@ polling:
   max_iterations: 0  # 0 or inf = run forever
 ```
 
+```json
+{
+  "polling": {
+    "interval": 0.05,
+    "jitter": 0.01,
+    "max_iterations": 0
+  }
+}
+```
+
 ### Configuration fields
 
 | Field | Description |

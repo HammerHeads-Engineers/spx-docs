@@ -52,6 +52,31 @@ instances:
         output: "#attr(error)"
 ```
 
+```json
+{
+  "instances": {
+    "sensor": {
+      "attributes": {
+        "value": { "default": 0.0 }
+      }
+    },
+    "controller": {
+      "attributes": {
+        "set_point": { "default": 10.0 }
+      },
+      "actions": [
+        {
+          "function": "#attr(error)",
+          "call": "#attr(set_point) - #attr(sensor/value)",
+          "output": "#attr(error)"
+        }
+      ]
+    }
+  }
+}
+```
+
+
 In Python:
 
 ```python

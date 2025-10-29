@@ -146,6 +146,41 @@ conditions:
           value: 0
 ```
 
+```json
+{
+  "conditions": [
+    {
+      "if": "#attr(pressure) > 30",
+      "ActionA": {
+        "foo": 1
+      },
+      "conditions": [
+        {
+          "when": "#attr(temperature) > 90",
+          "ActionB": { "bar": 2 }
+        },
+        {
+          "else": {
+            "ActionA": { "baz": 3 }
+          }
+        }
+      ]
+    },
+    {
+      "else": {
+        "actions": [
+          {
+            "set": "#attr(alert)",
+            "value": 0
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+
 ## Validation guarantees
 
 Schemas declared via `@definition_schema` ensure definitions fail fast (`tests/test_logic/test_conditions_validation.py`):

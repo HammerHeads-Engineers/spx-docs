@@ -24,6 +24,37 @@ scenarios:
       stop_path: communication.ascii.attach
 ```
 
+```json
+{
+  "scenarios": {
+    "voltage_spike": {
+      "enabled": true,
+      "duration": 2.0,
+      "actions": [
+        {
+          "override": {
+            "target": "#attr(voltage)",
+            "value": 400.0
+          }
+        }
+      ],
+      "run_limit": 1
+    },
+    "ascii_disconnect": {
+      "enabled": true,
+      "schedule": {
+        "period": 30.0,
+        "jitter": 5.0
+      },
+      "call": {
+        "path": "communication.ascii.detach",
+        "stop_path": "communication.ascii.attach"
+      }
+    }
+  }
+}
+```
+
 ### Configuration fields
 
 | Field | Description |

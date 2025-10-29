@@ -155,6 +155,24 @@ attributes:
         - log_change_hook
 ```
 
+```json
+{
+  "attributes": {
+    "voltage": {
+      "type": "float",
+      "default": 12.0,
+      "hooks": {
+        "on_set": [
+          "refresh_model",
+          "log_change_hook"
+        ]
+      }
+    }
+  }
+}
+```
+
+
 The `Hooks` container (see the hooks chapter) registers and executes these hook components automatically.
 
 ## Best practices

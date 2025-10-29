@@ -93,6 +93,38 @@ services:
       - ./extensions:/app/extensions:ro
     command: ["--address", "0.0.0.0", "--product-key", "${SPX_PRODUCT_KEY}", "--extensions", "/app/extensions"]
 ```
+
+```json
+{
+  "services": {
+    "spx-server": {
+      "image": "simplephysx/spx-server:v0.2.1-alpha.1",
+      "ports": ["8000:8000"],
+      "environment": {
+        "SPX_PRODUCT_KEY": "${SPX_PRODUCT_KEY}"
+      },
+      "healthcheck": {
+        "test": ["CMD-SHELL", "curl -f http://localhost:8000/ || exit 1"],
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5
+      },
+      "volumes": [
+        "./extensions:/app/extensions:ro"
+      ],
+      "command": [
+        "--address",
+        "0.0.0.0",
+        "--product-key",
+        "${SPX_PRODUCT_KEY}",
+        "--extensions",
+        "/app/extensions"
+      ]
+    }
+  }
+}
+```
+
 {% endcode %}
 
 Start the server:

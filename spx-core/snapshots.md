@@ -21,6 +21,16 @@ snapshots:
   retention: 5
 ```
 
+```json
+{
+  "snapshots": {
+    "directory": "/var/spx/snapshots",
+    "auto_on_shutdown": true,
+    "retention": 5
+  }
+}
+```
+
 Fields:
 
 - `directory`: where to store files (server must have write access).

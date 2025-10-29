@@ -132,6 +132,40 @@ timer:
   dt: 0.05
 ```
 
+```json
+{
+  "attributes": {
+    "raw_signal": {
+      "type": "float",
+      "default": 0.0
+    },
+    "filtered_signal": {
+      "type": "float",
+      "default": 0.0
+    }
+  },
+  "actions": [
+    {
+      "function": "$ext(raw_signal)",
+      "call": "sin($(.timer.time)) + 0.2 * sin(10 * $(.timer.time))"
+    }
+  ],
+  "moving_average": {
+    "source_attr": "raw_signal",
+    "target_attr": "filtered_signal",
+    "attributes": {
+      "window": {
+        "type": "int",
+        "default": 8
+      }
+    }
+  },
+  "timer": {
+    "dt": 0.05
+  }
+}
+```
+
 > After importing the module `examples.plugins.moving_average`, the class is registered under the name `moving_average`, so the YAML node works immediately.
 
 ---

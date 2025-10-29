@@ -94,6 +94,39 @@ instances:
   - sensor: PySensorModel
 ```
 
+```json
+{
+  "models": {
+    "PySensorModel": {
+      "attributes": {
+        "temperature": 0.0
+      },
+      "import": {
+        "/app/extensions/py_temp_sensor.py": {
+          "class": "PyTempSensor",
+          "init": {
+            "kwargs": {
+              "start": 25.0,
+              "drift": 0.0
+            }
+          },
+          "attributes": {
+            "temperature": { "property": "temperature" }
+          },
+          "methods": {
+            "run": "tick"
+          }
+        }
+      }
+    }
+  },
+  "instances": [
+    { "sensor": "PySensorModel" }
+  ]
+}
+```
+
+
 **How the mapping works**
 
 - `import` uses the path to the Python file as a key. SPX loads the module and instantiates `class: PyTempSensor`.
@@ -238,6 +271,51 @@ models:
 instances:
   - sensor: PySensorModel
 ```
+```json
+{
+  "models": {
+    "PySensorModel": {
+      "attributes": {
+        "temperature": 0.0
+      },
+      "import": {
+        "/app/extensions/py_temp_sensor.py": {
+          "class": "PyTempSensor",
+          "init": {
+            "kwargs": {
+              "start": 25.0,
+              "drift": 0.0
+            }
+          },
+          "attributes": {
+            "temperature": { "property": "temperature" }
+          },
+          "methods": {
+            "run": "tick"
+          }
+        }
+      },
+      "communications": [
+        {
+          "modbus_tcp": {
+            "mapping": {
+              "temperature": {
+                "address": [0, 1],
+                "group": "h_r",
+                "type": "uint_32"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "instances": [
+    { "sensor": "PySensorModel" }
+  ]
+}
+```
+
 
 **What this adds**
 

@@ -11,6 +11,16 @@ parameters:
   instances.controller.parameters.gain: 1.2
 ```
 
+```json
+{
+  "parameters": {
+    "attributes.voltage.default": 230.0,
+    "attributes.mode.default": "production",
+    "instances.controller.parameters.gain": 1.2
+  }
+}
+```
+
 ### How it works
 
 - Each key is an attribute reference resolved via `resolve_attribute_reference_hierarchical`.

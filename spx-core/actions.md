@@ -26,6 +26,21 @@ actions:
       duration: 5.0
 ```
 
+```json
+{
+  "actions": [
+    {
+      "ramp": {
+        "output": "#attr(voltage)",
+        "start_value": 0.0,
+        "stop_value": 230.0,
+        "duration": 5.0
+      }
+    }
+  ]
+}
+```
+
 ### PID example
 
 ```yaml
@@ -40,6 +55,24 @@ actions:
       sample_time: 0.1
 ```
 
+```json
+{
+  "actions": [
+    {
+      "pid": {
+        "output": "#attr(heater_power)",
+        "setpoint": "#attr(target_temperature)",
+        "feedback": "#attr(current_temperature)",
+        "kp": 2.0,
+        "ki": 0.5,
+        "kd": 0.1,
+        "sample_time": 0.1
+      }
+    }
+  ]
+}
+```
+
 ### Noise injection
 
 ```yaml
@@ -48,6 +81,20 @@ actions:
       output: "#attr(sensor.reading)"
       std: 0.01
       mode: proportional
+```
+
+```json
+{
+  "actions": [
+    {
+      "noise": {
+        "output": "#attr(sensor.reading)",
+        "std": 0.01,
+        "mode": "proportional"
+      }
+    }
+  ]
+}
 ```
 
 ### Overrides and suspend
@@ -61,6 +108,26 @@ actions:
   - suspend:
       target_actions: ["ramp", "pid"]
       duration: 1.0
+```
+
+```json
+{
+  "actions": [
+    {
+      "override": {
+        "target": "#attr(fan_speed)",
+        "value": 1000,
+        "duration": 2.0
+      }
+    },
+    {
+      "suspend": {
+        "target_actions": ["ramp", "pid"],
+        "duration": 1.0
+      }
+    }
+  ]
+}
 ```
 
 ## Best practices

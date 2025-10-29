@@ -37,6 +37,25 @@ models:
       - { contact_fault: $ext(temperature), spike_value: 500.0 }  # custom extension
 ```
 
+```json
+{
+  "models": {
+    "pt100_sensor": {
+      "attributes": {
+        "temperature": 0.0
+      },
+      "actions": [
+        { "saw": "$attr(temperature)", "stop_value": 14, "period": 5 },
+        { "ramp": "$attr(temperature)", "stop_value": 150, "duration": 5, "type": "overshoot", "overshoot": 5 },
+        { "noise": "$ext(temperature)", "std": 0.01, "mode": "proportional" },
+        { "contact_fault": "$ext(temperature)", "spike_value": 500.0 }
+      ]
+    }
+  }
+}
+```
+
+
 **Why `$ext(...)`?** We typically map fault injections to the *external* view of an attribute so core logic remains stable while the presented value exhibits faults.
 
 ---

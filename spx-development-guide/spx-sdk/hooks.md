@@ -27,6 +27,29 @@ attributes:
           email: ops@example.com
 ```
 
+```json
+{
+  "attributes": {
+    "temperature": {
+      "default": 20.0,
+      "hooks": {
+        "on_set": [
+          "refresh_model",
+          "notifier_hook"
+        ],
+        "on_threshold": {
+          "alert_hook": {
+            "level": "critical",
+            "email": "ops@example.com"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+
 When the SDK loads this definition, it creates hook instances under the attribute's `Hooks` container:
 
 - `refresh_model` -> instance of `RefreshHook`
@@ -81,5 +104,19 @@ attributes:
     hooks:
       on_set: refresh_model
 ```
+
+```json
+{
+  "attributes": {
+    "weight": {
+      "default": 0.0,
+      "hooks": {
+        "on_set": "refresh_model"
+      }
+    }
+  }
+}
+```
+
 
 When `weight` changes, the hook re-prepares and re-runs the system, mirroring the behaviour covered in `tests/test_hooks/test_hooks_attributes.py`.

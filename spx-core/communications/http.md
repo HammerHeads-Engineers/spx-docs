@@ -19,6 +19,29 @@ communication:
           path: system.controllers.pid.update_setpoint
 ```
 
+```json
+{
+  "communication": {
+    "http_api": {
+      "host": "0.0.0.0",
+      "port": 8080,
+      "base_path": "/sim",
+      "routes": {
+        "get:/temperature": {
+          "response": "#out(attributes.temperature)"
+        },
+        "post:/setpoint": {
+          "body": "json",
+          "handler": {
+            "path": "system.controllers.pid.update_setpoint"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
 ### Key fields
 
 - `host` / `port`: bind address and port.
@@ -38,6 +61,14 @@ headers:
   Access-Control-Allow-Origin: "*"
 ```
 
+```json
+{
+  "headers": {
+    "Access-Control-Allow-Origin": "*"
+  }
+}
+```
+
 ### Streaming / SSE
 
 For high-frequency data, use MQTT or WebSockets. The HTTP adapter suits control plane operations (setpoints, snapshots, config queries).
@@ -50,6 +81,19 @@ scenarios:
     duration: 5.0
     overrides:
       communication.http_api.status_override: 503
+```
+
+```json
+{
+  "scenarios": {
+    "http_503": {
+      "duration": 5.0,
+      "overrides": {
+        "communication.http_api.status_override": 503
+      }
+    }
+  }
+}
 ```
 
 ### Tips
