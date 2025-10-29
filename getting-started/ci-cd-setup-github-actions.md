@@ -22,7 +22,8 @@ This guide shows how to run your SPX server in CI and execute your unit tests ag
 
 ### Minimal workflow
 
-{% code title=".github/workflows/ci.yml" %}
+{% tabs %}
+{% tab title=".github/workflows/ci.yml" %}
 ```yaml
 name: CI
 
@@ -70,9 +71,9 @@ jobs:
         if: always()
         run: docker compose down
 ```
-{% endcode %}
+{% endtab %}
 
-{% code title=".github/workflows/ci.json" %}
+{% tab title=".github/workflows/ci.json" %}
 ```json
 {
   "name": "CI",
@@ -99,7 +100,7 @@ jobs:
         },
         {
           "name": "Install dependencies",
-          "run": "python -m pip install --upgrade pip\npip install -r requirements.txt"
+          "run": "python -m pip install --upgrade pip\\npip install -r requirements.txt"
         },
         {
           "name": "Start SPX server",
@@ -107,7 +108,7 @@ jobs:
         },
         {
           "name": "Wait for SPX server",
-          "run": "for i in {1..20}; do\n  if curl -fsS http://localhost:8000/ >/dev/null; then\n    echo 'SPX server is up'; exit 0\n  fi\n  echo 'Waiting for SPX server...'\n  sleep 3\ndone\necho 'SPX server failed to start' >&2\nexit 1"
+          "run": "for i in {1..20}; do\\n  if curl -fsS http://localhost:8000/ >/dev/null; then\\n    echo 'SPX server is up'; exit 0\\n  fi\\n  echo 'Waiting for SPX server...'\\n  sleep 3\\ndone\\necho 'SPX server failed to start' >&2\\nexit 1"
         },
         {
           "name": "Run unit tests",
@@ -123,7 +124,10 @@ jobs:
   }
 }
 ```
-{% endcode %}
+{% endtab %}
+{% endtabs %}
+
+- The JSON form escapes multi-line shell steps with ``\n``. When you paste it into a `.json` workflow, the runner expands those newline characters back into separate lines.
 
 ## What this workflow does
 1. **Checks out** your repository (`actions/checkout`).

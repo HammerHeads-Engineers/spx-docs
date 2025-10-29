@@ -40,6 +40,8 @@ You can embed a model inside tests without spinning up the SPX Server. This is i
 
 Models can host nested components declared under `instances`:
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 instances:
   sensor: { attributes: { value: { default: 0.0 } } }
@@ -50,8 +52,11 @@ instances:
       - function: "#attr(error)"
         call: "#attr(set_point) - #attr(sensor/value)"
         output: "#attr(error)"
-```
 
+```
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "instances": {
@@ -74,7 +79,10 @@ instances:
     }
   }
 }
+
 ```
+{% endtab %}
+{% endtabs %}
 
 
 In Python:

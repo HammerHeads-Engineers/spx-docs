@@ -2,8 +2,10 @@
 
 The ASCII adapter serves simple text protocols such as SCPI. It listens on TCP, parses newline-terminated commands, and maps them to attributes or custom handlers.
 
-## YAML structure
+## Configuration Example
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 communication:
   ascii:
@@ -17,9 +19,9 @@ communication:
         "#attr(measurement_mode)": "mode"
         response: "ACK"
 ```
+{% endtab %}
 
-### JSON structure
-
+{% tab title="JSON" %}
 ```json
 {
   "communication": {
@@ -39,6 +41,8 @@ communication:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Key fields
 
@@ -60,6 +64,7 @@ Commands may include placeholders (`{mode}`) that the adapter passes into the ma
 "CONF:VOLT {value}":
   "#attr(voltage_setpoint)": "value"
   response: "VOLT {value}"
+
 ```
 {% endtab %}
 
@@ -71,6 +76,7 @@ Commands may include placeholders (`{mode}`) that the adapter passes into the ma
     "response": "VOLT {value}"
   }
 }
+
 ```
 {% endtab %}
 {% endtabs %}
@@ -92,6 +98,7 @@ scenarios:
     duration: 5.0
     overrides:
       communication.ascii.response_delay: 10.0
+
 ```
 {% endtab %}
 
@@ -114,6 +121,7 @@ scenarios:
     }
   }
 }
+
 ```
 {% endtab %}
 {% endtabs %}

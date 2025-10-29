@@ -19,6 +19,7 @@ communication:
         body: json
         handler:
           path: system.controllers.pid.update_setpoint
+
 ```
 {% endtab %}
 
@@ -44,6 +45,7 @@ communication:
     }
   }
 }
+
 ```
 {% endtab %}
 {% endtabs %}
@@ -67,6 +69,7 @@ Use `headers` to add fixed headers; integrate with server middleware for auth (`
 ```yaml
 headers:
   Access-Control-Allow-Origin: "*"
+
 ```
 {% endtab %}
 
@@ -77,6 +80,7 @@ headers:
     "Access-Control-Allow-Origin": "*"
   }
 }
+
 ```
 {% endtab %}
 {% endtabs %}
@@ -95,6 +99,7 @@ scenarios:
     duration: 5.0
     overrides:
       communication.http_api.status_override: 503
+
 ```
 {% endtab %}
 
@@ -110,6 +115,7 @@ scenarios:
     }
   }
 }
+
 ```
 {% endtab %}
 {% endtabs %}

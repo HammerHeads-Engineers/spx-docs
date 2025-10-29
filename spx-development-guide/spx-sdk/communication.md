@@ -6,8 +6,10 @@ icon: satellite-dish
 
 Communication components expose simulations over fieldbus protocols (Modbus, MQTT, HTTP, etc.) so real software can talk to your model. In the SDK the core abstraction is `Protocol`, a lightweight `SpxComponent` subclass that you extend for each transport. The SPX Server ships production-grade protocol adapters; the SDK version focuses on quick prototyping and test doubles.
 
-## Declaring protocols in YAML
+## Declaring protocols
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 communication:
   modbus_tcp:
@@ -22,13 +24,9 @@ communication:
     class: SimpleHttp
     base_path: "/sim"
 ```
+{% endtab %}
 
-- `communication` sits next to `attributes`, `actions`, and other containers inside a model definition.
-- Each child entry instantiates a protocol component registered under `communication` (for example `ModbusServer`, `SimpleHttp`).
-- Your protocol class decides which fields it consumes (`host`, `port`, `mapping`, ...).
-
-JSON equivalent:
-
+{% tab title="JSON" %}
 ```json
 {
   "communication": {
@@ -48,6 +46,12 @@ JSON equivalent:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
+
+- `communication` sits next to `attributes`, `actions`, and other containers inside a model definition.
+- Each child entry instantiates a protocol component registered under `communication` (for example `ModbusServer`, `SimpleHttp`).
+- Your protocol class decides which fields it consumes (`host`, `port`, `mapping`, ...).
 
 ## Implementing a custom protocol
 

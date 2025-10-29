@@ -25,6 +25,7 @@ snapshots:
   directory: /var/spx/snapshots
   auto_on_shutdown: true
   retention: 5
+
 ```
 {% endtab %}
 
@@ -37,6 +38,7 @@ snapshots:
     "retention": 5
   }
 }
+
 ```
 {% endtab %}
 {% endtabs %}

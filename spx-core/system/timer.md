@@ -2,7 +2,7 @@
 
 The `Timer` component (`spx_core/system/timer.py`) keeps track of simulated time. It supports real-time and manual stepping, making it a key building block for deterministic tests.
 
-## YAML structure
+## Configuration Example
 
 {% tabs %}
 {% tab title="YAML" %}
@@ -30,6 +30,7 @@ timer:
     "decimal_places": 3
   }
 }
+
 ```
 {% endtab %}
 {% endtabs %}

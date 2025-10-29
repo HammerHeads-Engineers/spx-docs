@@ -13,6 +13,8 @@ Every attribute lives inside an `attributes` container (`SpxAttributes`). This c
 
 ## Declaring attributes
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 attributes:
   temperature:
@@ -24,9 +26,9 @@ attributes:
     default: false
   device_label: "SPX-001"        # scalar shortcut -> type inferred as string
 ```
+{% endtab %}
 
-JSON version:
-
+{% tab title="JSON" %}
 ```json
 {
   "attributes": {
@@ -36,6 +38,8 @@ JSON version:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 - `type` must be one of the supported entries in `type_mapping` (`float`, `bool`, `int`, `str`).
 - `default` seeds `internal_value`. If omitted the SDK falls back to the type default.
@@ -144,6 +148,8 @@ Each attribute can trigger hooks on specific events:
 
 Declare hooks just like in other components:
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 attributes:
   voltage:
@@ -154,7 +160,9 @@ attributes:
         - refresh_model
         - log_change_hook
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "attributes": {
@@ -171,6 +179,8 @@ attributes:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 
 The `Hooks` container (see the hooks chapter) registers and executes these hook components automatically.

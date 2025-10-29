@@ -25,6 +25,8 @@ SPX lets you add **custom components** so you can model behaviors that go beyond
 
 We’ll model a PT100‑like sensor and apply a few actions: a saw, a ramp with overshoot, proportional noise, and our new **contact_fault** action that injects spikes/drops.
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 models:
   pt100_sensor:
@@ -35,8 +37,11 @@ models:
       - { ramp: $attr(temperature), stop_value: 150, duration: 5, type: overshoot, overshoot: 5 }
       - { noise: $ext(temperature), std: 0.01, mode: proportional }
       - { contact_fault: $ext(temperature), spike_value: 500.0 }  # custom extension
-```
 
+```
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "models": {
@@ -53,7 +58,10 @@ models:
     }
   }
 }
+
 ```
+{% endtab %}
+{% endtabs %}
 
 
 **Why `$ext(...)`?** We typically map fault injections to the *external* view of an attribute so core logic remains stable while the presented value exhibits faults.

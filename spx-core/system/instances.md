@@ -2,7 +2,7 @@
 
 The `Instances` container (`spx_core/system/instances.py`) creates and manages nested components inside your model. Use it to wire multiple devices together or to reuse the same blueprint several times.
 
-## YAML structure
+## Configuration Example
 
 {% tabs %}
 {% tab title="YAML" %}
@@ -21,6 +21,7 @@ instances:
       instances:
         - node:
             type: library/edge_node
+
 ```
 {% endtab %}
 
@@ -58,6 +59,7 @@ instances:
     }
   ]
 }
+
 ```
 {% endtab %}
 {% endtabs %}
@@ -89,6 +91,7 @@ instances:
   - sensor:
       calibration:
         offset: 0.5
+
 ```
 {% endtab %}
 
@@ -110,6 +113,7 @@ instances:
     }
   ]
 }
+
 ```
 {% endtab %}
 {% endtabs %}

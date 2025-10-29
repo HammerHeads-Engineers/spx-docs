@@ -30,6 +30,7 @@ actions:
       start_value: 0.0
       stop_value: 230.0
       duration: 5.0
+
 ```
 {% endtab %}
 
@@ -47,6 +48,7 @@ actions:
     }
   ]
 }
+
 ```
 {% endtab %}
 {% endtabs %}
@@ -65,6 +67,7 @@ actions:
       ki: 0.5
       kd: 0.1
       sample_time: 0.1
+
 ```
 {% endtab %}
 
@@ -85,6 +88,7 @@ actions:
     }
   ]
 }
+
 ```
 {% endtab %}
 {% endtabs %}
@@ -99,6 +103,7 @@ actions:
       output: "#attr(sensor.reading)"
       std: 0.01
       mode: proportional
+
 ```
 {% endtab %}
 
@@ -115,6 +120,7 @@ actions:
     }
   ]
 }
+
 ```
 {% endtab %}
 {% endtabs %}
@@ -132,6 +138,7 @@ actions:
   - suspend:
       target_actions: ["ramp", "pid"]
       duration: 1.0
+
 ```
 {% endtab %}
 
@@ -154,6 +161,7 @@ actions:
     }
   ]
 }
+
 ```
 {% endtab %}
 {% endtabs %}

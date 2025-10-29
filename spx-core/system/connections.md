@@ -2,8 +2,10 @@
 
 Connections (`spx_core/system/connections.py`) copy values between attributes each time the simulation runs. They are handy for routing sensor data into controllers without writing custom actions.
 
-## YAML structure
+## Configuration Example
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 connections:
   - sensor_to_controller:
@@ -13,6 +15,29 @@ connections:
       from: "#attr(pump.flow)"
       to: "#external(tank.inflow)"
 ```
+{% endtab %}
+
+{% tab title="JSON" %}
+```json
+{
+  "connections": [
+    {
+      "sensor_to_controller": {
+        "from": "sensor.attributes.temperature",
+        "to": "controller.attributes.input_temperature"
+      }
+    },
+    {
+      "flow_feedback": {
+        "from": "#attr(pump.flow)",
+        "to": "#external(tank.inflow)"
+      }
+    }
+  ]
+}
+```
+{% endtab %}
+{% endtabs %}
 
 ### How it works
 

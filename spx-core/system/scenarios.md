@@ -2,7 +2,7 @@
 
 Scenarios (`spx_core/system/scenarios.py`) let you script temporary changes to your simulation: inject noise, disconnect protocols, or override values for a limited time. They are essential for fault-injection tests and QA workflows.
 
-## YAML structure
+## Configuration Example
 
 {% tabs %}
 {% tab title="YAML" %}
@@ -58,6 +58,7 @@ scenarios:
     }
   }
 }
+
 ```
 {% endtab %}
 {% endtabs %}

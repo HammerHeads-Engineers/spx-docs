@@ -349,10 +349,27 @@ instances:
 *   **Getter/Setter mapping**\
     Prefer explicit functions instead of a property:
 
+    {% tabs %}
+    {% tab title="YAML" %}
     ```yaml
     attributes:
       temperature: { getter: read_temp, setter: set_temp }
     ```
+    {% endtab %}
+
+    {% tab title="JSON" %}
+    ```json
+    {
+      "attributes": {
+        "temperature": {
+          "getter": "read_temp",
+          "setter": "set_temp"
+        }
+      }
+    }
+    ```
+    {% endtab %}
+    {% endtabs %}
 * **Multiple classes**\
   Import several classes by listing multiple module entries under `import`.
 * **Plain classes vs. `SpxComponent`**\

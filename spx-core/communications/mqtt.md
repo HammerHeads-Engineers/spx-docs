@@ -2,7 +2,7 @@
 
 The MQTT adapter publishes telemetry and consumes commands via MQTT topics. It runs an asyncio client inside the core and integrates with diagnostics for connection monitoring.
 
-## YAML structure
+## Configuration Example
 
 {% tabs %}
 {% tab title="YAML" %}
@@ -23,6 +23,7 @@ communication:
           qos: 1
           handler:
             path: system.controllers.pid.update_setpoint
+
 ```
 {% endtab %}
 
@@ -56,6 +57,7 @@ communication:
     }
   }
 }
+
 ```
 {% endtab %}
 {% endtabs %}
@@ -77,6 +79,8 @@ communication:
 - Strings are sent as-is.
 - For JSON, use the YAML multiline literal and ensure clients parse it accordingly.
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 payload: |
   {
@@ -84,12 +88,16 @@ payload: |
     "current": #out(attributes.current)
   }
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "payload": "{\n  \"voltage\": #out(attributes.voltage),\n  \"current\": #out(attributes.current)\n}"
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ### Scenarios
 
@@ -106,6 +114,7 @@ scenarios:
     duration: 6.0
     overrides:
       communication.mqtt.publish_delay: 2.0
+
 ```
 {% endtab %}
 
@@ -128,6 +137,7 @@ scenarios:
     }
   }
 }
+
 ```
 {% endtab %}
 {% endtabs %}

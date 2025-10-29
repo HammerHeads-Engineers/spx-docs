@@ -6,7 +6,7 @@
 - Spinning up dedicated `Timer`, `Polling`, and `Scenarios` children when those sections appear in YAML.
 - Driving the lifecycle (`prepare`, `start`, `run`) for the entire simulation.
 
-## YAML structure
+## Configuration Example
 
 {% tabs %}
 {% tab title="YAML" %}
@@ -28,6 +28,7 @@ model:
   attributes: { ... }
   actions: [ ... ]
   communication: { ... }
+
 ```
 {% endtab %}
 
@@ -61,6 +62,7 @@ model:
     "communication": { "...": "..." }
   }
 }
+
 ```
 {% endtab %}
 {% endtabs %}

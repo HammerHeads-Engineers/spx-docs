@@ -49,6 +49,7 @@ for t in np.arange(0, 60.1, 0.1):              # 0 → 60 s, 0.1 s ticks
     sensor["timer"]["time"] = t                # drive the built-in timer
     sensor.run()
     print(f"{t:4.1f}s ➜ {sensor['attributes']['temperature']['external_value']:.2f} °C")mer.time))
+
 ```
 {% endtab %}
 
@@ -75,6 +76,7 @@ for t in np.arange(0, 60.1, 0.1):
     sensor["timer"]["time"] = t
     sensor.run()
     print(f"{t:5.1f}s → {sensor['attributes']['temperature']['external_value']:.2f}°C")
+
 ```
 {% endtab %}
 
@@ -101,6 +103,7 @@ for t in np.arange(0, 60.1, 0.1):
     sensor["timer"]["time"] = t
     sensor.run()
     print(f"{t:5.1f}s → {sensor['attributes']['temperature']['external_value']:.2f}°C")
+
 ```
 {% endtab %}
 {% endtabs %}
@@ -151,6 +154,7 @@ actions:
     T:       $ext(temperature)
     k:       0.01
     ambient: 22.0
+
 ```
 {% endtab %}
 
@@ -170,6 +174,7 @@ actions:
     }
   ]
 }
+
 ```
 {% endtab %}
 
@@ -192,6 +197,7 @@ actions:
         }
     ]
 }
+
 ```
 {% endtab %}
 {% endtabs %}

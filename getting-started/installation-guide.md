@@ -76,6 +76,8 @@ $env:SPX_PRODUCT_KEY = "YOUR_REAL_KEY"
 Use a minimal **docker-compose.yml** and pin any image tag you need:
 
 {% code title="docker-compose.yml" %}
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 services:
   spx-server:
@@ -92,8 +94,11 @@ services:
       # Mount local SPX core and extensions for development/testing
       - ./extensions:/app/extensions:ro
     command: ["--address", "0.0.0.0", "--product-key", "${SPX_PRODUCT_KEY}", "--extensions", "/app/extensions"]
-```
 
+```
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "services": {
@@ -123,7 +128,10 @@ services:
     }
   }
 }
+
 ```
+{% endtab %}
+{% endtabs %}
 
 {% endcode %}
 

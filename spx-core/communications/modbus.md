@@ -2,7 +2,7 @@
 
 The Modbus adapter presents registers and coils so external PLCs or software masters can interact with your simulation.
 
-## YAML structure
+## Configuration Example
 
 {% tabs %}
 {% tab title="YAML" %}
@@ -21,6 +21,7 @@ communication:
         group: coils
         address: 10
         type: bool
+
 ```
 {% endtab %}
 
@@ -47,6 +48,7 @@ communication:
     }
   }
 }
+
 ```
 {% endtab %}
 {% endtabs %}
@@ -86,6 +88,7 @@ scenarios:
     duration: 5.0
     overrides:
       communication.modbus_tcp.response_delay: 0.5
+
 ```
 {% endtab %}
 
@@ -108,6 +111,7 @@ scenarios:
     }
   }
 }
+
 ```
 {% endtab %}
 {% endtabs %}

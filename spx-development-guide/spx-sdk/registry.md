@@ -53,14 +53,19 @@ When you package custom components, simply ensure their modules run `@register_c
 
 The registry can load batches of instances from YAML:
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 heater_instance:
   class: heater_device
   parameters:
     name: heater_instance
     parent: !python/object:spx_sdk.components.SpxComponent { name: "root" }
-```
 
+```
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "heater_instance": {
@@ -71,7 +76,10 @@ heater_instance:
     }
   }
 }
+
 ```
+{% endtab %}
+{% endtabs %}
 
 Use `load_instances_from_yaml(path)` or `load_instances_from_yaml_data(yaml_string)`. Each entry must include a registered `class` plus any constructor parameters. The helper stores the created objects in `instance_registry` so you can fetch them with `get_instance("heater_instance")`.
 

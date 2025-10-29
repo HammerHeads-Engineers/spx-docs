@@ -58,14 +58,19 @@ attrs = SpxAttributes(
 
 #### Generic mode (default, no type)
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 children:
   PIDController:
     kp: 1.2
   NoiseAction:
     std: 0.05
-```
 
+```
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "children": {
@@ -73,7 +78,10 @@ children:
     "NoiseAction": { "std": 0.05 }
   }
 }
+
 ```
+{% endtab %}
+{% endtabs %}
 
 
 * Each key is treated as a class name registered with `@register_class`.
@@ -99,21 +107,29 @@ class SpringAction(Action):
         force = -self.k * x - self.c * v            # F = -­kx * cv
         acc = force / self.m
         return super().run(result=acc)
-
-# 2) YAML snippet -----------------------------------------------------
-Actions:
-  - spring_mass_damper: $attr(acc)
-    input:      "$attr(position)"
-    velocity:   "$attr(speed)"
-    k:          15.0
-    m:          0.8
-    c:          0.05
 ```
+
+### 2) Definition snippet
+
+{% tabs %}
+{% tab title="YAML" %}
+```yaml
+actions:
+  - spring_mass_damper: "#attr(acc)"
+    input: "#attr(position)"
+    velocity: "#attr(speed)"
+    k: 15.0
+    m: 0.8
+    c: 0.05
+```
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
-  "Actions": [
+  "actions": [
     {
-      "spring_mass_damper": "$attr(acc)",
+      "spring_mass_damper": "#attr(acc)",
       "input": "#attr(position)",
       "velocity": "#attr(speed)",
       "k": 15.0,
@@ -123,9 +139,11 @@ Actions:
   ]
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 
-* During model load a `SpxContainer` called Actions scans the list, spots spring\_mass\_damper, pulls the matching class from the registry, and instantiates it under the parent.
+* During model load the `actions` container scans the list, spots `spring_mass_damper`, pulls the matching class from the registry, and instantiates it under the parent.
 * The new Action inherits lifecycle and hooks from `SpxComponent`; parameters are auto‑hydrated; outputs are resolved to real `SpxAttribute` objects.
 
 ### Authoring guidelines

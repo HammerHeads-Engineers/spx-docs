@@ -16,6 +16,8 @@ All types are registered in the SDK registry, so you can reference them directly
 
 ## Declaring conditions in YAML
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 conditions:
   - if: "#attr(temperature) > 80"
@@ -31,13 +33,9 @@ conditions:
         - set: "#attr(fan_state)"
           value: "LOW"
 ```
+{% endtab %}
 
-- Each entry in the list becomes a `Condition` (or `Else`) component.
-- The first key (`if`, `elif`, `when`, etc.) carries the expression to evaluate.
-- Additional keys hold child components to execute (`actions`, nested `conditions`, custom classes).
-
-The same structure in JSON:
-
+{% tab title="JSON" %}
 ```json
 {
   "conditions": [
@@ -63,6 +61,12 @@ The same structure in JSON:
   ]
 }
 ```
+{% endtab %}
+{% endtabs %}
+
+- Each entry in the list becomes a `Condition` (or `Else`) component.
+- The first key (`if`, `elif`, `when`, etc.) carries the expression to evaluate.
+- Additional keys hold child components to execute (`actions`, nested `conditions`, custom classes).
 
 ### Expression syntax
 
@@ -74,6 +78,8 @@ The validator normalises lowercase `true`/`false` to Python `True`/`False`, so b
 
 Use `if_chain` when you want an ordered list of branches where only the first matching condition should run.
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 if_chain:
   - if: "#attr(mode) == 'startup'"
@@ -89,11 +95,9 @@ if_chain:
         - set: "#attr(power_draw)"
           value: 0
 ```
+{% endtab %}
 
-`IfChain.prepare()` and `IfChain.run()` walk children in order. As soon as one branch returns `True`, remaining branches are skipped (`tests/test_logic/test_conditions_condition.py::TestConditions`).
-
-JSON form:
-
+{% tab title="JSON" %}
 ```json
 {
   "if_chain": [
@@ -119,6 +123,10 @@ JSON form:
   ]
 }
 ```
+{% endtab %}
+{% endtabs %}
+
+`IfChain.prepare()` and `IfChain.run()` walk children in order. As soon as one branch returns `True`, remaining branches are skipped (`tests/test_logic/test_conditions_condition.py::TestConditions`).
 
 ## Nesting logic and actions
 
@@ -130,6 +138,8 @@ Condition blocks are standard containers, so you can mix and match:
 
 Example with nested conditions:
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 conditions:
   - if: "#attr(pressure) > 30"
@@ -145,7 +155,9 @@ conditions:
         - set: "#attr(alert)"
           value: 0
 ```
+{% endtab %}
 
+{% tab title="JSON" %}
 ```json
 {
   "conditions": [
@@ -178,7 +190,10 @@ conditions:
     }
   ]
 }
+
 ```
+{% endtab %}
+{% endtabs %}
 
 
 ## Validation guarantees
@@ -206,3 +221,5 @@ if not res.ok:
 - Use `#attr(instance.attribute)` dotted paths to reference attributes across the hierarchy.
 - Prefer `if_chain` to unstructured lists when only one branch should run per tick.
 - Leverage diagnostics guards (for custom logic components) to capture evaluation errors.
+- Prototype new logic in unit tests first: assert that each branch flips the expected attributes before wiring it into a full model.
+- When onboarding teammates, comment complex branches with intent (`# if temperature > 80 => cool down`) so future readers grasp the scenario quickly.

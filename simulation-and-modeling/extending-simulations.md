@@ -104,6 +104,8 @@ class MovingAverage(SpxComponent):
 ---
 
 ## Using the Component in YAML
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 # examples/models/mavg_demo.yaml
 attributes:
@@ -130,8 +132,11 @@ moving_average:
 
 timer:
   dt: 0.05
-```
 
+```
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "attributes": {
@@ -164,7 +169,10 @@ timer:
     "dt": 0.05
   }
 }
+
 ```
+{% endtab %}
+{% endtabs %}
 
 > After importing the module `examples.plugins.moving_average`, the class is registered under the name `moving_average`, so the YAML node works immediately.
 

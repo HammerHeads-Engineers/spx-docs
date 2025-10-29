@@ -13,6 +13,8 @@ Both are exposed via `spx_sdk.hooks`. The container itself is decorated with `@d
 
 Each entry under `hooks` maps an event name to one or more hook classes. You can supply either a bare class name or a single-key object that includes per-hook configuration.
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 attributes:
   temperature:
@@ -25,8 +27,11 @@ attributes:
         alert_hook:
           level: critical
           email: ops@example.com
-```
 
+```
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "attributes": {
@@ -47,7 +52,10 @@ attributes:
     }
   }
 }
+
 ```
+{% endtab %}
+{% endtabs %}
 
 
 When the SDK loads this definition, it creates hook instances under the attribute's `Hooks` container:
@@ -97,14 +105,19 @@ This means user-supplied YAML that misconfigures hooks produces a structured val
 
 The included `RefreshHook` calls `prepare()` and `run()` on the root component. Use it when an attribute change should immediately recompute dependent state:
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 attributes:
   weight:
     default: 0.0
     hooks:
       on_set: refresh_model
-```
 
+```
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "attributes": {
@@ -116,7 +129,10 @@ attributes:
     }
   }
 }
+
 ```
+{% endtab %}
+{% endtabs %}
 
 
 When `weight` changes, the hook re-prepares and re-runs the system, mirroring the behaviour covered in `tests/test_hooks/test_hooks_attributes.py`.

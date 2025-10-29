@@ -2,7 +2,7 @@
 
 Modules (`spx_core/system/modules.py`) let you include reusable subsystems that were registered as templates. They are similar to instances, but they focus on higher-level building blocks—entire machines, test rigs, or collections of actions/conditions.
 
-## YAML structure
+## Configuration Example
 
 {% tabs %}
 {% tab title="YAML" %}
@@ -41,6 +41,7 @@ modules:
     }
   ]
 }
+
 ```
 {% endtab %}
 {% endtabs %}

@@ -27,6 +27,8 @@ This makes it easy to package device-oriented Python scripts alongside your SPX 
 
 A PythonFile definition is a dict of the form:
 
+{% tabs %}
+{% tab title="YAML" %}
 ```yaml
 python_file:
   "/path/to/mod1.py":
@@ -44,8 +46,11 @@ python_file:
       output:
         getter: "read_output"
         setter: "write_output"
-```
 
+```
+{% endtab %}
+
+{% tab title="JSON" %}
 ```json
 {
   "python_file": {
@@ -74,7 +79,10 @@ python_file:
     }
   }
 }
+
 ```
+{% endtab %}
+{% endtabs %}
 
 * Key: module file path (absolute or relative).
 * class: name of the class inside that module to instantiate.

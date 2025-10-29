@@ -2,7 +2,7 @@
 
 `Polling` (`spx_core/system/polling.py`) drives the simulation loop in real time. It runs in a background thread, repeatedly calling `model.run()` and sleeping between iterations.
 
-## YAML structure
+## Configuration Example
 
 {% tabs %}
 {% tab title="YAML" %}
@@ -24,6 +24,7 @@ polling:
     "max_iterations": 0
   }
 }
+
 ```
 {% endtab %}
 {% endtabs %}

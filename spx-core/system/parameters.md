@@ -2,7 +2,7 @@
 
 The `Parameters` container (`spx_core/system/parameters.py`) is the simplest way to push constant values into your model when it starts. Think of it as a batch of assignments that run during `prepare()`.
 
-## YAML structure
+## Configuration Example
 
 {% tabs %}
 {% tab title="YAML" %}
@@ -24,6 +24,7 @@ parameters:
     "instances.controller.parameters.gain": 1.2
   }
 }
+
 ```
 {% endtab %}
 {% endtabs %}

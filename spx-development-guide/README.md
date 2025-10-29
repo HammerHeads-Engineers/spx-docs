@@ -39,6 +39,7 @@ TemperatureSensor:
     - function: $in(temperature)
       call: $in(temperature) + 0.5 *
             (0.6 * $in(heating_power) - 0.02 * ($in(temperature) - 25))
+
 ```
 {% endtab %}
 
@@ -65,6 +66,7 @@ TemperatureSensor:
     ]
   }
 }
+
 ```
 {% endtab %}
 
@@ -89,6 +91,7 @@ models = {
         ]
     }
 }
+
 ```
 {% endtab %}
 {% endtabs %}

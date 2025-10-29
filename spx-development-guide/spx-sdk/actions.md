@@ -19,6 +19,7 @@ actions:
       - "#attr(status)"
       - "#attr(alarm_active)"
     value: "RUNNING"
+
 ```
 {% endtab %}
 
@@ -42,6 +43,7 @@ actions:
     }
   ]
 }
+
 ```
 {% endtab %}
 {% endtabs %}
@@ -74,6 +76,7 @@ actions:
       - "#attr(status)"
       - "#attr(display_message)"
     value: "Calibrating"
+
 ```
 {% endtab %}
 
@@ -91,6 +94,7 @@ actions:
     }
   ]
 }
+
 ```
 {% endtab %}
 {% endtabs %}
@@ -119,6 +123,7 @@ actions:
     call: "max(#attr(power_draw) - idle_offset, 0)"
     params:
       idle_offset: 15.0
+
 ```
 {% endtab %}
 
@@ -140,6 +145,7 @@ actions:
     }
   ]
 }
+
 ```
 {% endtab %}
 {% endtabs %}
@@ -189,6 +195,7 @@ actions:
     start_value: 0
     stop_value: 100
     step: 5
+
 ```
 {% endtab %}
 
@@ -204,6 +211,7 @@ actions:
     }
   ]
 }
+
 ```
 {% endtab %}
 {% endtabs %}
@@ -214,3 +222,11 @@ actions:
 - The actions container schema (`Actions`) ensures each entry is an object and the first key targets a recognised attribute reference pattern (`tests/test_actions/test_actions_validation.py`).
 - `SetAction` and `FunctionAction` add their own schemas (`tests/test_actions/test_set_action_validation.py`, `tests/test_actions/test_function_action_validation.py`), so missing required keys produce `ValidationError` instances before runtime.
 - Custom actions can attach `@definition_schema` and `@definition_validator` to enforce additional constraints, just like any other component.
+
+## Best practices
+
+- Prototype new behaviour with `set` and `function` before creating custom actions; this keeps early experiments easy to debug.
+- Name actions after intent (`sync_apparent_power`) so diagnostics and logs read like a story.
+- Keep expressions short. If they grow complex, calculate intermediate values in attributes and reference them from actions.
+- Add unit tests that load your YAML with `Model(...)` and call `run()` to confirm each action writes the expected values.
+- When collaborating with QA, document parameters (for example in comments or adjacent tables) so teammates know which knobs are safe to tweak.

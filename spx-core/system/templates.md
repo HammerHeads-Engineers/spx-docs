@@ -2,7 +2,7 @@
 
 Templates (`spx_core/system/templates.py`) let you package reusable model fragments and register them in the class registry. Other models can then reference the template by name via the `modules` or `instances` containers.
 
-## YAML structure
+## Configuration Example
 
 {% tabs %}
 {% tab title="YAML" %}
@@ -41,6 +41,7 @@ templates:
     }
   }
 }
+
 ```
 {% endtab %}
 {% endtabs %}
