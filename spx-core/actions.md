@@ -1,17 +1,21 @@
+---
+icon: react
+---
+
 # Actions Library
 
 The server core bundles a set of action classes under `spx_core/actions`. They run inside the simulation loop to evolve attribute values over time. Each action inherits from the same base you use in the SDK, but the server version is optimized and instrumented for production logging.
 
 ## How actions are structured
 
-- `ramps.py`: ramp, step, and integrator functions for smooth transitions.
-- `saws.py`: sawtooth generators, useful for repetitive test signals.
-- `interpolate.py`: linear/multi-point interpolation between samples.
-- `noises.py`: additive and multiplicative noise injection.
-- `pid.py`: PID controller implementation that reads error attributes and writes control outputs.
-- `overrides.py`: temporary overrides (`force`, `restore`).
-- `suspend.py`: pause/resume other actions.
-- `call.py`: call arbitrary registered functions with resolved parameters.
+* `ramps.py`: ramp, step, and integrator functions for smooth transitions.
+* `saws.py`: sawtooth generators, useful for repetitive test signals.
+* `interpolate.py`: linear/multi-point interpolation between samples.
+* `noises.py`: additive and multiplicative noise injection.
+* `pid.py`: PID controller implementation that reads error attributes and writes control outputs.
+* `overrides.py`: temporary overrides (`force`, `restore`).
+* `suspend.py`: pause/resume other actions.
+* `call.py`: call arbitrary registered functions with resolved parameters.
 
 Each action consumes a YAML block in the `actions:` list. Parameters are evaluated just like in the SDK (`#attr`, `#external`, expressions).
 
@@ -27,7 +31,6 @@ actions:
       stop_value: 230.0
       duration: 5.0
 ```
-
 {% endtab %}
 
 {% tab title="JSON" %}
@@ -63,7 +66,6 @@ actions:
       kd: 0.1
       sample_time: 0.1
 ```
-
 {% endtab %}
 
 {% tab title="JSON" %}
@@ -98,7 +100,6 @@ actions:
       std: 0.01
       mode: proportional
 ```
-
 {% endtab %}
 
 {% tab title="JSON" %}
@@ -132,7 +133,6 @@ actions:
       target_actions: ["ramp", "pid"]
       duration: 1.0
 ```
-
 {% endtab %}
 
 {% tab title="JSON" %}
@@ -160,7 +160,7 @@ actions:
 
 ## Best practices
 
-- Place critical control loops (PID, overrides) at the top of the list so they execute first.
-- Use `suspend` to temporarily disable other actions during fault injection.
-- Combine ramps with noise to emulate realistic sensor behavior.
-- Keep durations explicit; otherwise actions may run indefinitely.
+* Place critical control loops (PID, overrides) at the top of the list so they execute first.
+* Use `suspend` to temporarily disable other actions during fault injection.
+* Combine ramps with noise to emulate realistic sensor behavior.
+* Keep durations explicit; otherwise actions may run indefinitely.

@@ -1,3 +1,7 @@
+---
+icon: arrows-from-line
+---
+
 # Extending the Core
 
 While the SDK lets you register custom classes in Python easily, the server core adds operational considerations: packaging, dependency management, and safe loading. This guide outlines how to ship your own actions, protocols, or modules to the runtime.
@@ -31,9 +35,9 @@ The server provides hooks (see `spx_server/app/hooks/extensions.py`) to automate
 
 ## Dependency management
 
-- Place Python dependencies in `requirements.txt` files alongside the code.
-- Prefer pinned versions to avoid drift.
-- Validate installation offline before shipping to production.
+* Place Python dependencies in `requirements.txt` files alongside the code.
+* Prefer pinned versions to avoid drift.
+* Validate installation offline before shipping to production.
 
 ## Registering components
 
@@ -56,7 +60,7 @@ The same registry handles server and SDK extensions, so definitions authored loc
 
 ## Operational tips
 
-- Namespaces: prefix class names (`myco_ramp`) to avoid collisions.
-- Observability: instrument custom components with diagnostics (`@guard`) and logging.
-- Rollouts: load new modules in staging first; use snapshots to capture state before upgrades.
-- Documentation: add entries in GitBook under SPX-CORE so other teams know how to use your extensions.
+* Namespaces: prefix class names (`myco_ramp`) to avoid collisions.
+* Observability: instrument custom components with diagnostics (`@guard`) and logging.
+* Rollouts: load new modules in staging first; use snapshots to capture state before upgrades.
+* Documentation: add entries in GitBook under SPX-CORE so other teams know how to use your extensions.

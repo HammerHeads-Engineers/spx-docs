@@ -1,2 +1,6 @@
-# spx-python Client (Wrapper)
+---
+icon: python
+---
+
+# SPX-PYTHON
 

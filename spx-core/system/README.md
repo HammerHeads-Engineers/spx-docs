@@ -1,3 +1,7 @@
+---
+icon: solar-system
+---
+
 # System Runtime
 
 The system runtime is the part of SPX-CORE that turns your YAML file into a live simulation. The modules in `spx_core/system` load components, wire them together, advance time, and drive scenarios. This overview links to detailed pages for each module so you can configure them confidently.
@@ -12,12 +16,12 @@ The system runtime is the part of SPX-CORE that turns your YAML file into a live
 
 Each page below explains responsibilities, configuration fields, and practical examples aimed at junior developers and QA engineers.
 
-- [Model Loader](model.md)
-- [Instances Container](instances.md)
-- [Modules Container](modules.md)
-- [Parameters](parameters.md)
-- [Connections](connections.md)
-- [Timer](timer.md)
-- [Polling](polling.md)
-- [Scenarios](scenarios.md)
-- [Templates](templates.md)
+* [Model Loader](model.md)
+* [Instances Container](instances.md)
+* [Modules Container](modules.md)
+* [Parameters](parameters.md)
+* [Connections](connections.md)
+* [Timer](timer.md)
+* [Polling](polling.md)
+* [Scenarios](scenarios.md)
+* [Templates](templates.md)
