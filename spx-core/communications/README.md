@@ -18,6 +18,7 @@ Subpages cover the built-in adapters:
 * [HTTP](http.md)
 * [Modbus](modbus.md)
 * [MQTT](mqtt.md)
+* [BLE](ble.md)
 
 Tips:
 

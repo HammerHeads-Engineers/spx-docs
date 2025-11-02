@@ -241,4 +241,85 @@ After reload, any modules that register classes with `@register_class(...)` beco
 - **Outputs don’t change** → Verify that `run()` reads the correct source attribute and that you advance `timer.time` before calling `client.run()`.
 - **Noise feeds back into logic** → Write noise to `external_value`; keep `internal_value` for core logic. Remember the one‑way update rule.
 
+## Simulating Bluetooth Low Energy Devices
+SPX now provides a `ble` communication protocol that synchronizes model attributes with the standalone [`spx-ble-adapter`](../spx-ble-adapter/README.md). The adapter exposes your simulation as a live GATT peripheral, so you can pair real mobile apps or BLE test clients with your virtual hardware before silicon exists.
+
+### Prerequisites
+- Run the adapter next to SPX (Node.js 16+, Bluetooth enabled on the host). On macOS you may need elevated rights for CoreBluetooth.
+- Default HTTP endpoint is `http://127.0.0.1:8080`. Use `http://host.docker.internal:8080` when SPX runs inside Docker but the adapter runs on the host.
+
+```bash
+cd ../spx-ble-adapter
+npm install         # once
+npm start           # or: sudo npm start on macOS
+```
+
+### Define the BLE communication block
+Add a `ble` item under `communication` to push attributes into adapter state and describe the GATT surface. The definition below mirrors `spx-examples/library/ble/generic/ble_temperature_sensor.yaml`.
+
+```yaml
+attributes:
+  temperature: 22.5
+  setpoint: 24.0
+
+communication:
+  - ble:
+      adapter:
+        baseUrl: http://host.docker.internal:8080
+        polling:
+          enabled: true
+          interval: 1.0      # seconds between GET /state for inbound updates
+      device:
+        name: SpX Temperature Sensor
+      codecs:
+        celsius:
+          format: utf8
+      bindings:
+        temperature:
+          attribute: $out(temperature)
+          codecRef: celsius
+        setpoint:
+          attribute: $in(setpoint)
+          stateKey: setpointC
+          codecRef: celsius
+      services:
+        - uuid: "181a"
+          name: Environmental Sensing
+          characteristics:
+            - uuid: "2a6e"
+              name: Temperature
+              binding: temperature
+              properties: [read, notify]
+              notify:
+                triggers: [state]
+            - uuid: "f0c09111-8b3a-4e69-bdd0-9f0f613d1a90"
+              name: Setpoint
+              binding: setpoint
+              properties: [read, write, notify]
+              onWrite:
+                - action: parse
+                  type: float
+                  target: state
+                  key: setpointC
+                - action: log
+                  template: "[BLE] Setpoint -> {{value}}"
+```
+
+- `adapter`: connection details plus optional `polling` settings. Disable polling when the flow is outbound-only.
+- `bindings`: map SPX attributes to BLE state keys. Direction defaults to bidirectional; set `direction: outbound` or `direction: inbound` to narrow the flow. Inline codecs or reference entries under `codecs` to convert values.
+- `services`: copies directly to the adapter GATT profile. Bindings inject live values, and `onWrite` actions execute on the adapter whenever a client writes.
+
+### Reuse and extend the library templates
+- `spx-examples/library/ble/generic/ble_temperature_sensor.yaml` offers a minimal read/write sensor that pairs with the adapter defaults.
+- `spx-examples/library/ble/generic/ble_vital_signs_monitor.yaml` layers richer physiology, multiple codecs, and attribute-driven scenarios (`scenarios.*`) to stress mobile dashboards.
+
+Import these fragments into your own models or use them as references for custom UUIDs, codec definitions, and event handling.
+
+### Testing tips
+- After `client.prepare()` the `ble` protocol pushes the GATT definition and initial state via `PUT /config` and `PUT /state`.
+- Use a BLE explorer (nRF Connect, LightBlue, etc.) to confirm services and receive `notify` updates as your simulation runs.
+- Writes from the client propagate through the adapter back into SPX attributes (e.g., the setpoint above), letting you validate app-to-device flows end to end.
+
+For a step-by-step tutorial that builds the peripheral from scratch, see [BLE Device Simulation Walkthrough](extending-simulations/ble-device-simulation.md).
+
 ---
