@@ -24,4 +24,5 @@ Each page below explains responsibilities, configuration fields, and practical e
 * [Timer](timer.md)
 * [Polling](polling.md)
 * [Scenarios](scenarios.md)
+* [Logs](logs.md)
 * [Templates](templates.md)

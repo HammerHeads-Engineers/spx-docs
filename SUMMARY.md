@@ -55,6 +55,7 @@
       * [Connections](spx-core/system/connections.md)
       * [Timer](spx-core/system/timer.md)
       * [Polling](spx-core/system/polling.md)
+      * [Logs](spx-core/system/logs.md)
       * [Scenarios](spx-core/system/scenarios.md)
       * [Templates](spx-core/system/templates.md)
     * [Actions Library](spx-core/actions.md)
