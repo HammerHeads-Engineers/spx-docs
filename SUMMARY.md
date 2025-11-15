@@ -70,6 +70,7 @@
   * [SPX-PYTHON](spx-development-guide/spx-python-client-wrapper/README.md)
     * [Overview & Installation](spx-development-guide/spx-python-client-wrapper/overview-and-installation.md)
     * [Usage & Examples](spx-development-guide/spx-python-client-wrapper/usage-and-examples.md)
+    * [Testing Helpers & Logging Integration](spx-development-guide/spx-python-client-wrapper/testing-helpers-and-logging.md)
     * [Advanced & Best Practices](spx-development-guide/spx-python-client-wrapper/advanced-and-best-practices.md)
 * [Tooling & UI](tooling-and-ui/README.md)
   * [UI Reference](ui-reference/README.md)
