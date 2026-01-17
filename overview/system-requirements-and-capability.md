@@ -1,27 +1,22 @@
 # System Requirements and Capability
 
-To ensure optimal performance and compatibility, SPX (SimplePhysX) has specific hardware and software requirements. Below is a detailed overview of these prerequisites, along with compatibility and integration information.
+This page lists the practical prerequisites for running SPX locally (Docker) and authoring/testing models from Python.
 
-## Hardware Requirements
+## Runtime prerequisites (SPX Server)
 
-* **Processor:** Minimum Intel i5 or equivalent; recommended i7 or higher for optimal performance.
-* **Memory:** At least 8GB RAM; 16GB or more is recommended for handling large-scale simulations.
-* **Storage:** Minimum 250GB of hard drive space; SSD preferred for faster data processing.
+- **Docker Engine/Desktop** with **Docker Compose v2** (`docker compose`).
+- A valid **SPX product key** available as `SPX_PRODUCT_KEY` (get it from `https://simplephysx.com`).
+- Local port **8000** free (default SPX Server API).
 
-## Software Requirements
+If you enable protocol adapters, you may need to expose additional ports (for example Modbus TCP `502`, SCPI/ASCII instrument ports, MQTT, BLE adapter HTTP). Keep port mappings in your `docker-compose.yml` aligned with the models you run.
 
-* **Operating System:** Compatible with Windows 10 or later, macOS, and popular Linux distributions.
-* **Python Environment:** SPX is built on Python, so a recent version of Python (3.6 or later) is required.
-* **Dependencies:** Certain Python libraries are essential for running SPX. These may include NumPy, SciPy, Pandas, and others. Full list will be provided in the installation guide.
-* **Web Browser:** A modern web browser for accessing SPX’s web-based interface, if applicable.
+## Authoring/testing prerequisites (SDK + MiL tests)
 
-## Compatibility and Integration
+- **Python**: `>=3.9` (docs/examples target `3.9–3.12`).
+- **Test runner**: `pytest` (recommended) for MiL test suites.
+- **HTTP tooling**: `curl` or similar for quick API checks.
 
-* **Compatibility:** SPX is designed to be compatible with most modern computing environments that support Python.
-* **Integration:** SPX integrates well with existing CI/CD pipelines and IoT platforms. Its Python-based architecture ensures easy integration with other Python-compatible software and systems.
-* **API Integration:** SPX offers APIs for integration with external systems and tools, facilitating data exchange and process automation.
+## Optional toolchain
 
-## Networking and Connectivity
-
-* **Internet Connection:** A stable internet connection is required for downloading SPX components and updates.
-* **Network Configuration:** If SPX is used in a networked environment, appropriate network configurations might be necessary.
+- **SPX UI**: a modern browser (the UI talks to the SPX Server API).
+- **BLE simulations**: `spx-ble-adapter` requires Node.js (see `spx-core/communications/ble.md`).

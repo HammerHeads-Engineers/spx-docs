@@ -1,27 +1,43 @@
 # Use Case and Applications
 
-SPX (SimplePhysX) is not just a simulation platform; it's a versatile tool that can be applied across various industries to solve complex challenges. Below, we explore some illustrative examples and case studies of how SPX can be utilized in different sectors.
+SPX is typically used as a deterministic “plant/device” behind your real client code. The **quality gate** is a test suite (MiL tests) that drives time explicitly and asserts behavior.
 
-## IoT Network Optimization
+Below are concrete, repo-grounded use cases (models and tests live in `spx-examples`).
 
-**Scenario:** A smart home devices manufacturer wants to test the resilience of their IoT network under different conditions, including network congestion and signal interference.
+## MiL integration tests for Modbus clients
 
-**SPX Application:** Using SPX, the manufacturer can simulate a dense IoT environment with multiple devices. The platform can replicate various real-world scenarios, allowing the team to observe how their network handles high traffic and potential disruptions. This leads to insights into optimizing network performance and enhancing device interoperability.
+- Template model: `spx-examples/library/domains/thermal_controllers/generic/thermal_controller__modbus.yaml`
+- Your Software Under Test: a Modbus TCP client (PLC code, gateway, driver, etc.)
+- SPX role: deterministic device state + faults + time control
 
-## Autonomous Vehicle Software Testing
+Docs: `getting-started/add-communication-protocol.md`, `getting-started/use-in-unit-tests-mil.md`.
 
-**Scenario:** An automotive company is developing software for autonomous vehicles and needs to ensure the system's reliability in diverse driving conditions.
+## Simulate SCPI/ASCII instruments for driver testing
 
-**SPX Application:** SPX can simulate various driving environments, traffic conditions, and unexpected scenarios like sensor failures or adverse weather conditions. This comprehensive testing ensures that the vehicle's software can make safe and accurate decisions, significantly reducing the risk of errors in real-world operations.
+- Template model: `spx-examples/library/domains/measurement_instruments/generic/multimeter__scpi.yaml`
+- Your Software Under Test: instrument driver speaking SCPI over TCP
+- SPX role: instrument state machine + predictable waveforms/scenarios
 
-## Medical Device Reliability
+Docs: `spx-core/communications/ascii.md`, `getting-started/use-in-unit-tests-mil.md`.
 
-**Scenario:** A healthcare technology firm is creating a new heart rate monitor that must perform accurately under various patient conditions and potential equipment malfunctions.
+## MQTT device telemetry regression tests
 
-**SPX Application:** SPX enables the firm to create detailed simulations of different patient heart rates, including arrhythmias and bradycardia. Additionally, it can simulate scenarios where the device might face interference or power fluctuations. These simulations help in fine-tuning the device for high precision and reliability.
+- Template model: `spx-examples/library/domains/iot/generic/environment_sensor__mqtt.yaml`
+- Your Software Under Test: telemetry ingestion / rules engine / alerting
+- SPX role: controllable publish cadence, payload values, and fault injection
 
-## Energy Management System Efficiency
+Docs: `spx-core/communications/mqtt.md`.
 
-**Scenario:** An energy company seeks to optimize their grid management system for better handling of fluctuating renewable energy sources.
+## BLE device simulation for mobile apps and QA rigs
 
-**SPX Application:** With SPX, the company can model and simulate an energy grid incorporating various renewable sources. The platform helps in testing the grid's response to changes in energy supply, demand spikes, and potential system disruptions, leading to a more robust and efficient energy management strategy.
+- Template model: `spx-examples/library/domains/ble/generic/temperature_sensor__ble_gatt.yaml`
+- Companion process: `spx-ble-adapter` exposes a real BLE peripheral backed by SPX attributes
+
+Docs: `spx-core/communications/ble.md`, `simulation-and-modeling/extending-simulations/ble-device-simulation.md`.
+
+## Snapshot-driven regression suites
+
+- Capture a known-good state as a Snapshot.
+- Restore it before a test so every run starts from the same simulation state.
+
+Docs: `getting-started/snapshots-guide.md`, `spx-core/snapshots.md`.

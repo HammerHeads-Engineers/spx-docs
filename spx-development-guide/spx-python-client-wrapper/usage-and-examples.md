@@ -95,7 +95,7 @@ from spx_python.helpers import load_model, create_instance, ensure_instance
 client = spx_python.init(address=BASE_URL, product_key=PRODUCT_KEY)
 
 # Load or refresh a model from disk
-model_path = Path("library/ble/generic/ble_temperature_sensor.yaml")
+model_path = Path("library/domains/ble/generic/temperature_sensor__ble_gatt.yaml")
 changed = load_model(client, "BleTemperatureSensor", model_path)
 
 # Create a new instance, applying overrides on first start
@@ -156,7 +156,7 @@ client, instance, changed = bootstrap_model_instance(
     spx_module=spx_python,
     product_key=PRODUCT_KEY,
     base_url=BASE_URL,
-    model_path=Path("library/ble/generic/ble_vital_signs_monitor.yaml"),
+    model_path=Path("library/domains/ble/generic/vital_signs_monitor__ble_gatt.yaml"),
     model_key="tests_ble_vsm",
     instance_key="tests_ble_vsm_inst",
     attribute_overrides={"attributes/activityIntensity/internal_value": 0.3},

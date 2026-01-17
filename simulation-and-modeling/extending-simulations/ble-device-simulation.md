@@ -12,7 +12,7 @@ This guide builds on SPX custom components to expose a virtual device as a Bluet
 
 - SPX simulation with controllable attributes (`temperature`, `setpoint`, etc.).
 - `ble` protocol inside `spx_core`, which keeps SPX attributes in sync with the adapter state.
-- Standalone [`spx-ble-adapter`](../../spx-ble-adapter/README.md) process that speaks CoreBluetooth (macOS) or BlueZ (Linux) to expose a GATT peripheral.
+- Standalone [`spx-ble-adapter`](https://github.com/HammerHeads-Engineers/spx-ble-adapter) process that speaks CoreBluetooth (macOS) or BlueZ (Linux) to expose a GATT peripheral.
 - BLE client (nRF Connect, LightBlue, custom QA app) that connects and exercises the device.
 
 ---
@@ -21,7 +21,7 @@ This guide builds on SPX custom components to expose a virtual device as a Bluet
 
 - Node.js 16+ with build tools (the adapter depends on `@abandonware/bleno`).
 - Bluetooth enabled on the host. On macOS grant Terminal (or your shell) Bluetooth permissions; some systems require `sudo`.
-- SPX server running locally or via Docker. If SPX is inside Docker, ensure it can reach the adapter with `http://host.docker.internal:8080`.
+- SPX server running locally or via Docker. If SPX is inside Docker, ensure it can reach the adapter with `http://host.docker.internal:8085`.
 - `spx-python` or REST tooling to load the model.
 - A BLE inspection app on a phone/tablet (nRF Connect, LightBlue, or similar).
 
@@ -29,7 +29,7 @@ This guide builds on SPX custom components to expose a virtual device as a Bluet
 
 ## 1. Start from a minimal model
 
-Copy or import the library template `spx-examples/library/ble/generic/ble_temperature_sensor.yaml`. The relevant pieces:
+Copy or import the library template `spx-examples/library/domains/ble/generic/temperature_sensor__ble_gatt.yaml`. The relevant pieces:
 
 ```yaml
 attributes:
@@ -56,7 +56,7 @@ Append the `ble` adapter definition under `communication` (excerpted from the te
 communication:
   - ble:
       adapter:
-        baseUrl: http://host.docker.internal:8080   # use http://127.0.0.1:8080 if everything runs on the same host
+        baseUrl: http://host.docker.internal:8085   # use http://127.0.0.1:8085 if everything runs on the same host
         polling:
           enabled: true
           interval: 1.0
@@ -108,12 +108,13 @@ Bindings determine how SPX attributes map to the adapter state:
 Run the adapter in a separate shell:
 
 ```bash
-cd ../spx-ble-adapter
+git clone https://github.com/HammerHeads-Engineers/spx-ble-adapter.git
+cd spx-ble-adapter
 npm install          # first time
 npm start            # add sudo on macOS if CoreBluetooth requires it
 ```
 
-Watch the logs. You should see the adapter listening on port `8080` and waiting to load a configuration.
+Watch the logs. You should see the adapter listening on port `8085` and waiting to load a configuration.
 
 ---
 
@@ -130,7 +131,7 @@ client = spx_python.init(
     product_key=os.environ.get("SPX_PRODUCT_KEY", ""),
 )
 
-with open("library/ble/generic/ble_temperature_sensor.yaml", "r", encoding="utf-8") as f:
+with open("library/domains/ble/generic/temperature_sensor__ble_gatt.yaml", "r", encoding="utf-8") as f:
     model_def = yaml.safe_load(f)
 
 client["models"]["BleTemp"] = model_def
@@ -186,7 +187,7 @@ Triggering `mobile_override` mimics a mobile app write without real hardware. Th
 
 ## 7. Expanding to multi-sensor wearables
 
-The vital-signs template (`library/ble/generic/ble_vital_signs_monitor.yaml`) demonstrates a fuller device:
+The vital-signs template (`library/domains/ble/generic/vital_signs_monitor__ble_gatt.yaml`) demonstrates a fuller device:
 
 - Multiple attributes (`heartRateBpm`, `bloodOxygenPercent`, `batteryLevelPercent`, etc.) driven by custom actions that model physiology.
 - Rich codec definitions (`percentage`, `bloodPressure`, `intensity`) so each characteristic formats data appropriately.
@@ -199,7 +200,7 @@ Study the bindings section to see how each attribute ties to a reusable codec. U
 
 ## 8. Troubleshooting
 
-- **Adapter logs `health check failed`:** confirm `adapter.baseUrl` is reachable from SPX and that `npm start` is running. For Docker, expose port `8080` and use `http://host.docker.internal:8080`.
+- **Adapter logs `health check failed`:** confirm `adapter.baseUrl` is reachable from SPX and that `npm start` is running. For Docker, expose port `8085` and use `http://host.docker.internal:8085`.
 - **Mobile app cannot see the peripheral:** verify Bluetooth permissions, ensure no previous instance is still advertising, and check for OS-level restrictions when running under `sudo`.
 - **Writes do not change SPX attributes:** make sure the binding uses `$in(...)` or a bidirectional reference, and that polling is enabled (`polling.enabled: true`).
 - **Notifications stop after a few minutes:** the adapter stops when the subscriber disconnects. Confirm the mobile client keeps the connection alive and the simulation continues to call `client.run()`.

@@ -15,6 +15,12 @@
   * [Snapshots — Getting Started](getting-started/snapshots-guide.md)
   * [Use in Unit Tests (MiL)](getting-started/use-in-unit-tests-mil.md)
   * [CI/CD Setup (GitHub Actions)](getting-started/ci-cd-setup-github-actions.md)
+* [LLM-first model authoring](llm-first-model-authoring/README.md)
+  * [Repo-as-spec (spx-examples)](llm-first-model-authoring/repo-as-spec.md)
+  * [Model Brief template](llm-first-model-authoring/model-brief-template.md)
+  * [Workflow: Generate → Validate → Iterate](llm-first-model-authoring/workflow-generate-validate-iterate.md)
+  * [Prompt recipes](llm-first-model-authoring/prompt-recipes.md)
+  * [Definition of Done (DoD)](llm-first-model-authoring/definition-of-done.md)
 * [Usage Scenarios and Examples](usage-scenarios-and-examples/README.md)
   * [Guided Use Cases & Scenarios](usage-scenarios-and-examples/common-use-cases.md)
 * [Build Simulations](spx-development-guide/README.md)
@@ -79,6 +85,7 @@
 * [Operations & Support](operations-and-support/README.md)
   * [SPX-SERVER](spx-development-guide/server-api/README.md)
     * [API v3 Reference](api-v3-reference/README.md)
+      * [Code Examples](api-v3-reference/code-examples.md)
       * ```yaml
         props:
           models: true

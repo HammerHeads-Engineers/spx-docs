@@ -57,4 +57,4 @@ templates:
 - Keep templates focused: one device or subsystem per template.
 - Use parameters inside templates sparingly; prefer leaving knobs for the consuming model to set via `parameters`.
 - Version templates (e.g., `multimeter_v2`) when breaking changes occur so older models remain compatible.
-- Store template YAML alongside unit tests in `spx-examples/library/...` and sync them into the server repo during releases.
+- Store template YAML alongside unit tests in `spx-examples/library/domains/...` and sync them into the server repo during releases.

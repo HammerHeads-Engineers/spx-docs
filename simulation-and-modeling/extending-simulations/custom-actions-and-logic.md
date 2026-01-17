@@ -154,7 +154,7 @@ actions:
 - When temperature stays within `[18.0, 22.0]`, it preserves the previous output.
 - When the reading leaves the hysteresis band, it snaps to the nearest boundary (`low` or `high`).
 
-This wiring mirrors how built-in actions (`pid`, `ramp`, `call`) are declared in the library models under `spx-examples/library`.
+This wiring mirrors how built-in actions (`pid`, `ramp`, `call`) are declared in the library models under `spx-examples/library/domains`.
 
 ---
 

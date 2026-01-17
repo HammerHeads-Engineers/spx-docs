@@ -19,7 +19,7 @@ icon: code
 ```bash
 pip install --upgrade spx-sdk    # from PyPI
 # or, for local dev
-git clone https://github.com/your-org/spx-sdk.git
+git clone https://github.com/HammerHeads-Engineers/spx-sdk.git
 cd spx-sdk && pip install -e .
 ```
 
@@ -48,7 +48,7 @@ sensor.prepare();
 for t in np.arange(0, 60.1, 0.1):              # 0 → 60 s, 0.1 s ticks
     sensor["timer"]["time"] = t                # drive the built-in timer
     sensor.run()
-    print(f"{t:4.1f}s ➜ {sensor['attributes']['temperature']['external_value']:.2f} °C")mer.time))
+    print(f"{t:4.1f}s ➜ {sensor['attributes']['temperature']['external_value']:.2f} °C")
 
 ```
 {% endtab %}

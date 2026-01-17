@@ -24,17 +24,33 @@ This consolidated page combines the earlier "Common Use Cases" and "Step-by-Step
 
 ### Scenario: SCPI Multimeter Smoke Test
 
-Based on `library/measurement_instruments/generic/scpi_multimeter.yaml` in `spx-examples`.
+Based on `spx-examples/library/domains/measurement_instruments/generic/multimeter__scpi.yaml`.
 
 1. **Load the model**
-   ```bash
-   spx run library/measurement_instruments/generic/scpi_multimeter.yaml
+   Use `spx-python` to push the model definition into a running server:
+
+   ```python
+   import os
+   import yaml
+   import spx_python
+
+   client = spx_python.init(
+       address=os.environ.get("SPX_BASE_URL", "http://localhost:8000"),
+       product_key=os.environ["SPX_PRODUCT_KEY"],
+   )
+
+   # In your local checkout of spx-examples:
+   model_path = "library/domains/measurement_instruments/generic/multimeter__scpi.yaml"
+   with open(model_path, "r", encoding="utf-8") as f:
+       model_def = yaml.safe_load(f)
+
+   client["models"]["generic_scpi_multimeter"] = model_def
+   client["instances"]["scpi_inst_1"] = "generic_scpi_multimeter"
    ```
-   or instantiate `Model("generic_scpi_multimeter", yaml.safe_load(...))` in Python.
 
 2. **Connect your SCPI client**
-   - Point it to `127.0.0.1:5025`.
-   - Use line endings `\n`.
+   - If you are using the `spx-examples/docker-compose.yml` baseline, point it to `127.0.0.1:5025`.
+   - Use line endings `\n` (see `terminator` in the model).
 
 3. **Baseline reading**
    ```text
@@ -53,7 +69,8 @@ Based on `library/measurement_instruments/generic/scpi_multimeter.yaml` in `spx-
 
 5. **Run the `voltage_static` scenario**
    - In YAML, the scenario slews voltage toward 230 V and injects noise.
-   - Trigger via SDK: `model["scenarios"]["voltage_static"].start()`.
+   - Trigger via `spx-python`:
+     - `client["instances"]["scpi_inst_1"]["scenarios"]["voltage_static"].start()`
    - Observe multiple reads drifting toward 230 with small jitter.
 
 6. **Simulate protocol disruption**
@@ -74,7 +91,7 @@ Use this checklist when creating scenarios for other models:
 | Step | Questions | Notes |
 |------|-----------|-------|
 | Define intent | What user story are we simulating? | e.g. "Operator reads voltage while unplugging sensor." |
-| Select assets | Which YAML model and scenarios support it? | Start with `spx-examples/library/...`. |
+| Select assets | Which YAML model and scenarios support it? | Start with `spx-examples/library/domains/...`. |
 | Identify actors | Which services or scripts will interact with the model? | REST client, SCPI CLI, Modbus master. |
 | Script stimuli | Which API/protocol calls drive the scenario? | Document command sequences. |
 | Expected results | What readings/logs confirm success? | Use attribute wrappers or protocol responses. |
@@ -85,5 +102,5 @@ Use this checklist when creating scenarios for other models:
 
 - Start with one scenario and make the happy-path pass before layering faults.
 - Use the `spx-examples` repo as a library; copy models into your project as needed.
-- When results look odd, inspect attribute values via the SDK (`model["attributes"].internal[...]`).
+- When results look odd, inspect live instance state via `spx-python` and server logs.
 - Commit updates to scenarios alongside test scripts so the team reviews both.

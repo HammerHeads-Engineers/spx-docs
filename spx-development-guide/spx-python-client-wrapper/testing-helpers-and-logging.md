@@ -294,7 +294,7 @@ from tests.devices.ble_vital_signs_monitor_sut import BleVitalSignsMonitorSUT
 
 
 class TestBleVitalSignsMonitorLogged(SpxAssertionLoggingMixin, unittest.TestCase):
-    MODEL_PATH = Path("library/ble/generic/ble_vital_signs_monitor.yaml")
+    MODEL_PATH = Path("library/domains/ble/generic/vital_signs_monitor__ble_gatt.yaml")
     MODEL_KEY = "tests__ble_vital_signs_monitor"
     INSTANCE_KEY = "tests_ble_vital_signs_monitor_inst"
 
@@ -362,7 +362,7 @@ from tests.devices.modbus_vacuum_gauge_sut_example import ModbusVacuumGaugeSUTEx
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-MODEL_PATH = ROOT / "library" / "vacuum_systems" / "generic" / "vacuum_gauge.yaml"
+MODEL_PATH = ROOT / "library" / "domains" / "vacuum_systems" / "generic" / "vacuum_gauge__modbus.yaml"
 MODEL_KEY = "tests__vacuum_gauge"
 INSTANCE_KEY = "generic_vacuum_gauge"
 SPX_API_URL = os.environ.get("SPX_API_URL", "http://localhost:8000")
@@ -408,7 +408,7 @@ The full original test contains several assertions on pressure trajectories and 
 
 ### Pytest with a concrete model (generic MQTT environment sensor)
 
-The MQTT environment sensor example in `tests/test_mqtt_environment_sensor_sut_example.py` uses `ensure_model` and `ensure_instance` to prepare an instance backed by `library/iot/generic/mqtt_environment_sensor.yaml`.
+The MQTT environment sensor example in `tests/test_mqtt_environment_sensor_sut_example.py` uses `ensure_model` and `ensure_instance` to prepare an instance backed by `library/domains/iot/generic/environment_sensor__mqtt.yaml`.
 
 Below is a sketch of how to integrate the `SpxPytestLoggerPlugin` into a similar scenario:
 
@@ -422,7 +422,7 @@ import spx_python
 from spx_python.helpers import SpxPytestLoggerPlugin, spx_ensure_attribute
 
 ATTR_PATH = "test_logs"
-MODEL_PATH = Path("library/iot/generic/mqtt_environment_sensor.yaml")
+MODEL_PATH = Path("library/domains/iot/generic/environment_sensor__mqtt.yaml")
 MODEL_KEY = "tests__generic_mqtt_environment_sensor"
 INSTANCE_KEY = "tests_generic_mqtt_environment_sensor_inst"
 BASE_URL = os.environ.get("SPX_API_URL", "http://localhost:8000")

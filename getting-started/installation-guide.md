@@ -8,7 +8,7 @@ icon: up-to-dotted-line
 
 # Installation Guide
 
-In this Installation Guide you’ll perform one simple task: start the SPX Server in Docker and confirm it’s reachable on your computer. After choosing a subscription on simplephysics.io, you can either use the personalized Docker Compose file (fastest) or a custom template (e.g., to pin a specific tag). We’ll point you to the small set of prerequisites, show how to bring the container up, and how to check that the server answers locally. Once you see a successful response, you’re ready to move on to the Quick Start in Python and CI/CD setup.
+In this Installation Guide you’ll perform one simple task: start the SPX Server in Docker and confirm it’s reachable on your computer. After selecting a subscription on `https://simplephysx.com`, you can either use a personalized Docker Compose file (fastest) or a custom template (e.g., to pin an image tag). We’ll cover the prerequisites, show how to bring the container up, and how to check that the server answers locally.
 
 ## Requirements
 
@@ -22,8 +22,7 @@ In this Installation Guide you’ll perform one simple task: start the SPX Serve
       docker compose version
       ```
 * **Python:** Version **3.9–3.12** (3.10+ recommended). `pip` available (or Conda if you prefer Conda environments).
-* **Account & Subscription:** An SPX account on **simplephysics.io** with an active subscription (e.g., **Community**, free).\
-  After choosing a plan, you can either **download a personalized Docker Compose file** (includes your license) or **copy a license key** to use as `SPX_PRODUCT_KEY`.
+* **Account & Subscription:** An SPX account on `https://simplephysx.com` with an active subscription (e.g., Community). After choosing a plan, you can either download a personalized Docker Compose file (includes your key) or copy a product key to use as `SPX_PRODUCT_KEY`.
 * **Network:** Internet access to pull images from Docker Hub and local port **8000** available.
 * **Basics for verification:** A web browser or `curl`/PowerShell (`Invoke-WebRequest`) to check `http://localhost:8000/`.
 
@@ -33,11 +32,9 @@ In this Installation Guide you’ll perform one simple task: start the SPX Serve
 
 ### &#x20;Create your account & choose a subscription
 
-* Go to [**simplephysx.io**](https://hammerheadsenginee.wixstudio.com/simplephysx) and create an account.
-* Open the Subscriptions page and select a plan (e.g., Community – free tier).
-* Then open License Keys. You can either:
-  * Download a personalized Docker Compose file (pre-filled with your license key), or
-  * Copy a license key to your clipboard for manual use.
+* Go to `https://simplephysx.com` and create an account / sign in.
+* Select a subscription plan.
+* Retrieve your product key (`SPX_PRODUCT_KEY`) and (if available) a personalized Docker Compose file.
 
 > The downloaded Compose file is personalized (it embeds your key). Treat it like a secret and do not share it publicly.
 
@@ -81,7 +78,8 @@ Use a minimal **docker-compose.yml** and pin any image tag you need:
 ```yaml
 services:
   spx-server:
-    image: simplephysx/spx-server:v0.2.1-alpha.1
+    # Pick a tag that matches your environment (for example, align with spx-examples).
+    image: simplephysx/spx-server:<tag>
     ports: ["8000:8000"]
     environment:
       SPX_PRODUCT_KEY: ${SPX_PRODUCT_KEY}
@@ -103,7 +101,7 @@ services:
 {
   "services": {
     "spx-server": {
-      "image": "simplephysx/spx-server:v0.2.1-alpha.1",
+      "image": "simplephysx/spx-server:<tag>",
       "ports": ["8000:8000"],
       "environment": {
         "SPX_PRODUCT_KEY": "${SPX_PRODUCT_KEY}"
@@ -143,10 +141,10 @@ docker compose up -d
 
 #### Verify the server is up Open [http://localhost:8000/](http://localhost:8000/) (or a simple status/root endpoint).&#x20;
 
-You should get HTTP 200 / OK.&#x20;
+You should get HTTP 200 / OK (example response shape):
 
 ```sh
-{"message":"Welcome to SPX Server API","server_version":"0.2.1","api_version":"v3","supported_versions":["v3"]}
+{"message":"Welcome to SPX Server API","api_version":"v3","supported_versions":["v3"]}
 ```
 
 If not, wait a few seconds and retry.

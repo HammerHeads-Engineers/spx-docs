@@ -1,24 +1,25 @@
 # BLE Adapter
 
-The BLE adapter bridges SPX simulations with the standalone [`spx-ble-adapter`](../../spx-ble-adapter/README.md). It pushes your GATT layout and live attribute values over HTTP, exposing the simulation as a Bluetooth Low Energy peripheral that mobile apps can pair with.
+The BLE adapter bridges SPX simulations with the standalone [`spx-ble-adapter`](https://github.com/HammerHeads-Engineers/spx-ble-adapter). It pushes your GATT layout and live attribute values over HTTP, exposing the simulation as a Bluetooth Low Energy peripheral that mobile apps can pair with.
 
 ## Run the companion service
 
 The protocol talks to an external process, so start the adapter next to your SPX server:
 
 ```bash
-cd ../spx-ble-adapter
+git clone https://github.com/HammerHeads-Engineers/spx-ble-adapter.git
+cd spx-ble-adapter
 npm install         # first time
 npm start           # sudo npm start on macOS when CoreBluetooth requires it
 ```
 
 Defaults:
 
-- HTTP listener: `http://127.0.0.1:8080`
+- HTTP listener: `http://127.0.0.1:8085`
 - Advertised device name: `SPX-Sim`
 - Health endpoint: `GET /health`
 
-Point `adapter.baseUrl` at a reachable address (use `http://host.docker.internal:8080` when SPX runs inside Docker and the adapter runs on the host).
+Point `adapter.baseUrl` at a reachable address (use `http://host.docker.internal:8085` when SPX runs inside Docker and the adapter runs on the host).
 
 ## Configuration example
 
@@ -32,7 +33,7 @@ attributes:
 communication:
   - ble:
       adapter:
-        baseUrl: http://host.docker.internal:8080
+        baseUrl: http://host.docker.internal:8085
         timeout: 3.0
         polling:
           enabled: true
@@ -84,12 +85,12 @@ communication:
   },
   "communication": [
     {
-      "ble": {
-        "adapter": {
-          "baseUrl": "http://host.docker.internal:8080",
-          "timeout": 3.0,
-          "polling": {
-            "enabled": true,
+          "ble": {
+            "adapter": {
+              "baseUrl": "http://host.docker.internal:8085",
+              "timeout": 3.0,
+              "polling": {
+                "enabled": true,
             "interval": 1.0
           }
         },
@@ -177,7 +178,7 @@ communication:
 
 | Field | Type | Default | Notes |
 | --- | --- | --- | --- |
-| `adapter.baseUrl` | string | `http://127.0.0.1:8080` | Root for `/health`, `/config`, `/state`, `/events`. For Dockerised SPX use `http://host.docker.internal:8080`. |
+| `adapter.baseUrl` | string | `http://127.0.0.1:8085` | Root for `/health`, `/config`, `/state`, `/events`. For Dockerised SPX use `http://host.docker.internal:8085`. |
 | `adapter.timeout` | number | `2.0` seconds | Per-request timeout. Increase if the adapter runs remotely or handles large configs. |
 | `adapter.polling.enabled` | boolean | `true` | Disable when BLE clients never write back (pure outbound telemetry). |
 | `adapter.polling.interval` | number | `1.0` second | Delay between `GET /state` polls. Smaller values tighten feedback at the expense of HTTP load. |
@@ -200,7 +201,7 @@ The `device` block mirrors directly into the adapter. Common fields include:
 - **Tolerance:** numeric guard band that suppresses small changes to reduce notification spam.
 - **Codecs:** reuse a named codec (`codecRef`) or embed an inline definition. Supported formats in the adapter today include `utf8`, `sint16` (with `scale`), and `float`.
 
-Snippet from `library/ble/generic/ble_vital_signs_monitor.yaml`:
+Snippet from `library/domains/ble/generic/vital_signs_monitor__ble_gatt.yaml`:
 
 ```yaml
 bindings:
@@ -281,8 +282,8 @@ Use model `scenarios` to detach or fault the protocol (e.g., override `communica
 
 ## Reference models
 
-- `spx-examples/library/ble/generic/ble_temperature_sensor.yaml`: minimal read/write sensor.
-- `spx-examples/library/ble/generic/ble_vital_signs_monitor.yaml`: multi-characteristic wearable with scenarios that drive activity profiles.
+- `spx-examples/library/domains/ble/generic/temperature_sensor__ble_gatt.yaml`: minimal read/write sensor.
+- `spx-examples/library/domains/ble/generic/vital_signs_monitor__ble_gatt.yaml`: multi-characteristic wearable with scenarios that drive activity profiles.
 
 Import these into your models or use them as templates when defining new GATT services.
 
