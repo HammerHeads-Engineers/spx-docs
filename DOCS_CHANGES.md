@@ -2,7 +2,7 @@
 
 ## This PR
 
-- `getting-started/installer-and-packs.md` and `usage-scenarios-and-examples/industry-packs.md` — Added a 6-step golden path, clarified pack vs profile concepts, added role-based verification checklists, and tightened copy/paste hygiene.
+- `getting-started/installer-and-packs.md` / `usage-scenarios-and-examples/industry-packs.md` — Cleaned trailing spaces, added a 6-step golden path + role-based verification, moved examples in place, and rebuilt the pack overview table.
 - `getting-started/installation-guide.md` — Path A/Path B steps now include in-place `docker compose up -d`, `docker compose logs -f spx-server`, and `/health` verification (no reliance on “Common commands”).
 - Python requirement verified against `spx-examples` (`python = "^3.9"`, CI `3.9–3.12`) and kept consistent across non-excluded docs pages.
 - Troubleshooting: verified copy/paste hygiene (no trailing spaces) and confirmed the referenced validator exists in `spx-examples/tools/validate_models.py`.

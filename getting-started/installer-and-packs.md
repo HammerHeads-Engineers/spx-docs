@@ -29,7 +29,7 @@ Prerequisites:
    cd spx-examples
    ```
 
-2. Set `SPX_PRODUCT_KEY` (treat it as a secret; do not commit it):
+2. Set `SPX_PRODUCT_KEY` (treat it as a secret; use env/CI secrets and never commit it):
 
    ```bash
    export SPX_PRODUCT_KEY="YOUR_REAL_KEY"
@@ -55,10 +55,11 @@ Prerequisites:
    cd build/spx-generated
    ```
 
-5. Start the stack:
+5. Start the stack (script or docker compose):
 
    - macOS/Linux: `./spx-start.sh`
    - Windows: `pwsh ./spx-start.ps1`
+   - Or: `docker compose -f docker-compose.generated.yml --env-file .env up -d`
 
 6. Verify it is healthy:
 
@@ -159,17 +160,24 @@ The start scripts:
 - Share bundles with `SPX_PRODUCT_KEY=REPLACE_ME` (or remove `.env` before sharing).
 - Avoid putting keys into command history; prefer environment variables.
 
-## How to verify (by role)
+## How to verify (Integrator / QA / Developer)
 
-- Integrator:
-  - `curl -fsS http://localhost:8000/health`
-  - `docker compose -f docker-compose.generated.yml --env-file .env ps`
-- QA/CI:
-  - `python -m installer generate --packages <pack> --output build/ci/<pack> --no-start`
-  - `build/ci/<pack>/spx-start.sh`
-  - `curl -fsS http://localhost:8000/health`
-- Developer:
-  - Edit pack/profile files (see below), then re-run `python -m installer generate`.
+Integrator:
+
+- `curl -fsS http://localhost:8000/health`
+- `docker compose -f docker-compose.generated.yml --env-file .env ps`
+- Confirm your target protocol port is listening (for example Modbus on `5020-5120`).
+
+QA/CI:
+
+- `python -m installer generate --packages <pack> --output build/ci/<pack> --no-start`
+- `build/ci/<pack>/spx-start.sh`
+- `curl -fsS http://localhost:8000/health`
+
+Developer:
+
+- Update `library/catalog/*.yaml` and `profiles/<pack>/*.yaml`, then regenerate:
+  `python -m installer generate --packages <pack> --output build/spx-generated`
 
 ## Cleanup and uninstall
 
