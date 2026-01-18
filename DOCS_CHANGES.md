@@ -4,7 +4,7 @@
 
 - `overview/start-here.md` — Added a role-based “golden path” (Integrator / Developer / QA/CI).
 - `README.md` / `overview/introduction.md` / hub pages — Replaced “Next page: `path`” / backtick paths with real clickable links (non-UI, non-LLM-first).
-- `getting-started/choose-a-protocol-adapter.md` — Added an integrator routing page (pick an adapter, link to docs, link to `spx-examples` models).
+- `getting-started/choose-a-protocol-adapter.md` — Added an integrator routing page (pick an adapter, link to docs, link to `spx-examples` models); updated the Modbus example to a `modbus_slave` model.
 - `spx-development-guide/spx-sdk/imports/README.md` — Filled the stub “Imports” page with practical guidance and a minimal `python_file` example.
 - `spx-development-guide/spx-sdk/imports/pythonfile.md` — Updated to match current SDK behavior (SpxComponent vs plain classes, lifecycle `methods`, repo-relative path guidance).
 - `spx-development-guide/spx-sdk/actions.md` — Expanded `function`/`call` documentation (`imports`, `params`, multi-line calls, local helper imports aligned with `spx-examples`).
@@ -13,16 +13,17 @@
 - `spx-core/communications/README.md` — Rebuilt as a routing hub listing all protocol adapters implemented in `spx-server` (with YAML keys and grouping).
 - `spx-core/communications/http.md` — Rewritten to match `http_endpoint` + `endpoints` schema and grounded in `spx-examples`.
 - `spx-core/communications/mqtt.md` — Rewritten to match bindings-based `mqtt` schema; added `mqtt-ha` coverage (brokers, availability, discovery).
-- `spx-core/communications/modbus.md` — Rewritten to cover `modbus_slave` / `modbus_tcp` / `modbus_master` and the correct Modbus area codes (`h_r/i_r/c_o/d_i`).
+- `spx-core/communications/modbus.md` — Rewritten to cover `modbus_slave` / `modbus_tcp` / `modbus_master`, marked `modbus_tcp` as legacy (avoid for new models), and standardized Modbus area codes (`h_r/i_r/c_o/d_i`).
 - `spx-core/communications/bacnet.md` / `coap.md` / `dali.md` / `knx.md` / `lwm2m.md` / `matter.md` / `mbus.md` / `ocpp.md` / `opcua.md` / `profinet.md` / `redfish.md` / `snmp.md` — Added minimal, test-grounded pages for all remaining SPX Server communication adapters.
-- `getting-started/add-communication-protocol.md` — Tightened Modbus tutorial consistency (env vars, mapping text vs YAML, float decoding example, port exposure note).
+- `getting-started/add-communication-protocol.md` — Updated the tutorial to use `modbus_slave` (recommended) instead of legacy `modbus_tcp`; kept copy‑pasteable Modbus client validation and port exposure notes.
 - `troubleshooting-and-support/common-issues-and-solutions.md` — Expanded to 10 issues in Symptom/Cause/Fix format with concrete debug commands.
 - `troubleshooting-and-support/faqs.md` — Expanded to 14 FAQs for integrators/dev/QA (determinism, CI, version pinning, validation).
 - `appendices/glossary-of-terms.md` — Expanded to ~20 core terms with consistent terminology.
 - `release-notes.md` — Documented release/tag sources, versioning expectations, and a safe upgrade checklist.
 - `getting-started/installation-guide.md` — Rebuilt with complete Compose + `.env` templates, `/health` verification, and “next steps” links.
 - `getting-started/build-your-first-simulation.md` — Switched verification to `/health`, removed pinned versions, and standardized `SPX_BASE_URL` usage.
-- `getting-started/use-in-unit-tests-mil.md` — Standardized server base URL env var to `SPX_BASE_URL`.
+- `getting-started/use-in-unit-tests-mil.md` — Switched the MiL example to `modbus_slave` (recommended) and updated the SUT to connect via host port `1502` (Compose-style mapping).
+- `getting-started/code-defined-simulations.md` — Updated the Modbus example to use `communication` + `modbus_slave` (recommended) instead of legacy `modbus_tcp`.
 - `getting-started/ci-cd-setup-github-actions.md` — Added a Python matrix (3.9–3.12), standardized readiness probe to `/health`, and included `SPX_BASE_URL` in workflow env.
 - `getting-started/snapshots-guide.md` — Removed hard-coded server version requirement and cleaned up formatting.
 - `usage-scenarios-and-examples/common-use-cases.md` — Re-grounded the SCPI multimeter walkthrough in `spx-examples` (real file paths, scenarios, runnable commands).

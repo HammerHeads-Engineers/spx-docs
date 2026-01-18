@@ -18,6 +18,7 @@ We will:
 ## Prerequisites
 
 - A running **SPX Server** (e.g., `http://localhost:8000`) and a valid `SPX_PRODUCT_KEY` in your environment.  
+- If SPX Server runs in Docker, expose Modbus TCP from the container (for example `- "1502:502"` in Compose) and point your SUT at `127.0.0.1:1502`.
 - Python packages:
   ```bash
   pip install spx-python modbus-tk pyyaml
@@ -63,22 +64,24 @@ actions:
   - { ramp: $in(temperature), stop_value: 150, duration: 5, type: overshoot, overshoot: 5 }
   - { noise: $out(temperature), std: 0.01, mode: proportional }
 communication:
-  - modbus_tcp:
-      # host/port are optional; defaults are 127.0.0.1:502
+  - modbus_slave:
+      # Bind inside the SPX Server container. Expose the port via docker compose for host-side SUTs.
+      host: 0.0.0.0
+      port: 502
+      unit_id: 1
       mapping:
-        temperature: { address: [0, 1], group: h_r, type: uint_32 }
-        sensor_fault: { address: [4], group: c, type: uint_16 }
+        temperature: { address: [0, 1], group: h_r, type: float }
+        sensor_fault: { address: 4, group: c_o, type: bool }
 """
 
 
 class SUTSensor:
     """Software Under Test: minimal Modbus client used in assertions."""
 
-    def __init__(self, host="127.0.0.1", port=502, unit=1, scale=100.0, timeout=2.0):
+    def __init__(self, host="127.0.0.1", port=1502, unit=1, timeout=2.0):
         self.host = host
         self.port = port
         self.unit = unit
-        self.scale = scale
         self.timeout = timeout
         self._mb = None
 
@@ -87,14 +90,16 @@ class SUTSensor:
         self._mb.set_timeout(self.timeout)
 
     @staticmethod
-    def _u32_from_two_u16_be(regs):
+    def _float_from_two_u16_be(regs):
+        import struct
         if len(regs) != 2:
             raise ValueError(f"Expected 2 registers, got {len(regs)}")
-        return ((regs[0] & 0xFFFF) << 16) | (regs[1] & 0xFFFF)
+        payload = struct.pack(">HH", regs[0] & 0xFFFF, regs[1] & 0xFFFF)
+        return struct.unpack(">f", payload)[0]
 
     def read_temperature(self):
         regs = self._mb.execute(self.unit, C.READ_HOLDING_REGISTERS, 0, 2)
-        return self._u32_from_two_u16_be(regs) / self.scale
+        return self._float_from_two_u16_be(regs)
 
     def read_fault(self):
         coils = self._mb.execute(self.unit, C.READ_COILS, 4, 1)
@@ -119,18 +124,16 @@ class TestSUT_MiL_Modbus(unittest.TestCase):
         cls.client["instances"]["pt100_mb_1"] = "pt_100_modbus"
         cls.inst = cls.client["instances"]["pt100_mb_1"]
 
-        # 3) Start Modbus TCP (server inside the model)
-        # Deterministic stepping works fine with protocol servers running.
-        cls.inst["communication"]["modbus_tcp"].start()
-
-        # 4) Prefer deterministic time stepping in unit tests
+        # 3) Prefer deterministic time stepping in unit tests
         # (We won't call .start(); we will advance time via prepare() + run()).
         cls.client.prepare()
+        # Start the Modbus TCP server inside the model after prepare() built binding contexts.
+        cls.inst["communication"]["modbus_slave"].start()
 
     @classmethod
     def tearDownClass(cls):
         try:
-            cls.inst["communication"]["modbus_tcp"].stop()
+            cls.inst["communication"]["modbus_slave"].stop()
         finally:
             # Best-effort cleanup (optional)
             pass
@@ -211,7 +214,7 @@ if __name__ == "__main__":
 ## Troubleshooting
 
 - **“Connection refused”**: Ensure the SPX model’s Modbus server is started:  
-  `inst["communication"]["modbus_tcp"].start()`.
+  `inst["communication"]["modbus_slave"].start()`.
 - **No change in values**: If you used deterministic stepping, make sure you call `client.run()` in your test loop, or explicitly advance model time if your system expects it.
 - **Racey reads with `start()`**: In real‑time mode, add small sleeps (e.g., `time.sleep(0.1)`) to align with `timer.dt`, or switch back to deterministic stepping for unit tests.
 

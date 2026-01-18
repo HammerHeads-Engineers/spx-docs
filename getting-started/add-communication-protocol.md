@@ -33,26 +33,23 @@ actions:
   - { ramp: $in(temperature), stop_value: 150, duration: 5, type: overshoot, overshoot: 5}
   - { noise: $out(temperature), std: 0.01, mode: proportional}
 communication:
-  - modbus_tcp:
+  - modbus_slave:
       host: 0.0.0.0
       port: 502
       unit_id: 1
       mapping:
         temperature: { address: [0,1], group: h_r, type: float }
-        sensor_fault: { address: [4,4], group: c_o, type: uint_16 }
+        sensor_fault: { address: 4, group: c_o, type: bool }
 '''
 # 3) Register the model and create an instance
 model_def = yaml.safe_load(pt_100_yaml)
 client["models"]["pt_100_modbus"] = model_def
 client["instances"]["pt100_mb_1"] = "pt_100_modbus"
 inst = client["instances"]["pt100_mb_1"]
-modbus = inst["communication"]["modbus_tcp"]
-# Ensure the adapter is attached before connecting from an external Modbus client.
-attach = getattr(modbus, "attach", None)
-if callable(attach):
-    attach()
-# 4) Step deterministically (so external tools see changing readings)
 client.prepare()
+modbus = inst["communication"]["modbus_slave"]
+modbus.start()
+# 4) Step deterministically (so external tools see changing readings)
 for k in range(1, 51):  # ~5 seconds with dt=0.1
     inst["timer"]["time"] = k * 0.1
     client.run()
@@ -66,10 +63,10 @@ for k in range(1, 51):  # ~5 seconds with dt=0.1
 In this configuration:
 
 * `port` and `host` define where the Modbus TCP server listens (inside the SPX Server container). Common default is `0.0.0.0:502`; in this example we set them explicitly for predictability.
-* `data_encoding` defines byte order for values. **Default:** **Big Endian**.
+* Byte order is controlled via `bit_order` in mapping entries. **Default:** **Big Endian**.
 * `mapping` binds model attributes to Modbus tables and addresses:
   * `temperature` → `group: h_r` (holding registers), `address: [0, 1]`, `type: float` — a float32 spanning two consecutive 16‑bit registers.
-  * `sensor_fault` → `group: c_o` (coils), `address: [4, 4]`, `type: uint_16` — a binary 0/1 flag indicating sensor contact fault.
+  * `sensor_fault` → `group: c_o` (coils), `address: 4`, `type: bool` — a binary 0/1 flag indicating sensor contact fault.
 
 **Attributes in this model**
 
@@ -168,8 +165,6 @@ spx_client = spx_python.init(
 
 # 2) Get the model instance (created earlier in the guide)
 model = spx_client["instances"]["pt100_mb_1"]  # adjust if you used a different name
-# modbus = inst["communication"]["modbus_tcp"]
-# modbus.start()
 
 # 3) SUT: Modbus client (modbus_tk)
 sensor = SUTSensor(host="127.0.0.1", port=1502, unit=1, timeout=2.0)

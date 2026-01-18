@@ -1,6 +1,6 @@
 # Protocol Adapters
 
-Extending SPX with a new protocol adapter lets you bridge simulations to bespoke transports—legacy serial buses, proprietary gateways, or vendor-specific SDKs. This guide distils common patterns from the built-in adapters (`ascii`, `http_endpoint`, `modbus_tcp`, `mqtt`, `ble`) so you can author your own protocol component with minimal guesswork.
+Extending SPX with a new protocol adapter lets you bridge simulations to bespoke transports—legacy serial buses, proprietary gateways, or vendor-specific SDKs. This guide distils common patterns from the built-in adapters (`ascii`, `http_endpoint`, `modbus_slave`, `mqtt`, `ble`) so you can author your own protocol component with minimal guesswork.
 
 ---
 
@@ -123,7 +123,7 @@ Each protocol aligns with the same lifecycle contract:
 5. **detach()/attach()** — optional; typically used to temporarily pause the adapter while keeping state intact (HTTP, BLE).
 6. **release()/destroy()** — final clean-up invoked when the component is removed.
 
-Mirror the defensive coding seen in `http_endpoint` and `modbus_tcp`: always handle repeated calls, and log failures with enough context to debug (host, port, broker address).
+Mirror the defensive coding seen in `http_endpoint` and `modbus_slave`: always handle repeated calls, and log failures with enough context to debug (host, port, broker address).
 
 ---
 

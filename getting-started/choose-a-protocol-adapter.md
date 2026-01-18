@@ -16,7 +16,7 @@ Use this page to pick the adapter that matches your client/driver, then follow e
 
 | Adapter | When to use | Docs | Example model (spx-examples) |
 |---|---|---|---|
-| Modbus TCP | PLC/HMI/device drivers using Modbus | [Modbus](../spx-core/communications/modbus.md) | [`thermal_controller__modbus.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/thermal_controllers/generic/thermal_controller__modbus.yaml) |
+| Modbus TCP | PLC/HMI/device drivers using Modbus | [Modbus](../spx-core/communications/modbus.md) | [`energy_meter_iem3000__modbus.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/energy_meter_iem3000__modbus.yaml) |
 | ASCII / SCPI | Lab instruments, SCPI drivers | [ASCII](../spx-core/communications/ascii.md) | [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/measurement_instruments/generic/multimeter__scpi.yaml) |
 | MQTT | IoT telemetry pipelines and brokers | [MQTT](../spx-core/communications/mqtt.md) | [`environment_sensor__mqtt.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/environment_sensor__mqtt.yaml) |
 | BLE | Mobile apps and BLE test rigs | [BLE](../spx-core/communications/ble.md) | [`temperature_sensor__ble_gatt.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/ble/generic/temperature_sensor__ble_gatt.yaml) |

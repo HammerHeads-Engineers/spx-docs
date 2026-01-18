@@ -251,7 +251,7 @@ fig.show()
 ## 5) (Optional) Expose your Python‑backed attributes over Modbus
 
 You can build **hybrid** models: keep the logic in Python, and expose selected attributes via industrial protocols such as **Modbus**.\
-The YAML below adds a `communications` section to the same model and publishes `temperature` as a holding register with `modbus_tcp`.
+The YAML below adds a `communication` section to the same model and publishes `temperature` as a holding register with `modbus_slave` (recommended Modbus TCP server adapter).
 
 > Exact keys and encoding options may vary across SPX releases. See the dedicated Modbus guide for full details. The snippet demonstrates the typical shape.
 
@@ -274,10 +274,10 @@ models:
                 temperature: { property: temperature }
             methods: 
                 run: tick
-    communications:
-    - modbus_tcp:
-        mapping:
-          temperature: { address: [0, 1], group: h_r, type: uint_32 }
+    communication:
+      - modbus_slave:
+          mapping:
+            temperature: { address: [0, 1], group: h_r, type: float }
 
 instances:
   - sensor: PySensorModel
@@ -311,14 +311,14 @@ instances:
           }
         }
       },
-      "communications": [
+      "communication": [
         {
-          "modbus_tcp": {
+          "modbus_slave": {
             "mapping": {
               "temperature": {
                 "address": [0, 1],
                 "group": "h_r",
-                "type": "uint_32"
+                "type": "float"
               }
             }
           }

@@ -3,7 +3,7 @@
 SPX Server provides three Modbus components:
 
 - `modbus_slave` — Modbus TCP slave/server based on `pymodbus`
-- `modbus_tcp` — Modbus TCP slave/server based on `modbus-tk` (legacy/compat)
+- `modbus_tcp` — Modbus TCP slave/server based on `modbus-tk` (legacy/compat; avoid for new models)
 - `modbus_master` — Modbus TCP master/client that polls and/or writes bindings
 
 ## Addressing vocabulary
@@ -59,6 +59,8 @@ scenarios:
 ## `modbus_tcp` (modbus-tk server)
 
 **YAML key:** `modbus_tcp` (from `spx-server/spx_core/communications/modbus/modbus_tcp.py`)
+
+> **Legacy adapter**: `modbus_tcp` exists for backward compatibility. Avoid it for new models; prefer `modbus_slave` for Modbus TCP server simulations.
 
 Example model (spx-examples):
 [`library/domains/thermal_controllers/generic/thermal_controller__modbus.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/thermal_controllers/generic/thermal_controller__modbus.yaml)

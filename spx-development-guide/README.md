@@ -122,7 +122,7 @@ _No firmware‑side changes – your app still speaks the same protocol._
 | Action           | Rule that evolves an attribute over time                              | `ramp, noise, pid, custom spring_mass_damper` |
 | Connection       | Virtual wire linking two attributes in different instances            | `sensor_to_controller`                        |
 | Hook / Condition | Event engine for side-effects or safety logic                         | `refresh_model, emergency_shutdown`           |
-| Communication    | ...                                                                   | `modbus_tcp, http, mqtt`                      |
+| Communication    | ...                                                                   | `modbus_slave, http_endpoint, mqtt`           |
 
 _All elements are serialised to YAML, version-controlled in Git and reloadable at runtime, so a change in one brick immediately propagates through the whole virtual system._
 
