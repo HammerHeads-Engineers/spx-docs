@@ -76,17 +76,19 @@ With this setup, any Modbus TCP client can read the **temperature** from holding
 
 ## Quick Verification with a Modbus TCP Client
 
-> Note: your `docker-compose.yml` must expose the Modbus port for host-side clients. For example:
->
-> ```yaml
-> services:
->   spx-server:
->     ports:
->       - "8000:8000"
->       - "1502:502"   # Modbus TCP (avoid privileged host port 502 on Linux/rootless Docker)
-> ```
->
-> Then connect your SUT to `127.0.0.1:1502`.
+Note: your `docker-compose.yml` must expose the Modbus port for host-side clients.
+
+For example:
+
+```yaml
+services:
+  spx-server:
+    ports:
+      - "8000:8000"
+      - "1502:502"   # Modbus TCP (avoid privileged host port 502 on Linux/rootless Docker)
+```
+
+Then connect your SUT to `127.0.0.1:1502`.
 
 To verify the Modbus TCP server is working correctly, create a simple Python client that connects to your **host-exposed Modbus port** (for example `127.0.0.1:1502`), reads the mapped registers, and plots the temperature and fault flag. This example also demonstrates **Model‑in‑the‑Loop (MiL)**: the **Software Under Test (SUT)** is the Modbus TCP client (your real application code), while the **SPX model** plays the role of the plant/sensor. We use `spx-python` only as a control channel to start/stop the model so data capture stays in sync.
 

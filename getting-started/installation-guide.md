@@ -49,6 +49,7 @@ Use the personalized Compose you just downloaded:
 
    ```bash
    docker compose up -d
+   docker compose logs -f spx-server
    ```
 
 3. Verify the server is healthy:
@@ -100,6 +101,7 @@ Create a minimal Compose + `.env` file (recommended for teams because the key st
 
    ```bash
    docker compose up -d
+   docker compose logs -f spx-server
    ```
 
 4. Verify the server is healthy:
