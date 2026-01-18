@@ -1,6 +1,6 @@
 # Actions Module
 
-Actions transform attribute values and push results back into the simulation. Each action is a component that reads inputs (`#attr(...)`, `#in(...)`, `#ext(...)`), performs logic, and writes to one or more outputs. Use the `actions` container inside a model to declare the steps that run every simulation tick.
+Actions transform attribute values and push results back into the simulation. Each action is a component that reads inputs (for example `$in(...)`, `$attr(...)`, `$ext(...)`), performs logic, and writes to one or more outputs. Use the `actions` container inside a model to declare the steps that run every simulation tick.
 
 ## Defining actions in YAML
 
@@ -10,14 +10,14 @@ The `actions` container expects a list of mappings. The first key in each mappin
 {% tab title="YAML" %}
 ```yaml
 actions:
-  - function: "#attr(apparent_power)"
-    call: "(#attr(voltage) * #attr(current))"
+  - function: $in(apparent_power)
+    call: $in(voltage) * $in(current)
     params:
       alarm_threshold: 100.0
 
   - set:
-      - "#attr(status)"
-      - "#attr(alarm_active)"
+      - $in(status)
+      - $in(alarm_active)
     value: "RUNNING"
 
 ```
@@ -28,16 +28,16 @@ actions:
 {
   "actions": [
     {
-      "function": "#attr(apparent_power)",
-      "call": "(#attr(voltage) * #attr(current))",
+      "function": "$in(apparent_power)",
+      "call": "$in(voltage) * $in(current)",
       "params": {
         "alarm_threshold": 100.0
       }
     },
     {
       "set": [
-        "#attr(status)",
-        "#attr(alarm_active)"
+        "$in(status)",
+        "$in(alarm_active)"
       ],
       "value": "RUNNING"
     }
@@ -50,7 +50,7 @@ actions:
 
 During loading the SDK turns this into action components named `function` and `set`. If you reuse the same action name multiple times, the container suffices by appending counters (`set_1`, `set_2`).
 
-Attribute references accept prefixes `#attr`, `#internal`, `#external`, `#in`, `#out`, or `#ext` (aliases for the same wrappers). The hash `#` marker is optional; `$` or `@` also work, but `#` keeps YAML tidy.
+Attribute references use the `<prefix>(<path>)` form. In actions, prefer `$in(...)` (internal value) and `$out(...)` (external value), plus `$attr(...)`/`$ext(...)` for non-attribute component paths. The SDK also understands the same prefixes with `#` or `@` markers, but `spx-examples` uses `$...` consistently.
 
 ## The actions container
 
@@ -69,12 +69,12 @@ Use `set` to assign a literal value to one or more attributes. The schema enforc
 {% tab title="YAML" %}
 ```yaml
 actions:
-  - set: "#attr(transfer_in_progress)"
+  - set: $in(transfer_in_progress)
     value: 1
 
   - set:
-      - "#attr(status)"
-      - "#attr(display_message)"
+      - $in(status)
+      - $in(display_message)
     value: "Calibrating"
 
 ```
@@ -84,11 +84,11 @@ actions:
 ```json
 {
   "actions": [
-    { "set": "#attr(transfer_in_progress)", "value": 1 },
+    { "set": "$in(transfer_in_progress)", "value": 1 },
     {
       "set": [
-        "#attr(status)",
-        "#attr(display_message)"
+        "$in(status)",
+        "$in(display_message)"
       ],
       "value": "Calibrating"
     }
@@ -114,13 +114,13 @@ Class: `spx_sdk.actions.function_action.FunctionAction`
 {% tab title="YAML" %}
 ```yaml
 actions:
-  - function: "#attr(apparent_power)"
-    call: "#attr(voltage) * #attr(current)"
+  - function: $in(apparent_power)
+    call: $in(voltage) * $in(current)
 
   - function:
-      - "#attr(active_power)"
-      - "#attr(standby_power)"
-    call: "max(#attr(power_draw) - idle_offset, 0)"
+      - $in(active_power)
+      - $in(standby_power)
+    call: max($in(power_draw) - idle_offset, 0)
     params:
       idle_offset: 15.0
 
@@ -132,15 +132,15 @@ actions:
 {
   "actions": [
     {
-      "function": "#attr(apparent_power)",
-      "call": "#attr(voltage) * #attr(current)"
+      "function": "$in(apparent_power)",
+      "call": "$in(voltage) * $in(current)"
     },
     {
       "function": [
-        "#attr(active_power)",
-        "#attr(standby_power)"
+        "$in(active_power)",
+        "$in(standby_power)"
       ],
-      "call": "max(#attr(power_draw) - idle_offset, 0)",
+      "call": "max($in(power_draw) - idle_offset, 0)",
       "params": { "idle_offset": 15.0 }
     }
   ]
@@ -155,6 +155,55 @@ Features covered by `tests/test_actions/test_function_action.py`:
 - Supports multiple outputs (same result written to each).
 - `params` entries become resolvable attributes on the action, so you can reference them directly in `call`.
 - Attribute references inside `call` are resolved at runtime, after `prepare()` gathers wrappers.
+
+### Function `call`: imports, params, prepare_call
+
+The `function` action in `spx-examples` relies on a few extra fields to keep expressions readable and deterministic:
+
+- `params`: define constants, attribute references, or derived values. You can define them under `params:` or inline as top-level keys — both end up available as variables in `call`.
+- `imports`: expose modules/symbols inside the expression context (string, list, or mapping of `alias: "pkg.symbol"`; no `import ...` statements in YAML).
+- `prepare_call`: optional expression executed once during `prepare()` (commonly used to seed RNG or initialise cached helpers).
+
+#### Example: imports + prepare_call (deterministic RNG)
+
+```yaml
+actions:
+  - function: $out(noise_sample)
+    imports: [random]
+    prepare_call: random.seed(0)
+    params:
+      lo: 1
+      hi: 10
+    call: random.randint(lo, hi)
+```
+
+#### Example: imports mapping (alias + symbol import)
+
+```yaml
+actions:
+  - function: $in(absolute_error)
+    imports:
+      fabs: "math.fabs"
+    call: fabs($in(setpoint) - $in(measured))
+```
+
+#### Example: derived params + nested-chain references
+
+Parameters can reference other params and runtime values. `call` can also be a multi-line YAML block (`|`) as long as it forms a valid Python expression.
+
+```yaml
+actions:
+  - function: $in(delta_pct)
+    params:
+      cycle_time_s: 0.5
+      dt: "$(~.timer.default_step) or $(~.polling.interval) or 0.25"
+      delta_pct_value: "(cycle_time_s / max(1.0, dt)) * 100.0"
+    call: delta_pct_value
+```
+
+For the canonical DSL contract used by `spx-examples`, see:
+
+- https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md
 
 ## Base action class
 
@@ -191,7 +240,7 @@ With the registration in place you can declare:
 {% tab title="YAML" %}
 ```yaml
 actions:
-  - ramp: "#attr(progress)"
+  - ramp: $in(progress)
     start_value: 0
     stop_value: 100
     step: 5
@@ -204,7 +253,7 @@ actions:
 {
   "actions": [
     {
-      "ramp": "#attr(progress)",
+      "ramp": "$in(progress)",
       "start_value": 0,
       "stop_value": 100,
       "step": 5

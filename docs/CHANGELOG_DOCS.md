@@ -12,6 +12,7 @@ This file tracks documentation QA work for this PR (repo-wide scan + targeted fi
 
 - [x] `getting-started/installation-guide.md` — Wrong domain (`simplephysics.io`, `simplephysx.io` + Wix URL); pins an old image tag. Proposed: switch to `https://simplephysx.com`, remove/soften pinned tag, keep commands aligned with `docker compose`.
 - [x] `spx-development-guide/quick-start-spx-sdk-in-5-minutes.md` — Placeholder clone URL (`github.com/your-org/...`). Proposed: use canonical repo URL and keep Python range consistent.
+- [x] `spx-development-guide/spx-sdk/actions.md` — FunctionAction docs and examples lag behind the `spx-examples` DSL (missing `imports`/`prepare_call`, under-documenting `params`, inconsistent `$in/$out/$attr/$ext` usage). Proposed: align examples with the canonical DSL and document `imports`, derived params, and deterministic seeding patterns.
 
 - [x] `spx-core/README.md` — Broken internal link (`system.md`). Proposed: fix links to `spx-core/system/README.md` and `spx-core/communications/README.md`.
 - [x] `spx-core/communications/ble.md` — Broken link to a sibling repo (`../../spx-ble-adapter/...`) and local-only `cd ../...` instructions. Proposed: link to public repo + show `git clone` flow.
