@@ -1,6 +1,8 @@
 # ASCII / SCPI Adapter
 
-The ASCII adapter serves simple text protocols such as SCPI. It listens on TCP, parses newline-terminated commands, and maps them to attributes or custom handlers.
+**YAML key:** `ascii`
+
+The ASCII adapter serves simple text protocols such as SCPI. It listens on TCP (or UDP), parses newline-terminated commands, and maps them to attributes or custom handlers.
 
 ## Configuration Example
 
@@ -46,13 +48,16 @@ communication:
 
 ### Key fields
 
+- `host` (default: `0.0.0.0`) — bind address
 - `port`: TCP port. If omitted, SPX auto-assigns a free port starting at `5025` and writes the effective value into the instance at `communication.ascii.port`.
+- `transport` (default: `tcp`) — `tcp|udp`
 - `terminator`: command delimiter (`\n`, `\r\n`, etc.).
 - `response_delay`: base delay inserted before responding (seconds).
 - `response_jitter`: random delta added to delay (seconds).
-- `mappings`: command dictionary. Each key is a command pattern.
+- `mappings`: legacy command dictionary (still supported; converted internally to `bindings`). Each key is a command pattern.
   - A string value returns the referenced attribute.
   - A mapping updates attributes or invokes handlers; optional `response` overrides the reply.
+- `bindings`: explicit binding definitions (see `spx-server/tests/test_spx_core/test_communications/test_ascii/test_scpi.py` for examples).
 
 > Tip: In `spx-examples`, the SCPI multimeter model omits `port` so it can run multiple instances without collisions. See [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/measurement_instruments/generic/multimeter__scpi.yaml).
 

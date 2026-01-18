@@ -1,149 +1,121 @@
-# MQTT Adapter
+# MQTT adapter
 
-The MQTT adapter publishes telemetry and consumes commands via MQTT topics. It runs an asyncio client inside the core and integrates with diagnostics for connection monitoring.
+SPX Server ships two MQTT components:
 
-## Configuration Example
+- `mqtt` — single-broker MQTT client using bindings
+- `mqtt-ha` — multi-broker MQTT with optional availability + Home Assistant discovery fan-out
 
-{% tabs %}
-{% tab title="YAML" %}
+## `mqtt` (single broker)
+
+**YAML key:** `mqtt` (from `spx-server/spx_core/communications/mqtt/server.py`)
+
+Example model (spx-examples):
+[`library/domains/iot/generic/environment_sensor__mqtt.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/environment_sensor__mqtt.yaml)
+
 ```yaml
 communication:
-  mqtt:
-    broker: mqtt://localhost:1883
-    client_id: spx-sim
-    topics:
-      publish:
-        - topic: spx/sim/temperature
-          payload: "#out(attributes.temperature)"
-          qos: 1
-          retain: false
-          period: 1.0
-      subscribe:
-        - topic: spx/sim/setpoint
-          qos: 1
-          handler:
-            path: system.controllers.pid.update_setpoint
+  - mqtt:
+      broker: host.docker.internal
+      port: 1883
+      topic_prefix: spx/examples/env
+      publish_interval: 0.5
+      publish_jitter: 0.0
+      response_delay: 0.0
+      default_qos: 1
+      default_retain: false
+      payload_codec: text
+      bindings:
+        - name: temperature
+          attribute: $ext(temperature_c)
+          topic: telemetry/temperature_c
+          direction: publish
 
+        - name: setpoint
+          attribute: $attr(target_c)
+          topic: command/setpoint_c
+          direction: subscribe
 ```
-{% endtab %}
 
-{% tab title="JSON" %}
-```json
-{
-  "communication": {
-    "mqtt": {
-      "broker": "mqtt://localhost:1883",
-      "client_id": "spx-sim",
-      "topics": {
-        "publish": [
-          {
-            "topic": "spx/sim/temperature",
-            "payload": "#out(attributes.temperature)",
-            "qos": 1,
-            "retain": false,
-            "period": 1.0
-          }
-        ],
-        "subscribe": [
-          {
-            "topic": "spx/sim/setpoint",
-            "qos": 1,
-            "handler": {
-              "path": "system.controllers.pid.update_setpoint"
-            }
-          }
-        ]
-      }
-    }
-  }
-}
+### Top-level fields
 
-```
-{% endtab %}
-{% endtabs %}
+- `broker` (required): broker host name / IP (alias: `host`)
+- `port` (default: `1883`)
+- `keepalive` (default: `60`)
+- `connect_timeout` (default: `10.0`)
+- `topic_prefix` (default: empty) — prepended to every binding `topic`
+- `default_qos` (default: `1`) — `0|1|2`
+- `default_retain` (default: `true`)
+- `publish_interval` / `publish_jitter` (seconds; defaults: `0.5` / `0.0`)
+- `response_delay` (seconds; default: `0.0`) — artificial delay before publishing
+- `payload_codec` (default: `text`) — `text|json|raw`
+- Credentials (optional):
+  - `username` / `password`
+  - `credentials_file` (`.yaml`/`.yml`/`.json` with `username`/`password`)
+  - `env_username_var` / `env_password_var`
 
-### Key fields
+### Bindings
 
-- `broker`: URI (`mqtt://host:port` or `mqtts://` for TLS).
-- `client_id`: identifier; default random.
-- `username` / `password`: credentials (optional).
-- `topics.publish`: periodic publications.
-  - `payload`: expression resolved each time (stringified JSON supported).
-  - `period`: seconds between publishes; omit for publish-on-change.
-- `topics.subscribe`: inbound topics.
-  - `handler.path`: component method to call with message payload.
-  - `qos`: MQTT QoS level.
+Each entry under `bindings` maps a topic to an attribute reference:
 
-### Payload formats
+- `topic` (required)
+- `direction`: `publish|subscribe|both` (aliases map to outbound/inbound/bidirectional)
+- `attribute` (shorthand) or `attributes` / `read_attribute` / `write_attribute`
+- Optional per-binding overrides: `qos`, `retain`, `payload_codec`, `publish_interval`, `publish_jitter`, `response_delay`
 
-- Strings are sent as-is.
-- For JSON, use the YAML multiline literal and ensure clients parse it accordingly.
+Legacy config is still accepted and converted to bindings:
 
-{% tabs %}
-{% tab title="YAML" %}
-```yaml
-payload: |
-  {
-    "voltage": #out(attributes.voltage),
-    "current": #out(attributes.current)
-  }
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-```json
-{
-  "payload": "{\n  \"voltage\": #out(attributes.voltage),\n  \"current\": #out(attributes.current)\n}"
-}
-```
-{% endtab %}
-{% endtabs %}
+- `publishers:` + `subscribers:` → `bindings:`
 
 ### Scenarios
 
-{% tabs %}
-{% tab title="YAML" %}
+Use `detach` / `attach` to simulate broker disconnects:
+
 ```yaml
 scenarios:
   mqtt_disconnect:
     duration: 4.0
     call:
-      path: communication.mqtt.disconnect
-      stop_path: communication.mqtt.connect
-  mqtt_latency:
-    duration: 6.0
-    overrides:
-      communication.mqtt.publish_delay: 2.0
-
+      path: communication.mqtt.detach
+      stop_path: communication.mqtt.attach
 ```
-{% endtab %}
 
-{% tab title="JSON" %}
-```json
-{
-  "scenarios": {
-    "mqtt_disconnect": {
-      "duration": 4.0,
-      "call": {
-        "path": "communication.mqtt.disconnect",
-        "stop_path": "communication.mqtt.connect"
-      }
-    },
-    "mqtt_latency": {
-      "duration": 6.0,
-      "overrides": {
-        "communication.mqtt.publish_delay": 2.0
-      }
-    }
-  }
-}
+## `mqtt-ha` (multi broker + availability + discovery)
 
+**YAML key:** `mqtt-ha` (from `spx-server/spx_core/communications/mqtt/ha_server.py`)
+
+Minimal example (based on spx-server unit tests):
+
+```yaml
+communication:
+  - mqtt-ha:
+      brokers:
+        - host: broker-a.local
+          port: 1883
+          client_id: spx-a
+        - host: broker-b.local
+          port: 1883
+      availability:
+        topic: ha/device/status
+        online: ready
+        offline: lost
+        retain: true
+        qos: 1
+      discovery:
+        prefix: homeassistant
+        device_id: spx-device-1
+        entities:
+          - component: sensor
+            object_id: temperature
+            state_binding: temp_pub
+            payload:
+              unit_of_measurement: "°C"
+      bindings:
+        - name: temp_pub
+          attribute: "#attr(sensor.temperature)"
+          topic: telemetry/temp
+          direction: publish
 ```
-{% endtab %}
-{% endtabs %}
 
-### Tips
+## Contract (tests)
 
-- Use persistent sessions only when you need message replay after reconnect.
-- Monitor diagnostics logs for connection loss or publish errors.
-- Combine with actions to throttle telemetry based on system state (e.g., publish only when values change significantly).
+- `spx-server/tests/test_spx_core/test_communications/test_mqtt/test_mqtt.py`

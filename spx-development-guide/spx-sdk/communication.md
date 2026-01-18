@@ -4,54 +4,76 @@ icon: satellite-dish
 
 # Communication
 
-Communication components expose simulations over fieldbus protocols (Modbus, MQTT, HTTP, etc.) so real software can talk to your model. In the SDK the core abstraction is `Protocol`, a lightweight `SpxComponent` subclass that you extend for each transport. The SPX Server ships production-grade protocol adapters; the SDK version focuses on quick prototyping and test doubles.
+Communication components expose simulations over fieldbus protocols (Modbus, MQTT, HTTP, etc.) so real software can talk to your model.
 
-## Declaring protocols
+- **SPX Server** ships production-grade protocol adapters (see [Communication Adapters](../../spx-core/communications/README.md)).
+- **SPX SDK** provides the `Protocol` base class so you can implement custom transports (prototypes, test doubles, lab-only bridges).
+
+## Declaring adapters in a model
 
 {% tabs %}
 {% tab title="YAML" %}
 ```yaml
-communication:
-  modbus_tcp:
-    class: ModbusServer
-    host: 127.0.0.1
-    port: 5020
-    mapping:
-      temperature: { address: 0, group: holding, type: float }
-      heater_on: { address: 10, group: coils, type: bool }
+attributes:
+  temperature: 21.5
 
-  http_api:
-    class: SimpleHttp
-    base_path: "/sim"
+communication:
+  - modbus_slave:
+      host: 0.0.0.0
+      port: 5020
+      mapping:
+        temperature: { address: [0, 1], group: h_r, type: float }
+
+  - http_endpoint:
+      host: 0.0.0.0
+      port: 8001
+      endpoints:
+        "/v1/temperature":
+          method: GET
+          response:
+            temperature: "#attr(temperature)"
 ```
 {% endtab %}
 
 {% tab title="JSON" %}
 ```json
 {
-  "communication": {
-    "modbus_tcp": {
-      "class": "ModbusServer",
-      "host": "127.0.0.1",
-      "port": 5020,
-      "mapping": {
-        "temperature": { "address": 0, "group": "holding", "type": "float" },
-        "heater_on": { "address": 10, "group": "coils", "type": "bool" }
+  "attributes": {
+    "temperature": 21.5
+  },
+  "communication": [
+    {
+      "modbus_slave": {
+        "host": "0.0.0.0",
+        "port": 5020,
+        "mapping": {
+          "temperature": { "address": [0, 1], "group": "h_r", "type": "float" }
+        }
       }
     },
-    "http_api": {
-      "class": "SimpleHttp",
-      "base_path": "/sim"
+    {
+      "http_endpoint": {
+        "host": "0.0.0.0",
+        "port": 8001,
+        "endpoints": {
+          "/v1/temperature": {
+            "method": "GET",
+            "response": {
+              "temperature": "#attr(temperature)"
+            }
+          }
+        }
+      }
     }
-  }
+  ]
 }
 ```
 {% endtab %}
 {% endtabs %}
 
-- `communication` sits next to `attributes`, `actions`, and other containers inside a model definition.
-- Each child entry instantiates a protocol component registered under `communication` (for example `ModbusServer`, `SimpleHttp`).
-- Your protocol class decides which fields it consumes (`host`, `port`, `mapping`, ...).
+- Each adapter entry is instantiated from the registry using its YAML key (`@register_class(name="...")`).
+- Adapter schemas are defined by the server implementation and tested in `spx-server/tests/test_spx_core/test_communications/**`.
+- For adapter-specific configuration, use the reference pages under [Communication Adapters](../../spx-core/communications/README.md).
 
 ## Implementing a custom protocol
 
@@ -63,8 +85,8 @@ from spx_sdk.registry import register_class
 from spx_sdk.diagnostics import guard
 
 
-@register_class(name="SimpleHttp")
-class SimpleHttp(Protocol):
+@register_class(name="simple_http")
+class SimpleHttpProtocol(Protocol):
     def _populate(self, definition):
         super()._populate(definition)
         self.host = definition.get("host", "127.0.0.1")
@@ -84,7 +106,18 @@ class SimpleHttp(Protocol):
         return True
 ```
 
-Inside your protocol you can reach the model via `self.parent`, resolve attributes (`self.parent["attributes"]`), or trigger hooks. Tests in `tests/test_communication/test_protocol.py` show how guard-wrapped lifecycle methods surface `SpxFault` events when something goes wrong.
+You can instantiate your custom protocol in model YAML using the same registry key:
+
+```yaml
+communication:
+  - simple_http:
+      host: 127.0.0.1
+      port: 8080
+      base_path: /sim
+```
+
+Inside your protocol you can reach the model via `self.parent`, resolve attributes (`resolve_attribute_reference_hierarchical(self.parent, ref)`), or trigger hooks. SDK tests show how guard-wrapped lifecycle methods surface faults:
+[`tests/test_communication/test_protocol.py`](https://github.com/HammerHeads-Engineers/spx-sdk/blob/main/tests/test_communication/test_protocol.py)
 
 ## Managing children and teardown
 
@@ -94,9 +127,9 @@ Standard lifecycle methods return `True` by default. Override only what you need
 
 ## SDK vs. server adapters
 
-- **SDK goals:** quick mocks, deterministic unit tests, rapid iteration when designing new protocol mappings.
-- **Server goals:** high-performance networking, concurrency, security features, hot reload. When you ship to production, rely on the server's built-in adapters or deploy your custom adapter there.
-- **Shared definitions:** the YAML/JSON schema is consistent. Anything you test locally using your SDK protocol should drop into the server configuration with identical keys. If you need server-only fields (TLS, clustering), guard them behind conditionals in your authoring tooling.
+- **SDK goals:** quick mocks, deterministic unit tests, rapid iteration when designing a protocol mapping.
+- **Server goals:** production networking, concurrency, and built-in adapters with contract tests.
+- **Shared mechanism:** both rely on the same registry pattern (`@register_class(name="...")`) and the `Protocol` base.
 
 ## Best practices
 

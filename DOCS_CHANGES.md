@@ -8,7 +8,13 @@
 - `spx-development-guide/spx-sdk/imports/README.md` — Filled the stub “Imports” page with practical guidance and a minimal `python_file` example.
 - `spx-development-guide/spx-sdk/imports/pythonfile.md` — Updated to match current SDK behavior (SpxComponent vs plain classes, lifecycle `methods`, repo-relative path guidance).
 - `spx-development-guide/spx-sdk/actions.md` — Expanded `function`/`call` documentation (`imports`, `params`, multi-line calls, local helper imports aligned with `spx-examples`).
+- `spx-development-guide/spx-sdk/communication.md` — Removed legacy `class:` examples; aligned with SPX Server adapter keys (`modbus_slave`, `http_endpoint`) and linked to the authoritative adapter docs.
 - `spx-core/communications/ascii.md` — Documented ASCII port auto-assignment and aligned scenario naming with `spx-examples`.
+- `spx-core/communications/README.md` — Rebuilt as a routing hub listing all protocol adapters implemented in `spx-server` (with YAML keys and grouping).
+- `spx-core/communications/http.md` — Rewritten to match `http_endpoint` + `endpoints` schema and grounded in `spx-examples`.
+- `spx-core/communications/mqtt.md` — Rewritten to match bindings-based `mqtt` schema; added `mqtt-ha` coverage (brokers, availability, discovery).
+- `spx-core/communications/modbus.md` — Rewritten to cover `modbus_slave` / `modbus_tcp` / `modbus_master` and the correct Modbus area codes (`h_r/i_r/c_o/d_i`).
+- `spx-core/communications/bacnet.md` / `coap.md` / `dali.md` / `knx.md` / `lwm2m.md` / `matter.md` / `mbus.md` / `ocpp.md` / `opcua.md` / `profinet.md` / `redfish.md` / `snmp.md` — Added minimal, test-grounded pages for all remaining SPX Server communication adapters.
 - `getting-started/add-communication-protocol.md` — Tightened Modbus tutorial consistency (env vars, mapping text vs YAML, float decoding example, port exposure note).
 - `troubleshooting-and-support/common-issues-and-solutions.md` — Expanded to 10 issues in Symptom/Cause/Fix format with concrete debug commands.
 - `troubleshooting-and-support/faqs.md` — Expanded to 14 FAQs for integrators/dev/QA (determinism, CI, version pinning, validation).
@@ -26,6 +32,7 @@
 
 - `SUMMARY.md` — Added `overview/start-here.md` under the Overview section.
 - `SUMMARY.md` — Added `getting-started/choose-a-protocol-adapter.md` under Quick Start.
+- `SUMMARY.md` — Expanded “Communication Adapters” to include all protocol pages.
 
 ## Pages hidden
 

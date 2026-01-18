@@ -1,127 +1,69 @@
-# HTTP Adapter
+# HTTP endpoint adapter
 
-The HTTP adapter exposes REST endpoints backed by your simulation. It builds on FastAPI inside the server core.
+**YAML key:** `http_endpoint` (from `spx-server/spx_core/communications/http/http_endpoint.py`)
 
-## Configuration example
+Expose deterministic HTTP endpoints backed by attributes. Endpoints are served by FastAPI/uvicorn inside SPX Server.
 
-{% tabs %}
-{% tab title="YAML" %}
+## Minimal configuration
+
+This example is taken from `spx-examples`:
+[`library/domains/iot/generic/air_quality_station__http.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/air_quality_station__http.yaml)
+
 ```yaml
 communication:
-  http_api:
-    host: 0.0.0.0
-    port: 8080
-    base_path: "/sim"
-    routes:
-      get:/temperature:
-        response: "#out(attributes.temperature)"
-      post:/setpoint:
-        body: json
-        handler:
-          path: system.controllers.pid.update_setpoint
+  - http_endpoint:
+      host: 0.0.0.0
+      port: 8092
+      response_delay: 0.0
+      response_jitter: 0.0
+      endpoints:
+        "/v1/air-quality/{profile}":
+          method: GET
+          alias:
+            - "#attr(active_profile) = #param(profile)"
+          response:
+            profile: "#attr(active_profile)"
+            current:
+              timestamp: "#attr(current_timestamp)"
+              pm2_5: "#attr(current_pm2_5)"
 
+        "/simulator/profile":
+          method: POST
+          alias:
+            - "#attr(active_profile) = #param(__body__.profile)"
+          response:
+            status: "ok"
+            active_profile: "#attr(active_profile)"
 ```
-{% endtab %}
 
-{% tab title="JSON" %}
-```json
-{
-  "communication": {
-    "http_api": {
-      "host": "0.0.0.0",
-      "port": 8080,
-      "base_path": "/sim",
-      "routes": {
-        "get:/temperature": {
-          "response": "#out(attributes.temperature)"
-        },
-        "post:/setpoint": {
-          "body": "json",
-          "handler": {
-            "path": "system.controllers.pid.update_setpoint"
-          }
-        }
-      }
-    }
-  }
-}
+## Schema (what SPX Server actually supports)
 
-```
-{% endtab %}
-{% endtabs %}
+Top-level fields under `http_endpoint`:
 
-### Key fields
+- `host` (default: `0.0.0.0`)
+- `port` (default: `8001`)
+- `response_delay` / `response_jitter` (seconds; defaults: `0.0`)
+- `endpoints`: mapping or list of endpoints
 
-- `host` / `port`: bind address and port.
-- `base_path`: prefix for all routes.
-- `routes`: mapping of `<method>:<path>` to handlers.
-  - `response`: return an attribute or literal.
-  - `handler.path`: call a method on a component or custom module.
-  - `body`: decode request body (`json`, `form`, `raw`).
-  - `status`: override HTTP status.
+Per-endpoint fields:
 
-### Authentication & headers
+- `path`: required when `endpoints` is a list (when `endpoints` is a mapping, the key is the path)
+- `method` (or `type`): HTTP method(s). Accepts a string (`GET`) or a list (`[GET, POST]`). Default: `GET`.
+- `status_code`: success status code (default: `200`)
+- `alias`: optional list of assignments executed before rendering the response, for example:
+  - `"#attr(setpoint) = #param(__body__.setpoint)"`
+- `response`: any YAML structure. Strings may reference:
+  - `#attr(name)` — an attribute value
+  - `#param(name)` — a path/body parameter (see below)
+- `http_code`: optional conditions that raise non-2xx codes (see server tests for the exact syntax).
 
-Use `headers` to add fixed headers; integrate with server middleware for auth (`spx_server` provides plugins for API keys, tokens).
+## Path params and request body
 
-{% tabs %}
-{% tab title="YAML" %}
-```yaml
-headers:
-  Access-Control-Allow-Origin: "*"
+- Path parameters come from `{param}` segments in the path (for example `{profile}`).
+- For `POST`/`PUT`/`PATCH`, SPX parses JSON (or falls back to raw text) and exposes it as `__body__`.
+  - Example: `#param(__body__.profile)` reads `{"profile": "..."}`.
 
-```
-{% endtab %}
+## Contract (tests)
 
-{% tab title="JSON" %}
-```json
-{
-  "headers": {
-    "Access-Control-Allow-Origin": "*"
-  }
-}
-
-```
-{% endtab %}
-{% endtabs %}
-
-### Streaming / SSE
-
-For high-frequency data, use MQTT or WebSockets. The HTTP adapter suits control plane operations (setpoints, snapshots, config queries).
-
-### Scenarios
-
-{% tabs %}
-{% tab title="YAML" %}
-```yaml
-scenarios:
-  http_503:
-    duration: 5.0
-    overrides:
-      communication.http_api.status_override: 503
-
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-```json
-{
-  "scenarios": {
-    "http_503": {
-      "duration": 5.0,
-      "overrides": {
-        "communication.http_api.status_override": 503
-      }
-    }
-  }
-}
-
-```
-{% endtab %}
-{% endtabs %}
-
-### Tips
-
-- Document your API in OpenAPI format and keep YAML aligned.
-- Guard handlers with diagnostics (`@guard(prefix="api.")`) to capture faults.
-- Return typed JSON (numbers, booleans) to make client validation easier.
+- `spx-server/tests/test_spx_core/test_communications/test_http/test_http_endpoint.py`
+- `spx-server/tests/test_spx_core/test_communications/test_http/test_open_meteo_static_model.py`

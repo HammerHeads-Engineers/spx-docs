@@ -1,123 +1,152 @@
-# Modbus Adapter
+# Modbus adapters
 
-The Modbus adapter presents registers and coils so external PLCs or software masters can interact with your simulation.
+SPX Server provides three Modbus components:
 
-## Configuration Example
+- `modbus_slave` — Modbus TCP slave/server based on `pymodbus`
+- `modbus_tcp` — Modbus TCP slave/server based on `modbus-tk` (legacy/compat)
+- `modbus_master` — Modbus TCP master/client that polls and/or writes bindings
 
-{% tabs %}
-{% tab title="YAML" %}
+## Addressing vocabulary
+
+SPX uses short area codes (the same values appear in server tests and `spx-examples`):
+
+- `h_r` — holding registers
+- `i_r` — input registers
+- `c_o` — coils
+- `d_i` — discrete inputs
+
+Value codecs commonly used in mappings/bindings:
+
+- `float`, `bool`, `int_16`, `int_32`, `uint_16`, `uint_32`, `str`, `raw`
+
+Addresses can be a single integer or a `[start, end]` pair (use a pair for multi-register values like `float`).
+
+## `modbus_slave` (pymodbus server)
+
+**YAML key:** `modbus_slave` (from `spx-server/spx_core/communications/modbus_slave/server.py`)
+
+Example model (spx-examples):
+[`library/domains/iot/generic/energy_meter_iem3000__modbus.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/energy_meter_iem3000__modbus.yaml)
+
 ```yaml
 communication:
-  modbus_tcp:
-    host: 0.0.0.0
-    port: 502
-    unit_id: 1
-    mapping:
-      voltage:
-        group: holding
-        address: 0
-        type: float
-      heater_on:
-        group: coils
-        address: 10
-        type: bool
-
+  - modbus_slave:
+      host: 0.0.0.0
+      # If omitted, SPX auto-picks the first free port >= 5020 for this host.
+      port: 5023
+      unit_id: 1
+      zero_fill: true
+      # Legacy format (accepted): mapping → converted internally to bindings.
+      mapping:
+        current_l1_a: { address: [3000, 3001], group: i_r, type: float }
+        energy_import_kwh: { address: [45100, 45101], group: h_r, type: float }
 ```
-{% endtab %}
 
-{% tab title="JSON" %}
-```json
-{
-  "communication": {
-    "modbus_tcp": {
-      "host": "0.0.0.0",
-      "port": 502,
-      "unit_id": 1,
-      "mapping": {
-        "voltage": {
-          "group": "holding",
-          "address": 0,
-          "type": "float"
-        },
-        "heater_on": {
-          "group": "coils",
-          "address": 10,
-          "type": "bool"
-        }
-      }
-    }
-  }
-}
+Connectivity simulation:
 
-```
-{% endtab %}
-{% endtabs %}
+- `detach()` enters “blackhole” mode (keeps TCP listener, suppresses responses → client timeouts).
+- `attach()` exits blackhole mode and restarts the server to drop stale connections.
 
-### Key fields
-
-- `host` / `port`: bind address, default 0.0.0.0:502.
-- `unit_id`: Modbus unit/slave ID.
-- `mapping`: one entry per attribute.
-  - `group`: `holding`, `input`, `coils`, or `discrete`.
-  - `address`: starting register/coil address.
-  - `type`: numeric or boolean encoding (`uint16`, `float`, `bool`, etc.).
-  - Optional `length` for arrays.
-
-### Read/write behavior
-
-- Reads return `external_value` unless overridden by scenarios.
-- Writes update `external_value` and trigger hooks (`on_external_set`).
-- Use actions to propagate external writes to internal state if needed.
-
-### Endianness & packing
-
-The adapter supports standard Modbus packing. For custom packing, implement a small wrapper action that translates external writes into structured values.
-
-### Scenarios
-
-{% tabs %}
-{% tab title="YAML" %}
 ```yaml
 scenarios:
-  modbus_disconnect:
-    duration: 3.0
-    call:
-      path: communication.modbus_tcp.detach
-      stop_path: communication.modbus_tcp.attach
-  modbus_noise:
+  modbus_timeouts:
     duration: 5.0
-    overrides:
-      communication.modbus_tcp.response_delay: 0.5
-
+    call:
+      path: communication.modbus_slave.detach
+      stop_path: communication.modbus_slave.attach
 ```
-{% endtab %}
 
-{% tab title="JSON" %}
-```json
-{
-  "scenarios": {
-    "modbus_disconnect": {
-      "duration": 3.0,
-      "call": {
-        "path": "communication.modbus_tcp.detach",
-        "stop_path": "communication.modbus_tcp.attach"
-      }
-    },
-    "modbus_noise": {
-      "duration": 5.0,
-      "overrides": {
-        "communication.modbus_tcp.response_delay": 0.5
-      }
-    }
-  }
-}
+## `modbus_tcp` (modbus-tk server)
 
+**YAML key:** `modbus_tcp` (from `spx-server/spx_core/communications/modbus/modbus_tcp.py`)
+
+Example model (spx-examples):
+[`library/domains/thermal_controllers/generic/thermal_controller__modbus.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/thermal_controllers/generic/thermal_controller__modbus.yaml)
+
+```yaml
+communication:
+  - modbus_tcp:
+      host: 0.0.0.0
+      port: 502
+      id: 1
+      poll_interval: 0.25
+      response_delay: 0.0
+      mapping:
+        temperature: { address: [0, 1], group: h_r, type: float }
+        power_on: { address: [6, 6], group: c_o, type: uint_16 }
 ```
-{% endtab %}
-{% endtabs %}
 
-### Tips
+Connectivity simulation uses `detach()` / `attach()` (removes/re-adds the slave from the shared Modbus master).
 
-- Keep addresses contiguous for performance.
-- Document register maps alongside YAML so firmware teams stay in sync.
-- Use unit tests with a Modbus client library (`pymodbus`, `modbus-tk`) to validate behavior before deploying.
+## `modbus_master` (client / poller)
+
+**YAML key:** `modbus_master` (from `spx-server/spx_core/communications/modbus_master/master.py`)
+
+Minimal example (based on spx-server tests):
+
+```yaml
+communication:
+  - modbus_master:
+      poll_interval: 0.2
+      timeout: 1.0
+      bindings:
+        - name: temperature_in
+          host: 127.0.0.1
+          port: 1502
+          slave_id: 1
+          area: h_r
+          address: 300
+          length: 2
+          codec: float
+          direction: inbound
+          attribute: "#attr(temp_read)"
+
+        - name: coil_out
+          host: 127.0.0.1
+          port: 1502
+          slave_id: 1
+          area: c_o
+          address: 4
+          length: 1
+          codec: bool
+          direction: outbound
+          attribute: "#attr(alarm_write)"
+```
+
+Notes:
+
+- Dependency: `modbus_master` uses `modbus_tk` (`TcpMaster`) under the hood (same family as `modbus_tcp`). If `modbus_tk` is missing, reads/writes will fail.
+- Per-binding `host` / `port` / `slave_id` let one `modbus_master` talk to multiple devices.
+- `direction`: `inbound` (read → write attribute), `outbound` (read attribute → write registers/coils), `bidirectional` (both). If omitted, SPX defaults to `inbound` for polling.
+
+### Top-level fields
+
+- `host` / `port` — default connection target for bindings (defaults: `127.0.0.1:502`)
+- `timeout` — per-operation timeout in seconds (default: `1.0`)
+- `poll_interval` — default poll interval in seconds (default: `0.2`)
+- `ops_per_cycle` — max binding ops per worker cycle (default: `16`)
+- `max_retries` / `retry_delay` — retry policy for one read/write attempt (defaults: `1` / `0.05`)
+- `max_failures` — after this many failures the binding is disabled (default: `3`)
+- `min_poll_interval` — lower bound for polling cadence (default: `0.05`)
+
+### Binding fields
+
+Each entry under `bindings` is a Modbus master binding (`spx-server/spx_core/communications/modbus_master/bindings.py`):
+
+- Connection overrides: `host`, `port`, `slave_id`
+- Register selection: `area` (alias: `group`), `address` (int or `[start, end]`), `length`
+- Encoding: `codec` (alias: `type`), `bit_order` (alias: `byte_order`)
+- Attribute mapping: `attribute` (shorthand) or explicit `read_attribute` / `write_attribute`
+- Timing/stability overrides: `poll_interval`, `timeout`, `max_retries`, `retry_delay`, `max_failures`
+
+Write semantics:
+
+- Coils (`area: c_o`) and holding registers (`area: h_r`) are writable.
+- Discrete inputs (`d_i`) and input registers (`i_r`) are read-only (outbound writes will error).
+- Codec/length must match (for example `float` requires `length: 2`; `uint_16` requires `length: 1`).
+
+## Contract (tests)
+
+- `spx-server/tests/test_spx_core/test_communications/test_modbus/*` (`modbus_slave`)
+- `spx-server/tests/test_spx_core/test_communications/test_modbus_tcp/*` (`modbus_tcp`)
+- `spx-server/tests/test_spx_core/test_communications/test_modbus_master/*` (`modbus_master`)
