@@ -72,7 +72,7 @@ communication:
 {% endtabs %}
 
 - Each adapter entry is instantiated from the registry using its YAML key (`@register_class(name="...")`).
-- Adapter schemas are defined by the server implementation and tested in `spx-server/tests/test_spx_core/test_communications/**`.
+- Adapter schemas are defined by the server implementation.
 - For adapter-specific configuration, use the reference pages under [Communication Adapters](../../spx-core/communications/README.md).
 
 ## Implementing a custom protocol

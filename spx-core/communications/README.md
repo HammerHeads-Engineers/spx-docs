@@ -4,14 +4,13 @@ icon: satellite-dish
 
 # Communication Adapters
 
-SPX Server implements protocol adapters in `spx-server/spx_core/communications/**`.
+SPX Server implements protocol adapters in its server runtime.
 
 **Source of truth (in priority order):**
 
-1) Implementation: `spx-server/spx_core/communications/**`
+1) Implementation: SPX Server runtime
    - The YAML key is the `@register_class(name="...")` value.
-2) Tests (contract): `spx-server/tests/test_spx_core/test_communications/**`
-3) Runnable examples: `spx-examples/library/domains/**`
+2) Runnable examples: `spx-examples/library/domains/**`
 
 ## Shared concepts
 
@@ -55,5 +54,5 @@ SPX Server implements protocol adapters in `spx-server/spx_core/communications/*
 Tips:
 
 * Keep protocol ports/config in `parameters` so deployments can override them per environment.
-* Prefer `spx-server` tests as the “contract” for adapter behavior.
+* Prefer spx-examples models as runnable references for adapter behavior.
 * Use scenarios for chaos testing (`detach`, delay spikes, message drops) and validate via MiL tests.

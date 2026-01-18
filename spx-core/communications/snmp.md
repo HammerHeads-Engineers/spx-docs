@@ -56,7 +56,3 @@ communication:
 
 - UDP transport uses `pysnmp` under the hood (see server code for supported SNMPv2c/SNMPv3 fields).
 - Loopback transport is used by unit tests (attach a server to the client).
-
-## Contract (tests)
-
-- `spx-server/tests/test_spx_core/test_communications/test_snmp/`

@@ -36,7 +36,7 @@ communication:
 
 Notes:
 
-- Dependency: `knx_ip` requires `xknx` in the SPX Server environment (see server tests for the runtime guard).
+- Dependency: `knx_ip` requires `xknx` in the SPX Server environment.
 - Use `dpt` (for example `9.001`) or `value_codec` (for example `bool`, `uint8`) to control encoding.
 
 ## `knx_ip_simulator` (in-memory bus)
@@ -55,7 +55,3 @@ communication:
           read_attribute: "#attr(room_temperature_c)"
           write_attribute: "#attr(room_temperature_c)"
 ```
-
-## Contract (tests)
-
-- `spx-server/tests/test_spx_core/test_communications/test_knx/`

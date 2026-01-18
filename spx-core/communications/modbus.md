@@ -8,7 +8,7 @@ SPX Server provides three Modbus components:
 
 ## Addressing vocabulary
 
-SPX uses short area codes (the same values appear in server tests and `spx-examples`):
+SPX uses short area codes (the same values appear in `spx-examples`):
 
 - `h_r` — holding registers
 - `i_r` — input registers
@@ -23,7 +23,7 @@ Addresses can be a single integer or a `[start, end]` pair (use a pair for multi
 
 ## `modbus_slave` (pymodbus server)
 
-**YAML key:** `modbus_slave` (from `spx-server/spx_core/communications/modbus_slave/server.py`)
+**YAML key:** `modbus_slave`
 
 Example model (spx-examples):
 [`library/domains/iot/generic/energy_meter_iem3000__modbus.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/energy_meter_iem3000__modbus.yaml)
@@ -58,7 +58,7 @@ scenarios:
 
 ## `modbus_tcp` (modbus-tk server)
 
-**YAML key:** `modbus_tcp` (from `spx-server/spx_core/communications/modbus/modbus_tcp.py`)
+**YAML key:** `modbus_tcp`
 
 > **Legacy adapter**: `modbus_tcp` exists for backward compatibility. Avoid it for new models; prefer `modbus_slave` for Modbus TCP server simulations.
 
@@ -82,9 +82,9 @@ Connectivity simulation uses `detach()` / `attach()` (removes/re-adds the slave 
 
 ## `modbus_master` (client / poller)
 
-**YAML key:** `modbus_master` (from `spx-server/spx_core/communications/modbus_master/master.py`)
+**YAML key:** `modbus_master`
 
-Minimal example (based on spx-server tests):
+Minimal example:
 
 ```yaml
 communication:
@@ -133,7 +133,7 @@ Notes:
 
 ### Binding fields
 
-Each entry under `bindings` is a Modbus master binding (`spx-server/spx_core/communications/modbus_master/bindings.py`):
+Each entry under `bindings` is a Modbus master binding:
 
 - Connection overrides: `host`, `port`, `slave_id`
 - Register selection: `area` (alias: `group`), `address` (int or `[start, end]`), `length`
@@ -146,9 +146,3 @@ Write semantics:
 - Coils (`area: c_o`) and holding registers (`area: h_r`) are writable.
 - Discrete inputs (`d_i`) and input registers (`i_r`) are read-only (outbound writes will error).
 - Codec/length must match (for example `float` requires `length: 2`; `uint_16` requires `length: 1`).
-
-## Contract (tests)
-
-- `spx-server/tests/test_spx_core/test_communications/test_modbus/*` (`modbus_slave`)
-- `spx-server/tests/test_spx_core/test_communications/test_modbus_tcp/*` (`modbus_tcp`)
-- `spx-server/tests/test_spx_core/test_communications/test_modbus_master/*` (`modbus_master`)

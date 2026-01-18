@@ -53,8 +53,4 @@ communication:
 ## Notes
 
 - Dependency: requires the Python `ocpp` package in the SPX Server environment.
-- `bindings` can be a mapping (as shown) or a list; the binding schema is defined in `spx-server/spx_core/communications/ocpp/bindings.py`.
-
-## Contract (tests)
-
-- `spx-server/tests/test_spx_core/test_communications/test_ocpp/`
+- `bindings` can be a mapping (as shown) or a list.

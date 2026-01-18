@@ -6,8 +6,6 @@ Synchronise SPX attributes with a DALI-IP gateway by sending DALI frames (and op
 
 ## Minimal configuration
 
-Based on `spx-server/tests/test_spx_core/test_communications/test_dali/test_client.py`:
-
 ```yaml
 attributes:
   level: 10
@@ -46,7 +44,3 @@ communication:
 - `transport`: `udp|tcp|serial`
 - Gateway connection config is provided at the protocol level (`gateway_host`, `gateway_port`) or via the optional `gateway:` block.
 - Bindings describe DALI targets (`short_address` / `group_address` / `broadcast` / `instance_id`) and the command list (`commands`).
-
-## Contract (tests)
-
-- `spx-server/tests/test_spx_core/test_communications/test_dali/`

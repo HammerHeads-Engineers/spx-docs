@@ -57,7 +57,7 @@ communication:
 - `mappings`: legacy command dictionary (still supported; converted internally to `bindings`). Each key is a command pattern.
   - A string value returns the referenced attribute.
   - A mapping updates attributes or invokes handlers; optional `response` overrides the reply.
-- `bindings`: explicit binding definitions (see `spx-server/tests/test_spx_core/test_communications/test_ascii/test_scpi.py` for examples).
+- `bindings`: explicit binding definitions (see the spx-examples SCPI multimeter model for a concrete pattern).
 
 > Tip: In `spx-examples`, the SCPI multimeter model omits `port` so it can run multiple instances without collisions. See [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/measurement_instruments/generic/multimeter__scpi.yaml).
 

@@ -9,7 +9,7 @@ SPX Server ships:
 
 **YAML key:** `profinet_server`
 
-Minimal example (based on `spx-server` unit tests):
+Minimal example:
 
 ```yaml
 communication:
@@ -61,7 +61,3 @@ communication:
 
 - `profinet_server` accepts either `bindings:` or legacy `mapping:` (auto-converted to bindings).
 - `profinet_snap7_adapter` requires `python-snap7` when used.
-
-## Contract (tests)
-
-- `spx-server/tests/test_spx_core/test_communications/test_profinet/`

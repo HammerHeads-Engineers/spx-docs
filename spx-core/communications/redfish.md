@@ -56,8 +56,4 @@ communication:
 ## Notes
 
 - The loopback server is in-memory and is primarily used by the loopback transport in tests.
-- Pointer syntax is JSON Pointer-like (see server tests for examples and edge cases).
-
-## Contract (tests)
-
-- `spx-server/tests/test_spx_core/test_communications/test_redfish/`
+- Pointer syntax is JSON Pointer-like.

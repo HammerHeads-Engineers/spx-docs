@@ -7,7 +7,7 @@ SPX Server ships two MQTT components:
 
 ## `mqtt` (single broker)
 
-**YAML key:** `mqtt` (from `spx-server/spx_core/communications/mqtt/server.py`)
+**YAML key:** `mqtt`
 
 Example model (spx-examples):
 [`library/domains/iot/generic/environment_sensor__mqtt.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/environment_sensor__mqtt.yaml)
@@ -81,9 +81,9 @@ scenarios:
 
 ## `mqtt-ha` (multi broker + availability + discovery)
 
-**YAML key:** `mqtt-ha` (from `spx-server/spx_core/communications/mqtt/ha_server.py`)
+**YAML key:** `mqtt-ha`
 
-Minimal example (based on spx-server unit tests):
+Minimal example:
 
 ```yaml
 communication:
@@ -115,7 +115,3 @@ communication:
           topic: telemetry/temp
           direction: publish
 ```
-
-## Contract (tests)
-
-- `spx-server/tests/test_spx_core/test_communications/test_mqtt/test_mqtt.py`

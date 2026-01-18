@@ -41,8 +41,3 @@ communication:
 
 - Dependency: requires `asyncua` in the SPX Server environment.
 - Bindings support either `attributes` (single attribute) or explicit `read_attribute` / `write_attribute` for bidirectional nodes.
-
-## Contract (code + tests)
-
-- Implementation: `spx-server/spx_core/communications/opcua/opcua_server.py`
-- Tests: `spx-server/tests/test_spx_core/test_communications/test_opcua/`

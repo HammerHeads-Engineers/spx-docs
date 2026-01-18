@@ -40,7 +40,3 @@ communication:
 
 - Dependency: requires `python-matter-server` (and its `chip` dependencies) in the SPX Server environment.
 - `node_id` accepts integers or hex strings (`0x...`).
-
-## Contract (tests)
-
-- `spx-server/tests/test_spx_core/test_communications/test_matter/`

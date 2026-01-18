@@ -6,8 +6,6 @@ Simulated LwM2M device that registers against an LwM2M server and exposes resour
 
 ## Minimal configuration
 
-Based on `spx-server/tests/test_spx_core/test_communications/test_lwm2m/test_lwm2m_integration.py`:
-
 ```yaml
 attributes:
   temperature: 24.2
@@ -44,9 +42,5 @@ communication:
 
 - Dependency: requires `aiocoap` (tests are skipped when it is missing).
 - The binding schema is LwM2M-specific (`object_id` / `instance_id` / `resource_id` + `operation`).
-- `spx-examples` currently contains an `lwm2m` model using a different (older) schema. Prefer the `spx-server` tests until the example is aligned:
+- `spx-examples` currently contains an `lwm2m` model using a different (older) schema. Prefer the binding schema shown here until the example is aligned:
   - [`environment_sensor__lwm2m.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/environment_sensor__lwm2m.yaml)
-
-## Contract (tests)
-
-- `spx-server/tests/test_spx_core/test_communications/test_lwm2m/`

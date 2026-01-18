@@ -9,7 +9,7 @@ SPX Server ships two M-Bus components:
 
 **YAML key:** `mbus`
 
-Minimal example (based on `spx-server` unit tests):
+Minimal example:
 
 ```yaml
 attributes:
@@ -57,7 +57,3 @@ communication:
               direction: outbound
               attribute: "#attr(energy_kwh)"
 ```
-
-## Contract (tests)
-
-- `spx-server/tests/test_spx_core/test_communications/test_mbus/`

@@ -6,9 +6,6 @@ Expose BACnet/IP objects backed by SPX attributes (read/write mappings live unde
 
 ## Minimal configuration
 
-Based on the `spx-server` test model:
-`spx-server/tests/test_spx_core/test_communications/test_bacnet/hvac_example.yaml`
-
 ```yaml
 attributes:
   room_temperature: 22.0
@@ -47,11 +44,10 @@ communication:
 ## Notes
 
 - Dependency: requires `bacpypes3` in the SPX Server environment.
-- The full schema supports additional BACnet features (device metadata, schedules, alarms). Use `spx-server` tests as the contract.
+- The full schema supports additional BACnet features (device metadata, schedules, alarms). See spx-examples for richer models.
 
 ## References
 
-- Tests: `spx-server/tests/test_spx_core/test_communications/test_bacnet/`
 - Example models (spx-examples):
   - [`hvac_flexit_nordic__bacnet.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/hvac_flexit_nordic__bacnet.yaml)
   - [`fire_alarm_panel__bacnet.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/fire_alarm_panel__bacnet.yaml)

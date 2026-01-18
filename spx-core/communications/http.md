@@ -1,6 +1,6 @@
 # HTTP endpoint adapter
 
-**YAML key:** `http_endpoint` (from `spx-server/spx_core/communications/http/http_endpoint.py`)
+**YAML key:** `http_endpoint`
 
 Expose deterministic HTTP endpoints backed by attributes. Endpoints are served by FastAPI/uvicorn inside SPX Server.
 
@@ -55,15 +55,10 @@ Per-endpoint fields:
 - `response`: any YAML structure. Strings may reference:
   - `#attr(name)` — an attribute value
   - `#param(name)` — a path/body parameter (see below)
-- `http_code`: optional conditions that raise non-2xx codes (see server tests for the exact syntax).
+- `http_code`: optional conditions that raise non-2xx codes.
 
 ## Path params and request body
 
 - Path parameters come from `{param}` segments in the path (for example `{profile}`).
 - For `POST`/`PUT`/`PATCH`, SPX parses JSON (or falls back to raw text) and exposes it as `__body__`.
   - Example: `#param(__body__.profile)` reads `{"profile": "..."}`.
-
-## Contract (tests)
-
-- `spx-server/tests/test_spx_core/test_communications/test_http/test_http_endpoint.py`
-- `spx-server/tests/test_spx_core/test_communications/test_http/test_open_meteo_static_model.py`
