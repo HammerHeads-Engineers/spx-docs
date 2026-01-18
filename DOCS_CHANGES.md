@@ -4,10 +4,12 @@
 
 - `overview/start-here.md` — Added a role-based “golden path” (Integrator / Developer / QA/CI).
 - `README.md` / `overview/introduction.md` / hub pages — Replaced “Next page: `path`” / backtick paths with real clickable links (non-UI, non-LLM-first).
+- `getting-started/choose-a-protocol-adapter.md` — Added an integrator routing page (pick an adapter, link to docs, link to `spx-examples` models).
 - `spx-development-guide/spx-sdk/imports/README.md` — Filled the stub “Imports” page with practical guidance and a minimal `python_file` example.
 - `spx-development-guide/spx-sdk/imports/pythonfile.md` — Updated to match current SDK behavior (SpxComponent vs plain classes, lifecycle `methods`, repo-relative path guidance).
 - `spx-development-guide/spx-sdk/actions.md` — Expanded `function`/`call` documentation (`imports`, `params`, multi-line calls, local helper imports aligned with `spx-examples`).
 - `spx-core/communications/ascii.md` — Documented ASCII port auto-assignment and aligned scenario naming with `spx-examples`.
+- `getting-started/add-communication-protocol.md` — Tightened Modbus tutorial consistency (env vars, mapping text vs YAML, float decoding example, port exposure note).
 - `troubleshooting-and-support/common-issues-and-solutions.md` — Expanded to 10 issues in Symptom/Cause/Fix format with concrete debug commands.
 - `troubleshooting-and-support/faqs.md` — Expanded to 14 FAQs for integrators/dev/QA (determinism, CI, version pinning, validation).
 - `appendices/glossary-of-terms.md` — Expanded to ~20 core terms with consistent terminology.
@@ -23,6 +25,7 @@
 ## Navigation
 
 - `SUMMARY.md` — Added `overview/start-here.md` under the Overview section.
+- `SUMMARY.md` — Added `getting-started/choose-a-protocol-adapter.md` under Quick Start.
 
 ## Pages hidden
 

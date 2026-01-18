@@ -14,11 +14,11 @@ Goal: run SPX Server, expose a protocol adapter, and point your client/driver at
 
 1. Start the server: [Installation Guide](../getting-started/installation-guide.md)
 2. Build a minimal model + instance: [Build Your First Simulation](../getting-started/build-your-first-simulation.md)
-3. Add a protocol adapter/mapping: [Add a communication protocol](../getting-started/add-communication-protocol.md)
+3. Choose an adapter + expose ports: [Choose a protocol adapter](../getting-started/choose-a-protocol-adapter.md)
 4. Use a known-good example model for your protocol (from `spx-examples`):
-   - Modbus: `library/domains/iot/generic/energy_meter_iem3000__modbus.yaml`
-   - MQTT: `library/domains/iot/generic/environment_sensor__mqtt.yaml`
-   - SCPI/ASCII: `library/domains/measurement_instruments/generic/multimeter__scpi.yaml`
+   - Modbus: [`energy_meter_iem3000__modbus.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/energy_meter_iem3000__modbus.yaml)
+   - MQTT: [`environment_sensor__mqtt.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/environment_sensor__mqtt.yaml)
+   - SCPI/ASCII: [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/measurement_instruments/generic/multimeter__scpi.yaml)
 5. If something fails, start with: [Common Issues and Solutions](../troubleshooting-and-support/common-issues-and-solutions.md)
 
 ## Developer (model authoring + extensions)
@@ -41,4 +41,3 @@ Goal: run deterministic MiL suites locally and in CI, with reproducible starting
 2. Wire into pipelines: [CI/CD Setup (GitHub Actions)](../getting-started/ci-cd-setup-github-actions.md)
 3. Use Snapshots as fixtures when needed: [Snapshots — Getting Started](../getting-started/snapshots-guide.md)
 4. Pin versions and upgrade safely: [Release Notes](../release-notes.md)
-

@@ -108,6 +108,7 @@ docker compose up -d
 Health endpoint:
 
 ```bash
+docker compose ps
 curl -fsS http://localhost:8000/health
 ```
 
@@ -120,6 +121,7 @@ Expected response shape (values may differ):
 ### Logs
 
 ```bash
+docker compose logs -f spx-server
 docker compose logs --tail=200 --no-color spx-server
 ```
 
