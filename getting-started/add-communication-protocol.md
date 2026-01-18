@@ -2,7 +2,7 @@
 icon: satellite-dish
 ---
 
-# Add a Modbus TCP/IP to Your Simulation
+# Add Modbus TCP/IP to Your Simulation
 
 Communication protocols are a first‑class part of SPX simulations: they expose your simulated signals to external tools (HMIs, test rigs, PLCs) and let real software interact with the model as if it were physical hardware.
 
@@ -63,9 +63,8 @@ for k in range(1, 51):  # ~5 seconds with dt=0.1
 In this configuration:
 
 * `port` and `host` define where the Modbus TCP server listens (inside the SPX Server container). Common default is `0.0.0.0:502`; in this example we set them explicitly for predictability.
-* Byte order is controlled via `bit_order` in mapping entries. **Default:** **Big Endian**.
 * `mapping` binds model attributes to Modbus tables and addresses:
-  * `temperature` → `group: h_r` (holding registers), `address: [0, 1]`, `type: float` — a float32 spanning two consecutive 16‑bit registers.
+  * `temperature` → `group: h_r` (holding registers), `address: [0, 1]`, `type: float` — a float32 spanning two consecutive 16‑bit registers (Big Endian default).
   * `sensor_fault` → `group: c_o` (coils), `address: 4`, `type: bool` — a binary 0/1 flag indicating sensor contact fault.
 
 **Attributes in this model**
@@ -118,16 +117,9 @@ class SUTSensor:
         self._mb = None
 
     def connect(self):
-        """Create master and validate connectivity with a lightweight probe."""
+        """Create master and set timeouts."""
         self._mb = modbus_tcp.TcpMaster(host=self.host, port=self.port)
         self._mb.set_timeout(self.timeout)
-        # # Optional: do a tiny probe read; if server rejects, this will raise.
-        # try:
-        #     # A harmless probe: read 0 registers (some stacks allow count=0, others do not).
-        #     # If your server dislikes count=0, you can skip the probe or read a known-safe address.
-        #     self._mb.execute(self.unit, c.READ_COILS, 0, 1)
-        # except Exception as e:
-        #     raise RuntimeError(f"Could not connect to Modbus server at {self.host}:{self.port} (unit {self.unit})") from e
 
     @staticmethod
     def _float_from_two_u16_be(regs):

@@ -30,5 +30,5 @@ For a working baseline, `spx-examples/docker-compose.yml` already exposes common
 
 ## Next steps
 
-- Example tutorial: [Add a Modbus TCP/IP to Your Simulation](add-communication-protocol.md)
+- Example tutorial: [Add Modbus TCP/IP to Your Simulation](add-communication-protocol.md)
 - Deterministic QA flow: [Use in Unit Tests (MiL)](use-in-unit-tests-mil.md)

@@ -10,7 +10,7 @@
   * [Installation Guide](getting-started/installation-guide.md)
   * [Build Your First Simulation](getting-started/build-your-first-simulation.md)
   * [Choose a protocol adapter](getting-started/choose-a-protocol-adapter.md)
-  * [Add a Modbus TCP/IP to Your Simulation](getting-started/add-communication-protocol.md)
+  * [Add Modbus TCP/IP to Your Simulation](getting-started/add-communication-protocol.md)
   * [Extend with a Custom Component](getting-started/extend-with-custom-component.md)
 * [Advanced Setup & Automation](getting-started/advanced-setup.md)
   * [Loading Python Classes as Models](getting-started/code-defined-simulations.md)

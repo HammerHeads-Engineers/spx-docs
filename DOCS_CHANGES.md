@@ -1,5 +1,12 @@
 # Docs changes (non-UI, non-LLM-first)
 
+## This PR
+
+- `getting-started/installation-guide.md` — Made Path A/Path B steps self-contained (in-place compose + `.env` + run + `/health` verify) and added explicit success criteria.
+- `getting-started/add-communication-protocol.md` — Tightened the Modbus mapping explanation to match the shown YAML 1:1 and removed confusing commented probe code from the SUT snippet; renamed page title to “Add Modbus TCP/IP to Your Simulation”.
+- `SUMMARY.md` / `getting-started/choose-a-protocol-adapter.md` / `getting-started/use-in-unit-tests-mil.md` — Updated link text to match the Modbus tutorial title (no path changes).
+- Python requirement verified against `spx-examples` (`python = "^3.9"`, CI `3.9–3.12`) and kept consistent across non-excluded docs pages.
+
 ## Pages filled / improved
 
 - `overview/start-here.md` — Added a role-based “golden path” (Integrator / Developer / QA/CI).

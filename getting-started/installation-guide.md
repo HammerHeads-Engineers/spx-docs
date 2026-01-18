@@ -58,48 +58,58 @@ Use the personalized Compose you just downloaded:
    curl -fsS http://localhost:8000/health
    ```
 
+   Success criteria: `curl` exits with code `0` and returns JSON with `"status":"ok"`.
+
 #### Path B — Custom image/tag (e.g., specific alpha) or team template
 
 Create a minimal Compose + `.env` file (recommended for teams because the key stays out of YAML).
 
-1) Create `.env` (do not commit it; treat it as a secret):
+1. Create `.env` (do not commit it; treat it as a secret):
 
-```dotenv
-# .env
-SPX_PRODUCT_KEY=REPLACE_ME
+   ```dotenv
+   # .env
+   SPX_PRODUCT_KEY=REPLACE_ME
 
-# Optional: pin the server image tag.
-# If you want a known-good baseline, use the tag pinned in spx-examples/docker-compose.yml.
-SPX_SERVER_IMAGE=simplephysx/spx-server:v1.0.0-rc.43
-```
+   # Optional: pin the server image tag.
+   # If you want a known-good baseline, use the tag pinned in spx-examples/docker-compose.yml.
+   SPX_SERVER_IMAGE=simplephysx/spx-server:v1.0.0-rc.43
+   ```
 
-2) Create `docker-compose.yml`:
+2. Create `docker-compose.yml`:
 
-```yaml
-# docker-compose.yml
-services:
-  spx-server:
-    image: ${SPX_SERVER_IMAGE}
-    ports:
-      - "8000:8000"
-    environment:
-      SPX_PRODUCT_KEY: ${SPX_PRODUCT_KEY}
-    healthcheck:
-      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/health > /dev/null || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    volumes:
-      - ./extensions:/app/extensions
-    command: ["--address", "0.0.0.0", "--product-key", "${SPX_PRODUCT_KEY}", "--extensions", "/app/extensions"]
+   ```yaml
+   # docker-compose.yml
+   services:
+     spx-server:
+       image: ${SPX_SERVER_IMAGE}
+       ports:
+         - "8000:8000"
+       environment:
+         SPX_PRODUCT_KEY: ${SPX_PRODUCT_KEY}
+       healthcheck:
+         test: ["CMD-SHELL", "curl -fsS http://localhost:8000/health > /dev/null || exit 1"]
+         interval: 10s
+         timeout: 5s
+         retries: 5
+       volumes:
+         - ./extensions:/app/extensions
+       command: ["--address", "0.0.0.0", "--product-key", "${SPX_PRODUCT_KEY}", "--extensions", "/app/extensions"]
+   ```
 
-```
+3. Start the server:
 
-Start the server:
+   ```bash
+   docker compose up -d
+   ```
 
-```bash
-docker compose up -d
-```
+4. Verify the server is healthy:
+
+   ```bash
+   docker compose ps
+   curl -fsS http://localhost:8000/health
+   ```
+
+   Success criteria: `curl` exits with code `0` and returns JSON with `"status":"ok"`.
 
 ## Common commands (both paths)
 
@@ -134,6 +144,6 @@ docker compose down --remove-orphans
 ## Next steps
 
 - [Build Your First Simulation](build-your-first-simulation.md)
-- [Add a Modbus TCP/IP to Your Simulation](add-communication-protocol.md)
+- [Add Modbus TCP/IP to Your Simulation](add-communication-protocol.md)
 - [Use in Unit Tests (MiL)](use-in-unit-tests-mil.md)
 - [CI/CD Setup (GitHub Actions)](ci-cd-setup-github-actions.md)

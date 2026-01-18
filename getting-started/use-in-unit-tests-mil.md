@@ -11,7 +11,7 @@ We will:
 - drive the simulation **deterministically** (no wall‑clock timing),  
 - read the measurements via the SUT and assert expected behavior.
 
-> For a hands‑on intro to wiring Modbus, see **“Add a Modbus TCP/IP to Your Simulation”** in this Getting Started section.
+> For a hands‑on intro to wiring Modbus, see **“Add Modbus TCP/IP to Your Simulation”** in this Getting Started section.
 
 ---
 
