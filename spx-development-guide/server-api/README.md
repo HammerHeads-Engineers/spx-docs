@@ -13,6 +13,6 @@ SPX Server exposes a versioned REST API used by:
 
 ## References
 
-- API reference: `api-v3-reference/README.md` (OpenAPI is embedded under this chapter in the GitBook navigation)
-- Python wrapper: `spx-development-guide/spx-python-client-wrapper/README.md`
-- Common endpoints: `spx-core/system/README.md`
+- API reference: [API Reference](../../api-v3-reference/README.md) (OpenAPI is embedded under this chapter in the GitBook navigation)
+- Python wrapper: [SPX-PYTHON](../spx-python-client-wrapper/README.md)
+- Common endpoints: [System Runtime](../../spx-core/system/README.md)

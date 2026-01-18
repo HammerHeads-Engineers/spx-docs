@@ -18,6 +18,6 @@ docker compose down
 
 See:
 
-- MiL tests: `getting-started/use-in-unit-tests-mil.md`
-- CI: `getting-started/ci-cd-setup-github-actions.md`
-- Snapshots: `getting-started/snapshots-guide.md`
+- MiL tests: [Use in Unit Tests (MiL)](getting-started/use-in-unit-tests-mil.md)
+- CI: [CI/CD Setup (GitHub Actions)](getting-started/ci-cd-setup-github-actions.md)
+- Snapshots: [Snapshots — Getting Started](getting-started/snapshots-guide.md)

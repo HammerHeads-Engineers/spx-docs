@@ -13,7 +13,7 @@ icon: code
 
 | Tool   | Version    |
 | ------ | ---------- |
-| Python | 3.9 – 3.12 |
+| Python | `>=3.9` (tested `3.9–3.12`) |
 | pip    | 23+        |
 
 ```bash

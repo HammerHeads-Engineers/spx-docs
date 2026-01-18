@@ -56,4 +56,4 @@ PY
 ## 3) Where to find endpoint details
 
 - Use the embedded OpenAPI reference in this chapter to discover exact paths, payloads, and auth requirements.
-- For logs-related endpoints, see `spx-core/system/logs.md`.
+- For logs-related endpoints, see [Logs](../spx-core/system/logs.md).

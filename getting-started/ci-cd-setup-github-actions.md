@@ -32,8 +32,13 @@ on: [push, pull_request]
 jobs:
   tests:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
     env:
       SPX_PRODUCT_KEY: ${{ secrets.SPX_PRODUCT_KEY }}
+      SPX_BASE_URL: http://localhost:8000
 
     steps:
       - uses: actions/checkout@v4
@@ -41,7 +46,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
         run: |
@@ -54,7 +59,7 @@ jobs:
       - name: Wait for SPX server
         run: |
           for i in {1..20}; do
-            if curl -fsS http://localhost:8000/ >/dev/null; then
+            if curl -fsS http://localhost:8000/health >/dev/null; then
               echo 'SPX server is up'; exit 0
             fi
             echo 'Waiting for SPX server...'
@@ -73,7 +78,9 @@ jobs:
 ```
 {% endtab %}
 
-{% tab title=".github/workflows/ci.json" %}
+{% tab title="JSON (reference only)" %}
+GitHub Actions workflows must be YAML (`.yml`/`.yaml`). This JSON is a reference format for tooling/templates; do not commit it as a workflow file.
+
 ```json
 {
   "name": "CI",
@@ -83,9 +90,21 @@ jobs:
   ],
   "jobs": {
     "tests": {
-      "runs-on": "ubuntu-latest",
+        "runs-on": "ubuntu-latest",
+      "strategy": {
+        "fail-fast": false,
+        "matrix": {
+          "python-version": [
+            "3.9",
+            "3.10",
+            "3.11",
+            "3.12"
+          ]
+        }
+      },
       "env": {
-        "SPX_PRODUCT_KEY": "${{ secrets.SPX_PRODUCT_KEY }}"
+        "SPX_PRODUCT_KEY": "${{ secrets.SPX_PRODUCT_KEY }}",
+        "SPX_BASE_URL": "http://localhost:8000"
       },
       "steps": [
         {
@@ -95,7 +114,7 @@ jobs:
           "name": "Set up Python",
           "uses": "actions/setup-python@v5",
           "with": {
-            "python-version": "3.10"
+            "python-version": "${{ matrix.python-version }}"
           }
         },
         {
@@ -108,7 +127,7 @@ jobs:
         },
         {
           "name": "Wait for SPX server",
-          "run": "for i in {1..20}; do\\n  if curl -fsS http://localhost:8000/ >/dev/null; then\\n    echo 'SPX server is up'; exit 0\\n  fi\\n  echo 'Waiting for SPX server...'\\n  sleep 3\\ndone\\necho 'SPX server failed to start' >&2\\nexit 1"
+          "run": "for i in {1..20}; do\\n  if curl -fsS http://localhost:8000/health >/dev/null; then\\n    echo 'SPX server is up'; exit 0\\n  fi\\n  echo 'Waiting for SPX server...'\\n  sleep 3\\ndone\\necho 'SPX server failed to start' >&2\\nexit 1"
         },
         {
           "name": "Run unit tests",
@@ -127,14 +146,14 @@ jobs:
 {% endtab %}
 {% endtabs %}
 
-- The JSON form escapes multi-line shell steps with ``\n``. When you paste it into a `.json` workflow, the runner expands those newline characters back into separate lines.
+- The JSON form escapes multi-line shell steps with `\n` so the example stays self-contained.
 
 ## What this workflow does
 1. **Checks out** your repository (`actions/checkout`).
-2. **Sets up Python** 3.10 on the runner.
+2. **Sets up Python** using a matrix (3.9–3.12).
 3. **Installs dependencies** from `requirements.txt`.
 4. **Starts the SPX server** via `docker compose up -d` (it uses the compose file in your repo).
-5. **Waits for readiness** by polling `http://localhost:8000/`.
+5. **Waits for readiness** by polling `http://localhost:8000/health`.
 6. **Runs unit tests** with `unittest` (replace with `pytest` if you prefer).
 7. **Tears down** containers with `docker compose down` even on failure.
 
@@ -142,7 +161,7 @@ jobs:
 - **Python version / test matrix**: test multiple versions by changing `setup-python` or using matrix strategy.
 - **Pytest**: swap the test step for `pytest -q` if your project uses pytest.
 - **Compose filename**: if your file is `compose.yml` or lives in a subfolder, add `working-directory:` to steps or pass `-f` to `docker compose`.
-- **Port / health URL**: update `http://localhost:8000/` if your API runs on a different port or path.
+- **Port / health URL**: update `http://localhost:8000/health` if your API runs on a different port or path.
 - **Caching pip**: add `actions/cache` keyed by `requirements.txt` for faster runs.
 - **Build vs. pull**: if images aren’t prebuilt, make sure your compose config includes build context, or add a step `docker compose build`.
 - **Artifacts**: you can upload logs or junit XML via `actions/upload-artifact`.

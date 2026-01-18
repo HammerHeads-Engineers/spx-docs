@@ -1,88 +1,77 @@
 # Guided Use Cases & Scenarios
 
-This consolidated page combines the earlier "Common Use Cases" and "Step-by-Step Guides" to keep scenario-driven guidance together.
+This page focuses on scenario-driven engineering workflows (integrators/dev/QA), grounded in the runnable reference repo: [`spx-examples`](https://github.com/HammerHeads-Engineers/spx-examples).
 
 ## Common Use Cases
 
-### 1. Validating device drivers against virtual hardware
-- Model the target instrument or controller in YAML.
-- Wire protocol adapters so the real driver talks to the simulation.
-- Script deterministic scenarios to cover happy-path and fault modes.
-- Collect logs/telemetry for debugging without touching real hardware.
+### 1. Validate a device driver against virtual hardware
 
-### 2. Exercising QA smoke tests in CI
-- Spin up the SPX Server or SDK model inside a pipeline job.
-- Replay known-good scenarios to detect regressions in firmware or services.
-- Export `FaultEvent`s when assertions fail to keep feedback actionable.
+1. Pick a template model from `spx-examples/library/domains/...` (Modbus, SCPI/ASCII, MQTT, BLE).
+2. Start SPX Server via Docker Compose and expose the required protocol ports.
+3. Load the model, create an Instance, and drive deterministic time from tests (MiL).
+4. Use Scenarios to cover happy-path and fault modes (disconnects, delays, spikes).
+5. Debug with API state + server logs; keep the workflow repeatable in CI.
 
-### 3. Training junior engineers
-- Start from library models (for example the SCPI multimeter).
-- Let new team members modify attributes/actions safely.
-- Visualize protocol behavior without needing lab access.
+### 2. Run QA smoke tests in CI (MiL)
+
+- `docker compose up -d` → wait for `GET /health` → run `pytest` → `docker compose down`.
+- Store `SPX_PRODUCT_KEY` in the CI secret store; inject it into the job environment.
+- Pin versions explicitly (server image tag + Python dependencies) so tests stay reproducible.
+
+### 3. Onboard engineers with a safe sandbox
+
+- Start from one model + one scenario.
+- Make one change (attribute, mapping, scenario override) and re-run the same tests.
+
+See: [Use in Unit Tests (MiL)](../getting-started/use-in-unit-tests-mil.md), [Snapshots — Getting Started](../getting-started/snapshots-guide.md), [Communication Adapters](../spx-core/communications/README.md).
 
 ## Step-by-Step Walkthroughs
 
-### Scenario: SCPI Multimeter Smoke Test
+### End-to-end: SCPI multimeter smoke test (spx-examples)
 
-Based on `spx-examples/library/domains/measurement_instruments/generic/multimeter__scpi.yaml`.
+Files used:
 
-1. **Load the model**
-   Use `spx-python` to push the model definition into a running server:
+- Model: [`library/domains/measurement_instruments/generic/multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/measurement_instruments/generic/multimeter__scpi.yaml)
+- Test: [`tests/shared/integration/scpi_multimeter_sut_example.py`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/tests/shared/integration/scpi_multimeter_sut_example.py)
 
-   ```python
-   import os
-   import yaml
-   import spx_python
+This flow is a good baseline for “driver vs virtual hardware” integration testing:
 
-   client = spx_python.init(
-       address=os.environ.get("SPX_BASE_URL", "http://localhost:8000"),
-       product_key=os.environ["SPX_PRODUCT_KEY"],
-   )
+1. Start SPX Server and verify it’s healthy.
+2. Register the model + create an instance.
+3. Discover the effective ASCII/SCPI port from the instance (the model auto-assigns starting at 5025).
+4. Run protocol-level assertions and scenario-driven faults.
 
-   # In your local checkout of spx-examples:
-   model_path = "library/domains/measurement_instruments/generic/multimeter__scpi.yaml"
-   with open(model_path, "r", encoding="utf-8") as f:
-       model_def = yaml.safe_load(f)
+#### Run locally
 
-   client["models"]["generic_scpi_multimeter"] = model_def
-   client["instances"]["scpi_inst_1"] = "generic_scpi_multimeter"
-   ```
+```bash
+git clone https://github.com/HammerHeads-Engineers/spx-examples.git
+cd spx-examples
 
-2. **Connect your SCPI client**
-   - If you are using the `spx-examples/docker-compose.yml` baseline, point it to `127.0.0.1:5025`.
-   - Use line endings `\n` (see `terminator` in the model).
+cat <<'EOF' > .env
+SPX_PRODUCT_KEY=REPLACE_ME
+# SPX_BASE_URL=http://localhost:8000
+EOF
 
-3. **Baseline reading**
-   ```text
-   > MEAS:VOLT?
-   < 0.0
-   ```
-   Verifies the default `voltage` attribute.
+poetry install --with dev
+docker compose up -d
+curl -fsS http://localhost:8000/health
 
-4. **Change measurement mode**
-   ```text
-   > CONF:CURR
-   > MEAS:CURR?
-   < 0.0
-   ```
-   Confirms the `measurement_mode` attribute updates and the mapping dispatches the correct attribute.
+poetry run pytest -q tests/shared/integration/scpi_multimeter_sut_example.py
+```
 
-5. **Run the `voltage_static` scenario**
-   - In YAML, the scenario slews voltage toward 230 V and injects noise.
-   - Trigger via `spx-python`:
-     - `client["instances"]["scpi_inst_1"]["scenarios"]["voltage_static"].start()`
-   - Observe multiple reads drifting toward 230 with small jitter.
+Scenarios covered by this example (see the model YAML):
 
-6. **Simulate protocol disruption**
-   - Start `ascii_disconnect` scenario to detach the ASCII server for 2 seconds.
-   - Ensure the driver handles timeouts gracefully.
+- `voltage_static`
+- `ascii_disconnect`
+- `ascii_response_delay_spike`
+- `discharge_spike`
 
-7. **Inject latency spike**
-   - Enable `ascii_response_delay_spike` and confirm retry logic handles slow responses.
+#### Debug checklist
 
-8. **Record findings**
-   - Note expected vs. observed behavior.
-   - Capture any `FaultEvent`s emitted by the driver or simulation.
+```bash
+docker compose ps
+docker compose logs --tail=200 --no-color spx-server
+```
 
 ### Scenario Blueprint Template
 

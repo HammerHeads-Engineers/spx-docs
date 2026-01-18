@@ -15,7 +15,7 @@ This page documents patterns that keep SPX models **deterministic** while still 
 
 - Run a separate service (HTTP/TCP/etc.) next to SPX.
 - Keep SPX deterministic: the model pushes/pulls data at explicit step boundaries.
-- Example pattern: the BLE integration uses a companion `spx-ble-adapter` process (`spx-core/communications/ble.md`).
+- Example pattern: the BLE integration uses a companion `spx-ble-adapter` process ([BLE Adapter](../../spx-core/communications/ble.md)).
 
 **Option B: code running inside the SPX Server container**
 

@@ -14,7 +14,7 @@ In SPX you typically implement these as **custom actions** (or custom components
 2. Keep internal filter state in the Python class (buffer, integrator, etc.).
 3. Write the filtered value to an output (often `$out(filtered_signal)` so presentation effects do not feed back into core logic).
 
-See also: `getting-started/extend-with-custom-component.md`, `spx-development-guide/spx-sdk/actions.md`.
+See also: [Extend with a Custom Component](../../getting-started/extend-with-custom-component.md), [Actions](../../spx-development-guide/spx-sdk/actions.md).
 
 ## Minimal example: moving average
 

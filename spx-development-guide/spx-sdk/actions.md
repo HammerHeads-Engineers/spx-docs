@@ -156,35 +156,34 @@ Features covered by `tests/test_actions/test_function_action.py`:
 - `params` entries become resolvable attributes on the action, so you can reference them directly in `call`.
 - Attribute references inside `call` are resolved at runtime, after `prepare()` gathers wrappers.
 
-### Function `call`: imports, params, prepare_call
+### Function `call`: imports + params (spx-examples convention)
 
 The `function` action in `spx-examples` relies on a few extra fields to keep expressions readable and deterministic:
 
-- `params`: define constants, attribute references, or derived values. You can define them under `params:` or inline as top-level keys — both end up available as variables in `call`.
-- `imports`: expose modules/symbols inside the expression context (string, list, or mapping of `alias: "pkg.symbol"`; no `import ...` statements in YAML).
-- `prepare_call`: optional expression executed once during `prepare()` (commonly used to seed RNG or initialise cached helpers).
+- `params`: define constants, attribute references, or derived values that you reuse in `call`.
+- `imports`: expose modules/symbols inside the expression context (either a list like `[random]` or a mapping like `{np: numpy}`; no `import ...` statements in YAML).
 
-#### Example: imports + prepare_call (deterministic RNG)
+#### Example: imports list (deterministic RNG)
 
 ```yaml
 actions:
   - function: $out(noise_sample)
     imports: [random]
-    prepare_call: random.seed(0)
     params:
+      seed: 123
       lo: 1
       hi: 10
-    call: random.randint(lo, hi)
+    call: random.Random(seed).randint(lo, hi)
 ```
 
-#### Example: imports mapping (alias + symbol import)
+#### Example: imports mapping (module alias)
 
 ```yaml
 actions:
   - function: $in(absolute_error)
     imports:
-      fabs: "math.fabs"
-    call: fabs($in(setpoint) - $in(measured))
+      math: math
+    call: math.fabs($in(setpoint) - $in(measured))
 ```
 
 #### Example: derived params + nested-chain references
@@ -199,6 +198,28 @@ actions:
       dt: "$(~.timer.default_step) or $(~.polling.interval) or 0.25"
       delta_pct_value: "(cycle_time_s / max(1.0, dt)) * 100.0"
     call: delta_pct_value
+```
+
+#### Example: local helper import (`extensions/`)
+
+You can import a local helper function and call it from a multi-line expression. In `spx-examples`, helpers live under `extensions/` and are mounted into the server container.
+
+```yaml
+actions:
+  - function: $in(temperature)
+    imports: {thermal_step: "extensions.thermal_model.thermal_step"}
+    params:
+      dt: "$(~.timer.default_step) or $(~.polling.interval) or 0.25"
+    call: |
+      thermal_step(
+        $in(temperature),
+        $in(ambient),
+        $in(heating_power),
+        $in(heat_coeff),
+        $in(cool_coeff),
+        dt,
+        mass=$in(thermal_mass),
+      )
 ```
 
 For the canonical DSL contract used by `spx-examples`, see:

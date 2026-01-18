@@ -32,7 +32,7 @@ First commands to run:
 - **Likely cause**: `SPX_PRODUCT_KEY` is missing/invalid.
 - **Fix**:
   - Local: export `SPX_PRODUCT_KEY` (or put it in `.env` so Compose picks it up).
-  - CI: store `SPX_PRODUCT_KEY` as a secret and inject it in the job env (see `getting-started/ci-cd-setup-github-actions.md`).
+  - CI: store `SPX_PRODUCT_KEY` as a secret and inject it in the job env (see [CI/CD Setup (GitHub Actions)](../getting-started/ci-cd-setup-github-actions.md)).
 
 ## Model load fails with `422` / validation errors
 
@@ -41,7 +41,7 @@ First commands to run:
 - **Fix**:
   - Inspect the server error details: `docker compose logs --tail=200 --no-color spx-server`
   - If you are authoring in `spx-examples`, run its validator before starting the server: `python tools/validate_models.py`
-  - For SDK schema rules, see: `spx-development-guide/spx-sdk/validation.md`
+  - For SDK schema rules, see: [Validation](../spx-development-guide/spx-sdk/validation.md)
 
 ## Tests are flaky / non-deterministic
 
@@ -50,15 +50,15 @@ First commands to run:
 - **Fix**:
   - Drive time explicitly from tests (MiL): set timer attributes (if present) and call `client.run()` in a loop.
   - Seed any RNG used by model logic during prepare-time.
-  - Use Snapshots for stable starting states: `getting-started/snapshots-guide.md`
+  - Use Snapshots for stable starting states: [Snapshots — Getting Started](../getting-started/snapshots-guide.md)
 
 ## Custom extensions not found (“unknown action/class”)
 
 - **Symptom**: errors like “unknown class”, “unknown action”, or import failures in logs.
 - **Likely cause**: the extension file is not mounted into the container, or the registry/modules were not reloaded.
 - **Fix**:
-  - Ensure `./extensions` (or your chosen folder) is mounted into the server container (see `getting-started/installation-guide.md`).
-  - Reload modules before creating new instances: `client.reload_modules()` (see `getting-started/extend-with-custom-component.md`)
+  - Ensure `./extensions` (or your chosen folder) is mounted into the server container (see [Installation Guide](../getting-started/installation-guide.md)).
+  - Reload modules before creating new instances: `client.reload_modules()` (see [Extend with a Custom Component](../getting-started/extend-with-custom-component.md))
   - Inspect import errors: `docker compose logs --tail=200 --no-color spx-server`
 
 ## “Adapter can’t reach host” (Docker networking)
@@ -75,7 +75,7 @@ First commands to run:
 - **Likely cause**: the model enables a protocol adapter, but the host port is not mapped in `docker-compose.yml`.
 - **Fix**:
   - Confirm port mappings: `docker compose ps`
-  - Update `ports:` in `docker-compose.yml` to expose the required ports (see `spx-core/communications/README.md`).
+  - Update `ports:` in `docker-compose.yml` to expose the required ports (see [Communication Adapters](../spx-core/communications/README.md)).
 
 ## BLE simulations fail to connect to the BLE adapter
 
@@ -84,11 +84,11 @@ First commands to run:
 - **Fix**:
   - Confirm the adapter is running and reachable on the configured port (default `8085` in the adapter docs).
   - Verify the model’s BLE configuration matches your deployment network (host vs container).
-  - See: `spx-core/communications/ble.md`
+  - See: [BLE Adapter](../spx-core/communications/ble.md)
 
 ## CI fails intermittently (“server not ready”)
 
 - **Symptom**: CI fails with connection errors right after `docker compose up -d`.
 - **Likely cause**: tests start before the server finishes booting.
 - **Fix**:
-  - Add a readiness loop that polls `http://localhost:8000/` before running tests (see `getting-started/ci-cd-setup-github-actions.md`).
+  - Add a readiness loop that polls `http://localhost:8000/` before running tests (see [CI/CD Setup (GitHub Actions)](../getting-started/ci-cd-setup-github-actions.md)).

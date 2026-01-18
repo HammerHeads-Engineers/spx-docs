@@ -12,7 +12,7 @@ This guide shows how to **save**, **list**, and **load** system snapshots using 
 > * Instances (which instance uses which template)
 > * Connections (wiring between instances)
 >
-> **What it does&#x20;**_**not**_**&#x20;capture (MVP)**
+> **What it does not capture (MVP)**
 >
 > * Runtime state (thread state, attribute runtime values, timers, …)\
 >   Snapshots currently rebuild structure; runtime state always starts “fresh”.
@@ -21,7 +21,7 @@ This guide shows how to **save**, **list**, and **load** system snapshots using 
 
 ## Prerequisites
 
-* SPX Server `v0.3.0+` with API v3 enabled.
+* SPX Server with API v3 enabled (verify `GET /health` returns `"api_version":"v3"`).
 * Your `System` has the `snapshots` component mounted (this is default in recent builds).
 * `spx-python` client connected to your server (examples below).
 

@@ -16,11 +16,11 @@ This page collects practical conventions for authoring models with the SDK and k
 
 ## Validation and upgrades
 
-- Run schema/definition validation early: `spx-development-guide/spx-sdk/validation.md`.
-- Prefer explicit imports and registries for custom classes: `spx-development-guide/spx-sdk/registry.md`, `spx-development-guide/spx-sdk/imports/README.md`.
+- Run schema/definition validation early: [Validation](validation.md).
+- Prefer explicit imports and registries for custom classes: [Registry](registry.md), [Imports](imports/README.md).
 
 ## Where to look next
 
-- Actions: `spx-development-guide/spx-sdk/actions.md`
-- Attributes: `spx-development-guide/spx-sdk/attributes.md`
-- Model container: `spx-development-guide/spx-sdk/model.md`
+- Actions: [Actions](actions.md)
+- Attributes: [Attributes](attributes.md)
+- Model container: [Model](model.md)

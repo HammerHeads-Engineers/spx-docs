@@ -13,5 +13,5 @@ Use extensions when YAML alone is not enough: stateful physics, reusable domain 
 
 ## Related docs
 
-- Custom components: `getting-started/extend-with-custom-component.md`
-- Packaging/loading extensions: `spx-core/extending.md`
+- Custom components: [Extend with a Custom Component](../../getting-started/extend-with-custom-component.md)
+- Packaging/loading extensions: [Extending the Core](../../spx-core/extending.md)

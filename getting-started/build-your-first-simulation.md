@@ -23,17 +23,17 @@ docker compose up -d
 ```
 {% endcode %}
 
-Server should be reachable at http://localhost:8000/
+Server should be reachable at `http://localhost:8000` (health: `/health`).
 
 ```bash
-curl http://localhost:8000
+curl -fsS http://localhost:8000/health
 ```
 
 Result message in the shell should look like below:
 
 {% code overflow="wrap" %}
 ```bash
-{"message":"Welcome to SPX Server API","server_version":"0.2.1-alpha.1","api_version":"v3","supported_versions":["v3"]}
+{"status":"ok","server_version":"<version>","api_version":"v3"}
 ```
 {% endcode %}
 
@@ -47,11 +47,11 @@ Connect from Python (smoke test)
 
 {% code title="spx_smoke_test.py" %}
 ```python
-import os 
+import os
 import spx_python
 client = spx_python.init(
-    address="http://localhost:8000",
-    product_key=os.environ.get("SPX_PRODUCT_KEY")  #  required env var
+    address=os.environ.get("SPX_BASE_URL", "http://localhost:8000"),
+    product_key=os.environ["SPX_PRODUCT_KEY"],
 )
 print(client.keys())  # e.g., ['models', 'instances', 'timer', 'polling']
 ```
@@ -76,13 +76,13 @@ In practice, the ramp updates the internal value, and the noise is added to the 
 # (ramp, noise). Internal temperature is driven by actions; external
 # temperature can include noise without affecting internal logic.
 
-import os 
+import os
 import spx_python
 import yaml
 
 client = spx_python.init(
-    address="http://localhost:8000",
-    product_key=os.environ.get("SPX_PRODUCT_KEY")  #  required env var
+    address=os.environ.get("SPX_BASE_URL", "http://localhost:8000"),
+    product_key=os.environ["SPX_PRODUCT_KEY"],
 )
 
 pt_100_yaml = '''

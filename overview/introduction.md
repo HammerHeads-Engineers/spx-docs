@@ -14,8 +14,8 @@ SPX is a deterministic simulation stack you can run locally and drive from code.
 
 ## Where to start
 
-- Bring the server up: `getting-started/installation-guide.md`
-- Build a first Model + Instance: `getting-started/build-your-first-simulation.md`
-- Make it testable: `getting-started/use-in-unit-tests-mil.md`
-- Capture/restore state: `getting-started/snapshots-guide.md`
-- Extend beyond YAML: `simulation-and-modeling/extending-simulations/README.md`
+- Bring the server up: [Installation Guide](../getting-started/installation-guide.md)
+- Build a first Model + Instance: [Build Your First Simulation](../getting-started/build-your-first-simulation.md)
+- Make it testable: [Use in Unit Tests (MiL)](../getting-started/use-in-unit-tests-mil.md)
+- Capture/restore state: [Snapshots — Getting Started](../getting-started/snapshots-guide.md)
+- Extend beyond YAML: [Extending Simulations](../simulation-and-modeling/extending-simulations/README.md)

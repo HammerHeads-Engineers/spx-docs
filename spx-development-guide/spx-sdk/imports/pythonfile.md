@@ -150,4 +150,4 @@ pf.run()       # calls bound run() methods (or falls back to instance.run())
 * init section: use it only if your class requires constructor parameters.
 * Attribute names: ensure your model’s `attributes` container defines keys matching the `attributes:` bindings.
 * Logging & Debugging: check server logs for import/initialisation failures (`docker compose logs --tail=200 --no-color spx-server`).
-* If you need reusable libraries (not file-path imports), prefer registry-based components: `spx-development-guide/spx-sdk/registry.md`.
+* If you need reusable libraries (not file-path imports), prefer registry-based components: [Registry](../registry.md).

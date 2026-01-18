@@ -18,7 +18,7 @@ Core workflow (the “happy path”):
 
 Start here:
 
-- `getting-started/installation-guide.md`
-- `getting-started/build-your-first-simulation.md`
-- `getting-started/snapshots-guide.md`
-- `getting-started/use-in-unit-tests-mil.md`
+- [Installation Guide](getting-started/installation-guide.md)
+- [Build Your First Simulation](getting-started/build-your-first-simulation.md)
+- [Snapshots — Getting Started](getting-started/snapshots-guide.md)
+- [Use in Unit Tests (MiL)](getting-started/use-in-unit-tests-mil.md)

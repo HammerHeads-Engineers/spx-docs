@@ -10,7 +10,7 @@ No. The UI is optional. MiL tests should talk to SPX Server via the API (usually
 - Avoid wall-clock sleeps for simulation behavior.
 - Use Snapshots for stable starting states.
 
-See: `getting-started/use-in-unit-tests-mil.md`, `getting-started/snapshots-guide.md`.
+See: [Use in Unit Tests (MiL)](../getting-started/use-in-unit-tests-mil.md), [Snapshots — Getting Started](../getting-started/snapshots-guide.md).
 
 ## Where does `SPX_PRODUCT_KEY` come from?
 
@@ -20,7 +20,7 @@ Retrieve it from your account at `https://simplephysx.com` and inject it as an e
 
 Put Python files under an extensions directory (commonly `./extensions`) that is mounted into the SPX Server container, then reload modules.
 
-See: `getting-started/extend-with-custom-component.md`.
+See: [Extend with a Custom Component](../getting-started/extend-with-custom-component.md).
 
 ## What should I commit to git?
 
@@ -30,9 +30,9 @@ See: `getting-started/extend-with-custom-component.md`.
 
 ## Which Python versions are supported?
 
-Docs and reference repos target **Python 3.9–3.12**. Use `>=3.9` unless a specific repo pins tighter constraints.
+Docs and reference repos target Python `>=3.9` (tested in CI on `3.9–3.12`). Use `>=3.9` unless a specific repo pins tighter constraints.
 
-See: `overview/system-requirements-and-capability.md`.
+See: [System Requirements and Capability](../overview/system-requirements-and-capability.md).
 
 ## What is the canonical server URL / how do I change it?
 
@@ -40,7 +40,7 @@ See: `overview/system-requirements-and-capability.md`.
 - If you map the container to a different host port (for example `18000:8000`), point your client at that port.
 - In examples, use `SPX_BASE_URL` to override the default base URL.
 
-See: `getting-started/installation-guide.md`.
+See: [Installation Guide](../getting-started/installation-guide.md).
 
 ## How do I pin versions (server image + Python clients)?
 
@@ -48,14 +48,14 @@ See: `getting-started/installation-guide.md`.
 - Pin `spx-python`/`spx-sdk` versions in your Python environment (`requirements.txt`/`pyproject.toml`).
 - Treat `spx-examples` tags as a known-good baseline for models/tests.
 
-See: `release-notes.md`.
+See: [Release Notes](../release-notes.md).
 
 ## How do I validate model YAML before running it?
 
 Two common approaches:
 
 - If you develop in `spx-examples`, run: `python tools/validate_models.py`
-- If you use the SDK directly, use the validation rules documented in: `spx-development-guide/spx-sdk/validation.md`
+- If you use the SDK directly, use the validation rules documented in: [Validation](../spx-development-guide/spx-sdk/validation.md)
 
 ## What does a `422` from the API usually mean?
 
@@ -64,7 +64,7 @@ Most often it’s a model/definition validation failure (wrong YAML shape, missi
 Start with:
 
 - `docker compose logs --tail=200 --no-color spx-server`
-- `spx-development-guide/spx-sdk/validation.md`
+- [Validation](../spx-development-guide/spx-sdk/validation.md)
 
 ## How do I run MiL tests in CI?
 
@@ -75,7 +75,7 @@ Use the same loop you use locally:
 3. run `pytest`
 4. `docker compose down`
 
-See: `getting-started/ci-cd-setup-github-actions.md`.
+See: [CI/CD Setup (GitHub Actions)](../getting-started/ci-cd-setup-github-actions.md).
 
 ## When should I use Snapshots?
 
@@ -84,15 +84,15 @@ Use Snapshots to:
 - start tests from a known-good state without replaying long warmups,
 - debug a failing test by capturing and sharing the exact state.
 
-See: `getting-started/snapshots-guide.md`.
+See: [Snapshots — Getting Started](../getting-started/snapshots-guide.md).
 
 ## How do I debug protocol adapter issues (ports, networking)?
 
 - Confirm the adapter port is exposed on the host (`docker compose ps`).
 - If the adapter talks to a host-side service, don’t use `127.0.0.1` from inside Docker; prefer `host.docker.internal` (where supported).
 
-See: `spx-core/communications/README.md`.
+See: [Communication Adapters](../spx-core/communications/README.md).
 
 ## What should I include in a support request?
 
-Follow the checklist in: `troubleshooting-and-support/how-to-get-support.md`.
+Follow the checklist in: [How to Get Support](how-to-get-support.md).

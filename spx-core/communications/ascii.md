@@ -46,13 +46,15 @@ communication:
 
 ### Key fields
 
-- `port`: TCP port, default 5025.
+- `port`: TCP port. If omitted, SPX auto-assigns a free port starting at `5025` and writes the effective value into the instance at `communication.ascii.port`.
 - `terminator`: command delimiter (`\n`, `\r\n`, etc.).
 - `response_delay`: base delay inserted before responding (seconds).
 - `response_jitter`: random delta added to delay (seconds).
 - `mappings`: command dictionary. Each key is a command pattern.
   - A string value returns the referenced attribute.
   - A mapping updates attributes or invokes handlers; optional `response` overrides the reply.
+
+> Tip: In `spx-examples`, the SCPI multimeter model omits `port` so it can run multiple instances without collisions. See [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/measurement_instruments/generic/multimeter__scpi.yaml).
 
 ### Placeholders
 
@@ -94,7 +96,7 @@ scenarios:
     call:
       path: communication.ascii.detach
       stop_path: communication.ascii.attach
-  ascii_delay_spike:
+  ascii_response_delay_spike:
     duration: 5.0
     overrides:
       communication.ascii.response_delay: 10.0
@@ -113,7 +115,7 @@ scenarios:
         "stop_path": "communication.ascii.attach"
       }
     },
-    "ascii_delay_spike": {
+    "ascii_response_delay_spike": {
       "duration": 5.0,
       "overrides": {
         "communication.ascii.response_delay": 10.0
@@ -130,4 +132,4 @@ scenarios:
 
 - Normalize commands to uppercase to avoid case mismatches.
 - Use `response_delay` and `response_jitter` to emulate slow hardware.
-- Validate mappings with unit tests using the SDK (`scpi_multimeter.yaml` is a good starting point).
+- Validate mappings with MiL tests against SPX Server (see `spx-examples` [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/measurement_instruments/generic/multimeter__scpi.yaml) and [`scpi_multimeter_sut_example.py`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/tests/shared/integration/scpi_multimeter_sut_example.py)).

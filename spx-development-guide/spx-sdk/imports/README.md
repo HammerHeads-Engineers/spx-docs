@@ -18,13 +18,13 @@ Use imports when YAML alone is not enough:
 
 Package your extension code as a Python module and register classes via the SDK registry. This is the most maintainable path for reusable actions/components.
 
-See: `spx-development-guide/spx-sdk/registry.md`.
+See: [Registry](../registry.md).
 
 2) **File-based imports with `python_file` / `import`**
 
 Use the `python_file` component (alias: `import`) to load classes from repo-local files and bind them into the runtime.
 
-See: `spx-development-guide/spx-sdk/imports/pythonfile.md`.
+See: [PythonFile](pythonfile.md).
 
 ## Minimal example (YAML)
 

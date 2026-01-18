@@ -2,6 +2,6 @@
 
 Start here when something is failing in local runs or CI.
 
-- Runbook: `troubleshooting-and-support/common-issues-and-solutions.md`
-- FAQ: `troubleshooting-and-support/faqs.md`
-- Escalation checklist: `troubleshooting-and-support/how-to-get-support.md`
+- Runbook: [Common Issues and Solutions](common-issues-and-solutions.md)
+- FAQ: [FAQs](faqs.md)
+- Escalation checklist: [How to Get Support](how-to-get-support.md)

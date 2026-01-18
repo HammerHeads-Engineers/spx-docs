@@ -40,7 +40,7 @@ Developers, QA, and CI engineers who want a clear, repeatable path to stand up S
 Prerequisites (at a glance):
 
 * Docker & Docker Compose (to run the server)
-* Python (recommended 3.9+)
+* Python `>=3.9` (tested in CI on `3.9–3.12`)
 * A valid SPX\_PRODUCT\_KEY set as an environment variable
 * Network access to pull the SPX server image
 

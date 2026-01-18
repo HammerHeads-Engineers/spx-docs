@@ -12,6 +12,6 @@ Use this checklist when simulations are slow, flaky, or resource-heavy.
 
 Related:
 
-- `spx-core/system/timer.md`
-- `spx-core/system/polling.md`
-- `spx-core/snapshots.md`
+- [Timer](spx-core/system/timer.md)
+- [Polling](spx-core/system/polling.md)
+- [Snapshots (Core)](spx-core/snapshots.md)

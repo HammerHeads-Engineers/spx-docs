@@ -32,7 +32,7 @@ client = spx_python.init(
 client.reload_modules()
 ```
 
-See: `getting-started/extend-with-custom-component.md`.
+See: [Extend with a Custom Component](../../getting-started/extend-with-custom-component.md).
 
 ### 3) Run MiL tests
 
@@ -42,7 +42,7 @@ Run the test suite that loads the model, creates an instance, steps time, and as
 pytest
 ```
 
-See: `getting-started/use-in-unit-tests-mil.md`.
+See: [Use in Unit Tests (MiL)](../../getting-started/use-in-unit-tests-mil.md).
 
 ## Common failure modes
 

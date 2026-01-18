@@ -26,4 +26,4 @@ The public repos use SemVer-style tags such as `v0.3.0-alpha.N` / `v0.3.0-rc.N` 
 - When upgrading:
   - `docker compose pull && docker compose up -d`
   - run your full MiL test suite (`pytest`)
-  - refresh Snapshots only if your tests intentionally depend on them (`getting-started/snapshots-guide.md`)
+  - refresh Snapshots only if your tests intentionally depend on them ([Snapshots — Getting Started](getting-started/snapshots-guide.md))

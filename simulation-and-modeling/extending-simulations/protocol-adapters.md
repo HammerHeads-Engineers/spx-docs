@@ -287,6 +287,6 @@ The SPX loader instantiates the protocol component alongside other communication
 - Guard against partial configuration by raising informative `ValueError`/`RuntimeError` during `_populate` or `prepare`.
 - Clean up all resources in `stop()`/`release()` to avoid zombie threads or lingering sockets.
 - Consider exposing metrics attributes (counters, status enums) so dashboards can track connectivity.
-- Document the YAML schema inline and in the docs (see `spx-core/communications/ble.md` for a comprehensive example).
+- Document the YAML schema inline and in the docs (see [BLE Adapter](../../spx-core/communications/ble.md) for a comprehensive example).
 
 Following these conventions will ensure your custom protocol behaves like a first-class citizen alongside the built-in adapters. Once the module is importable, users can combine it with other communication blocks, scenarios, and automation tooling without additional integration work.
