@@ -1,48 +1,94 @@
 # Common Issues and Solutions
 
-## `docker compose up` fails / container conflicts
+Use this page as a practical runbook for local development and CI.
 
-- **Container name conflict** (for example `"/spx-server" is already in use"`): stop/remove the old container or tear down the other compose project:
-  - `docker rm -f spx-server`
-  - `docker compose down --remove-orphans`
+First commands to run:
+
+- `docker compose ps`
+- `docker compose logs --tail=200 --no-color spx-server`
+
+## `docker compose up` fails (container conflicts / compose not installed)
+
+- **Symptom**: `docker: Error response from daemon: Conflict. The container name "/spx-server" is already in use` or `docker compose: command not found`.
+- **Likely cause**: leftover containers from a previous run, or Docker Compose v2 is not installed/enabled.
+- **Fix**:
+  - Stop/remove old containers: `docker compose down --remove-orphans`
+  - If the name is still taken: `docker rm -f spx-server`
+  - Verify compose is available: `docker compose version`
 
 ## SPX Server is not reachable on `http://localhost:8000`
 
-- Check containers: `docker compose ps`
-- Check logs: `docker compose logs --tail=200 --no-color spx-server`
-- Port collision: change the host mapping in `docker-compose.yml` (for example `18000:8000`).
+- **Symptom**: browser/curl returns “connection refused” or times out.
+- **Likely cause**: the container is not running, the API port is not mapped, or port `8000` is already used by another process.
+- **Fix**:
+  - Check container status: `docker compose ps`
+  - Check logs: `docker compose logs --tail=200 --no-color spx-server`
+  - If you changed the host port (e.g. `18000:8000`), point clients at the new URL:
+    - set `SPX_BASE_URL=http://localhost:18000`
 
-## `SPX_PRODUCT_KEY` missing / invalid
+## API calls fail with auth errors (`401`/`403`) or tests fail early
 
-- Local: set `SPX_PRODUCT_KEY` in your shell or `.env` file (Compose reads it automatically).
-- CI: store `SPX_PRODUCT_KEY` as a secret and export it in the job environment (`getting-started/ci-cd-setup-github-actions.md`).
-- Symptoms include authentication failures and tests returning 401/403/404 depending on the endpoint.
+- **Symptom**: endpoints reject requests; tests fail before any model logic runs.
+- **Likely cause**: `SPX_PRODUCT_KEY` is missing/invalid.
+- **Fix**:
+  - Local: export `SPX_PRODUCT_KEY` (or put it in `.env` so Compose picks it up).
+  - CI: store `SPX_PRODUCT_KEY` as a secret and inject it in the job env (see `getting-started/ci-cd-setup-github-actions.md`).
+
+## Model load fails with `422` / validation errors
+
+- **Symptom**: loading a Model via API returns `422` (or server logs show `ValidationError` paths).
+- **Likely cause**: YAML shape does not match the expected schema (missing keys, wrong list vs mapping), or the model references an unregistered custom class/action.
+- **Fix**:
+  - Inspect the server error details: `docker compose logs --tail=200 --no-color spx-server`
+  - If you are authoring in `spx-examples`, run its validator before starting the server: `python tools/validate_models.py`
+  - For SDK schema rules, see: `spx-development-guide/spx-sdk/validation.md`
 
 ## Tests are flaky / non-deterministic
 
-- Remove wall-clock sleeps and always drive simulated time (`instance["timer"]["time"] = ...` then `client.run()`).
-- Keep `timer.dt` explicit in the model.
-- Use Snapshots for stable starting conditions (`getting-started/snapshots-guide.md`).
+- **Symptom**: the same MiL test sometimes passes and sometimes fails.
+- **Likely cause**: wall-clock sleeps, nondeterministic randomness, or background loops that advance state outside the test’s control.
+- **Fix**:
+  - Drive time explicitly from tests (MiL): set timer attributes (if present) and call `client.run()` in a loop.
+  - Seed any RNG used by model logic during prepare-time.
+  - Use Snapshots for stable starting states: `getting-started/snapshots-guide.md`
 
 ## Custom extensions not found (“unknown action/class”)
 
-- Ensure the `.py` file lives under a configured extensions directory mounted into the server (commonly `./extensions`).
-- Reload modules before creating new instances:
-  - `client.reload_modules()` (see `getting-started/extend-with-custom-component.md`)
-- Check server logs for import errors and missing dependencies.
+- **Symptom**: errors like “unknown class”, “unknown action”, or import failures in logs.
+- **Likely cause**: the extension file is not mounted into the container, or the registry/modules were not reloaded.
+- **Fix**:
+  - Ensure `./extensions` (or your chosen folder) is mounted into the server container (see `getting-started/installation-guide.md`).
+  - Reload modules before creating new instances: `client.reload_modules()` (see `getting-started/extend-with-custom-component.md`)
+  - Inspect import errors: `docker compose logs --tail=200 --no-color spx-server`
 
 ## “Adapter can’t reach host” (Docker networking)
 
-When SPX runs in Docker but a companion service runs on the host (common for BLE):
+- **Symptom**: a protocol adapter or companion service (MQTT broker, BLE adapter, etc.) works on the host but fails from SPX running in Docker.
+- **Likely cause**: `127.0.0.1` inside a container is not the host loopback.
+- **Fix**:
+  - Use `host.docker.internal` as the host address (where supported), or run the service inside the same compose network.
+  - Ensure the service port is published on the host and the model points to it.
 
-- Use `host.docker.internal` as the host address (where supported) instead of `127.0.0.1`.
-- Expose the backend port on the host and point the model configuration at it.
+## Protocol port not exposed (Modbus/SCPI/MQTT/etc.)
 
-See: `spx-core/communications/ble.md`.
+- **Symptom**: the SUT cannot connect to the simulated device port.
+- **Likely cause**: the model enables a protocol adapter, but the host port is not mapped in `docker-compose.yml`.
+- **Fix**:
+  - Confirm port mappings: `docker compose ps`
+  - Update `ports:` in `docker-compose.yml` to expose the required ports (see `spx-core/communications/README.md`).
 
-## Protocol port not exposed (Modbus/SCPI/etc.)
+## BLE simulations fail to connect to the BLE adapter
 
-- If the model enables a protocol adapter, the host port must be mapped in `docker-compose.yml`.
-- Confirm your `ports:` mappings and keep them aligned with the model’s configured port numbers.
+- **Symptom**: BLE models fail at startup or BLE operations time out.
+- **Likely cause**: `spx-ble-adapter` is not running/reachable, or the model points at the wrong host/port.
+- **Fix**:
+  - Confirm the adapter is running and reachable on the configured port (default `8085` in the adapter docs).
+  - Verify the model’s BLE configuration matches your deployment network (host vs container).
+  - See: `spx-core/communications/ble.md`
 
-See: `spx-core/communications/README.md`.
+## CI fails intermittently (“server not ready”)
+
+- **Symptom**: CI fails with connection errors right after `docker compose up -d`.
+- **Likely cause**: tests start before the server finishes booting.
+- **Fix**:
+  - Add a readiness loop that polls `http://localhost:8000/` before running tests (see `getting-started/ci-cd-setup-github-actions.md`).

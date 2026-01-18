@@ -1,0 +1,44 @@
+# Start here (by role)
+
+Use this page to pick the shortest “golden path” based on what you’re building.
+
+Common prerequisites:
+
+- Docker + Docker Compose v2 (`docker compose`)
+- `SPX_PRODUCT_KEY` in your environment
+- Optional: `SPX_BASE_URL` (defaults to `http://localhost:8000`)
+
+## Integrator (protocol + SUT client)
+
+Goal: run SPX Server, expose a protocol adapter, and point your client/driver at it.
+
+1. Start the server: [Installation Guide](../getting-started/installation-guide.md)
+2. Build a minimal model + instance: [Build Your First Simulation](../getting-started/build-your-first-simulation.md)
+3. Add a protocol adapter/mapping: [Add a communication protocol](../getting-started/add-communication-protocol.md)
+4. Use a known-good example model for your protocol (from `spx-examples`):
+   - Modbus: `library/domains/iot/generic/energy_meter_iem3000__modbus.yaml`
+   - MQTT: `library/domains/iot/generic/environment_sensor__mqtt.yaml`
+   - SCPI/ASCII: `library/domains/measurement_instruments/generic/multimeter__scpi.yaml`
+5. If something fails, start with: [Common Issues and Solutions](../troubleshooting-and-support/common-issues-and-solutions.md)
+
+## Developer (model authoring + extensions)
+
+Goal: author models and reusable custom logic (components/actions) safely and test-gate changes.
+
+1. Understand core terms: [Core Concepts](../simulation-and-modeling/core-concepts.md)
+2. Learn the SDK building blocks: [SPX SDK](../spx-development-guide/spx-sdk/README.md)
+3. Add custom Python logic: [Extend with a Custom Component](../getting-started/extend-with-custom-component.md)
+4. Packaging/imports:
+   - [Registry](../spx-development-guide/spx-sdk/registry.md)
+   - [Imports](../spx-development-guide/spx-sdk/imports/README.md)
+5. Validate with tests: [Testing and Validation](../testing-and-validation.md)
+
+## QA/CI (MiL tests + snapshots)
+
+Goal: run deterministic MiL suites locally and in CI, with reproducible starting state.
+
+1. Drive SPX from tests: [Use in Unit Tests (MiL)](../getting-started/use-in-unit-tests-mil.md)
+2. Wire into pipelines: [CI/CD Setup (GitHub Actions)](../getting-started/ci-cd-setup-github-actions.md)
+3. Use Snapshots as fixtures when needed: [Snapshots — Getting Started](../getting-started/snapshots-guide.md)
+4. Pin versions and upgrade safely: [Release Notes](../release-notes.md)
+

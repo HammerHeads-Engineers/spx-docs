@@ -4,22 +4,19 @@ icon: python
 
 # PythonFile
 
-The `PythonFile` component is an SPX “container” for dynamically importing and instantiating Python classes at runtime. It extends Item and lets you define a set of module paths, classes, and (optionally) constructor parameters in a configuration dictionary. This is particularly useful in Model-in-the-Loop (MiL) workflows for loading custom model blocks or device simulators from external scripts.
+The `PythonFile` component loads Python classes from local `.py` files and binds them into the SPX runtime. It is registered under `python_file` (alias: `import`) and is useful for MiL workflows where you want to ship a small amount of custom logic alongside a model without packaging a full Python module.
 
 ### Overview
 
-When you register a PythonFile (via `@register_class(name="python_file")`), SPX will treat it as a special Item whose children are not other SPX components, but instances of classes loaded from external .py files.
+At load time, `PythonFile`:
 
-* Dynamic loading: Uses `load_module_from_path()` to import a module given its filesystem path.
-* Conditional instantiation:
-  * If the target class subclasses Item, it is passed the SPX root and the original definition.
-  * Otherwise it is instantiated directly (with optional extra `args`/`kwargs`).
-* Class registry: Each instance is stored in the class\_instances dictionary by class name.
-
-\
-
-
-This makes it easy to package device-oriented Python scripts alongside your SPX model definitions and load them on-the-fly.
+- Dynamically imports a module via `load_module_from_path(<file_path>)`.
+- Instantiates the configured `class`:
+  - if the class subclasses `SpxComponent`, it is instantiated with `(root, definition, *init_args, **init_kwargs)`,
+  - otherwise it is instantiated as a plain class with `(*init_args, **init_kwargs)`.
+- Stores created objects in `class_instances` (keyed by class name).
+- Optionally binds lifecycle methods (`start`/`run`/`pause`/`stop`) to arbitrary methods via the `methods:` mapping.
+- Links SPX Attributes to Python properties/methods via the `attributes:` mapping.
 
 ***
 
@@ -31,12 +28,17 @@ A PythonFile definition is a dict of the form:
 {% tab title="YAML" %}
 ```yaml
 python_file:
-  "/path/to/mod1.py":
+  "extensions/mod1.py":
     class: FakeItemClass
     attributes:
       voltage:
-        property: "voltage"
-  "/path/to/mod2.py":
+        property: voltage
+    methods:
+      start: start
+      run:
+        method: tick
+        args: [3]
+  "extensions/mod2.py":
     class: ControlBlock
     init:
       args: [42]
@@ -44,8 +46,8 @@ python_file:
         gain: 1.5
     attributes:
       output:
-        getter: "read_output"
-        setter: "write_output"
+        getter: read_output
+        setter: write_output
 
 ```
 {% endtab %}
@@ -54,15 +56,19 @@ python_file:
 ```json
 {
   "python_file": {
-    "/path/to/mod1.py": {
+    "extensions/mod1.py": {
       "class": "FakeItemClass",
       "attributes": {
         "voltage": {
           "property": "voltage"
         }
+      },
+      "methods": {
+        "start": "start",
+        "run": { "method": "tick", "args": [3], "kwargs": {} }
       }
     },
-    "/path/to/mod2.py": {
+    "extensions/mod2.py": {
       "class": "ControlBlock",
       "init": {
         "args": [42],
@@ -84,11 +90,15 @@ python_file:
 {% endtab %}
 {% endtabs %}
 
-* Key: module file path (absolute or relative).
+* Key: module file path (absolute or relative filesystem path).
 * class: name of the class inside that module to instantiate.
-* init (optional): extra constructor parameters for plain (non-Item) classes:
+* init (optional): constructor parameters:
   * `args`: list of positional args
   * `kwargs`: dict of keyword args
+* methods (optional): lifecycle bindings:
+  * supported keys: `start`, `run`, `pause`, `stop`
+  * each entry can be a string (method name) or an object with `method`, `args`, `kwargs`
+  * `args`/`kwargs` may contain attribute references such as `$attr(value)` (resolved at call time)
 * attributes: mapping of SPX-model attribute names to linking instructions:
   * property: name of a Python `@property` to bind
   * getter/setter: names of methods to bind as attribute accessors
@@ -99,13 +109,12 @@ python_file:
 
 When your SPX model engine instantiates a PythonFile, the following attributes are available:
 
-| Attribute         | Type                  | Descripition                                          |
-| ----------------- | --------------------- | ----------------------------------------------------- |
-| `class_instances` | Dict\[str, object]    | Maps each class name to its instantiated object.      |
-| `definition`      | dict                  | The original configuration dict passed to \_populate. |
-| `children`        | _Inherited from Item_ | (May be empty) SPX children, not used here.           |
-| `parent`          | _Inherited from Item_ | Parent Item/SpxComponent in the SPX tree.             |
-| `name`            | _Inherited from Item_ | Unique name of this PythonFile instance.              |
+| Attribute         | Type               | Description                                           |
+| ----------------- | ------------------ | ----------------------------------------------------- |
+| `class_instances` | Dict\[str, object] | Maps each class name to its instantiated object.      |
+| `definition`      | dict               | The original configuration dict passed to `_populate`. |
+| `parent`          | object             | Parent component in the SPX tree.                     |
+| `name`            | str                | Unique name of this PythonFile instance.              |
 
 ***
 
@@ -114,7 +123,7 @@ When your SPX model engine instantiates a PythonFile, the following attributes a
 ```python
 # In your SPX model definition YAML / dict:
 "python_file": {
-  "/sim/models/voltage_source.py": {
+  "extensions/voltage_source.py": {
     "class": "VoltageSource",
     "init": {
       "args": [230, 50],         # voltage=230V, frequency=50Hz
@@ -129,16 +138,16 @@ When your SPX model engine instantiates a PythonFile, the following attributes a
 
 # In SPX application:
 pf = PythonFile(name="external_models", definition=your_config)
-pf.prepare()   # binds SPX attributes to the Python object
-pf.run()       # no-op here; your classes participate elsewhere
+pf.prepare()   # binds SPX attributes and prepares method bindings
+pf.run()       # calls bound run() methods (or falls back to instance.run())
 ```
 
 ***
 
 ### Best Practices
 
-* Absolute paths: Use full filesystem paths for module\_path to avoid import ambiguity.
-* init section: Only needed for plain classes whose `__init__` takes extra parameters.
-* Attribute names: Ensure your SPX model’s attributes container defines keys matching attributes in definition.
-* Logging & Debugging: Use your Python classes’ constructors or methods to log instantiation details.
-* MiL Integration: Subclass Item for components that need to propagate SPX lifecycle events (`prepare`, `run`, etc.), and bind SPX attributes for real-time data exchange.
+* Paths: prefer repo-relative file paths checked into your project. In Docker, make sure the same paths exist inside the container (mount your repo or extensions folder).
+* init section: use it only if your class requires constructor parameters.
+* Attribute names: ensure your model’s `attributes` container defines keys matching the `attributes:` bindings.
+* Logging & Debugging: check server logs for import/initialisation failures (`docker compose logs --tail=200 --no-color spx-server`).
+* If you need reusable libraries (not file-path imports), prefer registry-based components: `spx-development-guide/spx-sdk/registry.md`.

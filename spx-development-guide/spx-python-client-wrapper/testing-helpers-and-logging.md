@@ -301,7 +301,7 @@ class TestBleVitalSignsMonitorLogged(SpxAssertionLoggingMixin, unittest.TestCase
     @classmethod
     def setUpClass(cls):
         product_key = os.environ["SPX_PRODUCT_KEY"]
-        base_url = os.environ.get("SPX_API_URL", "http://localhost:8000")
+        base_url = os.environ.get("SPX_BASE_URL", "http://localhost:8000")
 
         client, instance, _changed = bootstrap_model_instance(
             spx_module=spx_python,
@@ -365,7 +365,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 MODEL_PATH = ROOT / "library" / "domains" / "vacuum_systems" / "generic" / "vacuum_gauge__modbus.yaml"
 MODEL_KEY = "tests__vacuum_gauge"
 INSTANCE_KEY = "generic_vacuum_gauge"
-SPX_API_URL = os.environ.get("SPX_API_URL", "http://localhost:8000")
+BASE_URL = os.environ.get("SPX_BASE_URL", "http://localhost:8000")
 
 
 class TestModbusVacuumGaugeLogged(SpxAssertionLoggingMixin, unittest.TestCase):
@@ -375,7 +375,7 @@ class TestModbusVacuumGaugeLogged(SpxAssertionLoggingMixin, unittest.TestCase):
         client, instance, _changed = bootstrap_model_instance(
             spx_module=spx_python,
             product_key=product_key,
-            base_url=SPX_API_URL,
+            base_url=BASE_URL,
             model_path=MODEL_PATH,
             model_key=MODEL_KEY,
             instance_key=INSTANCE_KEY,
@@ -425,7 +425,7 @@ ATTR_PATH = "test_logs"
 MODEL_PATH = Path("library/domains/iot/generic/environment_sensor__mqtt.yaml")
 MODEL_KEY = "tests__generic_mqtt_environment_sensor"
 INSTANCE_KEY = "tests_generic_mqtt_environment_sensor_inst"
-BASE_URL = os.environ.get("SPX_API_URL", "http://localhost:8000")
+BASE_URL = os.environ.get("SPX_BASE_URL", "http://localhost:8000")
 
 
 def _instance_factory():

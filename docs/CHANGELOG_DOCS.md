@@ -47,3 +47,12 @@ This file tracks documentation QA work for this PR (repo-wide scan + targeted fi
 - [x] `appendices/additional-resources-and-readings.md` — Empty page. Proposed: curated links to repos (`spx-examples`, SDK, clients).
 
 - [x] `appendices.md` / `troubleshooting-and-support.md` / `simulation-and-modeling/extending-simulations.md` — Duplicate/out-of-nav pages. Proposed: delete or convert into a short “moved” pointer to the canonical section to avoid conflicting guidance.
+
+## Follow-ups (this pass)
+
+- [x] `spx-development-guide/spx-sdk/imports/README.md` — Stub page (heading-only). Proposed: add a short “what imports are for” overview + links to `PythonFile` and registry patterns.
+- [x] `troubleshooting-and-support/common-issues-and-solutions.md` — Too short and not structured as Symptom/Cause/Fix; missing several common failure modes. Proposed: expand to 8–12 issues with symptom/cause/fix and real debug commands.
+- [x] `troubleshooting-and-support/faqs.md` — Too few FAQs (needs 10–15, integrator/dev/QA focused). Proposed: expand with practical Q&A (determinism, ports, adapters, CI, snapshots, version pinning).
+- [x] `appendices/glossary-of-terms.md` — Glossary is under-sized (needs ~15–25 terms). Proposed: add missing core terms (Domains, Services, Catalogs, Profiles/Packs, Hooks, Conditions, Determinism, Faults).
+- [x] `release-notes.md` — Missing explicit “source of truth” and versioning/compatibility policy for multi-artifact releases. Proposed: document where releases/tags live and how to pin/upgrade safely.
+- [x] Repo-wide examples — Inconsistent base URL env var usage (`SPX_ADDRESS` / `SPX_API_URL` vs `SPX_BASE_URL`). Proposed: standardize docs to `SPX_BASE_URL` (matches `spx-python` docs/tests).

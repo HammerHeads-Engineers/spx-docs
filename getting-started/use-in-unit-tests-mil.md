@@ -109,7 +109,7 @@ class TestSUT_MiL_Modbus(unittest.TestCase):
     def setUpClass(cls):
         # 1) Control channel: connect to SPX Server
         cls.client = spx_python.init(
-            address=os.environ.get("SPX_ADDRESS", "http://localhost:8000"),
+            address=os.environ.get("SPX_BASE_URL", "http://localhost:8000"),
             product_key=os.environ.get("SPX_PRODUCT_KEY", ""),
         )
 

@@ -4,12 +4,29 @@
 - **SPX SDK**: Python package for authoring/validating model definitions and implementing custom classes (actions/components).
 - **SPX UI**: browser frontend for inspecting and operating a running SPX Server.
 - **spx-python**: Python client wrapper for controlling SPX Server (dict-like interface over Models/Instances and helpers for tests).
+- **spx-examples**: the canonical models + MiL tests repository; a practical contract for conventions and validation.
+- **Registry**: the SDK’s class registry used to map names in YAML to Python classes at runtime.
+- **Extension**: custom Python code (typically under `./extensions`) mounted into the server and registered via the registry.
 
 - **Model**: a definition (usually YAML) describing attributes, actions, communication adapters, timers, and scenarios.
 - **Instance**: a running copy of a Model with live state you can read/write.
 - **Attribute**: a named value in a model/instance. Many models distinguish **internal** (true state) vs **external** (presented value with noise/faults).
+- **Internal value**: the “true” simulation state used by model logic and dynamics.
+- **External value**: the value exposed to the outside world (protocol adapters/UI); often includes noise, faults, or scaling.
 - **Action**: a step that runs each simulation tick and mutates attributes (built-in or custom).
+- **Condition**: an `if` rule that triggers actions when a predicate becomes true.
+- **Hook**: a lifecycle or attribute-event callback that runs a component when something changes (prepare/run/start/on_set, etc.).
 - **Scenario**: a repeatable script of events (fault injection, parameter steps, sequencing) executed against an Instance.
+- **Fault**: a scenario (or scenario step) that intentionally degrades behavior (timeouts, overrange, disconnect, noise, stuck values).
 - **MiL test**: “Model-in-the-Loop” test where SPX is the deterministic plant/device and your Software Under Test is the real client.
 - **Snapshot**: captured simulation state that can be restored to get a known starting point for tests/debugging.
 - **Protocol adapter**: a communication block (Modbus/MQTT/HTTP/ASCII/BLE, etc.) that exposes the simulation over a real interface.
+- **Communication binding**: a mapping between an Attribute and a protocol-level representation (register, topic, endpoint, GATT characteristic).
+- **Domain**: a top-level category for models (as in `library/domains/<domain>/...`).
+- **Service**: an external dependency required by a model/profile (MQTT broker, BLE adapter, etc.); typically declared in catalogs.
+- **Catalog**: curated YAML lists that describe available models/domains/services and metadata for installers/profiles.
+- **Profile**: a selection of models/services used for running a scenario set or CI pack.
+- **Pack**: a curated bundle of domains/models/profiles/tests intended to be used together.
+- **Timer**: a time base component used for deterministic stepping (`dt`, current time).
+- **Polling**: a background runner used by some components/adapters; should not replace MiL-driven deterministic stepping for model behavior.
+- **Determinism**: the property that simulation results depend only on inputs and the simulated time progression (not wall-clock timing).
