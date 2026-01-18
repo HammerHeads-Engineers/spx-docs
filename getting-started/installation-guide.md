@@ -113,6 +113,28 @@ Create a minimal Compose + `.env` file (recommended for teams because the key st
 
    Success criteria: `curl` exits with code `0` and returns JSON with `"status":"ok"`.
 
+#### Path C - Installer + packs (spx-examples)
+
+Use the installer when you want a ready-to-run bundle of models, supporting
+services (MQTT/BACnet/KNX/etc.), and optional UI.
+
+1. Clone the public `spx-examples` repo:
+
+   ```bash
+   git clone https://github.com/HammerHeads-Engineers/spx-examples.git
+   cd spx-examples
+   ```
+
+2. Run the installer wizard:
+
+   - macOS/Linux: `./spx-install.sh`
+   - Windows PowerShell: `pwsh ./spx-install.ps1`
+
+3. The generated bundle lives in `build/spx-generated/`. Update `.env` with
+   your key, then start it with `spx-start.sh` or `spx-start.ps1`.
+
+For full details, see [Installer and Packs (spx-examples)](installer-and-packs.md).
+
 ## Common commands (both paths)
 
 ### Verify

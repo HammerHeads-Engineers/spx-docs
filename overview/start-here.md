@@ -21,6 +21,14 @@ Goal: run SPX Server, expose a protocol adapter, and point your client/driver at
    - SCPI/ASCII: [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/measurement_instruments/generic/multimeter__scpi.yaml)
 5. If something fails, start with: [Common Issues and Solutions](../troubleshooting-and-support/common-issues-and-solutions.md)
 
+## Pack-based quickstart (installer)
+
+Goal: launch a ready-to-test stack with models, services, and optional UI.
+
+1. Use the installer workflow: [Installer and Packs (spx-examples)](../getting-started/installer-and-packs.md)
+2. Pick a pack + quickstart profile (smart building, energy, lab, industrial)
+3. Start the generated bundle with `spx-start` and validate your SUT
+
 ## Developer (model authoring + extensions)
 
 Goal: author models and reusable custom logic (components/actions) safely and test-gate changes.

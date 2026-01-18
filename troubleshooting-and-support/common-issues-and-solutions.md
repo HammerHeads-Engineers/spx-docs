@@ -16,6 +16,39 @@ First commands to run:
   - If the name is still taken: `docker rm -f spx-server`
   - Verify compose is available: `docker compose version`
 
+## Installer wizard fails to start (`spx-install.sh` / `spx-install.ps1`)
+
+- **Symptom**: the installer exits with missing Python modules or cannot find `docker`.
+- **Likely cause**: Python or pip is missing, or the required modules are not installed.
+- **Fix**:
+  - Verify Python and pip: `python --version` and `python -m pip --version`
+  - Install modules: `python -m pip install --user pyyaml colorama`
+  - If you need a custom interpreter, set `PYTHON_BIN` before running the installer.
+
+## `spx-start` fails with missing Python modules
+
+- **Symptom**: `spx-start` reports missing `requests` or `spx_python`.
+- **Likely cause**: required Python modules are not installed for the interpreter used by the script.
+- **Fix**:
+  - Install dependencies: `python -m pip install --user requests spx-python`
+  - Set `PYTHON_BIN` to the correct interpreter and re-run `spx-start`.
+
+## BLE adapter not running in installer bundles
+
+- **Symptom**: BLE models fail and the start script prints `npm not available; skipping BLE adapter start`.
+- **Likely cause**: Node.js and npm are missing, or the BLE adapter was not installed.
+- **Fix**:
+  - Install Node.js and re-run `spx-start`, or
+  - Regenerate the bundle without BLE services if you do not need them.
+
+## PowerShell scripts blocked by execution policy
+
+- **Symptom**: Windows refuses to run `spx-install.ps1` or `spx-start.ps1`.
+- **Likely cause**: PowerShell execution policy prevents running local scripts.
+- **Fix**:
+  - Run with `pwsh -ExecutionPolicy Bypass -File spx-install.ps1`
+  - Do the same for `spx-start.ps1` if needed.
+
 ## SPX Server is not reachable on `http://localhost:8000`
 
 - **Symptom**: browser/curl returns “connection refused” or times out.
@@ -32,6 +65,7 @@ First commands to run:
 - **Likely cause**: `SPX_PRODUCT_KEY` is missing/invalid.
 - **Fix**:
   - Local: export `SPX_PRODUCT_KEY` (or put it in `.env` so Compose picks it up).
+  - Installer bundles: update `.env` in the generated folder (it defaults to `REPLACE_ME`).
   - CI: store `SPX_PRODUCT_KEY` as a secret and inject it in the job env (see [CI/CD Setup (GitHub Actions)](../getting-started/ci-cd-setup-github-actions.md)).
 
 ## Model load fails with `422` / validation errors

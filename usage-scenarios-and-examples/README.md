@@ -9,4 +9,7 @@ This chapter collects end-to-end workflows that combine:
 
 For runnable reference implementations, use `spx-examples` as the canonical source of models + tests.
 
-Next page: [Guided Use Cases & Scenarios](common-use-cases.md).
+Next pages:
+
+- [Guided Use Cases & Scenarios](common-use-cases.md)
+- [Industry Packs and Profiles](industry-packs.md)

@@ -25,8 +25,12 @@
 - **Domain**: a top-level category for models (as in `library/domains/<domain>/...`).
 - **Service**: an external dependency required by a model/profile (MQTT broker, BLE adapter, etc.); typically declared in catalogs.
 - **Catalog**: curated YAML lists that describe available models/domains/services and metadata for installers/profiles.
-- **Profile**: a selection of models/services used for running a scenario set or CI pack.
-- **Pack**: a curated bundle of domains/models/profiles/tests intended to be used together.
+- **Installer**: the spx-examples wizard that builds a runnable bundle from selected packs or profiles.
+- **Bundle**: the generated installer output (includes `bundle.json`, compose files, scripts, models, and assets).
+- **spx-start / spx-stop**: generated scripts that start and stop an installer bundle and run bootstrap steps.
+- **Assets**: supporting files copied into a bundle (configs for MQTT/KNX/Home Assistant, etc.).
+- **Profile**: a selection of models/services used for running a scenario set or CI pack (in spx-examples: `profiles/<pack>/*.yaml`).
+- **Pack**: a curated bundle of domains/models/profiles/tests intended to be used together (in spx-examples: `library/catalog/industries.yaml`).
 - **Timer**: a time base component used for deterministic stepping (`dt`, current time).
 - **Polling**: a background runner used by some components/adapters; should not replace MiL-driven deterministic stepping for model behavior.
 - **Determinism**: the property that simulation results depend only on inputs and the simulated time progression (not wall-clock timing).
