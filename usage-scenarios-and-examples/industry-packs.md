@@ -15,14 +15,19 @@ bundles.
 Source of truth (public repo):
 https://github.com/HammerHeads-Engineers/spx-examples
 
+## Definitions
+
+- Pack: an industry bundle of models and services (broad scope).
+- Profile: a concrete preset used for a specific scenario, demo, or CI run.
+
 ## Pack overview
 
-| Pack ID | Focus | Protocols (high level) | Quickstart profiles |
+| Pack ID | Focus | Protocols/Services | Profiles |
 | --- | --- | --- | --- |
-| `smart_building_pack` | BMS/BAS demo stack | mqtt, lwm2m/coap, http, modbus, opcua, knx, matter, bacnet | `bms_quickstart` |
-| `energy_pack` | e-mobility and DER | http, mqtt, modbus, ocpp | `ev_csms_demo` |
-| `embedded_lab_pack` | BLE and lab instruments | ble, mqtt, lwm2m/coap, scpi, modbus | `mhealth_ci`, `scpi_lab` |
-| `industrial_iiot_pack` | industrial monitoring | modbus, mqtt, http, scpi, opcua | `process_cell_quickstart`, `iiot_monitoring` |
+| `smart_building_pack` | BMS/BAS demo stack | Protocols: mqtt, lwm2m/coap, http, modbus, opcua, knx, matter, bacnet<br>Services: mqtt_broker, lwm2m_server, modbus_tcp_gateway, http_gateway, opcua_server, knx_gateway, bacnet_gateway, homeassistant_bridge, matter_server | [`bms_quickstart`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/profiles/smart_building_pack/bms_quickstart.yaml) |
+| `energy_pack` | e-mobility and DER | Protocols: http, mqtt, modbus, ocpp<br>Services: mqtt_broker, modbus_tcp_gateway, http_gateway, ocpp_central_system | [`ev_csms_demo`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/profiles/energy_pack/ev_csms_demo.yaml) |
+| `embedded_lab_pack` | BLE and lab instruments | Protocols: ble, mqtt, lwm2m/coap, scpi, modbus<br>Services: btvirt_adapter, mqtt_broker, lwm2m_server, scpi_tcp_stack, modbus_tcp_gateway | [`mhealth_ci`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/profiles/embedded_lab_pack/mhealth_ci.yaml), [`scpi_lab`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/profiles/embedded_lab_pack/scpi_lab.yaml) |
+| `industrial_iiot_pack` | industrial monitoring | Protocols: modbus, mqtt, http, scpi, opcua<br>Services: modbus_tcp_gateway, mqtt_broker, http_gateway, scpi_tcp_stack, opcua_server | [`process_cell_quickstart`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/profiles/industrial_iiot_pack/process_cell_quickstart.yaml), [`iiot_monitoring`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/profiles/industrial_iiot_pack/iiot_monitoring.yaml) |
 
 For pack-specific details, see:
 
@@ -31,7 +36,7 @@ For pack-specific details, see:
 
 ## How packs and profiles map to the installer
 
-The installer builds its selection from:
+For maintainers and developers, the installer builds its selection from:
 
 - `library/catalog/industries.yaml` (pack metadata, default instances, start instances)
 - `library/catalog/models.yaml` (model catalog, `packages` and `profiles` tags)
@@ -68,6 +73,19 @@ python -m installer generate \
   --profile-ids scpi_lab \
   --no-ui
 ```
+
+## How to verify (by role)
+
+- Integrator:
+  - Pick a pack and profile, generate a bundle, then run `spx-start`.
+  - Verify `curl -fsS http://localhost:8000/health` and connect a client to one selected protocol.
+- QA/CI:
+  - `python -m installer generate --packages <pack> --output build/ci/<pack> --no-start`
+  - `build/ci/<pack>/spx-start.sh`
+  - `poetry run pytest -q tests/packs/<pack>`
+- Developer:
+  - Update `library/catalog/*.yaml` and `profiles/<pack>/*.yaml`, then regenerate with
+    `python -m installer generate --packages <pack> --output build/spx-generated`.
 
 ## Extending a pack (for contributors)
 

@@ -14,17 +14,76 @@ The installer generates a self-contained folder you can share with teammates.
 The installer lives in the public spx-examples repository:
 https://github.com/HammerHeads-Engineers/spx-examples
 
+## Golden path (6 steps)
+
+Prerequisites:
+
+- macOS, Linux, or Windows (PowerShell or pwsh)
+- Docker and Docker Compose v2 (`docker compose`)
+- Python 3.9+
+
+1. Clone spx-examples:
+
+   ```bash
+   git clone https://github.com/HammerHeads-Engineers/spx-examples.git
+   cd spx-examples
+   ```
+
+2. Set `SPX_PRODUCT_KEY` (treat it as a secret; do not commit it):
+
+   ```bash
+   export SPX_PRODUCT_KEY="YOUR_REAL_KEY"
+   ```
+
+   ```powershell
+   $env:SPX_PRODUCT_KEY = "YOUR_REAL_KEY"
+   ```
+
+3. Generate a bundle (canonical command):
+
+   ```bash
+   python -m installer generate \
+     --packages smart_building_pack \
+     --profile-ids bms_quickstart \
+     --with-ui \
+     --output build/spx-generated
+   ```
+
+4. Enter the output folder:
+
+   ```bash
+   cd build/spx-generated
+   ```
+
+5. Start the stack:
+
+   - macOS/Linux: `./spx-start.sh`
+   - Windows: `pwsh ./spx-start.ps1`
+
+6. Verify it is healthy:
+
+   ```bash
+   docker compose -f docker-compose.generated.yml --env-file .env ps
+   curl -fsS http://localhost:8000/health
+   ```
+
+   Success criteria:
+   - `curl` returns JSON with `"status":"ok"`.
+   - `docker compose ps` shows `spx-server` as `Up` (healthy).
+
 ## Prerequisites
 
 - Docker and Docker Compose v2 (`docker compose`)
-- Python 3.9+ with pip
+- Python 3.9+ with pip (installer requirement in spx-examples `pyproject.toml`)
+- Tests and local tooling in spx-examples are exercised on Python 3.9-3.12 in CI
+  (pack tests run on Python 3.10.14)
 - A valid SPX product key (`SPX_PRODUCT_KEY`)
 
 Optional:
 
 - Node.js + npm if you include BLE models (the start script installs `@simplephysx/spx-ble-adapter`).
 
-## Run the installer from the repo
+## Run the installer from the repo (interactive wizard)
 
 ```bash
 git clone https://github.com/HammerHeads-Engineers/spx-examples.git
@@ -40,13 +99,14 @@ By default, artifacts are generated under `build/spx-generated/`.
 
 ## Non-interactive generation
 
-Use pack and profile selectors to build bundles without prompts:
+Use pack and profile selectors to build bundles without prompts. Example:
 
 ```bash
 python -m installer generate \
-  --packages smart_building_pack \
-  --profile-ids bms_quickstart \
-  --with-ui \
+  --packages embedded_lab_pack \
+  --profile-ids scpi_lab \
+  --no-ui \
+  --start \
   --output build/spx-generated
 ```
 
@@ -62,12 +122,16 @@ Other useful flags:
 
 Inside the output folder (for example `build/spx-generated/`):
 
-- `docker-compose.generated.yml` with only the selected services.
-- `.env` with `SPX_PRODUCT_KEY=REPLACE_ME` (edit to a real key).
-- `bundle.json` describing selected packages, models, services, and instances.
-- `spx-start.sh` / `spx-stop.sh` and `spx-start.ps1` / `spx-stop.ps1`.
-- `assets/` and `extensions/` copied from the repo.
-- Selected model YAMLs copied into the bundle so it is self-contained.
+- `docker-compose.generated.yml`: compose file with only the selected services.
+- `.env`: product key placeholder (`SPX_PRODUCT_KEY=REPLACE_ME`) for this bundle.
+- `bundle.json`: selected packages, models, services, and instances; consumed by the
+  bootstrap runner to register models and create instances.
+- `bootstrap_runner.py`: lightweight bootstrap script invoked by `spx-start`.
+- `spx-start.sh` / `spx-stop.sh`: start/stop helpers for Bash or zsh.
+- `spx-start.ps1` / `spx-stop.ps1`: start/stop helpers for PowerShell.
+- `assets/`: copied service configs (MQTT, KNX, Home Assistant, Matter).
+- `extensions/`: copied custom Python extensions.
+- `library/`: selected model YAMLs copied into the bundle for self-contained sharing.
 
 ## Start and stop the stack
 
@@ -87,6 +151,25 @@ The start scripts:
 - optionally install and run the BLE adapter if BLE services are selected,
 - run `docker compose down --remove-orphans` and then `docker compose up -d`,
 - bootstrap models and instances from `bundle.json`.
+
+## Security and CI notes
+
+- Do not commit `.env` files containing `SPX_PRODUCT_KEY`.
+- Use CI secrets to inject `SPX_PRODUCT_KEY` and `SPX_BASE_URL`.
+- Share bundles with `SPX_PRODUCT_KEY=REPLACE_ME` (or remove `.env` before sharing).
+- Avoid putting keys into command history; prefer environment variables.
+
+## How to verify (by role)
+
+- Integrator:
+  - `curl -fsS http://localhost:8000/health`
+  - `docker compose -f docker-compose.generated.yml --env-file .env ps`
+- QA/CI:
+  - `python -m installer generate --packages <pack> --output build/ci/<pack> --no-start`
+  - `build/ci/<pack>/spx-start.sh`
+  - `curl -fsS http://localhost:8000/health`
+- Developer:
+  - Edit pack/profile files (see below), then re-run `python -m installer generate`.
 
 ## Cleanup and uninstall
 
