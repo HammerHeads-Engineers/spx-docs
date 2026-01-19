@@ -15,22 +15,32 @@ Back to UI Overview: [UI Overview](general-view.md).
 
 In the UI navigation, open **Timer** or **Polling**. These are separate pages.
 
+## What you can do here
+
+### Polling view
+
+The Polling page shows the polling entity as an attribute tree. Use it to inspect current polling values and adjust settable fields.
+
 <figure><img src="../.gitbook/assets/image (17).png" alt=""><figcaption><p>Polling system parameters</p></figcaption></figure>
+
+* Inspect top-level and nested polling attributes.
+* Update settable values and confirm changes in **Instances** or logs.
+
+### Timer view
+
+The Timer page shows the timer entity as an attribute tree. Use it to inspect current timer values and adjust settable fields when needed.
 
 <figure><img src="../.gitbook/assets/image (18).png" alt=""><figcaption><p>Timer system parameters</p></figcaption></figure>
 
-## What you can do here
-
-* Review the Timer entity attributes exposed by the server and adjust values that have setters.
-* Review the Polling entity attributes exposed by the server and adjust values that have setters.
-* Use the attribute tree to inspect nested values and confirm current settings.
+* Inspect timer attributes and nested values.
+* Update settable values and confirm behavior in **Instances** or tests.
 
 ## Typical workflow
 
-1. Open **Timer** and confirm the timer attributes load.
-2. Open **Polling** and confirm polling attributes load.
-3. Adjust a value (if the attribute is settable) and observe changes in **Instances**.
-4. Return to tests and confirm deterministic stepping still matches expectations.
+1. Open **Polling** and confirm the attribute tree loads.
+2. Expand nodes and note current values.
+3. Open **Timer** and confirm the attribute tree loads.
+4. Adjust a settable value and observe changes in **Instances**.
 
 ## What to verify
 

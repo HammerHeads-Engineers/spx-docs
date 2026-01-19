@@ -9,6 +9,7 @@
 - UI docs cleanup — Moved screenshot placeholders inline with the relevant text sections.
 - UI docs enrichment — Expanded window descriptions using spx-ui source (Instances, Models, Timer/Polling, Snapshots, Settings) and updated the walkthrough Logger wording.
 - `ui-reference/instances.md` — Reorganized into Instances list and Instance View instructions with inline screenshots and clarified controls/tabs.
+- `ui-reference/timer-and-polling.md` — Organized Polling and Timer descriptions with inline screenshots and step-by-step flow.
 - `SUMMARY.md` — Grouped UI docs under "UI (Web App)" and added the new pages.
 - `SUMMARY.md` / `getting-started/installer-and-packs.md` — Added navigation and a cross-link to the walkthrough.
 - `getting-started/installer-and-packs.md` / `usage-scenarios-and-examples/industry-packs.md` — Cleaned trailing spaces, added a 6-step golden path + role-based verification, moved examples in place, and rebuilt the pack overview table.
