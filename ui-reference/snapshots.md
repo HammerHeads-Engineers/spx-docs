@@ -21,9 +21,21 @@ In the UI navigation, select **Snapshots**.
 * Create a new snapshot (optional name) before making changes.
 * Load a snapshot to restore the system state, or delete snapshots you no longer need.
 
+## Snapshots list
+
+The list shows saved snapshots with path and date. Each row includes actions to load or delete that snapshot.
+
 <figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>List of system snapshots</p></figcaption></figure>
 
+## Create a snapshot
+
+Use **Create New Snapshot** to capture the current system state. The name field is optional.
+
 <figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption><p>New snapshot popup</p></figcaption></figure>
+
+## Load or delete a snapshot
+
+Use **Load** to restore the system to the selected snapshot, or **Delete** to remove it. Both actions require confirmation.
 
 <figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption><p>Load snapshot confirmation</p></figcaption></figure>
 
@@ -34,7 +46,7 @@ In the UI navigation, select **Snapshots**.
 1. Open **Snapshots**.
 2. Create a snapshot before you run a scenario or test.
 3. Make your changes or run the scenario.
-4. Restore the snapshot to reset state.
+4. Load the snapshot to reset state.
 5. Return to **Instances** and confirm values match the baseline.
 
 ## What to verify
