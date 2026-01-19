@@ -9,6 +9,7 @@
 * [Quick Start](getting-started/README.md)
   * [Installation Guide](getting-started/installation-guide.md)
   * [Installer and Packs (spx-examples)](getting-started/installer-and-packs.md)
+  * [Smart Building Pack: First Run Walkthrough](getting-started/first-run-smart-building-pack.md)
   * [Build Your First Simulation](getting-started/build-your-first-simulation.md)
   * [Choose a protocol adapter](getting-started/choose-a-protocol-adapter.md)
   * [Add Modbus TCP/IP to Your Simulation](getting-started/add-communication-protocol.md)

@@ -4,53 +4,23 @@ icon: sidebar
 
 # General View
 
-The General view is the fastest way to confirm that your SPX Server is up and that your simulation is doing what you think it is doing.
+The General view is a fast way to inspect a running SPX Server and validate behavior while you iterate.
 
-<figure><img src="../.gitbook/assets/Zrzut ekranu 2026-01-19 o 10.51.51.png" alt=""><figcaption></figcaption></figure>
+> First time running SPX? Follow: [Smart Building Pack: First Run Walkthrough](../getting-started/first-run-smart-building-pack.md).
 
-#### Typical workflow (Installer → UI sanity check)
+## UI Overview
 
-{% stepper %}
-{% step %}
-### Install and start a pack
+The UI is designed for interactive debugging and inspection. Use it to confirm that models and instances are loaded, that state changes as expected, and that scenarios behave as intended.
 
+[Screenshot: UI main navigation / landing screen]
 
-{% endstep %}
+Main areas:
 
-{% step %}
-### Open the UI
-
-Go to http://localhost:3000. You should see the Instances list (active running instances).
-
-<figure><img src="../.gitbook/assets/Zrzut ekranu 2026-01-19 o 10.47.24.png" alt=""><figcaption></figcaption></figure>
-{% endstep %}
-
-{% step %}
-### Confirm the server is working
-
-Open any instance from the list (for example Vaisala WXT530):
-
-the instance should show as running/active,
-
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
-
-Logs should not contain errors.
-
-<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
-{% endstep %}
-
-{% step %}
-### Validate the simulation react
-
-Go to the Scenarios tab and run a weather-related scenario (e.g., “change weather”).
-
-<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
-{% endstep %}
-
-{% step %}
-### :tada: Ready to Work
-{% endstep %}
-{% endstepper %}
+- Instances: list of running instances plus a detail view for attributes, scenarios, and logs.
+- Models: list of loaded models with a view/edit panel for model definitions.
+- Timer & Polling: configure time stepping and polling behavior.
+- Snapshots: create and restore snapshots while testing.
+- Settings: UI-level configuration for the running stack.
 
 #### What to keep in mind
 

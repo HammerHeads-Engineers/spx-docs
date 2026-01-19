@@ -72,6 +72,8 @@ Prerequisites:
    - `curl` returns JSON with `"status":"ok"`.
    - `docker compose ps` shows `spx-server` as `Up` (healthy).
 
+After installing Smart Building Pack, see: [Smart Building Pack: First Run Walkthrough](first-run-smart-building-pack.md).
+
 ## Prerequisites
 
 - Docker and Docker Compose v2 (`docker compose`)
