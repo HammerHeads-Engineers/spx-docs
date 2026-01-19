@@ -4,6 +4,8 @@
 
 - `getting-started/first-run-smart-building-pack.md` — Added a pack-specific first-run UI walkthrough with existing screenshots, pass criteria, and troubleshooting links.
 - `ui-reference/general-view.md` — Refocused on a UI overview and moved the pack-specific workflow to the new walkthrough; added a link to it.
+- `ui-reference/README.md` / `ui-reference/instances.md` / `ui-reference/models.md` / `ui-reference/timer-and-polling.md` / `ui-reference/snapshots.md` / `ui-reference/settings.md` — Split UI docs into per-area pages with workflows, verification checks, common issues, and screenshot placeholders; added UI Overview cross-links.
+- `SUMMARY.md` — Grouped UI docs under "UI (Web App)" and added the new pages.
 - `SUMMARY.md` / `getting-started/installer-and-packs.md` — Added navigation and a cross-link to the walkthrough.
 - `getting-started/installer-and-packs.md` / `usage-scenarios-and-examples/industry-packs.md` — Cleaned trailing spaces, added a 6-step golden path + role-based verification, moved examples in place, and rebuilt the pack overview table.
 - `getting-started/installation-guide.md` — Path A/Path B steps now include in-place `docker compose up -d`, `docker compose logs -f spx-server`, and `/health` verification (no reliance on “Common commands”).

@@ -8,6 +8,8 @@ description: >-
 
 This walkthrough assumes you used the Installer and selected the Smart Building Pack. After starting the generated stack, open the UI at http://localhost:3000.
 
+Learn the UI structure here: [UI Overview](../ui-reference/general-view.md).
+
 <figure><img src="../.gitbook/assets/Zrzut ekranu 2026-01-19 o 10.51.51.png" alt=""><figcaption></figcaption></figure>
 
 ## Walkthrough
