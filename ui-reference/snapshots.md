@@ -20,10 +20,14 @@ In the UI navigation, select **Snapshots**.
 * Browse existing snapshots for the current stack (path and date).
 * Create a new snapshot (optional name) before making changes.
 * Load a snapshot to restore the system state, or delete snapshots you no longer need.
-* \[Screenshot: Snapshots list with path/date/actions]
-* \[Screenshot: Create snapshot modal]
-* \[Screenshot: Load snapshot confirmation]
-* \[Screenshot: Delete snapshot confirmation]
+
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>List of system snapshots</p></figcaption></figure>
+
+<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption><p>New snapshot popup</p></figcaption></figure>
+
+<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption><p>Load snapshot confirmation</p></figcaption></figure>
+
+<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption><p>Delete snapshot confirmation</p></figcaption></figure>
 
 ## Typical workflow
 

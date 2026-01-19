@@ -22,10 +22,10 @@ Learn the UI structure here: [UI Overview](../ui-reference/general-view.md).
     <figure><img src="../.gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
 3.  Open the Logger tab and confirm there are no errors.
 
-    <figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 4.  Run a weather-related scenario (for example "change weather") and confirm chart/values update immediately.
 
-    <figure><img src="../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
+    <figure><img src="../.gitbook/assets/image (3) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ## Pass criteria
 
