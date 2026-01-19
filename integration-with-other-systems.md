@@ -2,11 +2,11 @@
 
 SPX integrates with external systems through the same interfaces your real devices use. In most projects, the integration boundary is a protocol adapter:
 
-- Modbus: [Modbus Adapter](spx-core/communications/modbus.md)
-- MQTT: [MQTT Adapter](spx-core/communications/mqtt.md)
-- HTTP: [HTTP Adapter](spx-core/communications/http.md)
-- ASCII/SCPI: [ASCII / SCPI Adapter](spx-core/communications/ascii.md)
-- BLE (via companion service): [BLE Adapter](spx-core/communications/ble.md)
+* Modbus: [Modbus Adapter](/broken/pages/HspwARSmThhECwKIDxp5)
+* MQTT: [MQTT Adapter](/broken/pages/wQZmN7ix2NnrhI2FK9Mr)
+* HTTP: [HTTP Adapter](/broken/pages/RlZU1sXYyJg1oMkOAkD1)
+* ASCII/SCPI: [ASCII / SCPI Adapter](/broken/pages/ZHfz8dNOl5kwq5lKEQy5)
+* BLE (via companion service): [BLE Adapter](spx-core/communications/ble.md)
 
 ## Recommended pattern
 

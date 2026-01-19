@@ -6,9 +6,9 @@ No. The UI is optional. MiL tests should talk to SPX Server via the API (usually
 
 ## How do I keep simulations deterministic?
 
-- Drive time explicitly from the client/test (set `instance["timer"]["time"]`, call `client.run()`).
-- Avoid wall-clock sleeps for simulation behavior.
-- Use Snapshots for stable starting states.
+* Drive time explicitly from the client/test (set `instance["timer"]["time"]`, call `client.run()`).
+* Avoid wall-clock sleeps for simulation behavior.
+* Use Snapshots for stable starting states.
 
 See: [Use in Unit Tests (MiL)](../getting-started/use-in-unit-tests-mil.md), [Snapshots — Getting Started](../getting-started/snapshots-guide.md).
 
@@ -24,9 +24,9 @@ See: [Extend with a Custom Component](../getting-started/extend-with-custom-comp
 
 ## What should I commit to git?
 
-- Model YAML (and any snapshots you intentionally use as test fixtures).
-- Extension code under `extensions/`.
-- MiL tests (`pytest`) that validate the model behavior.
+* Model YAML (and any snapshots you intentionally use as test fixtures).
+* Extension code under `extensions/`.
+* MiL tests (`pytest`) that validate the model behavior.
 
 ## Which Python versions are supported?
 
@@ -36,17 +36,17 @@ See: [System Requirements and Capability](../overview/system-requirements-and-ca
 
 ## What is the canonical server URL / how do I change it?
 
-- Default local base URL is `http://localhost:8000`.
-- If you map the container to a different host port (for example `18000:8000`), point your client at that port.
-- In examples, use `SPX_BASE_URL` to override the default base URL.
+* Default local base URL is `http://localhost:8000`.
+* If you map the container to a different host port (for example `18000:8000`), point your client at that port.
+* In examples, use `SPX_BASE_URL` to override the default base URL.
 
 See: [Installation Guide](../getting-started/installation-guide.md).
 
 ## How do I pin versions (server image + Python clients)?
 
-- Pin the server image tag in `docker-compose.yml` (for example `simplephysx/spx-server:<tag>`).
-- Pin `spx-python`/`spx-sdk` versions in your Python environment (`requirements.txt`/`pyproject.toml`).
-- Treat `spx-examples` tags as a known-good baseline for models/tests.
+* Pin the server image tag in `docker-compose.yml` (for example `simplephysx/spx-server:<tag>`).
+* Pin `spx-python`/`spx-sdk` versions in your Python environment (`requirements.txt`/`pyproject.toml`).
+* Treat `spx-examples` tags as a known-good baseline for models/tests.
 
 See: [Release Notes](../release-notes.md).
 
@@ -54,8 +54,8 @@ See: [Release Notes](../release-notes.md).
 
 Two common approaches:
 
-- If you develop in `spx-examples`, run: `python tools/validate_models.py`
-- If you use the SDK directly, use the validation rules documented in: [Validation](../spx-development-guide/spx-sdk/validation.md)
+* If you develop in `spx-examples`, run: `python tools/validate_models.py`
+* If you use the SDK directly, use the validation rules documented in: [Validation](../spx-development-guide/spx-sdk/validation.md)
 
 ## What does a `422` from the API usually mean?
 
@@ -63,8 +63,8 @@ Most often it’s a model/definition validation failure (wrong YAML shape, missi
 
 Start with:
 
-- `docker compose logs --tail=200 --no-color spx-server`
-- [Validation](../spx-development-guide/spx-sdk/validation.md)
+* `docker compose logs --tail=200 --no-color spx-server`
+* [Validation](../spx-development-guide/spx-sdk/validation.md)
 
 ## How do I run MiL tests in CI?
 
@@ -81,17 +81,17 @@ See: [CI/CD Setup (GitHub Actions)](../getting-started/ci-cd-setup-github-action
 
 Use Snapshots to:
 
-- start tests from a known-good state without replaying long warmups,
-- debug a failing test by capturing and sharing the exact state.
+* start tests from a known-good state without replaying long warmups,
+* debug a failing test by capturing and sharing the exact state.
 
 See: [Snapshots — Getting Started](../getting-started/snapshots-guide.md).
 
 ## How do I debug protocol adapter issues (ports, networking)?
 
-- Confirm the adapter port is exposed on the host (`docker compose ps`).
-- If the adapter talks to a host-side service, don’t use `127.0.0.1` from inside Docker; prefer `host.docker.internal` (where supported).
+* Confirm the adapter port is exposed on the host (`docker compose ps`).
+* If the adapter talks to a host-side service, don’t use `127.0.0.1` from inside Docker; prefer `host.docker.internal` (where supported).
 
-See: [Communication Adapters](../spx-core/communications/README.md).
+See: [Communication Adapters](/broken/pages/Xj0Kch85KiFEX0H4nFce).
 
 ## What should I include in a support request?
 

@@ -20,8 +20,8 @@ Use the SDK for prototyping; deploy the same definitions to the core when you ne
 
 ## What is next?
 
-* [System Runtime](system/README.md)
+* [System Runtime](system/)
 * [Actions Library](actions.md)
-* [Communication Adapters](communications/README.md)
+* [Communication Adapters](/broken/pages/Xj0Kch85KiFEX0H4nFce)
 * [Snapshots](snapshots.md)
 * [Extending the Core](extending.md)

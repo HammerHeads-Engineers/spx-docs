@@ -1,19 +1,50 @@
+---
+icon: sidebar
+---
+
 # General View
 
 The General view is the fastest way to confirm that your SPX Server is up and that your simulation is doing what you think it is doing.
 
-## Typical workflow
+<figure><img src="../.gitbook/assets/Zrzut ekranu 2026-01-19 o 10.51.51.png" alt=""><figcaption></figcaption></figure>
 
-1. **Confirm connectivity**: verify the UI is connected to the correct SPX Server (API base URL and “server is up” state).
-2. **Locate the running Instance**: find the Instance you created from your Model.
-3. **Inspect live state**:
-   - attributes (internal/external values where applicable),
-   - timers / simulated time,
-   - protocol adapter status (if the model exposes communication endpoints).
-4. **Trigger or observe scenarios**: run a Scenario and confirm it changes state as expected.
-5. **Debug with logs**: when something looks wrong in the UI, cross-check the server logs and the API endpoints used by your tests.
+#### Typical workflow (Installer → UI sanity check)
 
-## What to keep in mind
+1.  Install and start a pack
 
-- The UI is great for interactive debugging, but MiL tests should be the authoritative regression suite.
-- When a value “does not change”, first check that simulation time is being advanced deterministically (your client/test is stepping time and calling `run()`).
+    Run the installer and select an industry pack (for example Smart Building Pack). Start the generated stack.
+2.  Open the UI
+
+    Go to http://localhost:3000. You should see the Instances list (active running instances).
+3.
+
+    <figure><img src="../.gitbook/assets/Zrzut ekranu 2026-01-19 o 10.47.24.png" alt=""><figcaption></figcaption></figure>
+4.  Confirm the server is working
+
+    Open any instance from the list (for example Vaisala WXT530):
+
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+* the instance should show as running/active,
+* Logs should not contain errors.
+
+<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+
+4.  Validate the simulation reacts
+
+    Go to the Scenarios tab and run a weather-related scenario (e.g., “change weather”).
+
+<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+
+You should see the chart and/or attribute values update immediately after triggering the scenario.
+
+<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+
+If all steps above work, your installation is correct: UI ↔ SPX Server connectivity is OK, the simulation is running, and scenarios are applied successfully.
+
+<br>
+
+#### What to keep in mind
+
+* Use the UI for interactive inspection and debugging (instances, charts, scenarios, logs).
+* Use MiL tests as the authoritative regression suite. If a value “does not change” in tests, verify your test/client is advancing time deterministically (step time + run loop) before debugging the UI.
