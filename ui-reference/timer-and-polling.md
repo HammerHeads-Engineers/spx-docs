@@ -1,8 +1,9 @@
 ---
 description: Review simulated time and polling behavior in the UI.
+icon: timer
 ---
 
-# Timer and Polling
+# Timer & Polling
 
 ## Purpose
 
@@ -14,14 +15,14 @@ Back to UI Overview: [UI Overview](general-view.md).
 
 In the UI navigation, open **Timer** or **Polling**. These are separate pages.
 
-- [Screenshot: Timer page - attributes tree]
-- [Screenshot: Polling page - attributes tree]
+* \[Screenshot: Timer page - attributes tree]
+* \[Screenshot: Polling page - attributes tree]
 
 ## What you can do here
 
-- Review the Timer entity attributes exposed by the server and adjust values that have setters.
-- Review the Polling entity attributes exposed by the server and adjust values that have setters.
-- Use the attribute tree to inspect nested values and confirm current settings.
+* Review the Timer entity attributes exposed by the server and adjust values that have setters.
+* Review the Polling entity attributes exposed by the server and adjust values that have setters.
+* Use the attribute tree to inspect nested values and confirm current settings.
 
 ## Typical workflow
 
@@ -32,13 +33,13 @@ In the UI navigation, open **Timer** or **Polling**. These are separate pages.
 
 ## What to verify
 
-- Integrator: timer attributes respond when the stack is running.
-- QA: time is stepped deterministically in MiL tests.
-- Developer: polling behavior matches expected update cadence.
+* Integrator: timer attributes respond when the stack is running.
+* QA: time is stepped deterministically in MiL tests.
+* Developer: polling behavior matches expected update cadence.
 
 ## Common issues
 
-- No timer available: the server does not expose timer data for this stack.
-- No polling available: polling data is not exposed for this stack.
-- Values cannot be edited: the attribute is read-only (no setter).
-- UI time differs from tests: confirm both point to the same server.
+* No timer available: the server does not expose timer data for this stack.
+* No polling available: polling data is not exposed for this stack.
+* Values cannot be edited: the attribute is read-only (no setter).
+* UI time differs from tests: confirm both point to the same server.

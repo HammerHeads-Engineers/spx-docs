@@ -1,5 +1,6 @@
 ---
 description: Review UI-level settings and server connectivity information.
+icon: gear
 ---
 
 # Settings
@@ -16,15 +17,14 @@ In the UI navigation, select **Settings**.
 
 ## What you can do here
 
-- Connect or disconnect from a server using Host and Port, and check the status chip.
-- Adjust number formatting (max decimals) and see scientific-notation thresholds.
-- Review subscription plan and validity information.
-- Note the SPX UI version for support and troubleshooting.
-
-- [Screenshot: Server connection card]
-- [Screenshot: Number formatting settings]
-- [Screenshot: Subscription info card]
-- [Screenshot: SPX UI version row]
+* Connect or disconnect from a server using Host and Port, and check the status chip.
+* Adjust number formatting (max decimals) and see scientific-notation thresholds.
+* Review subscription plan and validity information.
+* Note the SPX UI version for support and troubleshooting.
+* \[Screenshot: Server connection card]
+* \[Screenshot: Number formatting settings]
+* \[Screenshot: Subscription info card]
+* \[Screenshot: SPX UI version row]
 
 ## Typical workflow
 
@@ -35,13 +35,13 @@ In the UI navigation, select **Settings**.
 
 ## What to verify
 
-- Integrator: the UI is connected to the intended SPX Server.
-- QA: subscription info is visible and matches the test environment.
-- Developer: Host/Port matches the target container or remote server.
+* Integrator: the UI is connected to the intended SPX Server.
+* QA: subscription info is visible and matches the test environment.
+* Developer: Host/Port matches the target container or remote server.
 
 ## Common issues
 
-- Connect is disabled or fails: confirm `SPX_PRODUCT_KEY` is available and the host/port are reachable.
-- UI shows no data: verify the server connection status and refresh.
-- Subscription shows "Not available": confirm the server exposes license info.
-- Settings section missing: check your UI build or permissions.
+* Connect is disabled or fails: confirm `SPX_PRODUCT_KEY` is available and the host/port are reachable.
+* UI shows no data: verify the server connection status and refresh.
+* Subscription shows "Not available": confirm the server exposes license info.
+* Settings section missing: check your UI build or permissions.

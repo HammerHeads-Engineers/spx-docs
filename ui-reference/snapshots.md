@@ -1,5 +1,6 @@
 ---
 description: Capture and restore snapshots of a running instance state.
+icon: floppy-disks
 ---
 
 # Snapshots
@@ -16,14 +17,13 @@ In the UI navigation, select **Snapshots**.
 
 ## What you can do here
 
-- Browse existing snapshots for the current stack (path and date).
-- Create a new snapshot (optional name) before making changes.
-- Load a snapshot to restore the system state, or delete snapshots you no longer need.
-
-- [Screenshot: Snapshots list with path/date/actions]
-- [Screenshot: Create snapshot modal]
-- [Screenshot: Load snapshot confirmation]
-- [Screenshot: Delete snapshot confirmation]
+* Browse existing snapshots for the current stack (path and date).
+* Create a new snapshot (optional name) before making changes.
+* Load a snapshot to restore the system state, or delete snapshots you no longer need.
+* \[Screenshot: Snapshots list with path/date/actions]
+* \[Screenshot: Create snapshot modal]
+* \[Screenshot: Load snapshot confirmation]
+* \[Screenshot: Delete snapshot confirmation]
 
 ## Typical workflow
 
@@ -35,13 +35,13 @@ In the UI navigation, select **Snapshots**.
 
 ## What to verify
 
-- Integrator: restoring a snapshot returns values to the expected baseline.
-- QA: snapshots make test setup repeatable.
-- Developer: snapshot/restore works before and after model changes.
+* Integrator: restoring a snapshot returns values to the expected baseline.
+* QA: snapshots make test setup repeatable.
+* Developer: snapshot/restore works before and after model changes.
 
 ## Common issues
 
-- Snapshot list is empty: confirm the stack is running and snapshots exist.
-- Load fails: check server logs and confirm the snapshot path is valid.
-- State does not match baseline: verify you restored the intended snapshot.
-- Snapshot creation fails: check server logs and disk space.
+* Snapshot list is empty: confirm the stack is running and snapshots exist.
+* Load fails: check server logs and confirm the snapshot path is valid.
+* State does not match baseline: verify you restored the intended snapshot.
+* Snapshot creation fails: check server logs and disk space.

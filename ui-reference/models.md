@@ -1,5 +1,6 @@
 ---
 description: Browse loaded models and inspect their definitions.
+icon: code
 ---
 
 # Models
@@ -16,16 +17,15 @@ In the UI navigation, select **Models**. The list shows loaded models; editing a
 
 ## What you can do here
 
-- Browse loaded models and confirm they match your bundle.
-- Click a definition preview to open the full definition modal and copy it if needed.
-- Create a new model or load a model from a JSON/YAML file.
-- Edit or delete models, including bulk delete or bulk edit for selected rows.
-- In the editor, switch between JSON and YAML, test the model, and save updates.
-
-- [Screenshot: Models list with definition preview]
-- [Screenshot: Model definition modal (copyable)]
-- [Screenshot: Model editor with JSON/YAML tabs]
-- [Screenshot: Load model modal]
+* Browse loaded models and confirm they match your bundle.
+* Click a definition preview to open the full definition modal and copy it if needed.
+* Create a new model or load a model from a JSON/YAML file.
+* Edit or delete models, including bulk delete or bulk edit for selected rows.
+* In the editor, switch between JSON and YAML, test the model, and save updates.
+* \[Screenshot: Models list with definition preview]
+* \[Screenshot: Model definition modal (copyable)]
+* \[Screenshot: Model editor with JSON/YAML tabs]
+* \[Screenshot: Load model modal]
 
 ## Typical workflow
 
@@ -37,13 +37,13 @@ In the UI navigation, select **Models**. The list shows loaded models; editing a
 
 ## What to verify
 
-- Integrator: required models for your target protocols are loaded.
-- QA: model definitions include the expected attributes and scenarios.
-- Developer: editor changes persist and test preview data updates.
+* Integrator: required models for your target protocols are loaded.
+* QA: model definitions include the expected attributes and scenarios.
+* Developer: editor changes persist and test preview data updates.
 
 ## Common issues
 
-- Model missing from the list: verify the pack/profile selection in the installer bundle.
-- Load model fails: validate JSON/YAML syntax and ensure the model name is unique.
-- Edit/Create opens in a new tab: allow pop-ups if your browser blocks them.
-- Definition looks stale: refresh the page or restart the stack after updates.
+* Model missing from the list: verify the pack/profile selection in the installer bundle.
+* Load model fails: validate JSON/YAML syntax and ensure the model name is unique.
+* Edit/Create opens in a new tab: allow pop-ups if your browser blocks them.
+* Definition looks stale: refresh the page or restart the stack after updates.

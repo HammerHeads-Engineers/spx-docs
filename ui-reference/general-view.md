@@ -1,5 +1,5 @@
 ---
-icon: sidebar
+icon: browser
 ---
 
 # UI Overview
@@ -12,13 +12,13 @@ The UI is a fast way to inspect a running SPX Server and validate behavior while
 
 Use the UI for interactive inspection and debugging. It helps you confirm what is running, verify state changes, and validate scenarios quickly.
 
-- [Screenshot: UI landing screen / main navigation]
+<figure><img src="../.gitbook/assets/Zrzut ekranu 2026-01-19 o 10.47.24.png" alt=""><figcaption></figcaption></figure>
 
-- [Instances](instances.md): inspect running instances, scenario triggers, and logs.
-- [Models](models.md): review loaded models and their definitions.
-- [Timer & Polling](timer-and-polling.md): separate Timer and Polling pages for system attributes.
-- [Snapshots](snapshots.md): capture and restore known-good states during testing.
-- [Settings](settings.md): review UI-level settings and connectivity details.
+* [Instances](instances.md): inspect running instances, scenario triggers, and logs.
+* [Models](models.md): review loaded models and their definitions.
+* [Timer & Polling](timer-and-polling.md): separate Timer and Polling pages for system attributes.
+* [Snapshots](snapshots.md): capture and restore known-good states during testing.
+* [Settings](settings.md): review UI-level settings and connectivity details.
 
 #### What to keep in mind
 
