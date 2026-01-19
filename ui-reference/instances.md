@@ -19,21 +19,31 @@ In the UI navigation, select **Instances** to open the list. Use the **Open** ac
 
 The list shows active instances with Name, Model, and Status. It also provides model filtering, creation, and bulk actions.
 
-### Steps
-
-1. Filter the list by model to focus on a specific group.
+{% stepper %}
+{% step %}
+#### Filter the list by model to focus on a specific group.
 
 <figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>Filter instances by model name</p></figcaption></figure>
+{% endstep %}
 
-2. Create a new instance (single or bulk) by choosing a model and name or name prefix.
+{% step %}
+#### Create a new instance (single or bulk) by choosing a model and name or name prefix.
 
 <figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption><p>Adding new instance</p></figcaption></figure>
+{% endstep %}
 
-3. Select instances and use bulk actions to start, stop, delete, or open multiple rows.
+{% step %}
+#### Select instances and use bulk actions to start, stop, delete, or open multiple rows.
 
 <figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption><p>Bulk operations on selected instances</p></figcaption></figure>
 
-4. Use per-row actions (Start, Stop, Delete, Open) and the status indicator to control or inspect a single instance.
+
+{% endstep %}
+
+{% step %}
+#### Use per-row actions (Start, Stop, Delete, Open) and the status indicator to control or inspect a single instance.
+{% endstep %}
+{% endstepper %}
 
 ## Instance View
 
@@ -43,39 +53,39 @@ Open the Instance View in a new tab from the list. The header shows the instance
 
 ### Controls and modes
 
-- Use **Continuous** mode for Start/Stop and real-time updates.
-- Use **Stepper** mode to Prepare and Run single steps.
-- Use **Reset** or **Delete** to clear state or remove the instance.
+* Use **Continuous** mode for Start/Stop and real-time updates.
+* Use **Stepper** mode to Prepare and Run single steps.
+* Use **Reset** or **Delete** to clear state or remove the instance.
 
 ### Tabs and panels
 
-- **Attributes**: view and edit attribute values, select axes, and inspect the time-series chart (range, refresh rate, clear, export CSV, print).
+* **Attributes**: view and edit attribute values, select axes, and inspect the time-series chart (range, refresh rate, clear, export CSV, print).
 
 <figure><img src="../.gitbook/assets/image (14).png" alt=""><figcaption><p>Instance attributes, and time-series chart</p></figcaption></figure>
 
-- **Physics**: review actions, toggle enabled state, and inspect action attributes.
+* **Physics**: review actions, toggle enabled state, and inspect action attributes.
 
 <figure><img src="../.gitbook/assets/image (7).png" alt=""><figcaption><p>Physics tab (actions)</p></figcaption></figure>
 
-- **Scenarios**: start or stop scenarios and confirm state transitions.
+* **Scenarios**: start or stop scenarios and confirm state transitions.
 
 <figure><img src="../.gitbook/assets/image (9).png" alt=""><figcaption><p>Defined ready to use scenarios</p></figcaption></figure>
 
-- **Communication**: review protocol bindings, toggle enabled state, and open per-binding logs.
+* **Communication**: review protocol bindings, toggle enabled state, and open per-binding logs.
 
 <figure><img src="../.gitbook/assets/image (10).png" alt=""><figcaption><p>Communication with protocols</p></figcaption></figure>
 
 <figure><img src="../.gitbook/assets/image (11).png" alt=""><figcaption><p>Communication logs (per attribute/register/binding)</p></figcaption></figure>
 
-- **Polling**: inspect per-instance polling attributes and adjust settable values.
+* **Polling**: inspect per-instance polling attributes and adjust settable values.
 
 <figure><img src="../.gitbook/assets/image (12).png" alt=""><figcaption><p>Instance polling parameters</p></figcaption></figure>
 
-- **Timer**: inspect per-instance timer attributes and adjust settable values.
+* **Timer**: inspect per-instance timer attributes and adjust settable values.
 
 <figure><img src="../.gitbook/assets/image (13).png" alt=""><figcaption><p>Instance timer parameters</p></figcaption></figure>
 
-- **Logger**: view instance logs and confirm there are no errors.
+* **Logger**: view instance logs and confirm there are no errors.
 
 <figure><img src="../.gitbook/assets/image (15).png" alt=""><figcaption><p>Instance logs</p></figcaption></figure>
 
