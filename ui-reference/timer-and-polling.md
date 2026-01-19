@@ -42,6 +42,6 @@ In the UI navigation, select **Timer & Polling**.
 
 ## Screenshots
 
-[Screenshot: Timer and Polling main view]
-[Screenshot: Timer controls]
-[Screenshot: Polling settings]
+- [Screenshot: Timer and Polling main view]
+- [Screenshot: Timer controls]
+- [Screenshot: Polling settings]

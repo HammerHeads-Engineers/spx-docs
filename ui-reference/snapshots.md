@@ -43,7 +43,7 @@ In the UI navigation, select **Snapshots**.
 
 ## Screenshots
 
-[Screenshot: Snapshots list]
-[Screenshot: Create snapshot action]
-[Screenshot: Snapshot restore action]
-[Screenshot: Snapshot details]
+- [Screenshot: Snapshots list]
+- [Screenshot: Create snapshot action]
+- [Screenshot: Snapshot restore action]
+- [Screenshot: Snapshot details]

@@ -43,8 +43,8 @@ In the UI navigation, select **Instances**. The list shows active instances; sel
 
 ## Screenshots
 
-[Screenshot: Instances list]
-[Screenshot: Instance details - Attributes tab]
-[Screenshot: Instance details - Charts tab]
-[Screenshot: Instance details - Scenarios tab]
-[Screenshot: Instance details - Logs tab]
+- [Screenshot: Instances list]
+- [Screenshot: Instance details - Attributes tab]
+- [Screenshot: Instance details - Charts tab]
+- [Screenshot: Instance details - Scenarios tab]
+- [Screenshot: Instance details - Logs tab]

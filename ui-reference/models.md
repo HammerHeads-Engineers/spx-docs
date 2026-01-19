@@ -43,6 +43,6 @@ In the UI navigation, select **Models**. The list shows loaded models; select on
 
 ## Screenshots
 
-[Screenshot: Models list]
-[Screenshot: Model detail view]
-[Screenshot: Model definition panel (YAML/JSON)]
+- [Screenshot: Models list]
+- [Screenshot: Model detail view]
+- [Screenshot: Model definition panel (YAML/JSON)]

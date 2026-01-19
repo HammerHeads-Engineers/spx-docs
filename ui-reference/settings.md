@@ -42,6 +42,6 @@ In the UI navigation, select **Settings**.
 
 ## Screenshots
 
-[Screenshot: Settings main view]
-[Screenshot: Server connection section]
-[Screenshot: About or build info section]
+- [Screenshot: Settings main view]
+- [Screenshot: Server connection section]
+- [Screenshot: About or build info section]

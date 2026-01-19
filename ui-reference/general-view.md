@@ -12,7 +12,7 @@ The UI is a fast way to inspect a running SPX Server and validate behavior while
 
 Use the UI for interactive inspection and debugging. It helps you confirm what is running, verify state changes, and validate scenarios quickly.
 
-[Screenshot: UI landing screen / main navigation]
+- [Screenshot: UI landing screen / main navigation]
 
 - [Instances](instances.md): inspect running instances, scenario triggers, and logs.
 - [Models](models.md): review loaded models and their definitions.
