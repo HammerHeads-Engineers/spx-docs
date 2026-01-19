@@ -7,55 +7,77 @@ icon: soap
 
 ## Purpose
 
-The Instances view is where you manage running model instances and drill into their detail tabs. Use it to check state, start or stop simulations, and confirm behavior while you iterate.
+The Instances section covers two views: the Instances list and the Instance View (detail tabs). Use the list to locate and manage running instances, and use the Instance View to inspect state, run scenarios, and troubleshoot behavior.
 
 Back to UI Overview: [UI Overview](general-view.md).
 
 ## Where to find it
 
-In the UI navigation, select **Instances**. The list shows active instances; use the **Open** action to open the detail view in a new tab.
+In the UI navigation, select **Instances** to open the list. Use the **Open** action to open the Instance View in a new tab.
 
-## What you can do here
+## Instances list
 
-* Filter the list by model, review the Name/Model/Status columns, and open instance details in a new tab.
+The list shows active instances with Name, Model, and Status. It also provides model filtering, creation, and bulk actions.
+
+### Steps
+
+1. Filter the list by model to focus on a specific group.
 
 <figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>Filter instances by model name</p></figcaption></figure>
 
-<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption><p>Bulk operations on selected instances</p></figcaption></figure>
-
-* Create new instances from a model (single or bulk) with a name or name prefix.
+2. Create a new instance (single or bulk) by choosing a model and name or name prefix.
 
 <figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption><p>Adding new instance</p></figcaption></figure>
 
-* Start, stop, or delete instances from the list, or run bulk actions on selected rows.
-* In the detail view, switch between Continuous and Stepper modes and run Start/Stop or Prepare/Run, plus Reset/Delete.
+3. Select instances and use bulk actions to start, stop, delete, or open multiple rows.
+
+<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption><p>Bulk operations on selected instances</p></figcaption></figure>
+
+4. Use per-row actions (Start, Stop, Delete, Open) and the status indicator to control or inspect a single instance.
+
+## Instance View
+
+Open the Instance View in a new tab from the list. The header shows the instance name, model, and current status, and the control bar provides action buttons.
 
 <figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption><p>Instance view</p></figcaption></figure>
 
-*   Inspect tabs for Attributes (edit values and choose chart axes), Physics (actions), Scenarios, Communication, Polling/Timer, and Logger.<br>
+### Controls and modes
 
-    <figure><img src="../.gitbook/assets/image (7).png" alt=""><figcaption><p>Models physics</p></figcaption></figure>
-*   Use the chart panel to adjust the time range and refresh rate, clear data, export CSV, or print.
+- Use **Continuous** mode for Start/Stop and real-time updates.
+- Use **Stepper** mode to Prepare and Run single steps.
+- Use **Reset** or **Delete** to clear state or remove the instance.
 
-    <figure><img src="../.gitbook/assets/image (9).png" alt=""><figcaption><p>Defined ready to use scenarios</p></figcaption></figure>
+### Tabs and panels
 
-    <figure><img src="../.gitbook/assets/image (10).png" alt=""><figcaption><p>Communication with protocols</p></figcaption></figure>
-*
+- **Attributes**: view and edit attribute values, select axes, and inspect the time-series chart (range, refresh rate, clear, export CSV, print).
 
-    <figure><img src="../.gitbook/assets/image (11).png" alt=""><figcaption><p>Communication logs (per attribute/register/binding)</p></figcaption></figure>
-*   \[Screenshot: Instance detail header and controls]
+<figure><img src="../.gitbook/assets/image (14).png" alt=""><figcaption><p>Instance attributes, and time-series chart</p></figcaption></figure>
 
-    <figure><img src="../.gitbook/assets/image (12).png" alt=""><figcaption><p>Instance polling parameters</p></figcaption></figure>
-*   \[Screenshot: Instance detail - Attributes tab and chart panel]
+- **Physics**: review actions, toggle enabled state, and inspect action attributes.
 
-    <figure><img src="../.gitbook/assets/image (13).png" alt=""><figcaption><p>Instance timer parameters</p></figcaption></figure>
-* \[Screenshot: Instance detail - Scenarios tab]
-*   \[Screenshot: Instance detail - Logger tab]\
-    <br>
+<figure><img src="../.gitbook/assets/image (7).png" alt=""><figcaption><p>Physics tab (actions)</p></figcaption></figure>
 
-    <figure><img src="../.gitbook/assets/image (14).png" alt=""><figcaption><p>Instance attributes, and time-series chart</p></figcaption></figure>
+- **Scenarios**: start or stop scenarios and confirm state transitions.
 
-    <figure><img src="../.gitbook/assets/image (15).png" alt=""><figcaption><p>Instance logs</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (9).png" alt=""><figcaption><p>Defined ready to use scenarios</p></figcaption></figure>
+
+- **Communication**: review protocol bindings, toggle enabled state, and open per-binding logs.
+
+<figure><img src="../.gitbook/assets/image (10).png" alt=""><figcaption><p>Communication with protocols</p></figcaption></figure>
+
+<figure><img src="../.gitbook/assets/image (11).png" alt=""><figcaption><p>Communication logs (per attribute/register/binding)</p></figcaption></figure>
+
+- **Polling**: inspect per-instance polling attributes and adjust settable values.
+
+<figure><img src="../.gitbook/assets/image (12).png" alt=""><figcaption><p>Instance polling parameters</p></figcaption></figure>
+
+- **Timer**: inspect per-instance timer attributes and adjust settable values.
+
+<figure><img src="../.gitbook/assets/image (13).png" alt=""><figcaption><p>Instance timer parameters</p></figcaption></figure>
+
+- **Logger**: view instance logs and confirm there are no errors.
+
+<figure><img src="../.gitbook/assets/image (15).png" alt=""><figcaption><p>Instance logs</p></figcaption></figure>
 
 ## Typical workflow
 
