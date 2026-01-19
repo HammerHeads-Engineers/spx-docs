@@ -14,11 +14,16 @@ Back to UI Overview: [UI Overview](general-view.md).
 
 In the UI navigation, select **Settings**.
 
+- [Screenshot: Settings main view]
+
 ## What you can do here
 
 - Review server base URL or connection status if the UI shows it.
 - Check any environment or build information that is displayed.
 - Adjust UI settings if the UI exposes them.
+
+- [Screenshot: Server connection section]
+- [Screenshot: About or build info section]
 
 ## Typical workflow
 
@@ -39,9 +44,3 @@ In the UI navigation, select **Settings**.
 - Settings changes do not apply: refresh the UI and recheck.
 - Data mismatch between UI and tests: confirm both use the same server.
 - Settings section missing: check your UI build or permissions.
-
-## Screenshots
-
-- [Screenshot: Settings main view]
-- [Screenshot: Server connection section]
-- [Screenshot: About or build info section]

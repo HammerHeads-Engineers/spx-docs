@@ -14,11 +14,16 @@ Back to UI Overview: [UI Overview](general-view.md).
 
 In the UI navigation, select **Timer & Polling**.
 
+- [Screenshot: Timer and Polling main view]
+
 ## What you can do here
 
 - View current simulated time and run state.
 - Adjust time stepping controls if the UI exposes them.
 - Review polling settings that control UI update frequency.
+
+- [Screenshot: Timer controls]
+- [Screenshot: Polling settings]
 
 ## Typical workflow
 
@@ -39,9 +44,3 @@ In the UI navigation, select **Timer & Polling**.
 - Values look stale: verify polling interval and refresh the view.
 - Non-deterministic updates: ensure deterministic stepping in tests.
 - UI time differs from tests: confirm both point to the same server.
-
-## Screenshots
-
-- [Screenshot: Timer and Polling main view]
-- [Screenshot: Timer controls]
-- [Screenshot: Polling settings]

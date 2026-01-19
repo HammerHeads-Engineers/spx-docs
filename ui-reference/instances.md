@@ -14,11 +14,18 @@ Back to UI Overview: [UI Overview](general-view.md).
 
 In the UI navigation, select **Instances**. The list shows active instances; select one to open its detail view.
 
+- [Screenshot: Instances list]
+
 ## What you can do here
 
 - Browse running instances and confirm they are active.
 - Open an instance detail view to review attributes/state, charts (if available), scenarios, and logs.
 - Trigger scenarios and verify that values update as expected.
+
+- [Screenshot: Instance details - Attributes tab]
+- [Screenshot: Instance details - Charts tab]
+- [Screenshot: Instance details - Scenarios tab]
+- [Screenshot: Instance details - Logs tab]
 
 ## Typical workflow
 
@@ -40,11 +47,3 @@ In the UI navigation, select **Instances**. The list shows active instances; sel
 - Values do not change: confirm the simulation time is advancing and polling is active.
 - Scenario does nothing: confirm the scenario exists in the model definition.
 - Logs show errors: check the Logs tab and align timestamps with recent changes.
-
-## Screenshots
-
-- [Screenshot: Instances list]
-- [Screenshot: Instance details - Attributes tab]
-- [Screenshot: Instance details - Charts tab]
-- [Screenshot: Instance details - Scenarios tab]
-- [Screenshot: Instance details - Logs tab]

@@ -6,6 +6,7 @@
 - `ui-reference/general-view.md` — Refocused on a UI overview and moved the pack-specific workflow to the new walkthrough; added a link to it.
 - `ui-reference/README.md` / `ui-reference/instances.md` / `ui-reference/models.md` / `ui-reference/timer-and-polling.md` / `ui-reference/snapshots.md` / `ui-reference/settings.md` — Split UI docs into per-area pages with workflows, verification checks, common issues, and screenshot placeholders; added UI Overview cross-links.
 - UI docs cleanup — Cleaned UI docs headings, fixed UI Overview title, formatted screenshot placeholders.
+- UI docs cleanup — Moved screenshot placeholders inline with the relevant text sections.
 - `SUMMARY.md` — Grouped UI docs under "UI (Web App)" and added the new pages.
 - `SUMMARY.md` / `getting-started/installer-and-packs.md` — Added navigation and a cross-link to the walkthrough.
 - `getting-started/installer-and-packs.md` / `usage-scenarios-and-examples/industry-packs.md` — Cleaned trailing spaces, added a 6-step golden path + role-based verification, moved examples in place, and rebuilt the pack overview table.

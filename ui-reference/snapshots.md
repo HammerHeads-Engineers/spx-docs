@@ -14,11 +14,17 @@ Back to UI Overview: [UI Overview](general-view.md).
 
 In the UI navigation, select **Snapshots**.
 
+- [Screenshot: Snapshots list]
+
 ## What you can do here
 
 - Browse existing snapshots for the current stack.
 - Create a new snapshot before making changes.
 - Restore a snapshot to return to a known-good state.
+
+- [Screenshot: Create snapshot action]
+- [Screenshot: Snapshot restore action]
+- [Screenshot: Snapshot details]
 
 ## Typical workflow
 
@@ -40,10 +46,3 @@ In the UI navigation, select **Snapshots**.
 - Restore does nothing: check Logs for snapshot or storage errors.
 - State does not match baseline: verify you restored the intended snapshot.
 - Snapshot creation fails: check disk space and server logs.
-
-## Screenshots
-
-- [Screenshot: Snapshots list]
-- [Screenshot: Create snapshot action]
-- [Screenshot: Snapshot restore action]
-- [Screenshot: Snapshot details]

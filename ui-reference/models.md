@@ -14,11 +14,16 @@ Back to UI Overview: [UI Overview](general-view.md).
 
 In the UI navigation, select **Models**. The list shows loaded models; select one to open its detail view.
 
+- [Screenshot: Models list]
+
 ## What you can do here
 
 - Browse loaded models and confirm they match your bundle.
 - Open a model detail view to review its definition (YAML/JSON) and scenarios.
 - If the UI exposes it, create an instance from a model and then verify it in **Instances**.
+
+- [Screenshot: Model detail view]
+- [Screenshot: Model definition panel (YAML/JSON)]
 
 ## Typical workflow
 
@@ -40,9 +45,3 @@ In the UI navigation, select **Models**. The list shows loaded models; select on
 - Definition looks stale: restart the stack and confirm the model file was updated.
 - Instance creation fails: check Logs for validation or schema errors.
 - Scenario not present: confirm the scenario is defined in the model.
-
-## Screenshots
-
-- [Screenshot: Models list]
-- [Screenshot: Model detail view]
-- [Screenshot: Model definition panel (YAML/JSON)]
