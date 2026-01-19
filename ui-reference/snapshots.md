@@ -21,19 +21,19 @@ In the UI navigation, select **Snapshots**.
 * Create a new snapshot (optional name) before making changes.
 * Load a snapshot to restore the system state, or delete snapshots you no longer need.
 
-## Snapshots list
+### Snapshots list
 
 The list shows saved snapshots with path and date. Each row includes actions to load or delete that snapshot.
 
 <figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>List of system snapshots</p></figcaption></figure>
 
-## Create a snapshot
+### Create a snapshot
 
 Use **Create New Snapshot** to capture the current system state. The name field is optional.
 
 <figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption><p>New snapshot popup</p></figcaption></figure>
 
-## Load or delete a snapshot
+### Load or delete a snapshot
 
 Use **Load** to restore the system to the selected snapshot, or **Delete** to remove it. Both actions require confirmation.
 
