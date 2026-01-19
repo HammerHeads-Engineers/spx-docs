@@ -6,44 +6,47 @@ description: Inspect running instances, trigger scenarios, and check logs.
 
 ## Purpose
 
-The Instances view is where you inspect running model instances and confirm they behave as expected. Use it to check current state, trigger scenarios, and confirm logs are clean while you iterate.
+The Instances view is where you manage running model instances and drill into their detail tabs. Use it to check state, start or stop simulations, and confirm behavior while you iterate.
 
 Back to UI Overview: [UI Overview](general-view.md).
 
 ## Where to find it
 
-In the UI navigation, select **Instances**. The list shows active instances; select one to open its detail view.
-
-- [Screenshot: Instances list]
+In the UI navigation, select **Instances**. The list shows active instances; use the **Open** action to open the detail view in a new tab.
 
 ## What you can do here
 
-- Browse running instances and confirm they are active.
-- Open an instance detail view to review attributes/state, charts (if available), scenarios, and logs.
-- Trigger scenarios and verify that values update as expected.
+- Filter the list by model, review the Name/Model/Status columns, and open instance details in a new tab.
+- Create new instances from a model (single or bulk) with a name or name prefix.
+- Start, stop, or delete instances from the list, or run bulk actions on selected rows.
+- In the detail view, switch between Continuous and Stepper modes and run Start/Stop or Prepare/Run, plus Reset/Delete.
+- Inspect tabs for Attributes (edit values and choose chart axes), Physics (actions), Scenarios, Communication, Polling/Timer, and Logger.
+- Use the chart panel to adjust the time range and refresh rate, clear data, export CSV, or print.
 
-- [Screenshot: Instance details - Attributes tab]
-- [Screenshot: Instance details - Charts tab]
-- [Screenshot: Instance details - Scenarios tab]
-- [Screenshot: Instance details - Logs tab]
+- [Screenshot: Instances list with model filter and bulk actions]
+- [Screenshot: Instance detail header and controls]
+- [Screenshot: Instance detail - Attributes tab and chart panel]
+- [Screenshot: Instance detail - Scenarios tab]
+- [Screenshot: Instance detail - Logger tab]
 
 ## Typical workflow
 
-1. Open **Instances**.
-2. Select an instance you care about.
-3. Review attributes/state to confirm baseline values.
-4. Trigger a scenario if you need to force a change.
-5. Check the Logs tab for errors or warnings.
+1. Open **Instances** and filter by model if needed.
+2. Create or select an instance and check its status indicator.
+3. Open the detail view, review Attributes, and select axes to plot in the chart.
+4. Run a scenario (or toggle an action in Physics) and confirm values change.
+5. Check the Logger tab for errors or warnings.
 
 ## What to verify
 
-- Integrator: the instance is active and values change when the SUT drives them.
-- QA: scenario triggers update values while time is stepped deterministically.
-- Developer: logs stay clean after loading or updating models.
+- Integrator: the status indicator reflects the expected state and values change when the SUT drives them.
+- QA: scenario start/stop commands update values while time is stepped deterministically.
+- Developer: Start/Stop or Prepare/Run commands take effect and Logger stays clean.
 
 ## Common issues
 
-- Instance missing from the list: verify the installer bundle and bootstrap completed successfully.
-- Values do not change: confirm the simulation time is advancing and polling is active.
-- Scenario does nothing: confirm the scenario exists in the model definition.
-- Logs show errors: check the Logs tab and align timestamps with recent changes.
+- Server connection not established: connect in **Settings** and refresh the list.
+- No instances for selected model: clear the model filter or re-run the installer bootstrap.
+- Instance detail shows "not found": the instance was deleted or renamed; refresh the list.
+- Commands disabled: check the instance state and selected mode (Continuous vs Stepper).
+- Logger shows errors: align timestamps with recent changes and check model logs.

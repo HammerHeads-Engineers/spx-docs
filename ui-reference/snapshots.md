@@ -14,17 +14,16 @@ Back to UI Overview: [UI Overview](general-view.md).
 
 In the UI navigation, select **Snapshots**.
 
-- [Screenshot: Snapshots list]
-
 ## What you can do here
 
-- Browse existing snapshots for the current stack.
-- Create a new snapshot before making changes.
-- Restore a snapshot to return to a known-good state.
+- Browse existing snapshots for the current stack (path and date).
+- Create a new snapshot (optional name) before making changes.
+- Load a snapshot to restore the system state, or delete snapshots you no longer need.
 
-- [Screenshot: Create snapshot action]
-- [Screenshot: Snapshot restore action]
-- [Screenshot: Snapshot details]
+- [Screenshot: Snapshots list with path/date/actions]
+- [Screenshot: Create snapshot modal]
+- [Screenshot: Load snapshot confirmation]
+- [Screenshot: Delete snapshot confirmation]
 
 ## Typical workflow
 
@@ -42,7 +41,7 @@ In the UI navigation, select **Snapshots**.
 
 ## Common issues
 
-- Snapshot missing: confirm you created it in the current stack.
-- Restore does nothing: check Logs for snapshot or storage errors.
+- Snapshot list is empty: confirm the stack is running and snapshots exist.
+- Load fails: check server logs and confirm the snapshot path is valid.
 - State does not match baseline: verify you restored the intended snapshot.
-- Snapshot creation fails: check disk space and server logs.
+- Snapshot creation fails: check server logs and disk space.

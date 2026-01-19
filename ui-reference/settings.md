@@ -6,7 +6,7 @@ description: Review UI-level settings and server connectivity information.
 
 ## Purpose
 
-The Settings view is where you confirm UI-level configuration and server connectivity details. Use it to verify the UI is pointing at the correct SPX Server before you troubleshoot behavior elsewhere.
+The Settings view is where you confirm UI-level configuration and server connectivity details. Use it to connect to the right SPX Server, adjust number formatting, and confirm subscription information.
 
 Back to UI Overview: [UI Overview](general-view.md).
 
@@ -14,33 +14,34 @@ Back to UI Overview: [UI Overview](general-view.md).
 
 In the UI navigation, select **Settings**.
 
-- [Screenshot: Settings main view]
-
 ## What you can do here
 
-- Review server base URL or connection status if the UI shows it.
-- Check any environment or build information that is displayed.
-- Adjust UI settings if the UI exposes them.
+- Connect or disconnect from a server using Host and Port, and check the status chip.
+- Adjust number formatting (max decimals) and see scientific-notation thresholds.
+- Review subscription plan and validity information.
+- Note the SPX UI version for support and troubleshooting.
 
-- [Screenshot: Server connection section]
-- [Screenshot: About or build info section]
+- [Screenshot: Server connection card]
+- [Screenshot: Number formatting settings]
+- [Screenshot: Subscription info card]
+- [Screenshot: SPX UI version row]
 
 ## Typical workflow
 
 1. Open **Settings**.
-2. Confirm the server base URL matches the running stack.
-3. Update settings if needed and refresh the UI.
-4. Return to **Instances** and confirm data loads correctly.
+2. Connect to the server using Host/Port or confirm the current connection.
+3. Adjust number formatting if you need fewer or more decimals.
+4. Confirm subscription and UI version, then return to **Instances**.
 
 ## What to verify
 
 - Integrator: the UI is connected to the intended SPX Server.
-- QA: environment settings align with the test environment.
-- Developer: local UI points to the local or target container.
+- QA: subscription info is visible and matches the test environment.
+- Developer: Host/Port matches the target container or remote server.
 
 ## Common issues
 
-- UI shows no data: verify the server base URL and connectivity.
-- Settings changes do not apply: refresh the UI and recheck.
-- Data mismatch between UI and tests: confirm both use the same server.
+- Connect is disabled or fails: confirm `SPX_PRODUCT_KEY` is available and the host/port are reachable.
+- UI shows no data: verify the server connection status and refresh.
+- Subscription shows "Not available": confirm the server exposes license info.
 - Settings section missing: check your UI build or permissions.

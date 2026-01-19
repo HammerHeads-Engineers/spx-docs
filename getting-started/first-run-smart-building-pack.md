@@ -22,7 +22,7 @@ Learn the UI structure here: [UI Overview](../ui-reference/general-view.md).
 
    <figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
-3. Open the Logs tab and confirm there are no errors.
+3. Open the Logger tab and confirm there are no errors.
 
    <figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -34,7 +34,7 @@ Learn the UI structure here: [UI Overview](../ui-reference/general-view.md).
 
 - UI loads at http://localhost:3000 and shows the Instances list.
 - Selected instance opens and shows as active.
-- Logs show no errors during the check.
+- Logger shows no errors during the check.
 - Scenario change updates values immediately.
 
 ## If something fails

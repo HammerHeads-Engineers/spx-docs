@@ -6,41 +6,39 @@ description: Review simulated time and polling behavior in the UI.
 
 ## Purpose
 
-The Timer and Polling view is where you check how simulated time advances and how often the UI refreshes data. Use it to confirm deterministic stepping in tests and to keep UI updates predictable. For deeper test guidance, see [Use in Unit Tests (MiL)](../getting-started/use-in-unit-tests-mil.md).
+The Timer and Polling views expose system-level entities that control simulated time and polling behavior. Use them to confirm deterministic stepping in tests and to keep UI updates predictable. For deeper test guidance, see [Use in Unit Tests (MiL)](../getting-started/use-in-unit-tests-mil.md).
 
 Back to UI Overview: [UI Overview](general-view.md).
 
 ## Where to find it
 
-In the UI navigation, select **Timer & Polling**.
+In the UI navigation, open **Timer** or **Polling**. These are separate pages.
 
-- [Screenshot: Timer and Polling main view]
+- [Screenshot: Timer page - attributes tree]
+- [Screenshot: Polling page - attributes tree]
 
 ## What you can do here
 
-- View current simulated time and run state.
-- Adjust time stepping controls if the UI exposes them.
-- Review polling settings that control UI update frequency.
-
-- [Screenshot: Timer controls]
-- [Screenshot: Polling settings]
+- Review the Timer entity attributes exposed by the server and adjust values that have setters.
+- Review the Polling entity attributes exposed by the server and adjust values that have setters.
+- Use the attribute tree to inspect nested values and confirm current settings.
 
 ## Typical workflow
 
-1. Open **Timer & Polling**.
-2. Confirm time advances while your script or test runs.
-3. Adjust step size or polling interval if needed.
-4. Return to **Instances** and confirm values refresh as expected.
+1. Open **Timer** and confirm the timer attributes load.
+2. Open **Polling** and confirm polling attributes load.
+3. Adjust a value (if the attribute is settable) and observe changes in **Instances**.
+4. Return to tests and confirm deterministic stepping still matches expectations.
 
 ## What to verify
 
-- Integrator: simulated time advances while the stack is running.
+- Integrator: timer attributes respond when the stack is running.
 - QA: time is stepped deterministically in MiL tests.
-- Developer: polling frequency matches expected update cadence.
+- Developer: polling behavior matches expected update cadence.
 
 ## Common issues
 
-- Time does not advance: confirm your test/client is updating the timer.
-- Values look stale: verify polling interval and refresh the view.
-- Non-deterministic updates: ensure deterministic stepping in tests.
+- No timer available: the server does not expose timer data for this stack.
+- No polling available: polling data is not exposed for this stack.
+- Values cannot be edited: the attribute is read-only (no setter).
 - UI time differs from tests: confirm both point to the same server.
