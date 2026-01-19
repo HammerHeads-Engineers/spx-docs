@@ -15,8 +15,9 @@ Back to UI Overview: [UI Overview](general-view.md).
 
 In the UI navigation, open **Timer** or **Polling**. These are separate pages.
 
-* \[Screenshot: Timer page - attributes tree]
-* \[Screenshot: Polling page - attributes tree]
+<figure><img src="../.gitbook/assets/image (17).png" alt=""><figcaption><p>Polling system parameters</p></figcaption></figure>
+
+<figure><img src="../.gitbook/assets/image (18).png" alt=""><figcaption><p>Timer system parameters</p></figcaption></figure>
 
 ## What you can do here
 
