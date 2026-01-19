@@ -48,7 +48,7 @@ Go to the Scenarios tab and run a weather-related scenario (e.g., “change weat
 {% endstep %}
 
 {% step %}
-### SPX Server connectivity is OK, the simulation is running, and scenarios are applied successfully.
+### :tada: Ready to Work
 {% endstep %}
 {% endstepper %}
 
