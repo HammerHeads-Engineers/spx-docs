@@ -6,6 +6,7 @@ Before generating any code, instruct the LLM to open and follow these files from
 
 - LLM contract: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md`
 - Model DSL: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md`
+- Task template: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_TASK_TEMPLATE.md`
 - Validation script: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/tools/validate_models.py`
 - Catalog (new models must be registered): `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/catalog/models.yaml`
 
@@ -189,5 +190,124 @@ Deliverables:
   - new model YAML,
   - catalog updates,
   - tests.
+- Short PR summary + exact local validation commands.
+```
+
+## 5) Generate a MiL integration test for an existing model
+
+Use this when the model YAML already exists and you want a deterministic, protocol-driven test that validates the SUT-facing behavior.
+
+```text
+You are preparing a patch for the spx-examples repository:
+https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
+
+Goal: add a deterministic MiL integration test for an existing model.
+
+Model:
+- YAML: <MODEL_PATH> (relative path)
+- GitHub URL: <MODEL_URL>
+
+Hard requirements:
+- Read and follow:
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md
+- Do not change the model YAML unless the test exposes a real defect.
+- Prefer existing SUT helpers under https://github.com/HammerHeads-Engineers/spx-examples/tree/main/tests/devices
+- Add the test under `tests/shared/integration/` or the relevant `tests/packs/<pack>/integration/` folder.
+- Use deterministic stepping (drive time from the test; avoid wall-clock sleeps for simulation behavior).
+- If the protocol requires ports/services, mention the required docker-compose port mapping.
+- Do not claim you ran anything; output the exact commands I should run locally:
+  - python tools/validate_models.py
+  - pytest -k <new_test_name> (or poetry run pytest -k <new_test_name>)
+
+Before coding:
+- Find a similar test in the repo that uses the same protocol and copy its structure.
+- List which attributes/scenarios you will assert and why they matter to the SUT.
+
+Deliverables:
+- Patch with the new test file (and any minimal support code if needed).
+- Short PR summary + exact local validation commands.
+```
+
+## 6) Generate client-software integration tests against an SPX model (MiL)
+
+Use this when you need to modify or create client code (SUT) and verify it end-to-end against an SPX model via MiL tests.
+
+```text
+You are preparing a patch for the spx-examples repository:
+https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
+
+Goal: add or update a client (SUT) and a deterministic MiL integration test that validates the client behavior against an SPX model.
+
+Inputs:
+- Model YAML: <MODEL_PATH> (relative path) + GitHub URL
+- Client code:
+  - Existing SUT wrapper in spx-examples (if any): <SUT_PATH>
+  - Or external client repo/path: <CLIENT_REPO_URL> + <PATHS>
+  - If external code is not public, ask me to paste the relevant files.
+
+Hard requirements:
+- Read and follow:
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md
+- Reuse or extend existing SUT helpers when possible:
+  - https://github.com/HammerHeads-Engineers/spx-examples/tree/main/tests/devices
+- Add the MiL test under `tests/shared/integration/` or `tests/packs/<pack>/integration/`.
+- Keep tests deterministic: drive time from the test (no wall-clock sleeps for simulation behavior).
+- If protocol ports/services are required, note the needed docker-compose port mappings.
+- Do not claim you ran anything; output the exact commands I should run locally:
+  - python tools/validate_models.py
+  - pytest -k <new_test_name> (or poetry run pytest -k <new_test_name>)
+
+Before coding:
+- Identify a similar existing test for the protocol and copy its structure.
+- List what the client should send/receive and which attributes/scenarios verify correctness.
+
+Deliverables:
+- Patch with the updated/new SUT code (if required) and the MiL test.
+- Short PR summary + exact local validation commands.
+```
+
+## 7) Generate production-device tests + report (test_logs)
+
+Use this when you need automated regression tests for a production client/device driver, plus a test report derived from `attributes/test_logs`.
+
+```text
+You are preparing a patch for the spx-examples repository:
+https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
+
+Goal: add deterministic MiL tests for a production client/device driver and generate a report from test_logs.
+
+Inputs:
+- Model YAML: <MODEL_PATH> (relative path) + GitHub URL
+- Production client details:
+  - Repo URL (or local path): <CLIENT_REPO_URL>
+  - Entry points / APIs to exercise:
+  - If not public, ask me to paste the relevant files.
+
+Hard requirements:
+- Read and follow:
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md
+- Use or extend existing SUT helpers when possible:
+  - https://github.com/HammerHeads-Engineers/spx-examples/tree/main/tests/devices
+- Add the MiL test under `tests/shared/integration/` or `tests/packs/<pack>/integration/`.
+- Keep tests deterministic: drive time from the test (no wall-clock sleeps for simulation behavior).
+- Log test assertions into `attributes/test_logs` (use existing patterns, e.g.:
+  https://github.com/HammerHeads-Engineers/spx-examples/blob/main/tests/packs/smart_building_pack/integration/test_pack_instances_running.py)
+- Report generation:
+  - Read `instance["attributes"]["test_logs"].internal_value` after the test.
+  - Write a JSON or Markdown report under `build/test_reports/<test_name>.<json|md>` (create the folder if missing).
+- If protocol ports/services are required, note the needed docker-compose port mappings.
+- Do not claim you ran anything; output the exact commands I should run locally:
+  - python tools/validate_models.py
+  - pytest -k <new_test_name> (or poetry run pytest -k <new_test_name>)
+
+Before coding:
+- Find a similar existing test for the same protocol and copy its structure.
+- List what the production client must send/receive and which attributes/scenarios validate correctness.
+
+Deliverables:
+- Patch with the MiL test, report generation, and any minimal SUT changes.
 - Short PR summary + exact local validation commands.
 ```

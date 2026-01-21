@@ -11,6 +11,7 @@ Copy this template into an issue/PR description before asking an LLM to generate
 ## 2) Starting point (spx-examples template)
 
 - Template file: `library/domains/<domain>/<vendor|generic>/<template>.yaml`
+- Template URL (GitHub, main): https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/<domain>/<vendor|generic>/<template>.yaml
 - Why this template is the closest match:
 
 ## 3) Target files (paths)
@@ -76,6 +77,8 @@ For each scenario:
 
 ## 6) Notes for the LLM
 
-- Follow `docs/LLM_SPEC.md` and `docs/MODEL_LANGUAGE.md` in `spx-examples`.
+- Follow the specs in `spx-examples`:
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md
 - Do not invent new YAML keys or protocols.
 - Prefer copying patterns from an existing model + its tests.
