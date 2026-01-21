@@ -16,104 +16,7 @@ Important: a web LLM must not claim it ran commands. It should output:
 - exact local validation commands to run (`python tools/validate_models.py`, `pytest` / `poetry run pytest`),
 - and any assumptions/questions when documentation is incomplete.
 
-## 1) Create a new model (copy the closest template)
-
-```text
-You are preparing a patch for the spx-examples repository:
-https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
-
-Goal: add a new model for <DEVICE> exposed over <PROTOCOL>.
-
-Hard requirements:
-- Follow these specs (read them first):
-  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md
-  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md
-- Place the model under: library/domains/<domain>/<vendor|generic>/<new_model>.yaml
-- File name and `name:` must be lower_snake_case and aligned.
-- Update library/catalog/models.yaml with a new entry for this model.
-- Add/extend tests under tests/ so pytest covers the new model behavior.
-- Do not claim you ran anything; output the exact commands I should run locally:
-  - python tools/validate_models.py
-  - pytest (or poetry run pytest)
-
-Start from this closest template:
-- <TEMPLATE_PATH> (relative path in repo, plus GitHub URL)
-
-Implement:
-- New model path: <NEW_MODEL_PATH>
-- Attributes (with units in names):
-  - <attr_1>: <type>, default <value>, notes <...>
-  - <attr_2>: ...
-- Communication mapping:
-  - protocol block: <protocol-specific mapping rules>
-- Scenarios:
-  - <scenario_name>: description, duration, overrides/actions
-
-Deliverables:
-- Patch with the new YAML model, catalog entry, and tests.
-- Short PR summary + how to validate locally.
-```
-
-## 2) Add protocol mapping to an existing model
-
-```text
-You are preparing a patch for the spx-examples repository:
-https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
-
-Goal: extend an existing model with a new <PROTOCOL> mapping without changing unrelated runtime behavior.
-
-Model:
-- YAML: <MODEL_PATH>
-
-What to add:
-- New protocol mapping for:
-  - <attribute_1> ↔ <protocol register/topic/endpoint>
-  - <attribute_2> ↔ ...
-
-Constraints:
-- Follow docs/MODEL_LANGUAGE.md for the communication block shape:
-  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md
-- Keep naming/unit conventions for any new attributes.
-- Update catalogs only if required (e.g., new protocol/service references).
-- Add/extend a MiL test under tests/ that proves the mapping works end-to-end.
-- Do not claim you ran anything; output the exact commands I should run locally:
-  - python tools/validate_models.py
-  - pytest (or poetry run pytest)
-
-Before coding:
-- Identify the closest existing model in library/domains that already uses <PROTOCOL> and follow its pattern.
-```
-
-## 3) Add faults + MiL tests (scenarios are the contract)
-
-```text
-You are preparing a patch for the spx-examples repository:
-https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
-
-Goal: add fault coverage to <MODEL_PATH> by introducing scenarios + tests that act as the quality gate.
-
-Add:
-- 2–3 scenarios under `scenarios:` that represent realistic faults:
-  - <fault_1>: description, duration/schedule, overrides/actions
-  - <fault_2>: ...
-- A MiL test that:
-  - loads the model and creates an instance,
-  - starts/stops the scenarios,
-  - drives deterministic time,
-  - asserts the expected SUT-visible behavior.
-
-Constraints:
-- Do not introduce wall-clock coupling for simulation behavior.
-- Prefer overrides/actions patterns already used in similar models.
-- Update docs/LLM_SPEC.md or docs/MODEL_LANGUAGE.md only if you introduce new constructs (avoid if possible).
-
-Validation:
-- Do not claim you ran anything; output the exact commands I should run locally:
-  - python tools/validate_models.py
-  - pytest -k <new_test_name> (or poetry run pytest -k <new_test_name>)
-```
-
-## 4) Generate a model + protocol mapping from device/protocol documentation
+## 1) Generate a model + protocol mapping from device/protocol documentation
 
 Use this when you have a device datasheet, protocol manual, or register map and want the LLM to “recreate the protocol surface” with the minimum simulation behavior required for MiL tests.
 
@@ -191,6 +94,103 @@ Deliverables:
   - catalog updates,
   - tests.
 - Short PR summary + exact local validation commands.
+```
+
+## 2) Create a new model (copy the closest template)
+
+```text
+You are preparing a patch for the spx-examples repository:
+https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
+
+Goal: add a new model for <DEVICE> exposed over <PROTOCOL>.
+
+Hard requirements:
+- Follow these specs (read them first):
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md
+- Place the model under: library/domains/<domain>/<vendor|generic>/<new_model>.yaml
+- File name and `name:` must be lower_snake_case and aligned.
+- Update library/catalog/models.yaml with a new entry for this model.
+- Add/extend tests under tests/ so pytest covers the new model behavior.
+- Do not claim you ran anything; output the exact commands I should run locally:
+  - python tools/validate_models.py
+  - pytest (or poetry run pytest)
+
+Start from this closest template:
+- <TEMPLATE_PATH> (relative path in repo, plus GitHub URL)
+
+Implement:
+- New model path: <NEW_MODEL_PATH>
+- Attributes (with units in names):
+  - <attr_1>: <type>, default <value>, notes <...>
+  - <attr_2>: ...
+- Communication mapping:
+  - protocol block: <protocol-specific mapping rules>
+- Scenarios:
+  - <scenario_name>: description, duration, overrides/actions
+
+Deliverables:
+- Patch with the new YAML model, catalog entry, and tests.
+- Short PR summary + how to validate locally.
+```
+
+## 3) Add protocol mapping to an existing model
+
+```text
+You are preparing a patch for the spx-examples repository:
+https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
+
+Goal: extend an existing model with a new <PROTOCOL> mapping without changing unrelated runtime behavior.
+
+Model:
+- YAML: <MODEL_PATH>
+
+What to add:
+- New protocol mapping for:
+  - <attribute_1> ↔ <protocol register/topic/endpoint>
+  - <attribute_2> ↔ ...
+
+Constraints:
+- Follow docs/MODEL_LANGUAGE.md for the communication block shape:
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md
+- Keep naming/unit conventions for any new attributes.
+- Update catalogs only if required (e.g., new protocol/service references).
+- Add/extend a MiL test under tests/ that proves the mapping works end-to-end.
+- Do not claim you ran anything; output the exact commands I should run locally:
+  - python tools/validate_models.py
+  - pytest (or poetry run pytest)
+
+Before coding:
+- Identify the closest existing model in library/domains that already uses <PROTOCOL> and follow its pattern.
+```
+
+## 4) Add faults + MiL tests (scenarios are the contract)
+
+```text
+You are preparing a patch for the spx-examples repository:
+https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
+
+Goal: add fault coverage to <MODEL_PATH> by introducing scenarios + tests that act as the quality gate.
+
+Add:
+- 2–3 scenarios under `scenarios:` that represent realistic faults:
+  - <fault_1>: description, duration/schedule, overrides/actions
+  - <fault_2>: ...
+- A MiL test that:
+  - loads the model and creates an instance,
+  - starts/stops the scenarios,
+  - drives deterministic time,
+  - asserts the expected SUT-visible behavior.
+
+Constraints:
+- Do not introduce wall-clock coupling for simulation behavior.
+- Prefer overrides/actions patterns already used in similar models.
+- Update docs/LLM_SPEC.md or docs/MODEL_LANGUAGE.md only if you introduce new constructs (avoid if possible).
+
+Validation:
+- Do not claim you ran anything; output the exact commands I should run locally:
+  - python tools/validate_models.py
+  - pytest -k <new_test_name> (or poetry run pytest -k <new_test_name>)
 ```
 
 ## 5) Generate a MiL integration test for an existing model

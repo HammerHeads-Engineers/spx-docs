@@ -19,9 +19,8 @@
 - Troubleshooting: verified copy/paste hygiene (no trailing spaces) and confirmed the referenced validator exists in `spx-examples/tools/validate_models.py`.
 - `getting-started/add-communication-protocol.md` — “For example” port mapping snippet now renders in-place (no empty blockquote in GitBook).
 - `llm-first-model-authoring/*.md` — Updated links to `spx-examples` main (specs, task template, catalogs, validator, and example templates).
-- `llm-first-model-authoring/prompt-recipes.md` — Added a MiL integration test generator prompt for existing models.
-- `llm-first-model-authoring/prompt-recipes.md` — Added a client-software MiL integration test prompt (modify or create SUT code).
-- `llm-first-model-authoring/prompt-recipes.md` — Added a production-device MiL test + report prompt (logs from `attributes/test_logs`).
+- `llm-first-model-authoring/prompt-recipes.md` — Reordered prompts to put the full device/protocol doc prompt first and renumbered the list.
+- `llm-first-model-authoring/prompt-recipes.md` — Added prompts for: MiL integration test for existing models, client-software MiL test (modify or create SUT), and production-device MiL test + report from `attributes/test_logs`.
 
 Validate:
 - `docker compose up -d`
