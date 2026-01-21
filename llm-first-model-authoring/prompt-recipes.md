@@ -1,26 +1,30 @@
+---
+icon: terminal
+---
+
 # Prompt recipes
 
 These prompts are designed for “web LLM” usage (internet access + GitHub browsing, no local repo access). They use `spx-examples` on GitHub as the canonical spec and convention source.
 
 Before generating any code, instruct the LLM to open and follow these files from the repo:
 
-- LLM contract: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md`
-- Model DSL: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md`
-- Task template: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_TASK_TEMPLATE.md`
-- Validation script: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/tools/validate_models.py`
-- Catalog (new models must be registered): `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/catalog/models.yaml`
+* LLM contract: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md`
+* Model DSL: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md`
+* Task template: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_TASK_TEMPLATE.md`
+* Validation script: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/tools/validate_models.py`
+* Catalog (new models must be registered): `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/catalog/models.yaml`
 
 Important: a web LLM must not claim it ran commands. It should output:
 
-- file-by-file changes (or a unified diff),
-- exact local validation commands to run (`python tools/validate_models.py`, `pytest` / `poetry run pytest`),
-- and any assumptions/questions when documentation is incomplete.
+* file-by-file changes (or a unified diff),
+* exact local validation commands to run (`python tools/validate_models.py`, `pytest` / `poetry run pytest`),
+* and any assumptions/questions when documentation is incomplete.
 
 ## 1) Generate a model + protocol mapping from device/protocol documentation
 
 Use this when you have a device datasheet, protocol manual, or register map and want the LLM to “recreate the protocol surface” with the minimum simulation behavior required for MiL tests.
 
-```text
+```
 You are preparing a patch for the spx-examples repository:
 https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
 
@@ -98,7 +102,7 @@ Deliverables:
 
 ## 2) Create a new model (copy the closest template)
 
-```text
+```
 You are preparing a patch for the spx-examples repository:
 https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
 
@@ -136,7 +140,7 @@ Deliverables:
 
 ## 3) Add protocol mapping to an existing model
 
-```text
+```
 You are preparing a patch for the spx-examples repository:
 https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
 
@@ -166,7 +170,7 @@ Before coding:
 
 ## 4) Add faults + MiL tests (scenarios are the contract)
 
-```text
+```
 You are preparing a patch for the spx-examples repository:
 https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
 
@@ -197,7 +201,7 @@ Validation:
 
 Use this when the model YAML already exists and you want a deterministic, protocol-driven test that validates the SUT-facing behavior.
 
-```text
+```
 You are preparing a patch for the spx-examples repository:
 https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
 
@@ -233,7 +237,7 @@ Deliverables:
 
 Use this when you need to modify or create client code (SUT) and verify it end-to-end against an SPX model via MiL tests.
 
-```text
+```
 You are preparing a patch for the spx-examples repository:
 https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
 
@@ -268,11 +272,11 @@ Deliverables:
 - Short PR summary + exact local validation commands.
 ```
 
-## 7) Generate production-device tests + report (test_logs)
+## 7) Generate production-device tests + report (test\_logs)
 
 Use this when you need automated regression tests for a production client/device driver, plus a test report derived from `attributes/test_logs`.
 
-```text
+```
 You are preparing a patch for the spx-examples repository:
 https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
 

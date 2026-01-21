@@ -2,9 +2,10 @@
 description: >-
   “Think of it as LEGO® for hardware simulation – snap a few bricks together,
   press Run, and your virtual device comes alive.”
+icon: buildings
 ---
 
-# Build Simulations with SPX
+# Build Simulations
 
 ### 1. What is SPX‑SDK?
 
