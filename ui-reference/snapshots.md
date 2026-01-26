@@ -17,22 +17,24 @@ In the UI navigation, select **Snapshots**.
 
 ## What you can do here
 
-* Browse snapshots for the current stack, including label, notes, path, and date.
-* Search snapshots by label, notes, or path.
-* Create a new snapshot with optional label/notes and choose memory vs disk storage.
-* Restore, download, or delete snapshots (with confirmation).
-* Delete multiple snapshots at once using bulk selection.
-* Import/export system configuration (models/instances/connections) and copy export data.
+The page has a toolbar (search + actions) and a snapshots table. Use it to capture state, review history, and restore baselines.
+
+### Toolbar actions
+
+* **Search** snapshots by label, notes, or path.
+* **New snapshot** to capture current system state.
+* **Import/Export** to move configuration (models/instances/connections) between environments.
+* **Copy export data** to share configuration via clipboard.
 
 ### Snapshots list
 
-The list shows saved snapshots with label, notes, path (or “In memory”), and date. Each row includes actions to restore, download, or delete that snapshot.
+The list shows saved snapshots with label, notes, path (or “In memory”), and date. Each row includes actions to restore, download, or delete that snapshot. Use bulk selection to delete multiple snapshots at once.
 
 <figure><img src="../.gitbook/assets/image (23).png" alt=""><figcaption><p>Snapshots list with label/notes/path/date columns</p></figcaption></figure>
 
 ### Create a snapshot
 
-Use **New snapshot** to capture the current system state. You can set a label and notes, and choose whether to save to memory, disk, or both.
+Use **New snapshot** to capture the current system state. Labels and notes are optional. You can save to memory, disk, or both (disk file names are generated automatically).
 
 <figure><img src="../.gitbook/assets/image (22).png" alt=""><figcaption><p>New snapshot modal with label/notes + save to memory/disk</p></figcaption></figure>
 

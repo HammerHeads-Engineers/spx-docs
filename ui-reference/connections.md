@@ -20,7 +20,7 @@ In the UI navigation, select **Connections**.
 * Browse and search connections by name or endpoint.
 * Create, edit, duplicate, or delete connections.
 * Toggle connections on/off with the **Enabled** switch.
-* Choose **Internal** or **External** value sources for each endpoint.
+* Choose **Internal** or **External** value sources (`internal_value` / `external_value`) for each endpoint. Internal values are computed inside the model; External values represent data coming from outside (protocols, UI/tests) and exposed to integrations.
 * Import/export full system configuration (models/instances/connections) and copy export data.
 
 ### Connections list
@@ -32,11 +32,13 @@ The table is grouped into **From** and **To** endpoints. Each connection has:
 * **To** — instance + attribute + value source.
 * **Enabled** — toggle to activate or disable the connection.
 
+Value sources are shown as chips in the list; when you edit a row, they become **Internal/External** toggles. Use **Internal** when you want simulation output, and **External** when the value should represent inbound or integration-facing data.
+
 <figure><img src="../.gitbook/assets/image (19).png" alt=""><figcaption><p>Connections list showing From/To columns + Enabled toggle</p></figcaption></figure>
 
 ### Create or edit a connection
 
-Use **Add connection** to create a new row, then select instances and attributes. Use the **Internal/External** toggle in the Value column to choose which attribute value to read/write (`internal_value` vs `external_value`).
+Use **Add connection** to create a new row, then select instances and attributes. Use the **Internal/External** toggle in the Value column to choose which attribute value to read/write (`internal_value` vs `external_value`). Internal is the model's computed value; External is the value exposed to or coming from the outside. Save or cancel from the action buttons in the row; existing rows also support **Duplicate** and **Delete**.
 
 <figure><img src="../.gitbook/assets/image (21).png" alt=""><figcaption><p>New connection row in edit mode</p></figcaption></figure>
 
