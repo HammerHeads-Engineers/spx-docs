@@ -28,13 +28,13 @@ In the UI navigation, select **Snapshots**.
 
 The list shows saved snapshots with label, notes, path (or “In memory”), and date. Each row includes actions to restore, download, or delete that snapshot.
 
-\[Screenshot: Snapshots list with label/notes/path/date columns]
+<figure><img src="../.gitbook/assets/image (23).png" alt=""><figcaption><p>Snapshots list with label/notes/path/date columns</p></figcaption></figure>
 
 ### Create a snapshot
 
 Use **New snapshot** to capture the current system state. You can set a label and notes, and choose whether to save to memory, disk, or both.
 
-\[Screenshot: New snapshot modal with label/notes + save to memory/disk]
+<figure><img src="../.gitbook/assets/image (22).png" alt=""><figcaption><p>New snapshot modal with label/notes + save to memory/disk</p></figcaption></figure>
 
 ### Restore, download, or delete a snapshot
 
@@ -42,8 +42,9 @@ Use **New snapshot** to capture the current system state. You can set a label an
 * **Download** saves the snapshot JSON to your machine.
 * **Delete** removes the snapshot (confirmation required).
 
-\[Screenshot: Restore snapshot confirmation]
-\[Screenshot: Delete snapshot confirmation]
+<figure><img src="../.gitbook/assets/image (24).png" alt=""><figcaption><p>Restore snapshot confirmation</p></figcaption></figure>
+
+<figure><img src="../.gitbook/assets/image (25).png" alt=""><figcaption><p>Delete snapshot confirmation</p></figcaption></figure>
 
 ## Typical workflow
 

@@ -21,10 +21,8 @@ In the UI navigation, select **Settings**.
 * Adjust number formatting (max decimals) and see scientific-notation thresholds.
 * Review subscription plan and validity information.
 * Note the SPX UI version for support and troubleshooting.
-* \[Screenshot: Server connection card]
-* \[Screenshot: Number formatting settings]
-* \[Screenshot: Subscription info card]
-* \[Screenshot: SPX UI version row]
+
+<figure><img src="../.gitbook/assets/image (26).png" alt=""><figcaption><p>Settings view</p></figcaption></figure>
 
 ## Typical workflow
 
