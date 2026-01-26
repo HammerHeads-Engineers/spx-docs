@@ -23,19 +23,19 @@ The list shows active instances with Name, Model, and Status. It also provides m
 {% step %}
 #### Filter the list by model to focus on a specific group.
 
-<figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption><p>Filter instances by model name</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4) (1).png" alt=""><figcaption><p>Filter instances by model name</p></figcaption></figure>
 {% endstep %}
 
 {% step %}
 #### Create a new instance (single or bulk) by choosing a model and name or name prefix.
 
-<figure><img src="../.gitbook/assets/image (2) (1).png" alt=""><figcaption><p>Adding new instance</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption><p>Adding new instance</p></figcaption></figure>
 {% endstep %}
 
 {% step %}
 #### Select instances and use bulk actions to start, stop, delete, or open multiple rows.
 
-<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption><p>Bulk operations on selected instances</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption><p>Bulk operations on selected instances</p></figcaption></figure>
 
 
 {% endstep %}
@@ -49,7 +49,7 @@ The list shows active instances with Name, Model, and Status. It also provides m
 
 Open the Instance View in a new tab from the list. The header shows the instance name, model, and current status, and the control bar provides action buttons.
 
-<figure><img src="../.gitbook/assets/image (3) (1).png" alt=""><figcaption><p>Instance view</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1) (1).png" alt=""><figcaption><p>Instance view</p></figcaption></figure>
 
 ### Controls and modes
 
@@ -65,7 +65,7 @@ Open the Instance View in a new tab from the list. The header shows the instance
 
 * **Physics**: review actions, toggle enabled state, and inspect action attributes.
 
-<figure><img src="../.gitbook/assets/image (7).png" alt=""><figcaption><p>Physics tab (actions)</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (7) (1).png" alt=""><figcaption><p>Physics tab (actions)</p></figcaption></figure>
 
 * **Scenarios**: start or stop scenarios and confirm state transitions.
 

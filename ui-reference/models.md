@@ -27,10 +27,13 @@ In the UI navigation, select **Models**. The list shows loaded models; editing o
 * Import/export full system configuration (models/instances/connections).
 * Edit or delete models, including bulk delete or bulk edit for selected rows.
 
-\[Screenshot: Models list with search, counts, and actions]
-\[Screenshot: Model definition modal with copy action]
-\[Screenshot: Models list with selection + bulk actions]
-\[Screenshot: Import/Export configuration modal (Models page)]
+<figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption><p>Import/Export configuration modal (Models page)</p></figcaption></figure>
+
+<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption><p>Models list with selection + bulk actions</p></figcaption></figure>
+
+<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption><p>Model definition modal with copy action</p></figcaption></figure>
+
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>Models list with search, counts, and actions</p></figcaption></figure>
 
 ### Model view (editor)
 
@@ -42,9 +45,11 @@ The Model View opens in a new tab when you create or edit a model. It is a split
 * Load from file, save to file, copy to clipboard, search, and format the definition.
 * Review create/update/test/delete results in the **Validation** panel.
 
-\[Screenshot: Model view header with editable name]
-\[Screenshot: Model editor with JSON/YAML tabs + action toolbar]
-\[Screenshot: Validation panel with test/save results]
+<figure><img src="../.gitbook/assets/image (7).png" alt=""><figcaption><p>Validation panel with test/save results</p></figcaption></figure>
+
+<figure><img src="../.gitbook/assets/image (6).png" alt=""><figcaption><p>Model editor with JSON/YAML tabs + action toolbar</p></figcaption></figure>
+
+<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption><p>Model view header with editable name</p></figcaption></figure>
 
 ## Typical workflow
 
