@@ -100,6 +100,7 @@
     * [UI Overview](ui-reference/general-view.md)
     * [Instances](ui-reference/instances.md)
     * [Models](ui-reference/models.md)
+    * [Connections](ui-reference/connections.md)
     * [Timer & Polling](ui-reference/timer-and-polling.md)
     * [Snapshots](ui-reference/snapshots.md)
     * [Settings](ui-reference/settings.md)

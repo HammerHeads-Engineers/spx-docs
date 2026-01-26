@@ -16,6 +16,7 @@ Use the UI for interactive inspection and debugging. It helps you confirm what i
 
 * [Instances](instances.md): inspect running instances, scenario triggers, and logs.
 * [Models](models.md): review loaded models and their definitions.
+* [Connections](connections.md): wire attribute data flow between instances.
 * [Timer & Polling](timer-and-polling.md): separate Timer and Polling pages for system attributes.
 * [Snapshots](snapshots.md): capture and restore known-good states during testing.
 * [Settings](settings.md): review UI-level settings and connectivity details.
