@@ -32,20 +32,19 @@ The table is grouped into **From** and **To** endpoints. Each connection has:
 * **To** — instance + attribute + value source.
 * **Enabled** — toggle to activate or disable the connection.
 
-\[Screenshot: Connections list showing From/To columns + Enabled toggle]
+<figure><img src="../.gitbook/assets/image (19).png" alt=""><figcaption><p>Connections list showing From/To columns + Enabled toggle</p></figcaption></figure>
 
 ### Create or edit a connection
 
 Use **Add connection** to create a new row, then select instances and attributes. Use the **Internal/External** toggle in the Value column to choose which attribute value to read/write (`internal_value` vs `external_value`).
 
-\[Screenshot: New connection row in edit mode]
-\[Screenshot: Internal vs External value source toggle]
+<figure><img src="../.gitbook/assets/image (21).png" alt=""><figcaption><p>New connection row in edit mode</p></figcaption></figure>
 
 ### Import / Export configuration
 
 Use **Import** or **Export** to move a full system configuration (models, instances, connections) between environments. You can also copy the export payload to the clipboard.
 
-\[Screenshot: Connections page import/export actions]
+<figure><img src="../.gitbook/assets/image (20).png" alt=""><figcaption><p>Connections page import/export actions</p></figcaption></figure>
 
 ## Typical workflow
 
