@@ -208,53 +208,6 @@ breakdown and automation options.
 
 For a fuller runbook, see:
 [Common Issues and Solutions](../troubleshooting-and-support/common-issues-and-solutions.md).
-## CORS configuration (UI access)
-
-If you access SPX Server from the SPX UI running on a different origin (host/port), configure CORS via environment variables. In Docker runs, you can set them in `.env` and keep Compose unchanged.
-
-Supported variables:
-
-- `SPX_CORS_ALLOW_ORIGINS` (CSV list, default in Docker image: `*`)
-- `SPX_CORS_ALLOW_CREDENTIALS` (`1` or `0`, default in Docker image: `0`)
-- `SPX_CORS_ALLOW_ORIGIN_REGEX` (optional regex)
-
-Example `.env` overrides:
-
-```dotenv
-SPX_PRODUCT_KEY=REPLACE_ME
-SPX_CORS_ALLOW_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
-SPX_CORS_ALLOW_CREDENTIALS=1
-```
-
-> Image placeholder: Docker `.env` CORS settings with allowed UI origin.
-
-### Verify
-
-Health endpoint:
-
-```bash
-docker compose ps
-curl -fsS http://localhost:8000/health
-```
-
-Expected response shape (values may differ):
-
-```json
-{"status":"ok","server_version":"<version>","api_version":"v3"}
-```
-
-### Logs
-
-```bash
-docker compose logs -f spx-server
-docker compose logs --tail=200 --no-color spx-server
-```
-
-### Stop
-
-```bash
-docker compose down --remove-orphans
-```
 
 ## Next steps
 
