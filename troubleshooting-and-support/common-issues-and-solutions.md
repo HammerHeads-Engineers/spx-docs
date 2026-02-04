@@ -16,7 +16,7 @@ First commands to run:
   - If the name is still taken: `docker rm -f spx-server`
   - Verify compose is available: `docker compose version`
 
-## Installer wizard fails to start (`spx-install.sh` / `spx-install.ps1`)
+## Setup wizard fails to start (`spx-setup.*` / `spx-install.*`)
 
 - **Symptom**: the installer exits with missing Python modules or cannot find `docker`.
 - **Likely cause**: Python or pip is missing, or the required modules are not installed.

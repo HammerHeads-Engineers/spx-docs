@@ -1,173 +1,216 @@
 ---
 description: >-
-  This page shows how to launch the SPX Server locally with Docker—using either
-  the personalized Docker Compose from the License Keys page or your own
-  template—and verify it responds on your machine.
+  Install SPX locally using the Setup Wizard from the package you download from
+  simplephysx.com, then verify the UI and API on localhost.
 icon: up-to-dotted-line
 ---
 
 # Installation Guide
 
-In this Installation Guide you’ll perform one simple task: start the SPX Server in Docker and confirm it’s reachable on your computer. After selecting a subscription on `https://simplephysx.com`, you can either use a personalized Docker Compose file (fastest) or a custom template (e.g., to pin an image tag). We’ll cover the prerequisites, show how to bring the container up, and how to check that the server answers locally.
+This page is the detailed, step-by-step version of the short instructions you
+see on **Product & Keys**. Follow it to install SPX locally via the Setup Wizard
+and verify:
 
-## Requirements
+- **UI**: `http://localhost:3000`
+- **API**: `http://localhost:8000` (docs: `http://localhost:8000/docs`)
 
-* **Docker Desktop**
-  * **Windows:** Install **Docker Desktop for Windows** (WSL 2 backend). Ensure **WSL 2** is enabled, the WSL kernel update is installed, and **virtualization** is enabled in BIOS/UEFI. Start Docker Desktop before proceeding.
-  * **macOS:** Install **Docker Desktop for Mac** (Intel or Apple Silicon) and start it.
-  *   Quick check:
+If you only need the SPX Server (no packs/services/UI), see
+[Advanced: Manual Docker Compose (server-only)](manual-docker-compose.md).
 
-      ```bash
-      docker --version
-      docker compose version
-      ```
-* **Python:** `>=3.9` (tested in CI on `3.9–3.12`). `pip` available (or Conda if you prefer Conda environments).
-* **Account & Subscription:** An SPX account on `https://simplephysx.com` with an active subscription (e.g., Community). After choosing a plan, you can either download a personalized Docker Compose file (includes your key) or copy a product key to use as `SPX_PRODUCT_KEY`.
-* **Network:** Internet access to pull images from Docker Hub and local port **8000** available.
-* **Basics for verification:** A web browser or `curl`/PowerShell (`Invoke-WebRequest`) to check `http://localhost:8000/health`.
+## Prerequisites (quick checklist)
 
-***
+- **Account + subscription** on `https://simplephysx.com` (e.g., Community).
+- **Docker Desktop / Docker Engine** with **Docker Compose v2** (`docker compose`).
+- **Python 3.9+** available from a terminal (`python` or `python3`).
+- Local ports **3000** (UI) and **8000** (API) available.
+- Internet access (to pull Docker images and Python packages on first run).
 
-## Step-by-Step Installation Process
+> Security: treat your **SPX product key** as a secret. Do not commit it to git,
+> paste it into public issues, or share bundles that contain it.
 
-### Create your account & choose a subscription
+## 1) Get a subscription, your key, and the installer package
 
-* Go to `https://simplephysx.com` and create an account / sign in.
-* Select a subscription plan.
-* Retrieve your product key (`SPX_PRODUCT_KEY`) and (if available) a personalized Docker Compose file.
+1. Log in to `https://simplephysx.com`.
+2. Choose a subscription in **Pricing** (for example: Community).
 
-> The downloaded Compose file is personalized (it embeds your key). Treat it like a secret and do not share it publicly.
+   > **Screenshot placeholder:** Pricing page with the selected subscription plan.
 
-### Choose your setup path
+3. Open **Product & Keys** in your profile (visible only when logged in).
+4. Copy your **SPX product key** (you will paste it into the wizard).
 
-#### **Path A** — Quickest start (recommended for most users)
+   > **Screenshot placeholder:** Product & Keys page showing the product key and the download link.
 
-Use the personalized Compose you just downloaded:
+5. Download the installer package (for example: `spx-examples-1.0.2.zip`).
 
-1. Save the file as **docker-compose.yml** in your project folder.
-2. Start the server:
+## 2) Extract the package
+
+Extract the `.zip` into a dedicated folder, for example:
+
+- `spx-examples-1.0.2/`
+
+In the extracted folder you should see platform launchers like:
+
+- Windows: `spx-setup.bat`
+- macOS: `spx-setup.command`
+- Linux desktop: `spx-setup.desktop`
+- macOS/Linux shells: `spx-setup.sh`
+
+> **Screenshot placeholder:** Extracted folder showing `spx-setup.*` launchers.
+
+## 3) Verify Docker + Python are available
+
+The setup wizard will run checks, but doing a quick pre-flight saves time.
+
+### Docker (all OS)
+
+```bash
+docker --version
+docker compose version
+docker info
+```
+
+If `docker info` fails, Docker Desktop / the Docker service is not running yet.
+
+### Python
+
+macOS/Linux:
+
+```bash
+python3 --version || python --version
+python3 -m pip --version || python -m pip --version
+```
+
+Windows (PowerShell):
+
+```powershell
+python --version
+python -m pip --version
+```
+
+If you have multiple Python installations, you can force the installer to use a
+specific one by setting `PYTHON_BIN` before running setup.
+
+## 4) Run the Setup Wizard (`spx-setup.*`)
+
+From the extracted folder, run the launcher that matches your OS:
+
+- **Windows:** double-click `spx-setup.bat`
+- **macOS:** double-click `spx-setup.command`
+- **Linux desktop:** double-click `spx-setup.desktop`
+- **Terminal (macOS/Linux):** `./spx-setup.sh`
+
+The launcher starts an interactive console wizard, generates a local bundle
+(by default under `build/spx-generated/`), and then offers to start the stack.
+
+### If your OS blocks running the launcher (common fixes)
+
+**macOS**
+
+- If you see “cannot be opened”, try right click → **Open**, or:
+
+  ```bash
+  chmod +x spx-setup.command spx-setup.sh
+  xattr -dr com.apple.quarantine .
+  ```
+
+**Linux**
+
+- If the `.desktop` file does not run, mark it as trusted/executable (desktop UI
+  usually shows “Allow Launching”), or run:
+
+  ```bash
+  chmod +x spx-setup.sh
+  ./spx-setup.sh
+  ```
+
+**Windows**
+
+- If PowerShell script execution is blocked in your environment, run the engine
+  directly from PowerShell:
+
+  ```powershell
+  powershell -ExecutionPolicy Bypass -NoProfile -File .\spx-install.ps1
+  # Or (PowerShell 7):
+  pwsh -ExecutionPolicy Bypass -File .\spx-install.ps1
+  ```
+
+## 5) Complete the wizard (packs / protocols / UI)
+
+The wizard runs in the terminal and guides you through:
+
+1. Selecting **industry packs** or choosing **by protocols** (ENTER accepts the defaults).
+
+   > **Screenshot placeholder:** Wizard screen with “Available packages” and the selection prompt.
+
+2. (Optional) Selecting quickstart **profiles** (if you selected packs).
+3. Choosing whether to install bundled **examples** (models/instances) and which instances to start (pack flow).
+4. Choosing whether to include the **SPX UI** container (recommended).
+5. Pasting your **SPX product key** (copy/paste from Product & Keys).
+
+   > **Screenshot placeholder:** Wizard prompt for “SPX Product Key”.
+
+   If you already set `SPX_PRODUCT_KEY` in your environment, the wizard will
+   detect and reuse it.
+
+6. Reviewing the **Summary**, then starting the stack when prompted.
+
+   > **Screenshot placeholder:** Wizard “Summary” section and the “Start the stack now?” prompt.
+
+Tip: the wizard is designed so pressing **ENTER** keeps you on the safe default
+path (recommended options enabled).
+
+## 6) Verify the installation
+
+After the stack starts:
+
+1. Open the UI: `http://localhost:3000`
+
+   > **Screenshot placeholder:** SPX UI home screen (Instances list).
+
+2. Verify the API health:
+
+   macOS/Linux:
 
    ```bash
-   docker compose up -d
-   docker compose logs -f spx-server
-   ```
-
-3. Verify the server is healthy:
-
-   ```bash
-   docker compose ps
    curl -fsS http://localhost:8000/health
    ```
 
-   Success criteria: `curl` exits with code `0` and returns JSON with `"status":"ok"`.
+   Windows (PowerShell):
 
-#### Path B — Custom image/tag (e.g., specific alpha) or team template
-
-Create a minimal Compose + `.env` file (recommended for teams because the key stays out of YAML).
-
-1. Create `.env` (do not commit it; treat it as a secret):
-
-   ```dotenv
-   # .env
-   SPX_PRODUCT_KEY=REPLACE_ME
-
-   # Optional: pin the server image tag.
-   # If you want a known-good baseline, use the tag pinned in spx-examples/docker-compose.yml.
-   SPX_SERVER_IMAGE=simplephysx/spx-server:v1.0.0-rc.43
+   ```powershell
+   (Invoke-WebRequest http://localhost:8000/health).Content
    ```
 
-2. Create `docker-compose.yml`:
+   Expected result: JSON with `"status":"ok"`.
 
-   ```yaml
-   # docker-compose.yml
-   services:
-     spx-server:
-       image: ${SPX_SERVER_IMAGE}
-       ports:
-         - "8000:8000"
-       environment:
-         SPX_PRODUCT_KEY: ${SPX_PRODUCT_KEY}
-       healthcheck:
-         test: ["CMD-SHELL", "curl -fsS http://localhost:8000/health > /dev/null || exit 1"]
-         interval: 10s
-         timeout: 5s
-         retries: 5
-       volumes:
-         - ./extensions:/app/extensions
-       command: ["--address", "0.0.0.0", "--product-key", "${SPX_PRODUCT_KEY}", "--extensions", "/app/extensions"]
-   ```
+3. Open API docs: `http://localhost:8000/docs`
 
-3. Start the server:
+   > **Screenshot placeholder:** API docs page on `/docs`.
 
-   ```bash
-   docker compose up -d
-   docker compose logs -f spx-server
-   ```
+## Where the bundle is generated
 
-4. Verify the server is healthy:
+By default, the wizard writes a self-contained folder under:
 
-   ```bash
-   docker compose ps
-   curl -fsS http://localhost:8000/health
-   ```
+- `build/spx-generated/`
 
-   Success criteria: `curl` exits with code `0` and returns JSON with `"status":"ok"`.
+Inside it you will find start/stop scripts and a generated
+`docker-compose.generated.yml`. See
+[Installer Wizard & Packs (Reference)](installer-and-packs.md) for the full
+breakdown and automation options.
 
-#### Path C - Installer + packs (spx-examples)
+## If something fails (quick fixes)
 
-Use the installer when you want a ready-to-run bundle of models, supporting
-services (MQTT/BACnet/KNX/etc.), and optional UI.
+- Wizard says Docker is not reachable: start Docker Desktop / the Docker service and retry (`docker info` should succeed).
+- Wizard cannot find Python: install Python 3.9+ or set `PYTHON_BIN` to a working interpreter, then re-run setup.
+- UI is not reachable on `localhost:3000`: check that the `spx-ui` container is running (see the generated bundle's start script output), and confirm port 3000 is free.
+- API is not reachable on `localhost:8000`: confirm `spx-server` is up and healthy; inspect logs from the generated stack.
+- Auth errors (`401`/`403`): re-copy your key from Product & Keys and re-run setup, or update the generated bundle files and restart.
 
-1. Clone the public `spx-examples` repo:
-
-   ```bash
-   git clone https://github.com/HammerHeads-Engineers/spx-examples.git
-   cd spx-examples
-   ```
-
-2. Run the installer wizard:
-
-   - macOS/Linux: `./spx-install.sh`
-   - Windows PowerShell: `pwsh ./spx-install.ps1`
-
-3. The generated bundle lives in `build/spx-generated/`. Update `.env` with
-   your key, then start it with `spx-start.sh` or `spx-start.ps1`.
-
-For full details, see [Installer and Packs (spx-examples)](installer-and-packs.md).
-
-## Common commands (both paths)
-
-### Verify
-
-Health endpoint:
-
-```bash
-docker compose ps
-curl -fsS http://localhost:8000/health
-```
-
-Expected response shape (values may differ):
-
-```json
-{"status":"ok","server_version":"<version>","api_version":"v3"}
-```
-
-### Logs
-
-```bash
-docker compose logs -f spx-server
-docker compose logs --tail=200 --no-color spx-server
-```
-
-### Stop
-
-```bash
-docker compose down --remove-orphans
-```
+For a fuller runbook, see:
+[Common Issues and Solutions](../troubleshooting-and-support/common-issues-and-solutions.md).
 
 ## Next steps
 
-- [Build Your First Simulation](build-your-first-simulation.md)
-- [Add Modbus TCP/IP to Your Simulation](add-communication-protocol.md)
-- [Use in Unit Tests (MiL)](use-in-unit-tests-mil.md)
-- [CI/CD Setup (GitHub Actions)](ci-cd-setup-github-actions.md)
+- If you installed Smart Building Pack: [Smart Building Pack: First Run Walkthrough](first-run-smart-building-pack.md)
+- Start building: [Build Your First Simulation](build-your-first-simulation.md)
+- Troubleshooting: [Common Issues and Solutions](../troubleshooting-and-support/common-issues-and-solutions.md)
