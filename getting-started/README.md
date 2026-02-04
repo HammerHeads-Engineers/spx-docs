@@ -30,8 +30,9 @@ By the end, you will be able to:
 
 What’s inside this page:
 
-* **Installation Guide** — prerequisites, environment variables (e.g., SPX\_PRODUCT\_KEY), server image & Docker Compose, client installation.
-* **Installer and Packs** — build ready-to-run bundles from spx-examples (models + services + optional UI).
+* **Installation Guide** — download the installer package from Product & Keys, run `spx-setup.*`, and verify UI/API on localhost.
+* **Advanced: Manual Docker Compose** — run the SPX Server API via Compose without the wizard (server-only).
+* **Installer Wizard & Packs** — reference for packs/profiles, protocol-only installs, generated bundles, and automation options.
 * **Quick Start Guide** — minimal, copy-paste recipes to connect to the server, do basic CRUD on models/instances, tweak attributes, run prepare()/run(), and wire these steps into your unit tests and CI.
 
 **Who is this for?**
@@ -43,6 +44,6 @@ Prerequisites (at a glance):
 * Docker & Docker Compose (to run the server)
 * Python `>=3.9` (tested in CI on `3.9–3.12`)
 * A valid SPX\_PRODUCT\_KEY set as an environment variable
-* Network access to pull the SPX server image
+* Network access to pull Docker images and install Python dependencies
 
 > Tip: Everything shown here is designed to work the same way locally and in CI, so the commands you practice on your laptop carry straight over to pipelines.
