@@ -51,6 +51,19 @@ templates:
 - Each entry is validated against the `Model` schema using the same validation engine as the SDK.
 - The template is stored in `class_registry` as `{ "class": Model, "template": <definition> }`.
 - When a module references `multimeter`, the runtime clones the template definition and instantiates it as a normal model.
+- If an attribute references a meta parameter (`$param(name)`) and the attribute type is missing/`str`, template normalization can promote that type from `meta_parameters[name].type`.
+
+### Meta parameter typing example
+
+```yaml
+templates:
+  regulator:
+    meta_parameters:
+      k__setpoint_c: { type: float, default: 60.0 }
+    attributes:
+      # Type is auto-promoted to float from meta_parameters
+      k__setpoint_c: { default: "$param(k__setpoint_c)", type: str }
+```
 
 ### Best practices
 
