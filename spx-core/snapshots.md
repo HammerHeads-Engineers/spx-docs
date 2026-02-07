@@ -66,8 +66,19 @@ The CLI proxies API calls; ensure the server is running and credentials are conf
 * Timer state (current time, step mode).
 * Communication adapter overrides.
 * Parameter overrides.
+* Instance `meta_parameters` values (when instances are created from templates/meta params).
 
 Sensitive data (credentials, secrets) should be kept out of snapshots; store them in parameters or vault-backed configs.
+
+## Import behavior (runtime replace)
+
+When importing with runtime replacement (`replace_runtime: true`), the server performs additional safety steps:
+
+* Existing runtime children are torn down before rebuilding the system tree (best-effort cleanup for running threads/servers).
+* Runtime license/config limits are preserved (for example `instance_limit`), and imported values are clamped to active runtime limits.
+* `core_dir`, `extensions_dir`, and runtime directories are preserved when missing in imported data.
+
+UI import dialogs can optionally include or skip `run.instances` startup directives, so you can import structure without forcing startup state.
 
 ## Best practices
 

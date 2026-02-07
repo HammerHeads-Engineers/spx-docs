@@ -43,9 +43,9 @@ The Model View opens in a new tab when you create or edit a model. It is a split
 
 * Edit JSON or YAML definitions with automatic format conversion.
 * Use **Save** to create or update the model (rename by clicking the model name in the header).
-* Use **Test model** to create/open a test instance in a new tab.
+* Use **Test model** to create/open a test instance in a new tab (including meta-parameter input when required).
 * Load from file, save to file, copy to clipboard, search, and format the definition.
-* Review create/update/test/delete results in the **Validation** panel.
+* Review create/update/test/delete results in the **Validation** panel (recent validation logs persist per model tab session).
 
 The header shows the editable model name; the toolbar groups model actions (save/test/delete) and file helpers (load/save/copy/search/format).
 
@@ -55,12 +55,22 @@ The header shows the editable model name; the toolbar groups model actions (save
 
 <figure><img src="../.gitbook/assets/image (7).png" alt=""><figcaption><p>Validation panel with test/save results</p></figcaption></figure>
 
+### Test model with meta parameters
+
+If the model defines `meta_parameters`, clicking **Test model** opens a modal to provide values before creating the test instance.
+
+* Required parameters must be provided before creation.
+* Existing test instances can be reopened or updated with new values.
+* Parameter values are stored locally for faster retesting of the same model.
+
+> Image placeholder: Test model modal with meta-parameter fields and validation hints.
+
 ## Typical workflow
 
 1. Open **Models** and confirm expected models are listed.
 2. Click a definition preview to inspect the full model definition.
 3. Open **Edit** (new tab) to enter the Model View.
-4. Update JSON/YAML, **Test model** to open a test instance, then **Save**.
+4. Update JSON/YAML, click **Test model**, fill meta parameters (if requested), then open/update the test instance.
 5. Return to **Models** to confirm the list refreshes and create instances.
 
 ## What to verify
@@ -73,6 +83,7 @@ The header shows the editable model name; the toolbar groups model actions (save
 
 * Model missing from the list: verify the pack/profile selection in the installer bundle.
 * Save/Test fails: ensure the model name is set and JSON/YAML parses correctly.
+* Test model asks for extra values: your model defines `meta_parameters`; provide required fields in the modal.
 * Load model fails: validate JSON/YAML syntax and ensure the model name is unique.
 * Edit/Create opens in a new tab: allow pop-ups if your browser blocks them.
 * Definition looks stale: refresh the page or restart the stack after updates.

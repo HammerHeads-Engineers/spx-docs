@@ -70,6 +70,7 @@ instances:
 |-------|-------------|
 | `type` | Required class or template name registered in the core. |
 | `parameters` | Mapping applied after instantiation. Keys can reference nested attributes (see examples). |
+| `meta_parameters` | Values for template meta parameters. Useful when the template exposes `$param(...)` knobs (for example unit id, port, setpoint seeds). |
 | `instances` | Embedded list that creates grandchildren under this instance. |
 | (no `type`) | If an entry omits `type`, the container treats it as an update to an existing child. |
 
@@ -79,6 +80,7 @@ instances:
 - **Limit enforcement**: You can set `instance_limit` when creating the container programmatically to prevent runaway instantiations.
 - **Updates**: Supplying an entry without `type` (only parameters) updates an existing child instead of creating a new one. This is useful for hot reconfiguration via API.
 - **Nested sections**: Additional keys in the same mapping (after the first) are treated as sub-containers to attach under the new instance.
+- **Meta-parameter resolution**: If `meta_parameters` are provided, the runtime resolves template parameters before instantiation and stores resolved values in the instance definition for observability/snapshots.
 
 ### Example: updating an instance at runtime
 

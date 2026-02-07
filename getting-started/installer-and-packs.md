@@ -100,6 +100,17 @@ Start the wizard:
 
 By default, artifacts are generated under `build/spx-generated/`.
 
+Current wizard flow (important):
+
+- `Add models from selected packages? [Y/n]`
+- `Add default instances? [Y/n]` (shown only if models are enabled)
+- `Include SPX UI frontend container? [Y/n]`
+- `Prepare offline installation bundle instead of immediate launch? [y/N]`
+
+For selected packs (`smart_building_pack`, `industrial_iiot_pack`, `embedded_lab_pack`), default instance generation is narrowed to instances explicitly selected for startup.
+
+> Image placeholder: Installer wizard prompts for models/instances/UI/offline options.
+
 ## Non-interactive generation
 
 Use pack and profile selectors to build bundles without prompts. Example:
@@ -120,6 +131,14 @@ Other useful flags:
 - `--no-ui` or `--with-ui`
 - `--allow-missing-product-key` (writes `REPLACE_ME` into `.env`)
 - `--start` (launch after generating)
+
+## Model conventions used by current packs
+
+Recent pack updates standardize several model-language conventions:
+
+- Prefer `k__` for primary control inputs and externally-driven command/setpoint attributes.
+- Prefer hidden `_cycle_time_s` for internal integration step; expose `cycle_time_s` only when intentionally user-facing.
+- Keep hidden helper attributes (prefixed `_`) near the end of the `attributes` block for readability.
 
 ## What gets generated
 

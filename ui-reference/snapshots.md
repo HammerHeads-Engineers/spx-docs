@@ -24,6 +24,7 @@ The page has a toolbar (search + actions) and a snapshots table. Use it to captu
 * **Search** snapshots by label, notes, or path.
 * **New snapshot** to capture current system state.
 * **Import/Export** to move configuration (models/instances/connections) between environments.
+* During config import, choose whether to include `run.instances` startup data.
 * **Copy export data** to share configuration via clipboard.
 
 ### Snapshots list
@@ -43,6 +44,8 @@ Use **New snapshot** to capture the current system state. Labels and notes are o
 * **Restore** loads the selected snapshot and resets system state (confirmation required).
 * **Download** saves the snapshot JSON to your machine.
 * **Delete** removes the snapshot (confirmation required).
+
+> Image placeholder: Import configuration dialog with include sections and run.instances toggle.
 
 <figure><img src="../.gitbook/assets/image (24).png" alt=""><figcaption><p>Restore snapshot confirmation</p></figcaption></figure>
 

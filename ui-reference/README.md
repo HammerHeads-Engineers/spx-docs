@@ -12,6 +12,7 @@ Use the UI to:
 
 * Inspect loaded **Models** and running **Instances**.
 * Wire and verify **Connections** between instances.
+* Use **Logs** page to inspect system/instance logs with source and severity filters.
 * Watch attribute/state changes while stepping time from a test or script.
 * Trigger **Scenarios** and verify expected transitions.
 * Manage and verify **Snapshots** during development.
