@@ -57,3 +57,23 @@ PY
 
 - Use the embedded OpenAPI reference in this chapter to discover exact paths, payloads, and auth requirements.
 - For logs-related endpoints, see [Logs](../spx-core/system/logs.md).
+
+## 4) Delete a component and inspect status flags (curl)
+
+```bash
+curl -fsS -X DELETE \
+  -H "Authorization: Bearer $SPX_PRODUCT_KEY" \
+  http://localhost:8000/api/v3/system/instances/my_inst
+```
+
+Expected response shape (values may differ):
+
+```json
+{
+  "detail": "Component 'my_inst' deleted",
+  "destroyed": true,
+  "removed_from_parent": true
+}
+```
+
+`destroyed` reports whether the runtime cleanup succeeded; `removed_from_parent` indicates the node was removed from the parent container.

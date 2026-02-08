@@ -272,15 +272,15 @@ Deliverables:
 - Short PR summary + exact local validation commands.
 ```
 
-## 7) Generate production-device tests + report (test\_logs)
+## 7) Generate production-device tests + report (_test\_logs)
 
-Use this when you need automated regression tests for a production client/device driver, plus a test report derived from `attributes/test_logs`.
+Use this when you need automated regression tests for a production client/device driver, plus a test report derived from `attributes/_test_logs`.
 
 ```
 You are preparing a patch for the spx-examples repository:
 https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
 
-Goal: add deterministic MiL tests for a production client/device driver and generate a report from test_logs.
+Goal: add deterministic MiL tests for a production client/device driver and generate a report from _test_logs.
 
 Inputs:
 - Model YAML: <MODEL_PATH> (relative path) + GitHub URL
@@ -297,10 +297,10 @@ Hard requirements:
   - https://github.com/HammerHeads-Engineers/spx-examples/tree/main/tests/devices
 - Add the MiL test under `tests/shared/integration/` or `tests/packs/<pack>/integration/`.
 - Keep tests deterministic: drive time from the test (no wall-clock sleeps for simulation behavior).
-- Log test assertions into `attributes/test_logs` (use existing patterns, e.g.:
+- Log test assertions into `attributes/_test_logs` (use existing patterns, e.g.:
   https://github.com/HammerHeads-Engineers/spx-examples/blob/main/tests/packs/smart_building_pack/integration/test_pack_instances_running.py)
 - Report generation:
-  - Read `instance["attributes"]["test_logs"].internal_value` after the test.
+  - Read `instance["attributes"]["_test_logs"].internal_value` after the test.
   - Write a JSON or Markdown report under `build/test_reports/<test_name>.<json|md>` (create the folder if missing).
 - If protocol ports/services are required, note the needed docker-compose port mappings.
 - Do not claim you ran anything; output the exact commands I should run locally:
