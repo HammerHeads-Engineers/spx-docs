@@ -29,6 +29,7 @@
 * [Usage Scenarios and Examples](usage-scenarios-and-examples/README.md)
   * [Guided Use Cases & Scenarios](usage-scenarios-and-examples/common-use-cases.md)
   * [Industry Packs and Profiles](usage-scenarios-and-examples/industry-packs.md)
+  * [Device Catalog (Official Pack Devices)](usage-scenarios-and-examples/device-catalog.md)
 * [Build Simulations](spx-development-guide/README.md)
   * [Concepts & Modeling](simulation-and-modeling/README.md)
     * [Core Concepts](simulation-and-modeling/core-concepts.md)
