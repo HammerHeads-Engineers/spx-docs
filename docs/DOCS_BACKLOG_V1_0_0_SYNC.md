@@ -5,6 +5,8 @@ This backlog was prepared after reviewing recent commits in:
 - `spx-examples`
 - `spx-server`
 - `spx-ui`
+- `spx-sdk`
+- `spx-python`
 
 The goal is to keep SPX Docs aligned with runtime/UI behavior on branch `version-1.0.0`.
 
@@ -12,11 +14,8 @@ The goal is to keep SPX Docs aligned with runtime/UI behavior on branch `version
 
 ### spx-examples
 
+- `8d03be0` (2026-02-06): release v1.0.3 (no docs changes)
 - `3b25b54` (2026-02-05): installer wizard flow split into model/instance options
-- `76b7694` (2026-02-03): `_cycle_time_s` and attribute ordering conventions
-- `e239ddc` (2026-02-03): Modbus model meta parameters for `port` and `unit_id`
-- `ab93035` (2026-02-03): `k__` attribute reference consistency in YAML
-- `0a5bf34` (2026-01-31): default Home Assistant theme file
 
 ### spx-server
 
@@ -24,18 +23,22 @@ The goal is to keep SPX Docs aligned with runtime/UI behavior on branch `version
 - `e49f405` (2026-02-02): snapshot import teardown + delete response status flags
 - `8275549` (2026-02-01): template meta-parameter type promotion
 - `5b8e4a6` (2026-02-01): snapshot import preserves/clamps runtime limits
-- `cf9fe4c` (2026-02-01): shared Modbus server for multiple unit IDs per port
-- `c006c4c` (2026-01-28): bearer auth in OpenAPI
-- `bb5b98f` (2026-01-29): root endpoint includes `license_user`
 
 ### spx-ui
 
 - `a2b818f` (2026-02-06): improved connection validation/error handling
 - `81052d8` (2026-02-06): new Logs page with source + severity filters
+- `f4a4c4a` (2026-02-03): AttributeValuePopover refactor + InstanceTab tooltips
 - `20c69a4` (2026-02-03): attribute unit display and responsive unit column
 - `026afc6` (2026-02-02): historical data limit raised to 100000
-- `a05310d` (2026-02-02): import/export toggle for `run.instances`
-- `2542975` (2026-02-01): Test model meta-parameter modal and helpers
+
+### spx-sdk
+
+- `d024f0a` (2025-12-22): FunctionAction params accept expressions (docs already aligned)
+
+### spx-python
+
+- `6f4647c` (2026-02-02): logging helpers default to `_test_logs` attribute name
 
 ## Implemented in this docs branch
 
@@ -53,17 +56,20 @@ The goal is to keep SPX Docs aligned with runtime/UI behavior on branch `version
   - `spx-core/system/instances.md`
   - `spx-development-guide/server-api/README.md`
   - `security-considerations.md`
+- Updated spx-python docs:
+  - `spx-development-guide/spx-python-client-wrapper/testing-helpers-and-logging.md`
+  - `llm-first-model-authoring/prompt-recipes.md`
 - Updated installer docs:
   - `getting-started/installer-and-packs.md`
+- Added API v3 delete response example (`destroyed`, `removed_from_parent`) in `api-v3-reference/code-examples.md`
+- Added CORS environment variable section + placeholder to `getting-started/installation-guide.md`
 
 ## Suggested next updates (not fully covered yet)
 
 ### P0 - before public 1.0.0 docs freeze
 
-1. Expand API v3 examples for delete response status flags (`destroyed`, `removed_from_parent`).
-2. Add dedicated CORS subsection to installation docs (`getting-started/installation-guide.md`) with `.env` override examples.
-3. Add end-to-end example for multi-model Modbus on one `host:port` with unique unit IDs.
-4. Add root endpoint response example including `license_user` field.
+1. Add end-to-end example for multi-model Modbus on one `host:port` with unique unit IDs.
+2. Add root endpoint response example including `license_user` field.
 
 Image placeholders to add:
 
