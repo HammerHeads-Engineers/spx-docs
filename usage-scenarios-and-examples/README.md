@@ -17,4 +17,4 @@ Next pages:
 
 * [Guided Use Cases & Scenarios](common-use-cases.md)
 * [Industry Packs and Profiles](industry-packs.md)
-* [Device Catalog (Pack Device Models)](device-catalog.md)
+* [Device Catalog (Official Pack Devices)](device-catalog.md)
