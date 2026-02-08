@@ -52,7 +52,7 @@ class HeaterTests(SpxAssertionLoggingMixin, unittest.TestCase):
 
         # Tell the mixin where to log
         cls.spx_log_instance = instance
-        cls.spx_log_attr = "test_logs"
+        cls.spx_log_attr = "_test_logs"
         spx_ensure_attribute(instance, cls.spx_log_attr, default=[])
 ```
 
@@ -77,7 +77,7 @@ class HeaterTests(SpxAssertionLoggingMixin, unittest.TestCase):
     def setUpClass(cls):
         # ... create cls.instance pointing to your SPX instance ...
         cls.spx_log_instance = cls.instance
-        cls.spx_log_attr = "test_logs"
+        cls.spx_log_attr = "_test_logs"
         spx_ensure_attribute(cls.instance, cls.spx_log_attr, default=[])
 
     def test_temperature_in_range(self):
@@ -105,7 +105,7 @@ class HeaterTests(SpxAssertionLoggingMixin, unittest.TestCase):
         # ... set cls.spx_log_instance and cls.spx_log_attr ...
         spx_ensure_attribute(cls.spx_log_instance, cls.spx_log_attr, default=[])
 
-    @spx_log_test_case()  # defaults to spx_log_attr ("test_logs")
+    @spx_log_test_case()  # defaults to spx_log_attr ("_test_logs")
     def test_heater_can_start(self):
         self.instance.start()
         self.assertEqual(self.instance.state, "running")
@@ -133,7 +133,7 @@ See `tests/test_unittest_logging.py::test_spx_log_test_case_records_entries` for
 - `spx_log`: a function-scoped fixture that appends custom entries (for example `"note"` records) to the same attribute.
 - `pytest_runtest_makereport` hook: automatically logs `"testcase"` entries with status and duration for each test function.
 
-All three write into `ATTR_PATH` (by default `"test_logs"`) on the instance produced by an `instance_factory` callable.
+All three write into `ATTR_PATH` (by default `"_test_logs"`) on the instance produced by an `instance_factory` callable.
 
 ### Wiring the plugin in `conftest.py`
 
@@ -150,7 +150,7 @@ from spx_python.helpers import SpxPytestLoggerPlugin, spx_ensure_attribute
 
 BASE_URL = os.getenv("SPX_BASE_URL", "http://localhost:8000")
 PRODUCT_KEY = os.environ["SPX_PRODUCT_KEY"]
-ATTR_PATH = "test_logs"
+ATTR_PATH = "_test_logs"
 
 
 def _build_client():
@@ -201,7 +201,7 @@ The `spx_log` fixture appends arbitrary entries to the configured attribute. Eac
 
 ```python
 def test_pytest_log_fixture_can_append(spx_instance, spx_log):
-    before = list(spx_instance["attributes"]["test_logs"].internal_value)
+    before = list(spx_instance["attributes"]["_test_logs"].internal_value)
 
     spx_log(
         "note",
@@ -210,7 +210,7 @@ def test_pytest_log_fixture_can_append(spx_instance, spx_log):
         scenario="happy_path",
     )
 
-    after = list(spx_instance["attributes"]["test_logs"].internal_value)
+    after = list(spx_instance["attributes"]["_test_logs"].internal_value)
     assert len(after) == len(before) + 1
     assert after[-1]["marker"] == "pytest_fixture"
     assert after[-1]["scenario"] == "happy_path"
@@ -246,7 +246,7 @@ In `tests/test_pytest_logging_integration.py` the `verify_pytest_logging_entries
 
 ## Inspecting and consuming logs
 
-All logging helpers ultimately append JSON-safe payloads to an SPX attribute, typically `attributes/test_logs/internal_value`:
+All logging helpers ultimately append JSON-safe payloads to an SPX attribute, typically `attributes/_test_logs/internal_value`:
 
 - Unittest mixin: `kind == "assertion"` and `kind == "testcase"` entries.
 - Pytest plugin:
@@ -256,7 +256,7 @@ All logging helpers ultimately append JSON-safe payloads to an SPX attribute, ty
 You can inspect them directly from Python:
 
 ```python
-logs_attr = instance["attributes"]["test_logs"]
+logs_attr = instance["attributes"]["_test_logs"]
 entries = list(logs_attr.internal_value or [])
 
 for entry in entries:
@@ -318,7 +318,7 @@ class TestBleVitalSignsMonitorLogged(SpxAssertionLoggingMixin, unittest.TestCase
 
         # Configure assertion logging
         cls.spx_log_instance = instance
-        cls.spx_log_attr = "test_logs"
+        cls.spx_log_attr = "_test_logs"
         spx_ensure_attribute(instance, cls.spx_log_attr, default=[])
 
         cls.sut = BleVitalSignsMonitorSUT(
@@ -339,7 +339,7 @@ class TestBleVitalSignsMonitorLogged(SpxAssertionLoggingMixin, unittest.TestCase
         )
 ```
 
-After this test runs, SPX will contain a `test_logs` attribute on `tests_ble_vital_signs_monitor_inst` with entries for the assertion (and any additional test case decorators you apply).
+After this test runs, SPX will contain a `_test_logs` attribute on `tests_ble_vital_signs_monitor_inst` with entries for the assertion (and any additional test case decorators you apply).
 
 ### Modbus Vacuum Gauge (unittest)
 
@@ -387,7 +387,7 @@ class TestModbusVacuumGaugeLogged(SpxAssertionLoggingMixin, unittest.TestCase):
         cls.attrs = instance["attributes"]
 
         cls.spx_log_instance = instance
-        cls.spx_log_attr = "test_logs"
+        cls.spx_log_attr = "_test_logs"
         spx_ensure_attribute(instance, cls.spx_log_attr, default=[])
 
     def setUp(self):
@@ -400,7 +400,7 @@ class TestModbusVacuumGaugeLogged(SpxAssertionLoggingMixin, unittest.TestCase):
             self.sut.close()
 
     def test_relay_outputs_follow_setpoints_logged(self):
-        # This assertion (and any subsequent ones) are logged to test_logs
+        # This assertion (and any subsequent ones) are logged to _test_logs
         self.assertIn("high_pressure", self.attrs)
 ```
 
@@ -421,7 +421,7 @@ import pytest
 import spx_python
 from spx_python.helpers import SpxPytestLoggerPlugin, spx_ensure_attribute
 
-ATTR_PATH = "test_logs"
+ATTR_PATH = "_test_logs"
 MODEL_PATH = Path("library/domains/iot/generic/environment_sensor__mqtt.yaml")
 MODEL_KEY = "tests__generic_mqtt_environment_sensor"
 INSTANCE_KEY = "tests_generic_mqtt_environment_sensor_inst"
