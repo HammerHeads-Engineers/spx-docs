@@ -4,7 +4,12 @@ icon: terminal
 
 # Prompt recipes
 
-These prompts are designed for “web LLM” usage (internet access + GitHub browsing, no local repo access). They use `spx-examples` on GitHub as the canonical spec and convention source.
+These prompts are split into two modes:
+
+* **Local-agent mode** (has local git/worktree access): recipe `0` for docs automation.
+* **Web-LLM mode** (internet + GitHub browsing, no local repo access): recipes `1+`.
+
+In both modes, treat `spx-examples` on GitHub as the canonical spec and convention source.
 
 Before generating any code, instruct the LLM to open and follow these files from the repo:
 
@@ -19,6 +24,63 @@ Important: a web LLM must not claim it ran commands. It should output:
 * file-by-file changes (or a unified diff),
 * exact local validation commands to run (`python tools/validate_models.py`, `pytest` / `poetry run pytest`),
 * and any assumptions/questions when documentation is incomplete.
+
+## 0) Update documentation from source repos (single-branch automation)
+
+Use this when you are updating `spx-docs` based on `spx-examples` changes.
+
+```
+You are preparing a docs automation patch for:
+- Docs repo: spx-docs
+- Source repo: spx-examples
+
+Branch policy (mandatory):
+1) Work only on: codex/docs-sync-latest-commits-v1-0-0
+2) Rebase on: origin/version-1.0.0 before editing
+3) Keep PR target: version-1.0.0
+
+Start with:
+- git fetch origin
+- git checkout codex/docs-sync-latest-commits-v1-0-0
+- git rebase origin/version-1.0.0
+- git status --porcelain (must be empty before starting)
+
+Source checkout:
+- Prefer local source path: ../spx-examples
+- If missing, clone:
+  - git clone --depth 1 --branch main https://github.com/HammerHeads-Engineers/spx-examples.git .tmp/spx-examples
+- Use the chosen path consistently in all commands below.
+
+Then pin and report source snapshot:
+- git -C <SPX_EXAMPLES_PATH> rev-parse origin/main
+
+Task:
+- Update docs pages impacted by source changes.
+- Keep change boundary strict: no unrelated edits outside impacted docs + required navigation/generated files.
+- If generated pages are affected, regenerate them from script (no manual table edits):
+  - python scripts/generate_device_catalog.py --spx-examples <SPX_EXAMPLES_PATH>
+
+Validation:
+- python scripts/generate_device_catalog.py --spx-examples <SPX_EXAMPLES_PATH> --check
+- any additional page-specific checks (links/examples/paths)
+- git diff --name-only (verify only intended files changed)
+
+Output format:
+1) Files changed.
+2) Source snapshot commit SHA(s).
+3) Evidence matrix:
+   - docs page
+   - source file/url
+   - source commit
+   - rationale
+4) Open assumptions/questions.
+5) Conflict/rebase status (state clearly whether conflicts were resolved in this run).
+
+Constraints:
+- Do not mark models as officially supported by manufacturers unless explicitly confirmed.
+- Do not include secrets/tokens in docs examples.
+- If source information is missing or conflicting, stop and ask concrete blocking questions.
+```
 
 ## 1) Generate a model + protocol mapping from device/protocol documentation
 

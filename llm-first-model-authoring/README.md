@@ -21,6 +21,7 @@ What you ship is not “a model”, it’s a **model + tests + catalog entries**
 
 ## Next steps
 
+* Docs automation rules: [Docs automation guidelines](docs-automation-guidelines.md)
 * Repo-as-spec: [Repo-as-spec](repo-as-spec.md)
 * Model Brief template: [Model Brief template](model-brief-template.md)
 * Workflow (Generate → Validate → Iterate): [Workflow: Generate → Validate → Iterate](workflow-generate-validate-iterate.md)
