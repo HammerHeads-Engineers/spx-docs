@@ -10,6 +10,22 @@ This backlog was prepared after reviewing recent commits in:
 
 The goal is to keep SPX Docs aligned with runtime/UI behavior on branch `version-1.0.0`.
 
+## Latest sync check (2026-02-10)
+
+- No new documentation-impacting changes found for the `version-1.0.0` docs scope.
+- Source repo heads are unchanged from the 2026-02-09 snapshot.
+- Review performed against the current local heads for each source repo.
+
+## Source snapshot (2026-02-10)
+
+| Repo | SHA |
+| --- | --- |
+| `spx-examples` | `801ded93e16a847528664de15c0d1cdc271136fa` |
+| `spx-server` | `d6404af0e94375fcaed436234a245cdca9034fd5` |
+| `spx-ui` | `575ecb92f2e1202c792cb1c213242cb8cbfa8a95` |
+| `spx-sdk` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` |
+| `spx-python` | `6f4647c3e6947e832e48af862f17ef9f898ebde8` |
+
 ## Latest sync check (2026-02-09)
 
 - No new documentation-impacting changes found for the `version-1.0.0` docs scope.
@@ -34,11 +50,11 @@ The goal is to keep SPX Docs aligned with runtime/UI behavior on branch `version
 
 ## Reviewed commit set
 
-Latest review (2026-02-09): no newly triaged documentation-impacting commits for the `version-1.0.0` docs scope.
+Latest review (2026-02-10): no newly triaged documentation-impacting commits for the `version-1.0.0` docs scope.
 
-Delta since 2026-02-08:
+Delta since 2026-02-09:
 
-- `spx-server`: `d6404af` (2026-02-09) test-only coverage expansion (no docs changes)
+- No source repo changes (SHAs unchanged).
 
 Workspace baseline heads used for the review:
 
