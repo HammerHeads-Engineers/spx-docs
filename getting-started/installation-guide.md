@@ -142,6 +142,10 @@ The wizard runs in the terminal and guides you through:
 
    > **Screenshot placeholder:** Wizard screen with “Available packages” and the selection prompt.
 
+   If you press ENTER through the defaults, the wizard picks the default protocol
+   set (currently Modbus + SCPI/ASCII when available), skips model/instance
+   installation prompts, and keeps the SPX UI enabled.
+
 2. (Optional) Selecting quickstart **profiles** (if you selected packs).
 3. Choosing whether to install bundled **examples** (models/instances) and which instances to start (pack flow).
 4. Choosing whether to include the **SPX UI** container (recommended).

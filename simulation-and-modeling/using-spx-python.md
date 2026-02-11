@@ -208,6 +208,34 @@ def test_heater_increases_temperature(client):
 
 ---
 
+## LLM Integration and Test Logging Patterns
+
+When you drive SPX with LLM-powered tooling or build test automation, keep these
+patterns in mind:
+
+- Treat the client as a dictionary-like tree (`models`, `instances`, `attributes`).
+- Keep secrets out of code and examples: set `SPX_PRODUCT_KEY` (and optionally
+  `SPX_BASE_URL`) in the environment.
+- Prefer helper functions in `spx_python.helpers` for idempotent setup and
+  polling (for example: `load_model`, `ensure_model`, `create_instance`,
+  `wait_for_attribute_value`, `wait_for_state`).
+- For structured test logging, use the helper utilities (for example:
+  `spx_log_test_case`, `spx_append_attribute_value`) instead of rolling your own.
+- Integration tests should **skip** when `SPX_PRODUCT_KEY` is missing or the
+  server is unavailable.
+
+Minimal pytest skip guard:
+
+```python
+import os
+import pytest
+
+if not os.environ.get("SPX_PRODUCT_KEY"):
+    pytest.skip("SPX_PRODUCT_KEY not set", allow_module_level=True)
+```
+
+---
+
 ## Fault Injection and Edge Cases
 
 Inject a sensor fault mid-run and verify system response:

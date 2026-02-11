@@ -86,6 +86,13 @@ Optional:
 
 - Node.js + npm if you include BLE models (the start script installs `@simplephysx/spx-ble-adapter`).
 
+Common environment variables:
+
+| Variable | Purpose | Example |
+| --- | --- | --- |
+| `SPX_PRODUCT_KEY` | Auth key for the SPX API and installer/bootstrap. | `SPX_PRODUCT_KEY=your-product-key` |
+| `SPX_BASE_URL` | Override the SPX API base URL (defaults to `http://localhost:8000`). | `SPX_BASE_URL=http://localhost:8000` |
+
 ## Run the installer from the repo (interactive wizard)
 
 ```bash
@@ -106,6 +113,10 @@ Current wizard flow (important):
 - `Add default instances? [Y/n]` (shown only if models are enabled)
 - `Include SPX UI frontend container? [Y/n]`
 - `Prepare offline installation bundle instead of immediate launch? [y/N]`
+
+If you press ENTER at the package selection prompt, the wizard chooses the
+default protocol set (currently Modbus + SCPI/ASCII when available), skips the
+model/instance prompts, and switches to protocol-only service selection.
 
 For selected packs (`smart_building_pack`, `industrial_iiot_pack`, `embedded_lab_pack`), default instance generation is narrowed to instances explicitly selected for startup.
 
@@ -152,6 +163,7 @@ Inside the output folder (for example `build/spx-generated/`):
 - `spx-start.sh` / `spx-stop.sh`: start/stop helpers for Bash or zsh.
 - `spx-start.ps1` / `spx-stop.ps1`: start/stop helpers for PowerShell.
 - `assets/`: copied service configs (MQTT, KNX, Home Assistant, Matter).
+- Home Assistant assets include the `spx_default` theme (selectable in the Home Assistant UI).
 - `extensions/`: copied custom Python extensions.
 - `library/`: selected model YAMLs copied into the bundle for self-contained sharing.
 
@@ -216,7 +228,15 @@ scripts/build_installer_package.sh
 ```
 
 This creates `dist/spx-installer/` and `dist/spx-installer.tgz`.
-Recipients extract and run `./spx-install.sh` or `pwsh ./spx-install.ps1`.
+Recipients extract and run the platform launchers:
+
+- `spx-setup.command` (macOS)
+- `spx-setup.desktop` (Linux desktop)
+- `spx-setup.sh` (macOS/Linux shell)
+- `spx-setup.bat` (Windows)
+
+The launchers call the installer engine (`spx-install.sh` / `spx-install.ps1`)
+for the interactive wizard.
 
 For single-file installers:
 
