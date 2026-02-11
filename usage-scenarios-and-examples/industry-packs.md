@@ -15,6 +15,33 @@ bundles.
 Source of truth (public repo):
 https://github.com/HammerHeads-Engineers/spx-examples
 
+Current snapshot used for pack/model counts in this docs update:
+
+- `spx-examples` `origin/develop` @ `bee350dfdcca1716d5df338b2c39ea3dc668cc28` (2026-02-11)
+- Baseline comparison: `origin/main` @ `8d03be0fed44188672fc8eb1f3a598fc3d797be7`
+
+## Catalog growth summary (`origin/main` -> `origin/develop`)
+
+Total model entries in `library/catalog/models.yaml`: **46 -> 87** (**+41**)
+
+### By pack (catalog tags)
+
+| Pack ID | `main` | `develop` | Delta |
+| --- | ---: | ---: | ---: |
+| `smart_building_pack` | 20 | 35 | +15 |
+| `energy_pack` | 8 | 10 | +2 |
+| `embedded_lab_pack` | 7 | 29 | +22 |
+| `industrial_iiot_pack` | 26 | 29 | +3 |
+
+### Domain deltas (new model entries)
+
+| Domain | Delta |
+| --- | ---: |
+| `iot` | +22 |
+| `measurement_instruments` | +17 |
+| `motion_controllers` | +1 |
+| `thermal_controllers` | +1 |
+
 ## Definitions
 
 - Pack: an industry bundle of models and services (broad scope).
@@ -24,10 +51,10 @@ https://github.com/HammerHeads-Engineers/spx-examples
 
 | Pack ID | Focus | Protocols/Services | Profiles |
 | --- | --- | --- | --- |
-| `smart_building_pack` | BMS/BAS demo stack | Protocols: mqtt, lwm2m/coap, http, modbus, opcua, knx, matter, bacnet<br>Services: mqtt_broker, lwm2m_server, modbus_tcp_gateway, http_gateway, opcua_server, knx_gateway, bacnet_gateway, homeassistant_bridge, matter_server | [`bms_quickstart`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/profiles/smart_building_pack/bms_quickstart.yaml) |
-| `energy_pack` | e-mobility and DER | Protocols: http, mqtt, modbus, ocpp<br>Services: mqtt_broker, modbus_tcp_gateway, http_gateway, ocpp_central_system | [`ev_csms_demo`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/profiles/energy_pack/ev_csms_demo.yaml) |
-| `embedded_lab_pack` | BLE and lab instruments | Protocols: ble, mqtt, lwm2m/coap, scpi, modbus<br>Services: btvirt_adapter, mqtt_broker, lwm2m_server, scpi_tcp_stack, modbus_tcp_gateway | [`mhealth_ci`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/profiles/embedded_lab_pack/mhealth_ci.yaml), [`scpi_lab`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/profiles/embedded_lab_pack/scpi_lab.yaml) |
-| `industrial_iiot_pack` | industrial monitoring | Protocols: modbus, mqtt, http, scpi, opcua<br>Services: modbus_tcp_gateway, mqtt_broker, http_gateway, scpi_tcp_stack, opcua_server | [`process_cell_quickstart`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/profiles/industrial_iiot_pack/process_cell_quickstart.yaml), [`iiot_monitoring`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/profiles/industrial_iiot_pack/iiot_monitoring.yaml) |
+| `smart_building_pack` | BMS/BAS demo stack | Protocols: mqtt, lwm2m/coap, http, modbus, opcua, knx, matter, bacnet<br>Services: mqtt_broker, lwm2m_server, modbus_tcp_gateway, http_gateway, opcua_server, knx_gateway, bacnet_gateway, homeassistant_bridge, matter_server | [`bms_quickstart`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/smart_building_pack/bms_quickstart.yaml) |
+| `energy_pack` | e-mobility and DER | Protocols: http, mqtt, modbus, ocpp<br>Services: mqtt_broker, modbus_tcp_gateway, http_gateway, ocpp_central_system | [`ev_csms_demo`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/energy_pack/ev_csms_demo.yaml) |
+| `embedded_lab_pack` | BLE and lab instruments | Protocols: ble, mqtt, lwm2m/coap, scpi, modbus<br>Services: btvirt_adapter, mqtt_broker, lwm2m_server, scpi_tcp_stack, modbus_tcp_gateway | [`mhealth_ci`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/embedded_lab_pack/mhealth_ci.yaml), [`scpi_lab`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/embedded_lab_pack/scpi_lab.yaml) |
+| `industrial_iiot_pack` | industrial monitoring | Protocols: modbus, mqtt, http, scpi, opcua<br>Services: modbus_tcp_gateway, mqtt_broker, http_gateway, scpi_tcp_stack, opcua_server | [`process_cell_quickstart`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/industrial_iiot_pack/process_cell_quickstart.yaml), [`iiot_monitoring`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/industrial_iiot_pack/iiot_monitoring.yaml) |
 
 ## Examples (copy/paste)
 

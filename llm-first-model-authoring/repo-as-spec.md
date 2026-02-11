@@ -21,7 +21,7 @@ When preparing automated docs/model updates, do not rely on floating `main` refe
 Capture and report the exact source commit, for example:
 
 ```bash
-git -C ../spx-examples rev-parse origin/main
+git -C ../spx-examples rev-parse origin/develop
 ```
 
 Use that SHA in page metadata or PR notes so review is reproducible.

@@ -27,7 +27,7 @@ This checklist is intentionally aligned with `spx-examples/docs/LLM_SPEC.md`:
 - [ ] Navigation is updated when needed (`SUMMARY.md`, chapter `README.md` pages).
 - [ ] Generated pages were regenerated from script (no manual table edits).
 - [ ] Generated docs check passes:
-  - [ ] `python scripts/generate_device_catalog.py --spx-examples ../spx-examples --check`
+  - [ ] `python scripts/generate_device_catalog.py --spx-examples ../spx-examples --source-ref origin/develop --source-branch develop --check`
   - [ ] Equivalent CI check is configured in your platform (GitLab CI or GitHub Actions).
 - [ ] Claims about device models do not imply official manufacturer support unless formally verified.
 - [ ] No secrets/tokens were added to docs examples.

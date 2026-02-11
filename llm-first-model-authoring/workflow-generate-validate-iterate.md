@@ -62,7 +62,7 @@ Model validation passed.
 If your change touches generated docs pages in `spx-docs`, also run:
 
 ```bash
-python scripts/generate_device_catalog.py --spx-examples ../spx-examples --check
+python scripts/generate_device_catalog.py --spx-examples ../spx-examples --source-ref origin/develop --source-branch develop --check
 ```
 
 And verify the change boundary before PR:

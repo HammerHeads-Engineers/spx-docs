@@ -58,7 +58,7 @@ Before generating/updating docs in automation:
 7. **Generated pages must be reproducible**
    - Regenerate from script, never by manual editing.
    - Current generator:
-     - `python scripts/generate_device_catalog.py --spx-examples ../spx-examples`
+     - `python scripts/generate_device_catalog.py --spx-examples ../spx-examples --source-ref origin/develop --source-branch develop`
 8. **CI drift guard is required**
    - Generated pages must be validated in CI (`--check` mode) to prevent silent drift.
    - This is required regardless of CI platform (GitLab CI or GitHub Actions).
@@ -90,7 +90,7 @@ For generated pages in this repository:
 Current check command:
 
 ```bash
-python scripts/generate_device_catalog.py --spx-examples ../spx-examples --check
+python scripts/generate_device_catalog.py --spx-examples ../spx-examples --source-ref origin/develop --source-branch develop --check
 ```
 
 ## GitLab CI example (recommended)
@@ -103,6 +103,6 @@ docs:generated-check:
   image: python:3.11
   script:
     - pip install pyyaml
-    - git clone --depth 1 --branch main https://github.com/HammerHeads-Engineers/spx-examples.git .tmp/spx-examples
-    - python scripts/generate_device_catalog.py --spx-examples .tmp/spx-examples --check
+    - git clone --depth 1 --branch develop https://github.com/HammerHeads-Engineers/spx-examples.git .tmp/spx-examples
+    - python scripts/generate_device_catalog.py --spx-examples .tmp/spx-examples --source-ref origin/develop --source-branch develop --check
 ```

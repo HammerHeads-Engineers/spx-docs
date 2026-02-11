@@ -48,20 +48,20 @@ Start with:
 Source checkout:
 - Prefer local source path: ../spx-examples
 - If missing, clone:
-  - git clone --depth 1 --branch main https://github.com/HammerHeads-Engineers/spx-examples.git .tmp/spx-examples
+  - git clone --depth 1 --branch develop https://github.com/HammerHeads-Engineers/spx-examples.git .tmp/spx-examples
 - Use the chosen path consistently in all commands below.
 
 Then pin and report source snapshot:
-- git -C <SPX_EXAMPLES_PATH> rev-parse origin/main
+- git -C <SPX_EXAMPLES_PATH> rev-parse origin/develop
 
 Task:
 - Update docs pages impacted by source changes.
 - Keep change boundary strict: no unrelated edits outside impacted docs + required navigation/generated files.
 - If generated pages are affected, regenerate them from script (no manual table edits):
-  - python scripts/generate_device_catalog.py --spx-examples <SPX_EXAMPLES_PATH>
+  - python scripts/generate_device_catalog.py --spx-examples <SPX_EXAMPLES_PATH> --source-ref origin/develop --source-branch develop
 
 Validation:
-- python scripts/generate_device_catalog.py --spx-examples <SPX_EXAMPLES_PATH> --check
+- python scripts/generate_device_catalog.py --spx-examples <SPX_EXAMPLES_PATH> --source-ref origin/develop --source-branch develop --check
 - any additional page-specific checks (links/examples/paths)
 - git diff --name-only (verify only intended files changed)
 

@@ -3,6 +3,7 @@
 
 Usage:
   python scripts/generate_device_catalog.py --spx-examples ../spx-examples
+  python scripts/generate_device_catalog.py --spx-examples ../spx-examples --source-ref origin/develop --source-branch develop
   python scripts/generate_device_catalog.py --spx-examples ../spx-examples --check
 """
 
@@ -12,7 +13,7 @@ import argparse
 import difflib
 import subprocess
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Dict, Iterable, List
 
@@ -38,6 +39,22 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Do not write output; fail if file content differs from generated content.",
     )
+    parser.add_argument(
+        "--source-ref",
+        default="HEAD",
+        help=(
+            "Git ref used for source snapshot metadata (default: HEAD). "
+            "Examples: HEAD, origin/main, origin/develop."
+        ),
+    )
+    parser.add_argument(
+        "--source-branch",
+        default=None,
+        help=(
+            "Branch name used in GitHub blob links and page description. "
+            "If omitted, inferred from --source-ref, then falls back to main."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -48,10 +65,25 @@ def run_git(spx_examples_path: Path, args: List[str]) -> str:
     ).strip()
 
 
-def get_source_snapshot(spx_examples_path: Path) -> str:
-    # Prefer origin/main to make the source-of-truth explicit.
+def resolve_source_branch(spx_examples_path: Path, source_ref: str, source_branch: str | None) -> str:
+    if source_branch:
+        return source_branch
+    if source_ref.startswith("origin/"):
+        return source_ref.split("/", 1)[1]
+    if source_ref.startswith("refs/heads/"):
+        return source_ref.split("/", 2)[2]
     try:
-        commit = run_git(spx_examples_path, ["rev-parse", "origin/main"])
+        resolved = run_git(spx_examples_path, ["rev-parse", "--abbrev-ref", source_ref])
+        if resolved and resolved != "HEAD":
+            return resolved
+    except subprocess.CalledProcessError:
+        pass
+    return "main"
+
+
+def get_source_snapshot(spx_examples_path: Path, source_ref: str) -> str:
+    try:
+        commit = run_git(spx_examples_path, ["rev-parse", source_ref])
     except subprocess.CalledProcessError:
         commit = run_git(spx_examples_path, ["rev-parse", "HEAD"])
     try:
@@ -61,8 +93,9 @@ def get_source_snapshot(spx_examples_path: Path) -> str:
     return f"`spx-examples` commit `{commit}` ({commit_date})"
 
 
-def load_yaml(path: Path) -> dict:
-    return yaml.safe_load(path.read_text(encoding="utf-8"))
+def load_yaml_from_ref(spx_examples_path: Path, source_ref: str, repo_relative_path: str) -> dict:
+    raw = run_git(spx_examples_path, ["show", f"{source_ref}:{repo_relative_path}"])
+    return yaml.safe_load(raw)
 
 
 def make_title_case_domain_sort_key(domain_id: str, domain_name_by_id: Dict[str, str]) -> str:
@@ -81,14 +114,15 @@ def model_filename(path: str) -> str:
     return path.split("/")[-1]
 
 
-def render_catalog(spx_examples_path: Path) -> str:
-    models_path = spx_examples_path / "library/catalog/models.yaml"
-    industries_path = spx_examples_path / "library/catalog/industries.yaml"
-    domains_path = spx_examples_path / "library/catalog/domains.yaml"
+def render_catalog(spx_examples_path: Path, source_ref: str, source_branch: str | None) -> str:
+    models_repo_path = "library/catalog/models.yaml"
+    industries_repo_path = "library/catalog/industries.yaml"
+    domains_repo_path = "library/catalog/domains.yaml"
 
-    models_data = load_yaml(models_path)["models"]
-    industries_data = load_yaml(industries_path)["industries"]
-    domains_data = load_yaml(domains_path)["domains"]
+    models_data = load_yaml_from_ref(spx_examples_path, source_ref, models_repo_path)["models"]
+    industries_data = load_yaml_from_ref(spx_examples_path, source_ref, industries_repo_path)["industries"]
+    domains_data = load_yaml_from_ref(spx_examples_path, source_ref, domains_repo_path)["domains"]
+    total_models = len(models_data)
 
     domain_name_by_id = {d["id"]: d["name"] for d in domains_data}
     pack_name_by_id = {p["id"]: p["name"] for p in industries_data}
@@ -104,8 +138,13 @@ def render_catalog(spx_examples_path: Path) -> str:
 
     # pack -> domain -> vendor -> entries
     catalog = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+    domain_totals = Counter()
+    protocol_totals = Counter()
 
     for model in models_data:
+        domain_totals[model.get("domain", "")] += 1
+        for protocol in model.get("protocols", []) or []:
+            protocol_totals[protocol] += 1
         entry = {
             "id": model.get("id", ""),
             "name": model.get("name", ""),
@@ -129,14 +168,16 @@ def render_catalog(spx_examples_path: Path) -> str:
                     key=lambda item: (item["name"].lower(), item["filename"].lower())
                 )
 
-    snapshot = get_source_snapshot(spx_examples_path)
+    snapshot = get_source_snapshot(spx_examples_path, source_ref)
+    resolved_source_branch = resolve_source_branch(spx_examples_path, source_ref, source_branch)
 
     lines: List[str] = []
     lines.extend(
         [
             "---",
             "description: >-",
-            "  Searchable catalog of device models available per installer pack, generated from spx-examples main.",
+            "  Searchable catalog of device models available per installer pack, generated from "
+            f"spx-examples {resolved_source_branch}.",
             "icon: list",
             "---",
             "",
@@ -154,6 +195,18 @@ def render_catalog(spx_examples_path: Path) -> str:
             "Generated from: `scripts/generate_device_catalog.py`.",
             "",
             "Grouping on this page: **Pack -> Domain -> Vendor/Family**.",
+            "",
+            "Snapshot summary:",
+            f"- Model entries in `library/catalog/models.yaml`: **{total_models}**",
+            "- Domains in catalog: "
+            + ", ".join(
+                f"`{domain}` (**{count}**)" for domain, count in sorted(domain_totals.items(), key=lambda item: item[0])
+            ),
+            "- Protocol tags in catalog: "
+            + ", ".join(
+                f"`{protocol}` (**{count}**)"
+                for protocol, count in sorted(protocol_totals.items(), key=lambda item: item[0])
+            ),
             "",
             "## Conventions",
             "",
@@ -209,8 +262,8 @@ def render_catalog(spx_examples_path: Path) -> str:
                 lines.append("| --- | --- | --- | --- | --- |")
                 for entry in entries:
                     url = (
-                        "https://github.com/HammerHeads-Engineers/spx-examples/blob/main/"
-                        f"{entry['path']}"
+                        "https://github.com/HammerHeads-Engineers/spx-examples/blob/"
+                        f"{resolved_source_branch}/{entry['path']}"
                     )
                     protocols = ", ".join(entry["protocols"]) if entry["protocols"] else "-"
                     profiles_cell = ", ".join(f"`{p}`" for p in entry["profiles"]) if entry["profiles"] else "-"
@@ -236,7 +289,7 @@ def main() -> int:
         print(f"error: not a git repository: {spx_examples_path}", file=sys.stderr)
         return 2
 
-    generated = render_catalog(spx_examples_path)
+    generated = render_catalog(spx_examples_path, args.source_ref, args.source_branch)
 
     if args.check:
         current = output_path.read_text(encoding="utf-8") if output_path.exists() else ""

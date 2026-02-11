@@ -10,23 +10,34 @@ This backlog was prepared after reviewing recent commits in:
 
 The goal is to keep SPX Docs aligned with runtime/UI behavior on branch `version-1.0.0`.
 
-## Latest sync check (2026-02-11)
+## Latest sync check (2026-02-11, `spx-examples` `origin/develop`)
 
-- Reviewed latest commits for the `version-1.0.0` docs scope using current local heads.
-- `spx-examples` latest changes are CI/CD + release metadata; no device catalog updates required.
-- `spx-ui` continues to include Logs page + connection error handling; already documented on this branch.
-- `spx-server`, `spx-sdk`, and `spx-python` changes are test/release or logging attr normalization; no new docs updates beyond existing edits.
-- Note: local source heads differ from the 2026-02-10 snapshot because several repos are on non-release branches (see snapshot).
+- Reviewed latest commits for the `version-1.0.0` docs scope with explicit catalog sync to `spx-examples` `origin/develop`.
+- Device catalog regenerated from `origin/develop` and now reflects **87** model entries in `library/catalog/models.yaml` (**+41** vs `origin/main` snapshot used previously).
+- Pack-level model tag deltas (`origin/main` -> `origin/develop`):
+  - `smart_building_pack`: `20 -> 35` (**+15**)
+  - `energy_pack`: `8 -> 10` (**+2**)
+  - `embedded_lab_pack`: `7 -> 29` (**+22**)
+  - `industrial_iiot_pack`: `26 -> 29` (**+3**)
+- Domain-level new model entries: `iot` **+22**, `measurement_instruments` **+17**, `motion_controllers` **+1**, `thermal_controllers` **+1**.
+- Protocol mix for new entries: `modbus` **+24**, `scpi` **+17**.
+- `spx-ui`, `spx-server`, `spx-sdk`, and `spx-python` status unchanged vs prior review; existing docs edits still cover their behavior changes.
 
-## Source snapshot (2026-02-11)
+## Source snapshot (2026-02-11, develop sync)
 
 | Repo | SHA |
 | --- | --- |
-| `spx-examples` | `801ded93e16a847528664de15c0d1cdc271136fa` |
+| `spx-examples` | `bee350dfdcca1716d5df338b2c39ea3dc668cc28` (`origin/develop`) |
 | `spx-server` | `8c374a1ffcf4b9400ae193246e88bb1acc7a16d0` |
 | `spx-ui` | `575ecb92f2e1202c792cb1c213242cb8cbfa8a95` |
 | `spx-sdk` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` |
 | `spx-python` | `6f4647c3e6947e832e48af862f17ef9f898ebde8` |
+
+Baseline snapshot for previous device catalog generation:
+
+| Repo | SHA |
+| --- | --- |
+| `spx-examples` | `8d03be0fed44188672fc8eb1f3a598fc3d797be7` (`origin/main`) |
 
 ## Latest sync check (2026-02-10)
 
@@ -68,7 +79,16 @@ The goal is to keep SPX Docs aligned with runtime/UI behavior on branch `version
 
 ## Reviewed commit set
 
-Latest review (2026-02-11): CI/CD, tests, and release metadata only; existing docs updates already cover known behavior changes (logs page, connection error handling, FunctionAction expressions, _test_logs usage).
+Latest review (2026-02-11, `origin/develop`): model catalog expansion in `spx-examples` required a new device catalog sync and pack/domain count updates in docs.
+
+Delta for `spx-examples` (`origin/main` -> `origin/develop`):
+
+- `library/catalog/models.yaml`: **+41** model entries (`46 -> 87`).
+- New domain entries: `iot` (+22), `measurement_instruments` (+17), `motion_controllers` (+1), `thermal_controllers` (+1).
+- New protocol entries: `modbus` (+24), `scpi` (+17).
+- Catalog growth concentrated in vendor families: `schneider`, `siglent`, `prevac`, `abb`, `apc`, `socomec`, `tektronix`, `keysight`, `rigol`, `rohde_schwarz`, `carlo_gavazzi`, `eaton`, `siemens`.
+
+Latest review (2026-02-11, local-head pass): CI/CD, tests, and release metadata only; existing docs updates already cover known behavior changes (logs page, connection error handling, FunctionAction expressions, _test_logs usage).
 
 Delta since 2026-02-10:
 
@@ -207,6 +227,9 @@ Local head snapshot at check time (informational):
 - Added API v3 delete response example (`destroyed`, `removed_from_parent`) in `api-v3-reference/code-examples.md`
 - Added CORS environment variable section + placeholder to `getting-started/installation-guide.md`
 - Added protocol-only wizard default note to `getting-started/installation-guide.md`
+- Regenerated `usage-scenarios-and-examples/device-catalog.md` from `spx-examples` `origin/develop` (snapshot `bee350d`), including updated pack/device counts and vendor/domain coverage.
+- Updated `usage-scenarios-and-examples/industry-packs.md` with `origin/develop` growth deltas (packs/domains) and current snapshot SHAs.
+- Updated generator script `scripts/generate_device_catalog.py` to support explicit `--source-ref` and `--source-branch` for reproducible branch-aware snapshots and links.
 
 ## Suggested next updates (not fully covered yet)
 

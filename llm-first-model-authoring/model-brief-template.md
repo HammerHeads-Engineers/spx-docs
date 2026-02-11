@@ -69,7 +69,7 @@ Copy this template into an issue/PR description before asking an LLM to generate
 * Generated pages impacted:
   * `usage-scenarios-and-examples/device-catalog.md` (`yes/no`)
 * If yes, regeneration command:
-  * `python scripts/generate_device_catalog.py --spx-examples ../spx-examples`
+  * `python scripts/generate_device_catalog.py --spx-examples ../spx-examples --source-ref origin/develop --source-branch develop`
 
 ## 8) Required output from automation
 
