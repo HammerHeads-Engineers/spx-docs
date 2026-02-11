@@ -15,6 +15,25 @@ Spec files (GitHub, main):
 
 Repo root (browse): [spx-examples/tree/main](https://github.com/HammerHeads-Engineers/spx-examples/tree/main)
 
+## Source pinning rule
+
+When preparing automated docs/model updates, do not rely on floating `main` references alone.
+Capture and report the exact source commit, for example:
+
+```bash
+git -C ../spx-examples rev-parse origin/develop
+```
+
+Use that SHA in page metadata or PR notes so review is reproducible.
+
+## Evidence matrix (required for substantial updates)
+
+For larger updates, include a compact table in PR notes:
+
+| Docs section | Source file/URL | Source commit | Why changed |
+| --- | --- | --- | --- |
+| `<page>` | `<path-or-url>` | `<sha>` | `<rationale>` |
+
 ## Key directories (real paths)
 
 - Models: `library/domains/<domain>/<vendor|generic>/*.yaml`

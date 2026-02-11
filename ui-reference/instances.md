@@ -56,12 +56,15 @@ Open the Instance View in a new tab from the list. The header shows the instance
 * Use **Continuous** mode for Start/Stop and real-time updates.
 * Use **Stepper** mode to Prepare and Run single steps.
 * Use **Reset** or **Delete** to clear state or remove the instance.
+* Stop actions use a dedicated stop icon, and command actions show short visual feedback after successful send.
 
 ### Tabs and panels
 
-* **Attributes**: view and edit attribute values, select axes, and inspect the time-series chart (range, refresh rate, clear, export CSV, print).
+* **Attributes**: view and edit attribute values, select axes, and inspect the time-series chart (range, refresh rate, clear, export CSV, print). The table also shows a responsive **UNIT** column (when space allows), command/key attribute styling, and a short “Command sent” badge after command writes.
 
 <figure><img src="../.gitbook/assets/image (14).png" alt=""><figcaption><p>Instance attributes, and time-series chart</p></figcaption></figure>
+
+> Image placeholder: Attributes table with UNIT column and command feedback badge.
 
 * **Physics**: review actions, toggle enabled state, and inspect action attributes.
 
@@ -71,7 +74,7 @@ Open the Instance View in a new tab from the list. The header shows the instance
 
 <figure><img src="../.gitbook/assets/image (9).png" alt=""><figcaption><p>Defined ready to use scenarios</p></figcaption></figure>
 
-* **Communication**: review protocol bindings, toggle enabled state, and open per-binding logs.
+* **Communication**: review protocol bindings, toggle enabled state, and open per-binding logs. When a log row is expanded, live updates are temporarily held to keep the view stable.
 
 <figure><img src="../.gitbook/assets/image (10).png" alt=""><figcaption><p>Communication with protocols</p></figcaption></figure>
 
@@ -85,7 +88,7 @@ Open the Instance View in a new tab from the list. The header shows the instance
 
 <figure><img src="../.gitbook/assets/image (13).png" alt=""><figcaption><p>Instance timer parameters</p></figcaption></figure>
 
-* **Logger**: view instance logs and confirm there are no errors.
+* **Logger**: view instance logs and confirm there are no errors. For cross-instance diagnostics, use the dedicated [Logs](logs.md) page.
 
 <figure><img src="../.gitbook/assets/image (15).png" alt=""><figcaption><p>Instance logs</p></figcaption></figure>
 
@@ -96,6 +99,7 @@ Open the Instance View in a new tab from the list. The header shows the instance
 3. Open the detail view, review Attributes, and select axes to plot in the chart.
 4. Run a scenario (or toggle an action in Physics) and confirm values change.
 5. Check the Logger tab for errors or warnings.
+6. If needed, switch to [Logs](logs.md) and compare instance logs with system-level logs.
 
 ## What to verify
 
@@ -110,3 +114,4 @@ Open the Instance View in a new tab from the list. The header shows the instance
 * Instance detail shows "not found": the instance was deleted or renamed; refresh the list.
 * Commands disabled: check the instance state and selected mode (Continuous vs Stepper).
 * Logger shows errors: align timestamps with recent changes and check model logs.
+* Chart feels “too short”: the history buffer is large (up to 100000 entries), so use range controls to focus the view.

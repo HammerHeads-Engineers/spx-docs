@@ -20,6 +20,18 @@ This checklist is intentionally aligned with `spx-examples/docs/LLM_SPEC.md`:
 - [ ] Deterministic stepping is preserved (MiL tests drive time; no wall-clock coupling)
 - [ ] Optional sanity check: model loads and runs as an Instance; inspect in UI ([`ui-reference/README.md`](../ui-reference/README.md))
 
+## DoD checklist (docs automation addendum)
+
+- [ ] Working branch is `codex/docs-sync-latest-commits-v1-0-0` and rebased on `origin/version-1.0.0`.
+- [ ] Source snapshot commit SHA(s) are captured in updated docs/PR notes.
+- [ ] Navigation is updated when needed (`SUMMARY.md`, chapter `README.md` pages).
+- [ ] Generated pages were regenerated from script (no manual table edits).
+- [ ] Generated docs check passes:
+  - [ ] `python scripts/generate_device_catalog.py --spx-examples ../spx-examples --source-ref origin/develop --source-branch develop --check`
+  - [ ] Equivalent CI check is configured in your platform (GitLab CI or GitHub Actions).
+- [ ] Claims about device models do not imply official manufacturer support unless formally verified.
+- [ ] No secrets/tokens were added to docs examples.
+
 ## Common failure modes (and what to check)
 
 - **`tools/validate_models.py` fails**
@@ -46,3 +58,8 @@ This checklist is intentionally aligned with `spx-examples/docs/LLM_SPEC.md`:
   - Required ports not exposed in `docker-compose.yml`
   - Model and service config disagree (hostnames/ports)
   - Product key missing (`SPX_PRODUCT_KEY`)
+
+- **Docs PR has avoidable conflicts**
+  - Branch was not rebased on `origin/version-1.0.0` before editing
+  - Generated docs were edited manually instead of regenerated
+  - Navigation updates were skipped (`SUMMARY.md`)

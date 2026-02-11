@@ -56,6 +56,18 @@ scenarios:
       stop_path: communication.modbus_slave.attach
 ```
 
+### Shared server behavior (multiple unit IDs on one port)
+
+In current SPX Server runtime, `modbus_slave` instances sharing the same `host:port` reuse one shared TCP server and register separate `unit_id` contexts.
+
+- This allows multiple models/devices to be exposed on the same Modbus TCP port.
+- Register map isolation remains per `unit_id`.
+- Duplicate `unit_id` on the same `host:port` is rejected (runtime error / API validation failure).
+
+Operational note:
+
+- `attach()` may trigger a server restart only when this protocol instance is the sole owner on that port (to avoid dropping connections for other unit IDs).
+
 ## `modbus_tcp` (modbus-tk server)
 
 **YAML key:** `modbus_tcp`
