@@ -30,7 +30,7 @@ By the end, you will be able to:
 
 What’s inside this page:
 
-* **Installation Guide** — download the installer package from Product & Keys, run `spx-setup.*`, and verify UI/API on localhost.
+* **Installation Guide** — download the installer from `simplephysx.com/keys`, extract the Windows/Linux delivery archive if needed, complete the native install, run `SPX Setup`, and verify UI/API on localhost.
 * **Advanced: Manual Docker Compose** — run the SPX Server API via Compose without the wizard (server-only).
 * **Installer Wizard & Packs** — reference for packs/profiles, protocol-only installs, generated bundles, and automation options.
 * **Quick Start Guide** — minimal, copy-paste recipes to connect to the server, do basic CRUD on models/instances, tweak attributes, run prepare()/run(), and wire these steps into your unit tests and CI.
@@ -42,8 +42,8 @@ Developers, QA, and CI engineers who want a clear, repeatable path to stand up S
 Prerequisites (at a glance):
 
 * Docker & Docker Compose (to run the server)
-* Python `>=3.9` (tested in CI on `3.9–3.12`)
-* A valid SPX\_PRODUCT\_KEY set as an environment variable
+* macOS/Linux: Python `>=3.9`; Windows installer can install Python automatically
+* A valid `SPX_PRODUCT_KEY`
 * Network access to pull Docker images and install Python dependencies
 
 > Tip: Everything shown here is designed to work the same way locally and in CI, so the commands you practice on your laptop carry straight over to pipelines.

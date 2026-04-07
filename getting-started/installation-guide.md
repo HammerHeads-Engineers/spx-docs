@@ -1,177 +1,236 @@
 ---
 description: >-
-  Install SPX locally using the Setup Wizard from the package you download from
-  simplephysx.com, then verify the UI and API on localhost.
+  Install SPX with the native RC41 installer for your platform, then run SPX
+  Setup to generate and start your local environment.
 icon: up-to-dotted-line
 ---
 
 # Installation Guide
 
-This page is the detailed, step-by-step version of the short instructions you
-see on **Product & Keys**. Follow it to install SPX locally via the Setup Wizard
-and verify:
+Use the native SPX release artifact for your platform, complete the installer,
+and then run `SPX Setup` to generate your local SPX environment. This page
+matches the current RC41 installer workflow.
+
+Quick path:
+
+1. Download the current installer from `simplephysx.com/keys`.
+2. On Windows and Linux, extract the delivery archive first.
+3. Run the native installer for your platform.
+4. Run `SPX Setup` after installation completes.
+5. Verify the UI and API on localhost.
+
+After setup, verify:
 
 - **UI**: `http://localhost:3000`
-- **API**: `http://localhost:8000` (docs: `http://localhost:8000/docs`)
+- **API**: `http://localhost:8000`
+- **API docs**: `http://localhost:8000/docs`
 
-If you only need the SPX Server (no packs/services/UI), see
+If you only need the SPX Server with a manual Compose flow, see
 [Advanced: Manual Docker Compose (server-only)](manual-docker-compose.md).
 
-## Prerequisites (quick checklist)
+## Prerequisites
 
-- **Account + subscription** on `https://simplephysx.com` (e.g., Community).
-- **Docker Desktop / Docker Engine** with **Docker Compose v2** (`docker compose`).
-- **Python 3.9+** available from a terminal (`python` or `python3`).
-- Local ports **3000** (UI) and **8000** (API) available.
-- Internet access (to pull Docker images and Python packages on first run).
+- Docker must be installed and running.
+- Windows and macOS users should use Docker Desktop.
+- Linux users need Docker Engine with Docker Compose v2.
+- macOS and Linux require access to a local Python installation for the setup flow.
+- The Windows installer can install the Python prerequisite automatically.
+- A valid SPX product key is required.
+- Local ports `3000` and `8000` should be available.
 
-> Security: treat your **SPX product key** as a secret. Do not commit it to git,
-> paste it into public issues, or share bundles that contain it.
+> Security: treat your `SPX_PRODUCT_KEY` as a secret. Do not commit it to git
+> or share generated bundles that contain it.
 
-## 1) Get a subscription, your key, and the installer package
+## 1) Download the recommended installer for your platform
 
-1. Log in to `https://simplephysx.com`.
-2. Choose a subscription in **Pricing** (for example: Community).
+Download the RC41 installer from [simplephysx.com/keys](https://simplephysx.com/keys).
+This subscriber-only page contains your available SPX product keys and the
+download links for the current installers.
 
-   > **Screenshot placeholder:** Pricing page with the selected subscription plan.
+Use the native installer artifact that matches your OS:
 
-3. Open **Product & Keys** in your profile (visible only when logged in).
-4. Copy your **SPX product key** (you will paste it into the wizard).
+- Windows: `spx-installer-1.1.0-rc.41.exe`
+- macOS: `spx-installer-macos-1.1.0-rc.41.pkg`
+- Linux/Unix: `spx-installer-1.1.0-rc.41.run`
 
-   > **Screenshot placeholder:** Product & Keys page showing the product key and the download link.
+On the subscriber download page, the Windows and Linux installers are delivered
+inside archives:
 
-5. Download the installer package (for example: `spx-examples-1.0.2.zip`).
+- Windows: download the `.zip`, extract it, then run
+  `spx-installer-1.1.0-rc.41.exe`
+- Linux/Unix: download the `.tar`, extract it, then run
+  `spx-installer-1.1.0-rc.41.run`
+- macOS: download and open `spx-installer-macos-1.1.0-rc.41.pkg`
 
-## 2) Extract the package
+These native installers are the recommended installation path. The portable
+`.tgz` and `.zip` archives mentioned later in this guide are fallback artifacts
+only. Do not confuse them with the delivery archive that wraps the Windows or
+Linux native installer download.
 
-Extract the `.zip` into a dedicated folder, for example:
+## 2) Run the native installer
 
-- `spx-examples-1.0.2/`
+### Windows
 
-In the extracted folder you should see platform launchers like:
+Download the Windows archive from [simplephysx.com/keys](https://simplephysx.com/keys),
+extract the `.zip`, then run `spx-installer-1.1.0-rc.41.exe`.
 
-- Windows: `spx-setup.bat`
-- macOS: `spx-setup.command`
-- Linux desktop: `spx-setup.desktop`
-- macOS/Linux shells: `spx-setup.sh`
+- The EXE is a Windows-native installer for `SPX Tools`.
+- It installs the application payload under `%LocalAppData%\SPX\app`.
+- Start Menu and Windows Apps entries are grouped under `SPX Tools`.
+- If Python is missing, the installer can install the official Python 3.12
+  offline prerequisite for you.
 
-> **Screenshot placeholder:** Extracted folder showing `spx-setup.*` launchers.
+### macOS
 
-## 3) Verify Docker + Python are available
+Download and open `spx-installer-macos-1.1.0-rc.41.pkg`.
 
-The setup wizard will run checks, but doing a quick pre-flight saves time.
+- The PKG installs `SPX Tools` into `/Applications/SPX Tools/`.
+- The installation flow uses the native macOS `Installer.app` experience,
+  including the license step.
 
-### Docker (all OS)
+### Linux/Unix
+
+Download the Linux archive from [simplephysx.com/keys](https://simplephysx.com/keys),
+extract the `.tar`, then make `spx-installer-1.1.0-rc.41.run` executable and
+run it.
+
+For example:
 
 ```bash
-docker --version
-docker compose version
-docker info
+tar -xf <downloaded-file>.tar
+chmod +x spx-installer-1.1.0-rc.41.run
+./spx-installer-1.1.0-rc.41.run
 ```
 
-If `docker info` fails, Docker Desktop / the Docker service is not running yet.
+- The `.run` file is the recommended release artifact on Linux/Unix.
+- It self-extracts to a temporary directory and launches the same terminal-based
+  installer engine used by the portable package.
 
-### Python
+## 3) What happens after the native installer
 
-macOS/Linux:
+The native installer/bootstrapper itself is not the environment wizard. After
+installation, the next step is to run `SPX Setup` so SPX can generate the local
+environment and install/start the SPX server with the package and configuration
+you choose.
 
-```bash
-python3 --version || python --version
-python3 -m pip --version || python -m pip --version
-```
+`SPX Setup` does the user-facing setup work:
 
-Windows (PowerShell):
+- It guides you through package and service selection.
+- It generates the local compose bundle and helper scripts.
+- It can start the stack immediately after generation.
+- If you accept the defaults, SPX uses a protocol-only setup
+  (`Modbus + SCPI/ASCII`), skips model installation, and keeps the SPX UI
+  enabled.
 
-```powershell
-python --version
-python -m pip --version
-```
+On Windows and macOS, `SPX Setup` is installed as part of `SPX Tools`. On
+Linux/Unix, the `.run` flow hands off into the same terminal-based setup engine,
+and day-to-day work happens through the generated shell scripts after setup.
 
-If you have multiple Python installations, you can force the installer to use a
-specific one by setting `PYTHON_BIN` before running setup.
+## 4) Platform-specific behavior and install locations
 
-## 4) Run the Setup Wizard (`spx-setup.*`)
+### Windows
 
-From the extracted folder, run the launcher that matches your OS:
+- The generated runtime environment lives under `%LocalAppData%\SPX\generated`.
+- The installer-managed Codex workspace lives under `%LocalAppData%\SPX\workspace`.
+- Windows installs shortcuts for `SPX Setup`, `SPX MCP Setup`, `SPX Start`,
+  `SPX Stop`, and `SPX Cleanup`.
+- Do not use a separate `SPX Uninstall` launcher on Windows. Uninstall is done
+  through the standard Windows Apps / installed app management flow.
 
-- **Windows:** double-click `spx-setup.bat`
-- **macOS:** double-click `spx-setup.command`
-- **Linux desktop:** double-click `spx-setup.desktop`
-- **Terminal (macOS/Linux):** `./spx-setup.sh`
+### macOS
 
-The launcher starts an interactive console wizard, generates a local bundle
-(by default under `build/spx-generated/`), and then offers to start the stack.
+- Installed apps: `SPX Setup.app`, `SPX MCP Setup.app`, `SPX Start.app`,
+  `SPX Stop.app`, `SPX Cleanup.app`, and `SPX Uninstall.app`.
+- `SPX Setup.app` contains the full installer payload and launches the
+  terminal-based wizard without asking you to trust a loose downloaded
+  `.command` file.
+- The generated runtime environment lives under
+  `~/Library/Application Support/SPX/generated`.
+- The installer runtime lives under
+  `~/Library/Application Support/SPX/runtime`.
+- The installer-managed Codex workspace is created at
+  `~/Documents/SPX Codex Workspace`.
 
-### If your OS blocks running the launcher (common fixes)
+### Linux/Unix
 
-**macOS**
+- Generated files live under `~/.local/share/spx/generated` when SPX runs from
+  an installed or non-writable packaged location.
+- Runtime files live under `~/.local/share/spx/runtime`.
+- Linux does not install the macOS/Windows-style launcher apps.
+- After setup, Linux users primarily work with the generated scripts such as
+  `spx-start.sh` and `spx-stop.sh`.
 
-- If you see “cannot be opened”, try right click → **Open**, or:
+## 5) What each installed launcher does
 
-  ```bash
-  chmod +x spx-setup.command spx-setup.sh
-  xattr -dr com.apple.quarantine .
-  ```
+### `SPX Setup`
 
-**Linux**
+Use this right after the native installer finishes.
 
-- If the `.desktop` file does not run, mark it as trusted/executable (desktop UI
-  usually shows “Allow Launching”), or run:
+- It is the main post-install entrypoint.
+- It generates or refreshes the local SPX environment.
+- It writes the generated compose bundle and helper scripts.
+- It can start the stack immediately.
 
-  ```bash
-  chmod +x spx-setup.sh
-  ./spx-setup.sh
-  ```
+### `SPX Start`
 
-**Windows**
+Use this after the environment has already been generated.
 
-- If PowerShell script execution is blocked in your environment, run the engine
-  directly from PowerShell:
+- It starts the previously generated SPX stack.
+- It is the normal day-to-day entrypoint when you want to bring the local
+  environment back up without rerunning setup.
 
-  ```powershell
-  powershell -ExecutionPolicy Bypass -NoProfile -File .\spx-install.ps1
-  # Or (PowerShell 7):
-  pwsh -ExecutionPolicy Bypass -File .\spx-install.ps1
-  ```
+### `SPX Stop`
 
-## 5) Complete the wizard (packs / protocols / UI)
+- It stops the generated SPX stack.
+- Use it to shut down the local environment cleanly.
 
-The wizard runs in the terminal and guides you through:
+### `SPX Cleanup`
 
-1. Selecting **industry packs** or choosing **by protocols** (ENTER accepts the defaults).
+- It removes the generated SPX environment and related Docker resources.
+- It does not uninstall the native app or package itself.
+- Use it when you want to reset the generated environment and regenerate it
+  later with `SPX Setup`.
 
-   > **Screenshot placeholder:** Wizard screen with “Available packages” and the selection prompt.
+### `SPX Uninstall`
 
-   If you press ENTER through the defaults, the wizard picks the default protocol
-   set (currently Modbus + SCPI/ASCII when available), skips model/instance
-   installation prompts, and keeps the SPX UI enabled.
+- This is a dedicated macOS app only.
+- It stops the local stack, removes generated SPX files, deletes the installed
+  SPX apps, forgets the macOS package receipt, and can optionally remove the
+  installer-managed workspace.
+- On Windows, use standard Windows app management instead of a dedicated
+  launcher.
 
-2. (Optional) Selecting quickstart **profiles** (if you selected packs).
-3. Choosing whether to install bundled **examples** (models/instances) and which instances to start (pack flow).
-4. Choosing whether to include the **SPX UI** container (recommended).
-5. Pasting your **SPX product key** (copy/paste from Product & Keys).
+### `SPX MCP Setup`
 
-   > **Screenshot placeholder:** Wizard prompt for “SPX Product Key”.
+- It creates or refreshes the installer-managed Codex MCP workspace.
+- It prepares a local Python environment for that workspace.
+- It writes `.codex/config.toml` and points Codex at the local SPX MCP server.
+- During setup you choose a work mode: `runtime_mcp` for an installer-managed
+  MCP workspace copy, or `repo_dev` for a full Git clone of `spx-examples` on
+  `develop`.
+- For packaged setup, pressing `ENTER` should suggest or select `runtime_mcp`
+  by default.
+- The generated MCP workspace is write-enabled by default unless you explicitly
+  choose read-only mode.
 
-   If you already set `SPX_PRODUCT_KEY` in your environment, the wizard will
-   detect and reuse it.
+## 6) What the setup wizard generates
 
-6. Reviewing the **Summary**, then starting the stack when prompted.
+The generated environment is created in the platform-specific locations listed
+above. In practical terms, `SPX Setup` writes:
 
-   > **Screenshot placeholder:** Wizard “Summary” section and the “Start the stack now?” prompt.
+- `docker-compose.generated.yml` with only the services you selected
+- `.env` containing `SPX_PRODUCT_KEY=REPLACE_ME` until you insert a real key
+- `bundle.json` for bootstrap
+- `spx-start.sh`, `spx-stop.sh`, `spx-start.ps1`, and `spx-stop.ps1`
+- `assets/` and `extensions/` copied for the selected services
 
-Tip: the wizard is designed so pressing **ENTER** keeps you on the safe default
-path (recommended options enabled).
+## 7) Verify the installation
 
-## 6) Verify the installation
+After `SPX Setup` finishes, either let it start the stack immediately or use
+`SPX Start` to bring the environment up before verifying it.
 
-After the stack starts:
-
-1. Open the UI: `http://localhost:3000`
-
-   > **Screenshot placeholder:** SPX UI home screen (Instances list).
-
-2. Verify the API health:
+1. Open the UI at `http://localhost:3000`.
+2. Check API health.
 
    macOS/Linux:
 
@@ -185,83 +244,30 @@ After the stack starts:
    (Invoke-WebRequest http://localhost:8000/health).Content
    ```
 
-   Expected result: JSON with `"status":"ok"`.
+3. Open API docs at `http://localhost:8000/docs`.
 
-3. Open API docs: `http://localhost:8000/docs`
+The expected health response includes `"status":"ok"`.
 
-   > **Screenshot placeholder:** API docs page on `/docs`.
+## 8) Portable fallback
 
-## Where the bundle is generated
+Portable `.tgz` and `.zip` archives are fallback artifacts for internal
+sharing, debugging, or manual payload handoff. They are not the recommended
+main installation path.
 
-By default, the wizard writes a self-contained folder under:
+If you are intentionally using a portable archive, the fallback entrypoints are:
 
-- `build/spx-generated/`
+- `spx-setup.command`
+- `spx-setup.desktop`
+- `spx-setup.sh`
+- `spx-setup.bat`
+- Direct `spx-install.sh` or `spx-install.ps1` usage as an advanced manual
+  fallback
 
-Inside it you will find start/stop scripts and a generated
-`docker-compose.generated.yml`. See
-[Installer Wizard & Packs (Reference)](installer-and-packs.md) for the full
-breakdown and automation options.
-
-## If something fails (quick fixes)
-
-- Wizard says Docker is not reachable: start Docker Desktop / the Docker service and retry (`docker info` should succeed).
-- Wizard cannot find Python: install Python 3.9+ or set `PYTHON_BIN` to a working interpreter, then re-run setup.
-- UI is not reachable on `localhost:3000`: check that the `spx-ui` container is running (see the generated bundle's start script output), and confirm port 3000 is free.
-- API is not reachable on `localhost:8000`: confirm `spx-server` is up and healthy; inspect logs from the generated stack.
-- Auth errors (`401`/`403`): re-copy your key from Product & Keys and re-run setup, or update the generated bundle files and restart.
-
-For a fuller runbook, see:
+If you run into problems during setup or startup, see
 [Common Issues and Solutions](../troubleshooting-and-support/common-issues-and-solutions.md).
-## CORS configuration (UI access)
-
-If you access SPX Server from the SPX UI running on a different origin (host/port), configure CORS via environment variables. In Docker runs, you can set them in `.env` and keep Compose unchanged.
-
-Supported variables:
-
-- `SPX_CORS_ALLOW_ORIGINS` (CSV list, default in Docker image: `*`)
-- `SPX_CORS_ALLOW_CREDENTIALS` (`1` or `0`, default in Docker image: `0`)
-- `SPX_CORS_ALLOW_ORIGIN_REGEX` (optional regex)
-
-Example `.env` overrides:
-
-```dotenv
-SPX_PRODUCT_KEY=REPLACE_ME
-SPX_CORS_ALLOW_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
-SPX_CORS_ALLOW_CREDENTIALS=1
-```
-
-> Image placeholder: Docker `.env` CORS settings with allowed UI origin.
-
-### Verify
-
-Health endpoint:
-
-```bash
-docker compose ps
-curl -fsS http://localhost:8000/health
-```
-
-Expected response shape (values may differ):
-
-```json
-{"status":"ok","server_version":"<version>","api_version":"v3"}
-```
-
-### Logs
-
-```bash
-docker compose logs -f spx-server
-docker compose logs --tail=200 --no-color spx-server
-```
-
-### Stop
-
-```bash
-docker compose down --remove-orphans
-```
 
 ## Next steps
 
-- If you installed Smart Building Pack: [Smart Building Pack: First Run Walkthrough](first-run-smart-building-pack.md)
-- Start building: [Build Your First Simulation](build-your-first-simulation.md)
-- Troubleshooting: [Common Issues and Solutions](../troubleshooting-and-support/common-issues-and-solutions.md)
+- Smart Building Pack walkthrough: [Smart Building Pack: First Run Walkthrough](first-run-smart-building-pack.md)
+- Build your own simulation: [Build Your First Simulation](build-your-first-simulation.md)
+- Troubleshooting runbook: [Common Issues and Solutions](../troubleshooting-and-support/common-issues-and-solutions.md)
