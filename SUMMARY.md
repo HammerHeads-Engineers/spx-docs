@@ -8,6 +8,7 @@
   * [System Requirements and Capability](overview/system-requirements-and-capability.md)
 * [Quick Start](getting-started/README.md)
   * [Installation Guide](getting-started/installation-guide.md)
+  * [Connect an LLM with SPX MCP](getting-started/connect-llm-with-spx-mcp.md)
   * [Advanced: Manual Docker Compose (server-only)](getting-started/manual-docker-compose.md)
   * [Smart Building Pack: First Run Walkthrough](getting-started/first-run-smart-building-pack.md)
   * [Build Your First Simulation](getting-started/build-your-first-simulation.md)

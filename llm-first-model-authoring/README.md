@@ -19,8 +19,15 @@ Treat `spx-examples` as a repo-as-spec:
 
 What you ship is not “a model”, it’s a **model + tests + catalog entries** that stays stable under deterministic stepping.
 
+For runtime-first work after installing SPX, start with the installer-managed
+MCP workspace. `SPX MCP Setup` creates a Codex workspace with the local
+`spx-mcp` server configured, so an agent can inspect the running server,
+register catalog models, create instances, update attributes, and validate
+behavior before you decide whether the change needs to become durable repo work.
+
 ## Next steps
 
+* Runtime-first MCP setup: [Connect an LLM with SPX MCP](../getting-started/connect-llm-with-spx-mcp.md)
 * Docs automation rules: [Docs automation guidelines](docs-automation-guidelines.md)
 * Repo-as-spec: [Repo-as-spec](repo-as-spec.md)
 * Model Brief template: [Model Brief template](model-brief-template.md)

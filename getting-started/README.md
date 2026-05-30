@@ -24,6 +24,7 @@ This page helps you get up and running with the SPX simulation stack—the SPX S
 By the end, you will be able to:
 
 * Start the SPX Server locally via Docker and verify it’s healthy.
+* Connect Codex to your local SPX runtime through the packaged SPX MCP server.
 * Initialize the SPX-Python client and talk to the server.
 * Create models and instances, read/write attributes, and run a basic simulation step.
 * Reuse the same flow in unit tests and CI pipelines.
@@ -31,6 +32,7 @@ By the end, you will be able to:
 What’s inside this page:
 
 * **Installation Guide** — download the installer from `simplephysx.com/keys`, extract the Windows/Linux delivery archive if needed, complete the native install, run `SPX Setup`, and verify UI/API on localhost.
+* **Connect an LLM with SPX MCP** — run `SPX MCP Setup`, open the generated Codex workspace, and use MCP tools against the local SPX server.
 * **Advanced: Manual Docker Compose** — run the SPX Server API via Compose without the wizard (server-only).
 * **Quick Start Guide** — minimal, copy-paste recipes to connect to the server, do basic CRUD on models/instances, tweak attributes, run prepare()/run(), and wire these steps into your unit tests and CI.
 

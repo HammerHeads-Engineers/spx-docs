@@ -8,6 +8,16 @@ Common prerequisites:
 - `SPX_PRODUCT_KEY` in your environment
 - Optional: `SPX_BASE_URL` (defaults to `http://localhost:8000`)
 
+## LLM / Agent workflow
+
+Goal: use Codex or another MCP-compatible LLM client to inspect and control a
+local SPX runtime through MCP.
+
+1. Install and start SPX: [Installation Guide](../getting-started/installation-guide.md)
+2. Create the MCP workspace: [Connect an LLM with SPX MCP](../getting-started/connect-llm-with-spx-mcp.md)
+3. In Codex, use the generated workspace to inspect server health, list models
+   and instances, and make runtime changes through SPX MCP tools
+
 ## Integrator (protocol + SUT client)
 
 Goal: run SPX Server, expose a protocol adapter, and point your client/driver at it.
@@ -21,13 +31,15 @@ Goal: run SPX Server, expose a protocol adapter, and point your client/driver at
    - SCPI/ASCII: [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/measurement_instruments/generic/multimeter__scpi.yaml)
 5. If something fails, start with: [Common Issues and Solutions](../troubleshooting-and-support/common-issues-and-solutions.md)
 
-## Pack-based quickstart (installer)
+## Ready pack walkthrough
 
 Goal: launch a ready-to-test stack with models, services, and optional UI.
 
-1. Use the installer workflow: [Installer and Packs (spx-examples)](../getting-started/installer-and-packs.md)
-2. Pick a pack + quickstart profile (smart building, energy, lab, industrial)
-3. Start the generated bundle with `spx-start` and validate your SUT
+1. Install and start SPX: [Installation Guide](../getting-started/installation-guide.md)
+2. Walk through the ready smart-building stack:
+   [Smart Building Pack: First Run Walkthrough](../getting-started/first-run-smart-building-pack.md)
+3. For custom pack/profile generation, use the advanced reference:
+   [Installer and Packs (spx-examples)](../getting-started/installer-and-packs.md)
 
 ## Developer (model authoring + extensions)
 

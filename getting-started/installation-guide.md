@@ -20,6 +20,8 @@ Quick path:
 4. Launch `SPX Setup` from the installed SPX Tools.
 5. Let `SPX Setup` generate and start your local SPX environment.
 6. Verify the UI and API on localhost.
+7. Launch `SPX MCP Setup`, open the generated workspace in Codex, and start a
+   fresh thread so Codex loads the local MCP config.
 
 After setup, verify:
 
@@ -33,6 +35,7 @@ After setup, verify:
 - Windows and macOS users should use Docker Desktop.
 - Linux users need Docker Engine with Docker Compose v2.
 - A valid SPX product key is required.
+- Python 3.10+ is required for `SPX MCP Setup`.
 - Local ports `3000` and `8000` should be available.
 
 > Security: treat your `SPX_PRODUCT_KEY` as a secret. Do not commit it to git
@@ -79,7 +82,8 @@ Open `spx-installer-macos-<version>.pkg`.
 - Installs SPX Tools into `/Applications/SPX Tools/`.
 - Uses the native macOS Installer experience, including the license step.
 - Installs launcher apps such as `SPX Setup.app`, `SPX Start.app`,
-  `SPX Stop.app`, `SPX Cleanup.app`, and `SPX Uninstall.app`.
+  `SPX MCP Setup.app`, `SPX Stop.app`, `SPX Cleanup.app`, and
+  `SPX Uninstall.app`.
 
 ### Linux/Unix
 
@@ -119,56 +123,7 @@ set (`Modbus + SCPI/ASCII` when available), keeps SPX UI enabled, and skips
 model installation. If you select a pack, decide explicitly whether to add
 models and starter instances.
 
-## 4) Use SPX Tools
-
-After setup, use the installed SPX Tools instead of rerunning the installer.
-
-### `SPX Setup`
-
-Generates or refreshes your local SPX environment. Use it when installing for
-the first time, changing packages, or regenerating the runtime bundle.
-
-### `SPX Start`
-
-Starts the previously generated SPX stack. Use it for normal day-to-day startup
-after setup has already generated the environment.
-
-### `SPX Stop`
-
-Stops the generated SPX stack cleanly.
-
-### `SPX Cleanup`
-
-Removes the generated SPX environment and related Docker resources. It does not
-uninstall the native SPX Tools package.
-
-### `SPX Uninstall`
-
-macOS has a dedicated `SPX Uninstall.app` in `/Applications/SPX Tools/`.
-
-On Windows, uninstall SPX Tools through the standard Windows Apps / installed
-app management flow.
-
-On Linux/Unix, remove the generated environment and package files according to
-the distribution method you used.
-
-## 5) What SPX Setup creates
-
-The generated runtime environment contains:
-
-- `docker-compose.generated.yml`
-- `.env`
-- `bundle.json`
-- start/stop scripts for Bash, zsh, PowerShell, and desktop launchers
-- selected assets, extensions, and model library files
-
-Default generated locations:
-
-- Windows: `%LocalAppData%\SPX\generated`
-- macOS: `~/Library/Application Support/SPX/generated`
-- Linux/Unix: `~/.local/share/spx/generated`
-
-## 6) Verify the installation
+## 4) Verify the local stack
 
 After `SPX Setup` starts the stack, or after running `SPX Start`, verify:
 
@@ -191,6 +146,91 @@ After `SPX Setup` starts the stack, or after running `SPX Start`, verify:
 
 The expected health response includes `"status":"ok"`.
 
+## 5) Connect Codex with SPX MCP
+
+SPX MCP is the recommended next step after the local stack is running. It lets
+Codex call the local SPX server through the packaged `spx-mcp` server, inspect
+models and instances, register catalog models, and make runtime changes through
+MCP tools.
+
+Launch `SPX MCP Setup`:
+
+- Windows: Start Menu / Windows Apps under `SPX Tools`.
+- macOS: `/Applications/SPX Tools/SPX MCP Setup.app`.
+- Linux/Unix or portable payload: run `spx-mcp-setup.sh` from the installer
+  payload.
+
+The setup creates a Codex workspace with:
+
+- a local `.venv` for the MCP server,
+- `.codex/config.toml` pointing Codex at the local `spx-mcp` server,
+- `.codex/workspace_mode.toml` with the selected work mode,
+- `.spx-mcp-workspace.json` with workspace metadata.
+
+Choose `runtime_mcp` for normal post-install work with the local `spx-server`.
+Use `repo_dev` only when you want a full `spx-examples` checkout for durable
+repository changes, tests, docs, commits, or PRs. Packaged workspaces are
+read/write by default; use read-only mode only for inspection-only access.
+
+After setup finishes, open the generated workspace in Codex and start a fresh
+thread so the host app reloads `.codex/config.toml`.
+
+Full walkthrough: [Connect an LLM with SPX MCP](connect-llm-with-spx-mcp.md).
+
+## 6) Use SPX Tools
+
+After setup, use the installed SPX Tools instead of rerunning the installer.
+
+### `SPX Setup`
+
+Generates or refreshes your local SPX environment. Use it when installing for
+the first time, changing packages, or regenerating the runtime bundle.
+
+### `SPX Start`
+
+Starts the previously generated SPX stack. Use it for normal day-to-day startup
+after setup has already generated the environment.
+
+### `SPX Stop`
+
+Stops the generated SPX stack cleanly.
+
+### `SPX Cleanup`
+
+Removes the generated SPX environment and related Docker resources. It does not
+uninstall the native SPX Tools package.
+
+### `SPX MCP Setup`
+
+Creates or refreshes the Codex workspace for local SPX MCP access. Use it after
+the SPX stack is generated and reachable on `http://localhost:8000`.
+
+### `SPX Uninstall`
+
+macOS has a dedicated `SPX Uninstall.app` in `/Applications/SPX Tools/`.
+
+On Windows, uninstall SPX Tools through the standard Windows Apps / installed
+app management flow.
+
+On Linux/Unix, remove the generated environment and package files according to
+the distribution method you used.
+
+## 7) What SPX Setup creates
+
+The generated runtime environment contains:
+
+- `docker-compose.generated.yml`
+- `.env`
+- `bundle.json`
+- start/stop scripts for Bash, zsh, PowerShell, and desktop launchers
+- selected assets, extensions, and model library files
+
+Default generated locations:
+
+- Windows: `%LocalAppData%\SPX\generated`
+- macOS: `~/Library/Application Support/SPX/generated`
+- Linux/Unix: `~/.local/share/spx/generated`
+
 ## Advanced fallback
 
 Use portable archives or manual Docker Compose only when you intentionally need
@@ -202,6 +242,7 @@ an advanced fallback flow, debugging payload, or server-only setup.
 
 ## Next steps
 
+- Connect Codex or another MCP client: [Connect an LLM with SPX MCP](connect-llm-with-spx-mcp.md)
 - Smart Building Pack walkthrough: [Smart Building Pack: First Run Walkthrough](first-run-smart-building-pack.md)
 - Build your own simulation: [Build Your First Simulation](build-your-first-simulation.md)
 - Troubleshooting runbook: [Common Issues and Solutions](../troubleshooting-and-support/common-issues-and-solutions.md)
