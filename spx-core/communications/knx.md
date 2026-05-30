@@ -10,7 +10,7 @@ SPX Server ships two KNX components:
 **YAML key:** `knx_ip`
 
 Example model (spx-examples):
-[`library/domains/iot/generic/room_controller__knx.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/room_controller__knx.yaml)
+[`library/domains/building/controller/generic/room_controller__knx.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/building/controller/generic/room_controller__knx.yaml)
 
 ```yaml
 communication:

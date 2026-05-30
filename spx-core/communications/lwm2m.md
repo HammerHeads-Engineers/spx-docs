@@ -43,4 +43,4 @@ communication:
 - Dependency: requires `aiocoap` (tests are skipped when it is missing).
 - The binding schema is LwM2M-specific (`object_id` / `instance_id` / `resource_id` + `operation`).
 - `spx-examples` currently contains an `lwm2m` model using a different (older) schema. Prefer the binding schema shown here until the example is aligned:
-  - [`environment_sensor__lwm2m.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/environment_sensor__lwm2m.yaml)
+  - [`environment_sensor__lwm2m.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/environment/sensor/generic/environment_sensor__lwm2m.yaml)

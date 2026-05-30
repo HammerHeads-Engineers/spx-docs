@@ -36,6 +36,7 @@ command.
 
 Source files:
 
+- [`spx-examples`](https://github.com/HammerHeads-Engineers/spx-examples)
 - [`profiles/industrial_iiot_pack/modbus_master_plc_demo.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/industrial_iiot_pack/modbus_master_plc_demo.yaml)
 - [`library/domains/industrial/controller/generic/plc_controller__modbus_master.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/industrial/controller/generic/plc_controller__modbus_master.yaml)
 

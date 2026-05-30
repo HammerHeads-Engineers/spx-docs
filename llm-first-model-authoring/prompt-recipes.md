@@ -13,11 +13,11 @@ In both modes, treat `spx-examples` on GitHub as the canonical spec and conventi
 
 Before generating any code, instruct the LLM to open and follow these files from the repo:
 
-* LLM contract: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md`
-* Model DSL: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md`
-* Task template: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_TASK_TEMPLATE.md`
-* Validation script: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/tools/validate_models.py`
-* Catalog (new models must be registered): `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/catalog/models.yaml`
+* LLM contract: `https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/LLM_SPEC.md`
+* Model DSL: `https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/MODEL_LANGUAGE.md`
+* Task template: `https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/LLM_TASK_TEMPLATE.md`
+* Validation script: `https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/tools/validate_models.py`
+* Catalog (new models must be registered): `https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/catalog/models.yaml`
 
 Important: a web LLM must not claim it ran commands. It should output:
 
@@ -88,13 +88,13 @@ Use this when you have a device datasheet, protocol manual, or register map and 
 
 ```
 You are preparing a patch for the spx-examples repository:
-https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
+https://github.com/HammerHeads-Engineers/spx-examples (branch: develop)
 
 Before coding, read and follow:
-- https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md
-- https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md
-- https://github.com/HammerHeads-Engineers/spx-examples/blob/main/tools/validate_models.py
-- https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/catalog/models.yaml
+- https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/LLM_SPEC.md
+- https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/MODEL_LANGUAGE.md
+- https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/tools/validate_models.py
+- https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/catalog/models.yaml
 
 Goal: generate a new SPX model that:
 1) implements the minimum deterministic simulation behavior needed for MiL testing, and
@@ -166,14 +166,14 @@ Deliverables:
 
 ```
 You are preparing a patch for the spx-examples repository:
-https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
+https://github.com/HammerHeads-Engineers/spx-examples (branch: develop)
 
 Goal: add a new model for <DEVICE> exposed over <PROTOCOL>.
 
 Hard requirements:
 - Follow these specs (read them first):
-  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md
-  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/LLM_SPEC.md
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/MODEL_LANGUAGE.md
 - Place the model under: library/domains/<domain>/<vendor|generic>/<new_model>.yaml
 - File name and `name:` must be lower_snake_case and aligned.
 - Update library/catalog/models.yaml with a new entry for this model.
@@ -204,7 +204,7 @@ Deliverables:
 
 ```
 You are preparing a patch for the spx-examples repository:
-https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
+https://github.com/HammerHeads-Engineers/spx-examples (branch: develop)
 
 Goal: extend an existing model with a new <PROTOCOL> mapping without changing unrelated runtime behavior.
 
@@ -218,7 +218,7 @@ What to add:
 
 Constraints:
 - Follow docs/MODEL_LANGUAGE.md for the communication block shape:
-  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/MODEL_LANGUAGE.md
 - Keep naming/unit conventions for any new attributes.
 - Update catalogs only if required (e.g., new protocol/service references).
 - Add/extend a MiL test under tests/ that proves the mapping works end-to-end.
@@ -234,7 +234,7 @@ Before coding:
 
 ```
 You are preparing a patch for the spx-examples repository:
-https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
+https://github.com/HammerHeads-Engineers/spx-examples (branch: develop)
 
 Goal: add fault coverage to <MODEL_PATH> by introducing scenarios + tests that act as the quality gate.
 
@@ -265,7 +265,7 @@ Use this when the model YAML already exists and you want a deterministic, protoc
 
 ```
 You are preparing a patch for the spx-examples repository:
-https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
+https://github.com/HammerHeads-Engineers/spx-examples (branch: develop)
 
 Goal: add a deterministic MiL integration test for an existing model.
 
@@ -275,10 +275,10 @@ Model:
 
 Hard requirements:
 - Read and follow:
-  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md
-  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/LLM_SPEC.md
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/MODEL_LANGUAGE.md
 - Do not change the model YAML unless the test exposes a real defect.
-- Prefer existing SUT helpers under https://github.com/HammerHeads-Engineers/spx-examples/tree/main/tests/devices
+- Prefer existing SUT helpers under https://github.com/HammerHeads-Engineers/spx-examples/tree/develop/tests/devices
 - Add the test under `tests/shared/integration/` or the relevant `tests/packs/<pack>/integration/` folder.
 - Use deterministic stepping (drive time from the test; avoid wall-clock sleeps for simulation behavior).
 - If the protocol requires ports/services, mention the required docker-compose port mapping.
@@ -301,7 +301,7 @@ Use this when you need to modify or create client code (SUT) and verify it end-t
 
 ```
 You are preparing a patch for the spx-examples repository:
-https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
+https://github.com/HammerHeads-Engineers/spx-examples (branch: develop)
 
 Goal: add or update a client (SUT) and a deterministic MiL integration test that validates the client behavior against an SPX model.
 
@@ -314,10 +314,10 @@ Inputs:
 
 Hard requirements:
 - Read and follow:
-  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md
-  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/LLM_SPEC.md
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/MODEL_LANGUAGE.md
 - Reuse or extend existing SUT helpers when possible:
-  - https://github.com/HammerHeads-Engineers/spx-examples/tree/main/tests/devices
+  - https://github.com/HammerHeads-Engineers/spx-examples/tree/develop/tests/devices
 - Add the MiL test under `tests/shared/integration/` or `tests/packs/<pack>/integration/`.
 - Keep tests deterministic: drive time from the test (no wall-clock sleeps for simulation behavior).
 - If protocol ports/services are required, note the needed docker-compose port mappings.
@@ -340,7 +340,7 @@ Use this when you need automated regression tests for a production client/device
 
 ```
 You are preparing a patch for the spx-examples repository:
-https://github.com/HammerHeads-Engineers/spx-examples (branch: main)
+https://github.com/HammerHeads-Engineers/spx-examples (branch: develop)
 
 Goal: add deterministic MiL tests for a production client/device driver and generate a report from _test_logs.
 
@@ -353,14 +353,14 @@ Inputs:
 
 Hard requirements:
 - Read and follow:
-  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md
-  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/LLM_SPEC.md
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/MODEL_LANGUAGE.md
 - Use or extend existing SUT helpers when possible:
-  - https://github.com/HammerHeads-Engineers/spx-examples/tree/main/tests/devices
+  - https://github.com/HammerHeads-Engineers/spx-examples/tree/develop/tests/devices
 - Add the MiL test under `tests/shared/integration/` or `tests/packs/<pack>/integration/`.
 - Keep tests deterministic: drive time from the test (no wall-clock sleeps for simulation behavior).
 - Log test assertions into `attributes/_test_logs` (use existing patterns, e.g.:
-  https://github.com/HammerHeads-Engineers/spx-examples/blob/main/tests/packs/smart_building_pack/integration/test_pack_instances_running.py)
+  https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/tests/packs/smart_building_pack/integration/test_pack_instances_running.py)
 - Report generation:
   - Read `instance["attributes"]["_test_logs"].internal_value` after the test.
   - Write a JSON or Markdown report under `build/test_reports/<test_name>.<json|md>` (create the folder if missing).

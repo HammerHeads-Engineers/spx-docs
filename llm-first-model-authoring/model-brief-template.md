@@ -32,7 +32,7 @@ Copy this template into an issue/PR description before asking an LLM to generate
 ## 3) Starting point (spx-examples template)
 
 * Template file: `library/domains/<domain>/<vendor|generic>/<template>.yaml`
-* Template URL: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/<domain>/<vendor|generic>/<template>.yaml`
+* Template URL: `https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/<domain>/<vendor|generic>/<template>.yaml`
 * New model path: `library/domains/<domain>/<vendor|generic>/<new_model>.yaml`
 
 ## 4) Protocol mapping scope

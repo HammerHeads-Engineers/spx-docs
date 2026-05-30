@@ -13,6 +13,13 @@ This chapter collects end-to-end workflows that combine:
 
 For runnable reference implementations, use `spx-examples` as the canonical source of models + tests.
 
+## Reference repository: spx-examples
+
+Browse the public
+[spx-examples repository](https://github.com/HammerHeads-Engineers/spx-examples)
+for the current model catalog, installer profiles, generated bundle tooling,
+and MiL test suites.
+
 Next pages:
 
 * [Guided Use Cases & Scenarios](common-use-cases.md)

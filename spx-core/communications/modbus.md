@@ -26,7 +26,7 @@ Addresses can be a single integer or a `[start, end]` pair (use a pair for multi
 **YAML key:** `modbus_slave`
 
 Example model (spx-examples):
-[`library/domains/iot/generic/energy_meter_iem3000__modbus.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/energy_meter_iem3000__modbus.yaml)
+[`library/domains/energy/meter/schneider/energy_meter_iem3000__modbus.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/energy/meter/schneider/energy_meter_iem3000__modbus.yaml)
 
 ```yaml
 communication:
@@ -75,7 +75,7 @@ Operational note:
 > **Legacy adapter**: `modbus_tcp` exists for backward compatibility. Avoid it for new models; prefer `modbus_slave` for Modbus TCP server simulations.
 
 Example model (spx-examples):
-[`library/domains/thermal_controllers/generic/thermal_controller__modbus.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/thermal_controllers/generic/thermal_controller__modbus.yaml)
+[`library/domains/industrial/controller/generic/thermal_controller__modbus.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/industrial/controller/generic/thermal_controller__modbus.yaml)
 
 ```yaml
 communication:

@@ -8,6 +8,12 @@ Common prerequisites:
 - `SPX_PRODUCT_KEY` in your environment
 - Optional: `SPX_BASE_URL` (defaults to `http://localhost:8000`)
 
+## Reference repository: spx-examples
+
+For the latest runnable models, installer profiles, generated bundle tooling,
+and MiL tests, use the public
+[spx-examples repository](https://github.com/HammerHeads-Engineers/spx-examples).
+
 ## LLM / Agent workflow
 
 Goal: use Codex, Claude Code, or another MCP-capable LLM client to inspect and
@@ -25,10 +31,11 @@ Goal: run SPX Server, expose a protocol adapter, and point your client/driver at
 1. Start the server: [Installation Guide](../getting-started/installation-guide.md)
 2. Build a minimal model + instance: [Build Your First Simulation](../getting-started/build-your-first-simulation.md)
 3. Choose an adapter + expose ports: [Choose a protocol adapter](../getting-started/choose-a-protocol-adapter.md)
-4. Use a known-good example model for your protocol (from `spx-examples`):
-   - Modbus: [`energy_meter_iem3000__modbus.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/energy_meter_iem3000__modbus.yaml)
-   - MQTT: [`environment_sensor__mqtt.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/environment_sensor__mqtt.yaml)
-   - SCPI/ASCII: [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/measurement_instruments/generic/multimeter__scpi.yaml)
+4. Use a known-good example model for your protocol (from `spx-examples`
+   `develop`):
+   - Modbus: [`energy_meter_iem3000__modbus.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/energy/meter/schneider/energy_meter_iem3000__modbus.yaml)
+   - MQTT: [`environment_sensor__mqtt.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/environment/sensor/generic/environment_sensor__mqtt.yaml)
+   - SCPI/ASCII: [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/lab/instrument/generic/multimeter__scpi.yaml)
 5. If something fails, start with: [Common Issues and Solutions](../troubleshooting-and-support/common-issues-and-solutions.md)
 
 ## Ready pack walkthrough

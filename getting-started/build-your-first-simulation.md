@@ -134,6 +134,14 @@ python examples/core/first_simulation.py
 The script writes an interactive Plotly chart to
 `examples/core/first_simulation.html`.
 
+## Browse model examples
+
+For the current reusable model library, browse
+[`spx-examples/library/domains`](https://github.com/HammerHeads-Engineers/spx-examples/tree/develop/library/domains).
+That catalog is the best starting point when you want to move beyond the small
+inline PT100 example and reuse a tested Modbus, MQTT, SCPI, BLE, BACnet, KNX, or
+OPC UA model.
+
 ## Try protocol examples next
 
 Once the server is running, use the installer packs for protocol services:

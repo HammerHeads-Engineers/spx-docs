@@ -72,8 +72,10 @@ installer-managed workspace for fast MCP-first work against the live local
 `spx-server`. Runtime changes are local unless you later decide to port them
 into a repository workflow.
 
-Use `repo_dev` only when you need a full Git clone of `spx-examples` for
-durable changes: models, tests, docs, packs, commits, and PRs.
+Use `repo_dev` only when you need a full Git clone of the public
+[spx-examples repository](https://github.com/HammerHeads-Engineers/spx-examples)
+for durable changes: models, tests, docs, packs, commits, and PRs. This mode is
+for repository work that should survive beyond local runtime experiments.
 
 Packaged MCP workspaces are read/write by default so Codex can register models,
 create instances, start/stop instances, update attributes, and manage runtime

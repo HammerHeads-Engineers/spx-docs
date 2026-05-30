@@ -29,6 +29,12 @@ By the end, you will be able to:
 * Create models and instances, read/write attributes, and run a basic simulation step.
 * Reuse the same flow in unit tests and CI pipelines.
 
+## Reference repository: spx-examples
+
+For the latest runnable models, installer profiles, generated bundle tooling,
+and MiL tests, use the public
+[spx-examples repository](https://github.com/HammerHeads-Engineers/spx-examples).
+
 What’s inside this page:
 
 * **Installation Guide** — download the installer from `simplephysx.com/keys`, extract the Windows/Linux delivery archive if needed, complete the native install, run `SPX Setup`, and verify UI/API on localhost.

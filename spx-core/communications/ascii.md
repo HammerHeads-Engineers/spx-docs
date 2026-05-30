@@ -59,7 +59,7 @@ communication:
   - A mapping updates attributes or invokes handlers; optional `response` overrides the reply.
 - `bindings`: explicit binding definitions (see the spx-examples SCPI multimeter model for a concrete pattern).
 
-> Tip: In `spx-examples`, the SCPI multimeter model omits `port` so it can run multiple instances without collisions. See [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/measurement_instruments/generic/multimeter__scpi.yaml).
+> Tip: In `spx-examples`, the SCPI multimeter model omits `port` so it can run multiple instances without collisions. See [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/lab/instrument/generic/multimeter__scpi.yaml).
 
 ### Placeholders
 
@@ -137,4 +137,4 @@ scenarios:
 
 - Normalize commands to uppercase to avoid case mismatches.
 - Use `response_delay` and `response_jitter` to emulate slow hardware.
-- Validate mappings with MiL tests against SPX Server (see `spx-examples` [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/measurement_instruments/generic/multimeter__scpi.yaml) and [`scpi_multimeter_sut_example.py`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/tests/shared/integration/scpi_multimeter_sut_example.py)).
+- Validate mappings with MiL tests against SPX Server (see `spx-examples` [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/lab/instrument/generic/multimeter__scpi.yaml) and [`scpi_multimeter_sut_example.py`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/tests/shared/integration/scpi_multimeter_sut_example.py)).

@@ -12,10 +12,17 @@ LLM-first authoring in SPX means:
 
 Treat `spx-examples` as a repo-as-spec:
 
-* Repo root (main): https://github.com/HammerHeads-Engineers/spx-examples/tree/main
-* Spec: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md`
-* Modeling language: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md`
-* Task template: `https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_TASK_TEMPLATE.md`
+* Repo root (develop): https://github.com/HammerHeads-Engineers/spx-examples/tree/develop
+* Spec: `https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/LLM_SPEC.md`
+* Modeling language: `https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/MODEL_LANGUAGE.md`
+* Task template: `https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/LLM_TASK_TEMPLATE.md`
+
+## Reference repository: spx-examples
+
+For LLM-assisted work, use the public
+[spx-examples repository](https://github.com/HammerHeads-Engineers/spx-examples)
+as the current contract for model structure, catalog metadata, validation,
+examples, and MiL tests.
 
 What you ship is not “a model”, it’s a **model + tests + catalog entries** that stays stable under deterministic stepping.
 

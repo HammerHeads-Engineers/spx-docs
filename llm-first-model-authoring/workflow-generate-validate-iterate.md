@@ -43,7 +43,7 @@ docker compose up -d
 1. Pick the closest template under `library/domains/...`.
 2. Copy it into the correct domain/vendor folder.
 3. Keep `name:` aligned with the file stem and keep YAML structure consistent with `docs/MODEL_LANGUAGE.md`:
-   - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/MODEL_LANGUAGE.md
+   - https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/MODEL_LANGUAGE.md
 
 ## Validate
 
@@ -90,19 +90,19 @@ Goal: create a SCPI multimeter variant with a new fault scenario and a regressio
 
 1) Start from the template:
 
-- `library/domains/measurement_instruments/generic/multimeter__scpi.yaml`
-- https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/measurement_instruments/generic/multimeter__scpi.yaml
+- `library/domains/lab/instrument/generic/multimeter__scpi.yaml`
+- https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/lab/instrument/generic/multimeter__scpi.yaml
 
 2) Copy it:
 
 ```bash
-cp library/domains/measurement_instruments/generic/multimeter__scpi.yaml \\
-  library/domains/measurement_instruments/generic/multimeter_overrange__scpi.yaml
+cp library/domains/lab/instrument/generic/multimeter__scpi.yaml \\
+  library/domains/lab/instrument/generic/multimeter_overrange__scpi.yaml
 ```
 
 3) Edit the new model:
 
-- File: `library/domains/measurement_instruments/generic/multimeter_overrange__scpi.yaml`
+- File: `library/domains/lab/instrument/generic/multimeter_overrange__scpi.yaml`
 - Update:
   - `name: multimeter_overrange__scpi`
   - Add a scenario under `scenarios:` (follow patterns in the source template)
@@ -122,10 +122,10 @@ scenarios:
 4) Register it in the catalog:
 
 - File: `library/catalog/models.yaml`
-- https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/catalog/models.yaml
+- https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/catalog/models.yaml
 - Add a new entry with:
-  - `path: library/domains/measurement_instruments/generic/multimeter_overrange__scpi.yaml`
-  - `domain: measurement_instruments`
+  - `path: library/domains/lab/instrument/generic/multimeter_overrange__scpi.yaml`
+  - `domain: lab`
   - `protocols: [scpi]`
   - `services: [{id: scpi_tcp_stack}]` (match existing SCPI models)
 
@@ -151,7 +151,7 @@ poetry run pytest -k scpi_multimeter
 7) Inspect in UI (optional):
 
 - Start the UI container (see `spx-examples/docker-compose.yml` for the `spx-ui` service):
-  - https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docker-compose.yml
+  - https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docker-compose.yml
 - Open the UI and inspect the instance attributes/scenarios.
 
 ## Output contract for automation runs

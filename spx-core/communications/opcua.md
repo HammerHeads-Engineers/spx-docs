@@ -7,7 +7,7 @@ Expose an OPC UA server (`opc.tcp://...`) and map nodes to SPX attributes.
 ## Minimal configuration
 
 Example model (spx-examples):
-[`library/domains/iot/generic/production_workcell__opcua.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/production_workcell__opcua.yaml)
+[`library/domains/industrial/workcell/generic/production_workcell__opcua.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/industrial/workcell/generic/production_workcell__opcua.yaml)
 
 ```yaml
 communication:

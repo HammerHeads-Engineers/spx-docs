@@ -2,7 +2,7 @@
 
 This checklist is intentionally aligned with `spx-examples/docs/LLM_SPEC.md`:
 
-- https://github.com/HammerHeads-Engineers/spx-examples/blob/main/docs/LLM_SPEC.md
+- https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/LLM_SPEC.md
 
 ## DoD checklist
 

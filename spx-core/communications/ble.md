@@ -282,7 +282,7 @@ Use model `scenarios` to detach or fault the protocol (e.g., override `communica
 
 ## Reference models
 
-- `spx-examples/library/domains/ble/generic/temperature_sensor__ble_gatt.yaml`: minimal read/write sensor.
+- `spx-examples/library/domains/lab/sensor/generic/temperature_sensor__ble_gatt.yaml`: minimal read/write sensor.
 - `spx-examples/library/domains/ble/generic/vital_signs_monitor__ble_gatt.yaml`: multi-characteristic wearable with scenarios that drive activity profiles.
 
 Import these into your models or use them as templates when defining new GATT services.

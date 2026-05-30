@@ -7,7 +7,7 @@ Expose deterministic HTTP endpoints backed by attributes. Endpoints are served b
 ## Minimal configuration
 
 This example is taken from `spx-examples`:
-[`library/domains/iot/generic/air_quality_station__http.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/air_quality_station__http.yaml)
+[`library/domains/environment/station/generic/air_quality_station__http.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/environment/station/generic/air_quality_station__http.yaml)
 
 ```yaml
 communication:

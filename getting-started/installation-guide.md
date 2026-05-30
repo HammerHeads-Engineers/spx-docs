@@ -30,6 +30,13 @@ After setup, verify:
 - **API**: `http://localhost:8000`
 - **API docs**: `http://localhost:8000/docs`
 
+## Reference repository: spx-examples
+
+Native installers are the recommended first path. For advanced bundle
+generation, installer profiles, pack definitions, runnable models, and MiL
+tests, use the public
+[spx-examples repository](https://github.com/HammerHeads-Engineers/spx-examples).
+
 ## Prerequisites
 
 - Docker must be installed and running before you start SPX.

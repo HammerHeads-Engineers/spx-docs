@@ -10,7 +10,7 @@ SPX Server ships two MQTT components:
 **YAML key:** `mqtt`
 
 Example model (spx-examples):
-[`library/domains/iot/generic/environment_sensor__mqtt.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/environment_sensor__mqtt.yaml)
+[`library/domains/environment/sensor/generic/environment_sensor__mqtt.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/environment/sensor/generic/environment_sensor__mqtt.yaml)
 
 ```yaml
 communication:

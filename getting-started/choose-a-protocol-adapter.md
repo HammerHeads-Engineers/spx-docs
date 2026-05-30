@@ -12,16 +12,23 @@ Use this page to pick the adapter that matches your client/driver, then follow e
 - the adapter reference docs under [Communication Adapters](../spx-core/communications/README.md), or
 - a runnable baseline from `spx-examples` (models + tests).
 
+Reference repository:
+[spx-examples](https://github.com/HammerHeads-Engineers/spx-examples) contains
+the latest runnable protocol models under
+[`library/domains`](https://github.com/HammerHeads-Engineers/spx-examples/tree/develop/library/domains)
+and integration tests under
+[`tests`](https://github.com/HammerHeads-Engineers/spx-examples/tree/develop/tests).
+
 ## Quick routing
 
 | Adapter | When to use | Docs | Example model (spx-examples) |
 |---|---|---|---|
 | Modbus TCP server/device | PLC/HMI/device drivers using Modbus | [Modbus](../spx-core/communications/modbus.md) | [`energy_meter_iem3000__modbus.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/energy/meter/schneider/energy_meter_iem3000__modbus.yaml) |
 | Modbus TCP client/controller | SPX acts as a PLC-style Modbus master | [Modbus Client / PLC Controller](modbus-client-controller.md) | [`plc_controller__modbus_master.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/industrial/controller/generic/plc_controller__modbus_master.yaml) |
-| ASCII / SCPI | Lab instruments, SCPI drivers | [ASCII](../spx-core/communications/ascii.md) | [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/measurement_instruments/generic/multimeter__scpi.yaml) |
-| MQTT | IoT telemetry pipelines and brokers | [MQTT](../spx-core/communications/mqtt.md) | [`environment_sensor__mqtt.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/environment_sensor__mqtt.yaml) |
-| BLE | Mobile apps and BLE test rigs | [BLE](../spx-core/communications/ble.md) | [`temperature_sensor__ble_gatt.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/ble/generic/temperature_sensor__ble_gatt.yaml) |
-| HTTP endpoint | Simple REST callbacks / webhooks | [HTTP](../spx-core/communications/http.md) | [`air_quality_station__http.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/air_quality_station__http.yaml) |
+| ASCII / SCPI | Lab instruments, SCPI drivers | [ASCII](../spx-core/communications/ascii.md) | [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/lab/instrument/generic/multimeter__scpi.yaml) |
+| MQTT | IoT telemetry pipelines and brokers | [MQTT](../spx-core/communications/mqtt.md) | [`environment_sensor__mqtt.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/environment/sensor/generic/environment_sensor__mqtt.yaml) |
+| BLE | Mobile apps and BLE test rigs | [BLE](../spx-core/communications/ble.md) | [`temperature_sensor__ble_gatt.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/lab/sensor/generic/temperature_sensor__ble_gatt.yaml) |
+| HTTP endpoint | Simple REST callbacks / webhooks | [HTTP](../spx-core/communications/http.md) | [`air_quality_station__http.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/environment/station/generic/air_quality_station__http.yaml) |
 
 ## Note on ports (Docker)
 

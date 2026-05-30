@@ -2,6 +2,13 @@
 
 This page focuses on scenario-driven engineering workflows (integrators/dev/QA), grounded in the runnable reference repo: [`spx-examples`](https://github.com/HammerHeads-Engineers/spx-examples).
 
+## Reference repository: spx-examples
+
+Use the public
+[spx-examples repository](https://github.com/HammerHeads-Engineers/spx-examples)
+as the latest source for runnable models, MiL tests, scenarios, and pack
+profiles.
+
 ## Common Use Cases
 
 ### 1. Validate a device driver against virtual hardware
@@ -31,8 +38,8 @@ See: [Use in Unit Tests (MiL)](../getting-started/use-in-unit-tests-mil.md), [Sn
 
 Files used:
 
-* Model: [`library/domains/measurement_instruments/generic/multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/measurement_instruments/generic/multimeter__scpi.yaml)
-* Test: [`tests/shared/integration/scpi_multimeter_sut_example.py`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/tests/shared/integration/scpi_multimeter_sut_example.py)
+* Model: [`library/domains/lab/instrument/generic/multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/lab/instrument/generic/multimeter__scpi.yaml)
+* Test: [`tests/shared/integration/scpi_multimeter_sut_example.py`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/tests/shared/integration/scpi_multimeter_sut_example.py)
 
 This flow is a good baseline for “driver vs virtual hardware” integration testing:
 

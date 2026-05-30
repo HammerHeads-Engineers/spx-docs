@@ -7,7 +7,7 @@ Map SPX attributes to Matter cluster attributes/commands via a `python-matter-se
 ## Minimal configuration
 
 Example model (spx-examples):
-[`library/domains/iot/generic/thermostat__matter.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/thermostat__matter.yaml)
+[`library/domains/building/thermostat/generic/thermostat__matter.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/building/thermostat/generic/thermostat__matter.yaml)
 
 ```yaml
 communication:

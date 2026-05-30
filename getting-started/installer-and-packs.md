@@ -17,7 +17,9 @@ selected models, supporting services (MQTT, BACnet, KNX, OPC UA, Modbus, SCPI,
 Home Assistant, etc.), and optional SPX UI.
 
 Source of truth:
-https://github.com/HammerHeads-Engineers/spx-examples
+[spx-examples](https://github.com/HammerHeads-Engineers/spx-examples) is the
+public repository for the installer CLI, setup wizard scripts, pack
+definitions, profiles, model library, generated bundle tooling, and MiL tests.
 
 This page is aligned with `spx-examples` `origin/develop` at
 `518d631ed9649810445ac9f0c5474ecd22880167` (`1.1.0-rc.48`). At that snapshot,

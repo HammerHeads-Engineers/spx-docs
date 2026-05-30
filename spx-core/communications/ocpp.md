@@ -7,7 +7,7 @@ OCPP adapter that can run as a Charge Point (`role: charge_point`) or as a Centr
 ## Minimal configuration (Charge Point)
 
 Example model (spx-examples):
-[`library/domains/energy/emobility/evse__ocpp.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/energy/emobility/evse__ocpp.yaml)
+[`library/domains/energy/evse/generic/evse__ocpp.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/energy/evse/generic/evse__ocpp.yaml)
 
 ```yaml
 communication:
@@ -29,7 +29,7 @@ communication:
 ## Minimal configuration (Central System)
 
 Example model (spx-examples):
-[`library/domains/energy/emobility/csms__ocpp.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/energy/emobility/csms__ocpp.yaml)
+[`library/domains/energy/csms/generic/csms__ocpp.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/energy/csms/generic/csms__ocpp.yaml)
 
 ```yaml
 communication:
