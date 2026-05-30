@@ -10,13 +10,13 @@ Common prerequisites:
 
 ## LLM / Agent workflow
 
-Goal: use Codex or another MCP-compatible LLM client to inspect and control a
-local SPX runtime through MCP.
+Goal: use Codex, Claude Code, or another MCP-capable LLM client to inspect and
+control a local SPX runtime through MCP.
 
 1. Install and start SPX: [Installation Guide](../getting-started/installation-guide.md)
 2. Create the MCP workspace: [Connect an LLM with SPX MCP](../getting-started/connect-llm-with-spx-mcp.md)
-3. In Codex, use the generated workspace to inspect server health, list models
-   and instances, and make runtime changes through SPX MCP tools
+3. In your MCP client, use the generated workspace to inspect server health,
+   list models and instances, and make runtime changes through SPX MCP tools
 
 ## Integrator (protocol + SUT client)
 

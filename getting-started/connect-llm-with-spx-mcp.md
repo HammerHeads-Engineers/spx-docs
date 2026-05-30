@@ -1,19 +1,19 @@
 ---
-description: Connect Codex to your local SPX runtime with the packaged SPX MCP server.
+description: Connect MCP-capable LLM clients to your local SPX runtime.
 icon: cable
 ---
 
 # Connect an LLM with SPX MCP
 
 SPX MCP is the recommended path after `SPX Setup` has generated and started
-your local SPX stack. It gives Codex a local MCP server that understands the
-SPX catalog, profiles, packs, model validation rules, runtime logs,
-communication trees, protocol bindings, and the running `spx-server`.
+your local SPX stack. It gives MCP-capable LLM clients a local `stdio` server
+that understands the SPX catalog, profiles, packs, model validation rules,
+runtime logs, communication trees, protocol bindings, and the running
+`spx-server`.
 
-The installer flow is Codex-first: `SPX MCP Setup` writes a ready
-`.codex/config.toml` for the generated workspace. The same `spx-mcp` server is a
-local MCP `stdio` server, so Claude Code or another MCP-compatible client can
-use it too after you configure that client manually.
+`SPX MCP Setup` creates an `SPX MCP Workspace` with ready client configuration
+for Codex and Claude Code. Other MCP-capable clients can use the same local
+`spx-mcp` server after you add that server to the client manually.
 
 ## Prerequisites
 
@@ -22,7 +22,7 @@ use it too after you configure that client manually.
 - The SPX stack is running and `http://localhost:8000/health` returns
   `"status":"ok"`.
 - Python 3.10+ is available for the MCP runtime.
-- Codex is installed if you want the automatic workspace flow.
+- Codex or Claude Code is installed if you want an auto-configured client.
 
 ## Quick path
 
@@ -31,8 +31,9 @@ use it too after you configure that client manually.
 3. Launch `SPX MCP Setup`.
 4. Choose `runtime_mcp` unless you intentionally need full repository work.
 5. Keep the default read/write MCP access for normal local runtime work.
-6. Open the generated workspace in Codex.
-7. Start a fresh Codex thread so the host app reloads `.codex/config.toml`.
+6. Open the generated `SPX MCP Workspace` in Codex, Claude Code, or another
+   MCP-capable client.
+7. Start a fresh session so the client reloads its local MCP configuration.
 
 ## Launch SPX MCP Setup
 
@@ -45,17 +46,24 @@ Use the launcher for your platform:
 
 Default workspace locations:
 
-- macOS: `~/Documents/SPX Codex Workspace`
+- macOS: `~/Documents/SPX MCP Workspace`
 - Windows: `%LocalAppData%\SPX\workspace`
-- Linux/Unix: `~/spx-codex-workspace`
+- Linux/Unix: `~/spx-mcp-workspace`
+
+Older installs may still have a legacy `SPX Codex Workspace`. Treat that as an
+old workspace name, not the current default.
 
 The setup creates:
 
 - a local `.venv` prepared for `spx-mcp`,
 - `.codex/config.toml` pointing Codex at the local MCP server,
-- `.codex/workspace_mode.toml` with the selected work mode,
+- `.mcp.json` pointing Claude Code at the same local MCP server,
+- `CLAUDE.md` so Claude Code can follow `@AGENTS.md`,
+- `.spx/workspace_mode.toml` with the selected work mode,
 - `.spx-mcp-workspace.json` with workspace metadata,
 - an `.env` seeded from the generated SPX environment when available.
+
+Existing `.codex/workspace_mode.toml` files are still read as a legacy fallback.
 
 ## Choose the work mode
 
@@ -72,9 +80,10 @@ create instances, start/stop instances, update attributes, and manage runtime
 scenarios or connections. Use read-only mode only when you want inspection-only
 access.
 
-## First use in Codex
+## First use in an MCP client
 
-Open the generated workspace in Codex and start a new thread. Then ask Codex:
+Open the generated workspace in Codex, Claude Code, or another configured MCP
+client and start a fresh session. Then ask the client:
 
 ```text
 Use the SPX MCP tools from this workspace. First list the available SPX MCP
@@ -84,7 +93,7 @@ safe attribute. Report the model id, instance key, final state, and any relevant
 endpoint details.
 ```
 
-For normal local runtime work, a good Codex result is short and concrete:
+For normal local runtime work, a good result is short and concrete:
 
 - the MCP server is available,
 - the local SPX server is healthy,
@@ -92,20 +101,20 @@ For normal local runtime work, a good Codex result is short and concrete:
 - one model can be registered or ensured as an instance,
 - instance attributes can be read or updated through MCP.
 
-## Other MCP clients
+## Client support
 
-Codex is the only client auto-configured by the installer today. Other
-MCP-compatible clients can use the same local `stdio` server, but you must add
-the MCP server entry to that client's configuration yourself.
+Codex and Claude Code are auto-configured by `SPX MCP Setup`. Other
+MCP-capable clients can use the same local `stdio` server, but you must add the
+MCP server entry to that client's configuration yourself.
 
-The command shape is the same one written into the generated Codex config: run
-Python from the workspace `.venv`, execute `-m spx_mcp stdio`, and include
+The command shape is the same one written into the generated client configs:
+run Python from the workspace `.venv`, execute `-m spx_mcp stdio`, and include
 `--allow-write` when you want runtime write tools.
 
 ## Troubleshooting
 
-- If Codex does not show the SPX MCP tools, open the generated workspace and
-  start a fresh thread so `.codex/config.toml` is reloaded.
+- If the client does not show the SPX MCP tools, open the generated workspace
+  and start a fresh session so the local MCP configuration is reloaded.
 - If setup cannot find Python, install Python 3.10+ and rerun `SPX MCP Setup`.
 - If runtime tools cannot reach SPX, start the stack with `SPX Start` and verify
   `http://localhost:8000/health`.

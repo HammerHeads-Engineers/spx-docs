@@ -20,10 +20,10 @@ Treat `spx-examples` as a repo-as-spec:
 What you ship is not “a model”, it’s a **model + tests + catalog entries** that stays stable under deterministic stepping.
 
 For runtime-first work after installing SPX, start with the installer-managed
-MCP workspace. `SPX MCP Setup` creates a Codex workspace with the local
-`spx-mcp` server configured, so an agent can inspect the running server,
-register catalog models, create instances, update attributes, and validate
-behavior before you decide whether the change needs to become durable repo work.
+SPX MCP workspace. `SPX MCP Setup` configures the local `spx-mcp` server for
+MCP-capable clients, so an agent can inspect the running server, register
+catalog models, create instances, update attributes, and validate behavior
+before you decide whether the change needs to become durable repo work.
 
 ## Next steps
 

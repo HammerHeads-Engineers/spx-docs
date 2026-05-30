@@ -20,8 +20,9 @@ Quick path:
 4. Launch `SPX Setup` from the installed SPX Tools.
 5. Let `SPX Setup` generate and start your local SPX environment.
 6. Verify the UI and API on localhost.
-7. Launch `SPX MCP Setup`, open the generated workspace in Codex, and start a
-   fresh thread so Codex loads the local MCP config.
+7. Launch `SPX MCP Setup`, open the generated `SPX MCP Workspace` in Codex,
+   Claude Code, or another MCP-capable client, and start a fresh session so the
+   client loads the local MCP config.
 
 After setup, verify:
 
@@ -146,12 +147,12 @@ After `SPX Setup` starts the stack, or after running `SPX Start`, verify:
 
 The expected health response includes `"status":"ok"`.
 
-## 5) Connect Codex with SPX MCP
+## 5) Connect an LLM with SPX MCP
 
 SPX MCP is the recommended next step after the local stack is running. It lets
-Codex call the local SPX server through the packaged `spx-mcp` server, inspect
-models and instances, register catalog models, and make runtime changes through
-MCP tools.
+MCP-capable LLM clients call the local SPX server through the packaged
+`spx-mcp` server, inspect models and instances, register catalog models, and
+make runtime changes through MCP tools.
 
 Launch `SPX MCP Setup`:
 
@@ -160,20 +161,25 @@ Launch `SPX MCP Setup`:
 - Linux/Unix or portable payload: run `spx-mcp-setup.sh` from the installer
   payload.
 
-The setup creates a Codex workspace with:
+The setup creates an `SPX MCP Workspace` with:
 
 - a local `.venv` for the MCP server,
 - `.codex/config.toml` pointing Codex at the local `spx-mcp` server,
-- `.codex/workspace_mode.toml` with the selected work mode,
+- `.mcp.json` pointing Claude Code at the same local `spx-mcp` server,
+- `CLAUDE.md` so Claude Code can follow `@AGENTS.md`,
+- `.spx/workspace_mode.toml` with the selected work mode,
 - `.spx-mcp-workspace.json` with workspace metadata.
 
 Choose `runtime_mcp` for normal post-install work with the local `spx-server`.
 Use `repo_dev` only when you want a full `spx-examples` checkout for durable
 repository changes, tests, docs, commits, or PRs. Packaged workspaces are
 read/write by default; use read-only mode only for inspection-only access.
+Existing `.codex/workspace_mode.toml` files are still read as a legacy
+fallback.
 
-After setup finishes, open the generated workspace in Codex and start a fresh
-thread so the host app reloads `.codex/config.toml`.
+After setup finishes, open the generated workspace in Codex, Claude Code, or
+another MCP-capable client and start a fresh session so the client reloads the
+local MCP configuration.
 
 Full walkthrough: [Connect an LLM with SPX MCP](connect-llm-with-spx-mcp.md).
 
@@ -202,7 +208,7 @@ uninstall the native SPX Tools package.
 
 ### `SPX MCP Setup`
 
-Creates or refreshes the Codex workspace for local SPX MCP access. Use it after
+Creates or refreshes the SPX MCP workspace for local MCP access. Use it after
 the SPX stack is generated and reachable on `http://localhost:8000`.
 
 ### `SPX Uninstall`
@@ -242,7 +248,7 @@ an advanced fallback flow, debugging payload, or server-only setup.
 
 ## Next steps
 
-- Connect Codex or another MCP client: [Connect an LLM with SPX MCP](connect-llm-with-spx-mcp.md)
+- Connect an MCP-capable LLM client: [Connect an LLM with SPX MCP](connect-llm-with-spx-mcp.md)
 - Smart Building Pack walkthrough: [Smart Building Pack: First Run Walkthrough](first-run-smart-building-pack.md)
 - Build your own simulation: [Build Your First Simulation](build-your-first-simulation.md)
 - Troubleshooting runbook: [Common Issues and Solutions](../troubleshooting-and-support/common-issues-and-solutions.md)
