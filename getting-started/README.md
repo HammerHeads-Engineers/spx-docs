@@ -34,6 +34,7 @@ What’s inside this page:
 * **Installation Guide** — download the installer from `simplephysx.com/keys`, extract the Windows/Linux delivery archive if needed, complete the native install, run `SPX Setup`, and verify UI/API on localhost.
 * **Connect an LLM with SPX MCP** — run `SPX MCP Setup`, open the generated SPX MCP workspace, and use MCP tools against the local SPX server.
 * **Advanced: Manual Docker Compose** — run the SPX Server API via Compose without the wizard (server-only).
+* **Modbus Client / PLC Controller** — use SPX as an active Modbus master that polls and controls downstream Modbus devices.
 * **Quick Start Guide** — minimal, copy-paste recipes to connect to the server, do basic CRUD on models/instances, tweak attributes, run prepare()/run(), and wire these steps into your unit tests and CI.
 
 **Who is this for?**

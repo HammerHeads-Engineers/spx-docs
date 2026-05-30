@@ -140,6 +140,19 @@ python -m installer generate \
   --output build/spx-generated
 ```
 
+Industrial Modbus master PLC demo:
+
+```bash
+python -m installer generate \
+  --packages industrial_iiot_pack \
+  --profile-ids modbus_master_plc_demo \
+  --no-ui
+```
+
+This profile demonstrates SPX as an active Modbus master/controller. See
+[Use SPX as a Modbus Client / PLC Controller](../getting-started/modbus-client-controller.md)
+for the guided workflow.
+
 For pack-specific details, see:
 
 - `library/industries/<pack>/README.md`

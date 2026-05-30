@@ -10,6 +10,10 @@ This page uses **Modbus TCP** as an example adapter. For other protocols, start 
 
 In this step we wire our **PT100‑style temperature sensor** from [Build Your First Simulation](build-your-first-simulation.md) to Modbus so any Modbus client can read the sensor value and a binary fault flag.
 
+This guide shows SPX as a Modbus TCP server/device. If you want SPX to actively
+poll and control other Modbus devices as a client or PLC-style controller, use
+[Use SPX as a Modbus Client / PLC Controller](modbus-client-controller.md).
+
 **What is Modbus TCP?** It is a widely used industrial protocol over TCP/IP. In SPX it ships **natively in the Core library**, so you can enable it directly in your model—no extra installation required.
 
 {% code title="modbus_example.py" %}

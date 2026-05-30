@@ -188,6 +188,19 @@ Other useful flags:
 - `--print-selection json` prints resolved packages, models, services, and
   starter instances for CI/debugging.
 
+Industrial Modbus client/controller example:
+
+```bash
+python -m installer generate \
+  --packages industrial_iiot_pack \
+  --profile-ids modbus_master_plc_demo \
+  --no-ui \
+  --output build/spx-generated
+```
+
+For the guided flow, see
+[Use SPX as a Modbus Client / PLC Controller](modbus-client-controller.md).
+
 ## What gets generated
 
 Inside the output folder, for example `build/spx-generated/`:

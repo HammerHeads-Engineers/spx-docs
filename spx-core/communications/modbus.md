@@ -96,6 +96,9 @@ Connectivity simulation uses `detach()` / `attach()` (removes/re-adds the slave 
 
 **YAML key:** `modbus_master`
 
+For a guided controller example, see
+[Use SPX as a Modbus Client / PLC Controller](../../getting-started/modbus-client-controller.md).
+
 Minimal example:
 
 ```yaml
