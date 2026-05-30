@@ -1,6 +1,6 @@
 ---
 description: Connect MCP-capable LLM clients to your local SPX runtime.
-icon: cable
+icon: brain-circuit
 ---
 
 # Connect an LLM with SPX MCP

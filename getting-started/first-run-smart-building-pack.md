@@ -2,6 +2,7 @@
 description: >-
   First-run UI walkthrough after installing the Smart Building Pack with the
   current spx-examples installer.
+icon: buildings
 ---
 
 # Smart Building Pack: First Run Walkthrough
