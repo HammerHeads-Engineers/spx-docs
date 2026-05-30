@@ -32,7 +32,6 @@ What’s inside this page:
 
 * **Installation Guide** — download the installer from `simplephysx.com/keys`, extract the Windows/Linux delivery archive if needed, complete the native install, run `SPX Setup`, and verify UI/API on localhost.
 * **Advanced: Manual Docker Compose** — run the SPX Server API via Compose without the wizard (server-only).
-* **Installer Wizard & Packs** — reference for packs/profiles, protocol-only installs, generated bundles, and automation options.
 * **Quick Start Guide** — minimal, copy-paste recipes to connect to the server, do basic CRUD on models/instances, tweak attributes, run prepare()/run(), and wire these steps into your unit tests and CI.
 
 **Who is this for?**

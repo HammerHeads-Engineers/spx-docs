@@ -7,6 +7,11 @@ icon: package
 
 # Installer and packs (spx-examples)
 
+This is an advanced reference for users who need to customize generated
+bundles, profiles, supporting services, or automation flows. For a first local
+installation, start with the [Installation Guide](installation-guide.md) and run
+the native `SPX Setup` wizard.
+
 Use the `spx-examples` installer when you want a complete, ready-to-run bundle:
 selected models, supporting services (MQTT, BACnet, KNX, OPC UA, Modbus, SCPI,
 Home Assistant, etc.), and optional SPX UI.
