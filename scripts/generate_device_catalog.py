@@ -15,7 +15,7 @@ import subprocess
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
-from typing import Dict, Iterable, List
+from typing import Dict, List
 
 import yaml
 
@@ -102,16 +102,15 @@ def make_title_case_domain_sort_key(domain_id: str, domain_name_by_id: Dict[str,
     return domain_name_by_id.get(domain_id, domain_id).lower()
 
 
-def detect_vendor(path: str) -> str:
-    # Expected path shape: library/domains/<domain>/<vendor>/<file>.yaml
-    parts = path.split("/")
-    if len(parts) >= 5 and parts[0] == "library" and parts[1] == "domains":
-        return parts[3]
-    return "generic"
-
-
 def model_filename(path: str) -> str:
     return path.split("/")[-1]
+
+
+def normalized_model_field(model: dict, field: str, fallback: str) -> str:
+    value = model.get(field)
+    if isinstance(value, str) and value.strip():
+        return value.strip()
+    return fallback
 
 
 def render_catalog(spx_examples_path: Path, source_ref: str, source_branch: str | None) -> str:
@@ -136,8 +135,8 @@ def render_catalog(spx_examples_path: Path, source_ref: str, source_branch: str 
             ids.add(profile)
         pack_profiles[pack["id"]] = ids
 
-    # pack -> domain -> vendor -> entries
-    catalog = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+    # pack -> domain -> device_class -> vendor -> entries
+    catalog = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(list))))
     domain_totals = Counter()
     protocol_totals = Counter()
 
@@ -148,10 +147,11 @@ def render_catalog(spx_examples_path: Path, source_ref: str, source_branch: str 
         entry = {
             "id": model.get("id", ""),
             "name": model.get("name", ""),
-            "domain": model.get("domain", ""),
+            "domain": normalized_model_field(model, "domain", "unknown"),
+            "device_class": normalized_model_field(model, "device_class", "generic"),
             "path": model["path"],
             "filename": model_filename(model["path"]),
-            "vendor": detect_vendor(model["path"]),
+            "vendor": normalized_model_field(model, "vendor", "generic"),
             "protocols": model.get("protocols", []) or [],
         }
         model_profiles = set(model.get("profiles", []) or [])
@@ -159,14 +159,15 @@ def render_catalog(spx_examples_path: Path, source_ref: str, source_branch: str 
         for pack in model.get("packages", []) or []:
             entry_copy = dict(entry)
             entry_copy["profiles"] = sorted(model_profiles.intersection(pack_profiles.get(pack, set())))
-            catalog[pack][entry_copy["domain"]][entry_copy["vendor"]].append(entry_copy)
+            catalog[pack][entry_copy["domain"]][entry_copy["device_class"]][entry_copy["vendor"]].append(entry_copy)
 
     for pack_id in list(catalog.keys()):
         for domain_id in list(catalog[pack_id].keys()):
-            for vendor in list(catalog[pack_id][domain_id].keys()):
-                catalog[pack_id][domain_id][vendor].sort(
-                    key=lambda item: (item["name"].lower(), item["filename"].lower())
-                )
+            for device_class in list(catalog[pack_id][domain_id].keys()):
+                for vendor in list(catalog[pack_id][domain_id][device_class].keys()):
+                    catalog[pack_id][domain_id][device_class][vendor].sort(
+                        key=lambda item: (item["name"].lower(), item["filename"].lower())
+                    )
 
     snapshot = get_source_snapshot(spx_examples_path, source_ref)
     resolved_source_branch = resolve_source_branch(spx_examples_path, source_ref, source_branch)
@@ -194,7 +195,7 @@ def render_catalog(spx_examples_path: Path, source_ref: str, source_branch: str 
             "",
             "Generated from: `scripts/generate_device_catalog.py`.",
             "",
-            "Grouping on this page: **Pack -> Domain -> Vendor/Family**.",
+            "Grouping on this page: **Pack -> Domain -> Device Class -> Vendor**.",
             "",
             "Snapshot summary:",
             f"- Model entries in `library/catalog/models.yaml`: **{total_models}**",
@@ -212,7 +213,8 @@ def render_catalog(spx_examples_path: Path, source_ref: str, source_branch: str 
             "",
             "- `Device name`: official `name` from `library/catalog/models.yaml`.",
             "- `Model file`: exact YAML file name used in the library.",
-            "- `Vendor/Family`: folder under `library/domains/<domain>/...` (for example `abb`, `siemens`, `generic`).",
+            "- `Device Class`: official `device_class` from `library/catalog/models.yaml`.",
+            "- `Vendor`: official `vendor` from `library/catalog/models.yaml`.",
             "- `Profiles`: only profiles that belong to the current pack.",
             "",
         ]
@@ -229,8 +231,9 @@ def render_catalog(spx_examples_path: Path, source_ref: str, source_branch: str 
 
         all_items: List[dict] = []
         for domain_group in pack_entries.values():
-            for vendor_group in domain_group.values():
-                all_items.extend(vendor_group)
+            for class_group in domain_group.values():
+                for vendor_group in class_group.values():
+                    all_items.extend(vendor_group)
 
         lines.append(f"## `{pack_id}` - {pack_name}")
         lines.append("")
@@ -246,32 +249,43 @@ def render_catalog(spx_examples_path: Path, source_ref: str, source_branch: str 
         for domain_id in sorted_domains:
             domain_name = domain_name_by_id.get(domain_id, domain_id)
             domain_items: List[dict] = []
-            for vendor_items in pack_entries[domain_id].values():
-                domain_items.extend(vendor_items)
+            for class_group in pack_entries[domain_id].values():
+                for vendor_items in class_group.values():
+                    domain_items.extend(vendor_items)
 
             lines.append(f"### Domain: `{domain_id}` - {domain_name}")
             lines.append("")
             lines.append(f"Device count in domain: **{len(domain_items)}**")
             lines.append("")
 
-            for vendor in sorted(pack_entries[domain_id].keys(), key=str.lower):
-                entries = pack_entries[domain_id][vendor]
-                lines.append(f"#### Vendor/Family: `{vendor}`")
+            for device_class in sorted(pack_entries[domain_id].keys(), key=str.lower):
+                class_items: List[dict] = []
+                for vendor_items in pack_entries[domain_id][device_class].values():
+                    class_items.extend(vendor_items)
+
+                lines.append(f"#### Device Class: `{device_class}`")
                 lines.append("")
-                lines.append("| Device name | Model file | Model ID | Protocols | Profiles |")
-                lines.append("| --- | --- | --- | --- | --- |")
-                for entry in entries:
-                    url = (
-                        "https://github.com/HammerHeads-Engineers/spx-examples/blob/"
-                        f"{resolved_source_branch}/{entry['path']}"
-                    )
-                    protocols = ", ".join(entry["protocols"]) if entry["protocols"] else "-"
-                    profiles_cell = ", ".join(f"`{p}`" for p in entry["profiles"]) if entry["profiles"] else "-"
-                    lines.append(
-                        f"| {entry['name']} | [`{entry['filename']}`]({url}) | "
-                        f"`{entry['id']}` | `{protocols}` | {profiles_cell} |"
-                    )
+                lines.append(f"Device count in class: **{len(class_items)}**")
                 lines.append("")
+
+                for vendor in sorted(pack_entries[domain_id][device_class].keys(), key=str.lower):
+                    entries = pack_entries[domain_id][device_class][vendor]
+                    lines.append(f"##### Vendor: `{vendor}`")
+                    lines.append("")
+                    lines.append("| Device name | Model file | Model ID | Protocols | Profiles |")
+                    lines.append("| --- | --- | --- | --- | --- |")
+                    for entry in entries:
+                        url = (
+                            "https://github.com/HammerHeads-Engineers/spx-examples/blob/"
+                            f"{resolved_source_branch}/{entry['path']}"
+                        )
+                        protocols = ", ".join(entry["protocols"]) if entry["protocols"] else "-"
+                        profiles_cell = ", ".join(f"`{p}`" for p in entry["profiles"]) if entry["profiles"] else "-"
+                        lines.append(
+                            f"| {entry['name']} | [`{entry['filename']}`]({url}) | "
+                            f"`{entry['id']}` | `{protocols}` | {profiles_cell} |"
+                        )
+                    lines.append("")
 
     return "\n".join(lines).rstrip() + "\n"
 

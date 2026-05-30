@@ -1,45 +1,55 @@
 ---
 description: >-
   Use the spx-examples installer to assemble a ready-to-run bundle of models,
-  services, and optional UI.
+  services, packs, default instances, and optional UI.
 icon: package
 ---
 
 # Installer and packs (spx-examples)
 
-Use the spx-examples installer when you want a complete, ready-to-run bundle:
-selected models, supporting services (MQTT, BACnet, KNX, etc.), and optional UI.
-The installer generates a self-contained folder you can share with teammates.
+Use the `spx-examples` installer when you want a complete, ready-to-run bundle:
+selected models, supporting services (MQTT, BACnet, KNX, OPC UA, Modbus, SCPI,
+Home Assistant, etc.), and optional SPX UI.
 
-The installer lives in the public spx-examples repository:
+Source of truth:
 https://github.com/HammerHeads-Engineers/spx-examples
 
-## Golden path (6 steps)
+This page is aligned with `spx-examples` `origin/develop` at
+`518d631ed9649810445ac9f0c5474ecd22880167` (`1.1.0-rc.48`). At that snapshot,
+generated bundles use `simplephysx/spx-server:v1.0.0-rc.64` and
+`simplephysx/spx-ui:v1.0.0-rc.68`.
+
+## Golden path (Smart Building Pack)
 
 Prerequisites:
 
-- macOS, Linux, or Windows (PowerShell or pwsh)
+- macOS, Linux, or Windows (PowerShell or `pwsh`)
 - Docker and Docker Compose v2 (`docker compose`)
 - Python 3.9+
+- A valid `SPX_PRODUCT_KEY`
 
-1. Clone spx-examples:
+1. Clone `spx-examples`:
 
    ```bash
    git clone https://github.com/HammerHeads-Engineers/spx-examples.git
    cd spx-examples
    ```
 
-2. Set `SPX_PRODUCT_KEY` (treat it as a secret; use env/CI secrets and never commit it):
+2. Set `SPX_PRODUCT_KEY`:
+
+   macOS/Linux:
 
    ```bash
    export SPX_PRODUCT_KEY="YOUR_REAL_KEY"
    ```
 
+   Windows PowerShell:
+
    ```powershell
    $env:SPX_PRODUCT_KEY = "YOUR_REAL_KEY"
    ```
 
-3. Generate a bundle (canonical command):
+3. Generate the Smart Building quickstart bundle:
 
    ```bash
    python -m installer generate \
@@ -49,19 +59,27 @@ Prerequisites:
      --output build/spx-generated
    ```
 
-4. Enter the output folder:
+4. Enter the generated folder:
 
    ```bash
    cd build/spx-generated
    ```
 
-5. Start the stack (script or docker compose):
+5. Start the stack:
 
-   - macOS/Linux: `./spx-start.sh`
-   - Windows: `pwsh ./spx-start.ps1`
-   - Or: `docker compose -f docker-compose.generated.yml --env-file .env up -d`
+   macOS/Linux:
 
-6. Verify it is healthy:
+   ```bash
+   ./spx-start.sh
+   ```
+
+   Windows PowerShell:
+
+   ```powershell
+   pwsh ./spx-start.ps1
+   ```
+
+6. Verify:
 
    ```bash
    docker compose -f docker-compose.generated.yml --env-file .env ps
@@ -69,31 +87,34 @@ Prerequisites:
    ```
 
    Success criteria:
-   - `curl` returns JSON with `"status":"ok"`.
-   - `docker compose ps` shows `spx-server` as `Up` (healthy).
 
-After installing Smart Building Pack, see: [Smart Building Pack: First Run Walkthrough](first-run-smart-building-pack.md).
+   - `curl` returns JSON with `"status":"ok"`.
+   - `docker compose ps` shows the selected services running.
+   - If `--with-ui` was used, SPX UI opens at `http://localhost:3000`.
+
+After installing Smart Building Pack, see
+[Smart Building Pack: First Run Walkthrough](first-run-smart-building-pack.md).
 
 ## Prerequisites
 
 - Docker and Docker Compose v2 (`docker compose`)
-- Python 3.9+ with pip (installer requirement in spx-examples `pyproject.toml`)
-- Tests and local tooling in spx-examples are exercised on Python 3.9-3.12 in CI
-  (pack tests run on Python 3.10.14)
+- Python 3.9+ with pip (installer requirement in `spx-examples` `pyproject.toml`)
+- Tests and local tooling in `spx-examples` are exercised on Python 3.9-3.12 in CI
 - A valid SPX product key (`SPX_PRODUCT_KEY`)
 
 Optional:
 
-- Node.js + npm if you include BLE models (the start script installs `@simplephysx/spx-ble-adapter`).
+- Node.js + npm if you include BLE models. The Bash start script can install or
+  update `@simplephysx/spx-ble-adapter` when BLE services are selected.
 
 Common environment variables:
 
 | Variable | Purpose | Example |
 | --- | --- | --- |
-| `SPX_PRODUCT_KEY` | Auth key for the SPX API and installer/bootstrap. | `SPX_PRODUCT_KEY=your-product-key` |
-| `SPX_BASE_URL` | Override the SPX API base URL (defaults to `http://localhost:8000`). | `SPX_BASE_URL=http://localhost:8000` |
+| `SPX_PRODUCT_KEY` | Auth key for SPX API and installer/bootstrap. | `SPX_PRODUCT_KEY=your-product-key` |
+| `SPX_BASE_URL` | Override SPX API base URL for client scripts and tests. | `SPX_BASE_URL=http://localhost:8000` |
 
-## Run the installer from the repo (interactive wizard)
+## Run the interactive wizard from the repo
 
 ```bash
 git clone https://github.com/HammerHeads-Engineers/spx-examples.git
@@ -103,69 +124,79 @@ cd spx-examples
 Start the wizard:
 
 - macOS/Linux: `./spx-install.sh`
-- Windows (PowerShell): `pwsh ./spx-install.ps1`
+- Windows PowerShell: `pwsh ./spx-install.ps1`
 
 By default, artifacts are generated under `build/spx-generated/`.
 
-Current wizard flow (important):
+Current wizard flow:
 
-- `Add models from selected packages? [Y/n]`
-- `Add default instances? [Y/n]` (shown only if models are enabled)
-- `Include SPX UI frontend container? [Y/n]`
-- `Prepare offline installation bundle instead of immediate launch? [y/N]`
+- `Enter package numbers (comma-separated, ENTER for default protocols, 0 for protocols, q to quit):`
+- `Add models from selected packages? [Y/n]:` (shown only when packages are selected)
+- `Add default instances? [y/N]:` (shown only when models are enabled)
+- `Include SPX UI frontend container? [Y/n]:`
+- `Start the stack immediately after generation? [Y/n]:`
+- Product key prompt
 
-If you press ENTER at the package selection prompt, the wizard chooses the
-default protocol set (currently Modbus + SCPI/ASCII when available), skips the
-model/instance prompts, and switches to protocol-only service selection.
+If you press `ENTER` at the package selection prompt, the wizard chooses the
+default protocol set (`Modbus + SCPI/ASCII` when available), skips model and
+instance prompts, keeps SPX UI enabled, and starts the stack by default.
 
-For selected packs (`smart_building_pack`, `industrial_iiot_pack`, `embedded_lab_pack`), default instance generation is narrowed to instances explicitly selected for startup.
-
-> Image placeholder: Installer wizard prompts for models/instances/UI/offline options.
+If you select `smart_building_pack`, `industrial_iiot_pack`, or
+`embedded_lab_pack` and opt into default instances, the installer narrows the
+generated instances to the pack's starter set. This keeps first-run stacks small
+enough for the default licensing path.
 
 ## Non-interactive generation
 
-Use pack and profile selectors to build bundles without prompts. Example:
+Use pack and profile selectors to build bundles without prompts.
+
+Smart Building with UI:
+
+```bash
+python -m installer generate \
+  --packages smart_building_pack \
+  --profile-ids bms_quickstart \
+  --with-ui \
+  --output build/spx-generated
+```
+
+Embedded Lab SCPI bundle without UI:
 
 ```bash
 python -m installer generate \
   --packages embedded_lab_pack \
   --profile-ids scpi_lab \
   --no-ui \
-  --start \
   --output build/spx-generated
 ```
 
 Other useful flags:
 
-- `--protocols mqtt,modbus,http` (filter by protocols)
-- `--no-examples` (skip model/instance bootstrap in start scripts)
-- `--no-ui` or `--with-ui`
-- `--allow-missing-product-key` (writes `REPLACE_ME` into `.env`)
-- `--start` (launch after generating)
-
-## Model conventions used by current packs
-
-Recent pack updates standardize several model-language conventions:
-
-- Prefer `k__` for primary control inputs and externally-driven command/setpoint attributes.
-- Prefer hidden `_cycle_time_s` for internal integration step; expose `cycle_time_s` only when intentionally user-facing.
-- Keep hidden helper attributes (prefixed `_`) near the end of the `attributes` block for readability.
+- `--protocols mqtt,modbus,http` filters by protocol.
+- `--with-examples` enables bootstrap runner in generated start scripts (default
+  in non-interactive mode).
+- `--no-examples` skips model and instance bootstrap in start scripts.
+- `--no-ui` or `--with-ui` controls the SPX UI container.
+- `--allow-missing-product-key` writes `SPX_PRODUCT_KEY=REPLACE_ME` into `.env`.
+- `--start` starts the generated stack immediately.
+- `--no-start` generates artifacts without prompting to start.
+- `--print-selection json` prints resolved packages, models, services, and
+  starter instances for CI/debugging.
 
 ## What gets generated
 
-Inside the output folder (for example `build/spx-generated/`):
+Inside the output folder, for example `build/spx-generated/`:
 
-- `docker-compose.generated.yml`: compose file with only the selected services.
-- `.env`: product key placeholder (`SPX_PRODUCT_KEY=REPLACE_ME`) for this bundle.
-- `bundle.json`: selected packages, models, services, and instances; consumed by the
-  bootstrap runner to register models and create instances.
-- `bootstrap_runner.py`: lightweight bootstrap script invoked by `spx-start`.
-- `spx-start.sh` / `spx-stop.sh`: start/stop helpers for Bash or zsh.
-- `spx-start.ps1` / `spx-stop.ps1`: start/stop helpers for PowerShell.
-- `assets/`: copied service configs (MQTT, KNX, Home Assistant, Matter).
-- Home Assistant assets include the `spx_default` theme (selectable in the Home Assistant UI).
-- `extensions/`: copied custom Python extensions.
-- `library/`: selected model YAMLs copied into the bundle for self-contained sharing.
+- `docker-compose.generated.yml`: compose file with only the selected services
+- `.env`: product key value or `SPX_PRODUCT_KEY=REPLACE_ME`
+- `bundle.json`: selected packages, models, services, and instances consumed by bootstrap
+- `bootstrap_runner.py` and `runtime_bootstrap.py`
+- `spx-start.sh` / `spx-stop.sh`: start/stop helpers for Bash or zsh
+- `spx-start.ps1` / `spx-stop.ps1`: start/stop helpers for PowerShell
+- `spx-start.command`, `spx-stop.command`, `spx-start.bat`, `spx-stop.bat`: convenience launchers
+- `assets/`: copied service configs, including MQTT, KNX, Home Assistant, Matter
+- `extensions/`: copied custom Python extensions
+- `library/`: selected model YAMLs copied into the bundle for self-contained sharing
 
 ## Start and stop the stack
 
@@ -181,75 +212,58 @@ From the generated folder:
 The start scripts:
 
 - verify `docker` and Python,
-- install missing Python modules (`requests`, `spx-python`),
-- optionally install and run the BLE adapter if BLE services are selected,
+- prepare a local runtime Python environment,
+- install missing runtime modules such as `requests` and `spx-python`,
+- optionally prepare the BLE adapter if BLE services are selected,
 - run `docker compose down --remove-orphans` and then `docker compose up -d`,
-- bootstrap models and instances from `bundle.json`.
+- bootstrap models and instances from `bundle.json` when examples are enabled.
+
+## Current packs and profiles
+
+| Pack ID | Focus | Profiles |
+| --- | --- | --- |
+| `smart_building_pack` | BMS/BAS demo stack across MQTT, LwM2M/CoAP, HTTP, Modbus, OPC UA, KNX, Matter, BACnet, Home Assistant | `bms_quickstart` |
+| `energy_pack` | e-mobility, OCPP, DER, and energy telemetry | `ev_csms_demo` |
+| `embedded_lab_pack` | BLE, MQTT/LwM2M, SCPI, Modbus, and lab instruments | `mhealth_ci`, `scpi_lab` |
+| `industrial_iiot_pack` | process, motion, IO, MQTT, Modbus, SCPI, HTTP, OPC UA | `process_cell_quickstart`, `iiot_monitoring`, `modbus_master_plc_demo` |
+
+For deeper pack/model counts, see
+[Industry packs and profiles](../usage-scenarios-and-examples/industry-packs.md).
 
 ## Security and CI notes
 
 - Do not commit `.env` files containing `SPX_PRODUCT_KEY`.
 - Use CI secrets to inject `SPX_PRODUCT_KEY` and `SPX_BASE_URL`.
-- Share bundles with `SPX_PRODUCT_KEY=REPLACE_ME` (or remove `.env` before sharing).
+- Share bundles with `SPX_PRODUCT_KEY=REPLACE_ME` or remove `.env` before sharing.
 - Avoid putting keys into command history; prefer environment variables.
 
-## How to verify (Integrator / QA / Developer)
+## How to verify
 
 Integrator:
 
 - `curl -fsS http://localhost:8000/health`
 - `docker compose -f docker-compose.generated.yml --env-file .env ps`
-- Confirm your target protocol port is listening (for example Modbus on `5020-5120`).
+- Confirm your selected protocol ports are exposed.
 
 QA/CI:
 
-- `python -m installer generate --packages <pack> --output build/ci/<pack> --no-start`
+- `python -m installer generate --packages <pack> --output build/ci/<pack> --allow-missing-product-key --no-start`
 - `build/ci/<pack>/spx-start.sh`
 - `curl -fsS http://localhost:8000/health`
 
 Developer:
 
-- Update `library/catalog/*.yaml` and `profiles/<pack>/*.yaml`, then regenerate:
-  `python -m installer generate --packages <pack> --output build/spx-generated`
+- Update `library/catalog/*.yaml` and `profiles/<pack>/*.yaml`.
+- Regenerate with `python -m installer generate --packages <pack> --output build/spx-generated`.
 
 ## Cleanup and uninstall
 
 - Stop containers: `./spx-stop.sh` or `pwsh ./spx-stop.ps1`
-- Remove containers and volumes: `docker compose -f docker-compose.generated.yml --env-file .env down -v`
-- Remove generated files: delete the generated folder (for example `build/spx-generated`)
-- Remove BLE adapter (if installed): `npm uninstall -g @simplephysx/spx-ble-adapter`
+- Remove containers and volumes:
 
-## Build shareable installer packages (optional)
+  ```bash
+  docker compose -f docker-compose.generated.yml --env-file .env down -v
+  ```
 
-If you need a redistributable archive (no repo clone):
-
-```bash
-scripts/build_installer_package.sh
-```
-
-This creates `dist/spx-installer/` and `dist/spx-installer.tgz`.
-Recipients extract and run the platform launchers:
-
-- `spx-setup.command` (macOS)
-- `spx-setup.desktop` (Linux desktop)
-- `spx-setup.sh` (macOS/Linux shell)
-- `spx-setup.bat` (Windows)
-
-The launchers call the installer engine (`spx-install.sh` / `spx-install.ps1`)
-for the interactive wizard.
-
-For single-file installers:
-
-```bash
-scripts/build_self_extractors.sh --version v1.2.3
-```
-
-Outputs:
-
-- `dist/spx-installer-v1.2.3.run` (macOS/Linux)
-- `dist/spx-installer-v1.2.3.ps1` (Windows)
-
-## Packs and profiles
-
-Packs and profiles define the model and service bundles available to the installer.
-See: [Industry packs and profiles](../usage-scenarios-and-examples/industry-packs.md).
+- Remove generated files: delete the generated folder, for example `build/spx-generated`
+- Remove BLE adapter if installed globally: `npm uninstall -g @simplephysx/spx-ble-adapter`
