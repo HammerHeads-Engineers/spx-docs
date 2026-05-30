@@ -143,6 +143,19 @@ Other useful flags:
 - `--allow-missing-product-key` (writes `REPLACE_ME` into `.env`)
 - `--start` (launch after generating)
 
+Industrial Modbus client/controller example:
+
+```bash
+python -m installer generate \
+  --packages industrial_iiot_pack \
+  --profile-ids modbus_master_plc_demo \
+  --no-ui \
+  --output build/spx-generated
+```
+
+For the guided flow, see
+[Use SPX as a Modbus Client / PLC Controller](modbus-client-controller.md).
+
 ## Model conventions used by current packs
 
 Recent pack updates standardize several model-language conventions:

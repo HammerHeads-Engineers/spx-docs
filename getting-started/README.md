@@ -33,6 +33,7 @@ What’s inside this page:
 * **Installation Guide** — download the installer package from Product & Keys, run `spx-setup.*`, and verify UI/API on localhost.
 * **Advanced: Manual Docker Compose** — run the SPX Server API via Compose without the wizard (server-only).
 * **Installer Wizard & Packs** — reference for packs/profiles, protocol-only installs, generated bundles, and automation options.
+* **Modbus Client / PLC Controller** — use SPX as an active Modbus master that polls and controls downstream Modbus devices.
 * **Quick Start Guide** — minimal, copy-paste recipes to connect to the server, do basic CRUD on models/instances, tweak attributes, run prepare()/run(), and wire these steps into your unit tests and CI.
 
 **Who is this for?**

@@ -54,7 +54,7 @@ Total model entries in `library/catalog/models.yaml`: **46 -> 87** (**+41**)
 | `smart_building_pack` | BMS/BAS demo stack | Protocols: mqtt, lwm2m/coap, http, modbus, opcua, knx, matter, bacnet<br>Services: mqtt_broker, lwm2m_server, modbus_tcp_gateway, http_gateway, opcua_server, knx_gateway, bacnet_gateway, homeassistant_bridge, matter_server | [`bms_quickstart`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/smart_building_pack/bms_quickstart.yaml) |
 | `energy_pack` | e-mobility and DER | Protocols: http, mqtt, modbus, ocpp<br>Services: mqtt_broker, modbus_tcp_gateway, http_gateway, ocpp_central_system | [`ev_csms_demo`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/energy_pack/ev_csms_demo.yaml) |
 | `embedded_lab_pack` | BLE and lab instruments | Protocols: ble, mqtt, lwm2m/coap, scpi, modbus<br>Services: btvirt_adapter, mqtt_broker, lwm2m_server, scpi_tcp_stack, modbus_tcp_gateway | [`mhealth_ci`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/embedded_lab_pack/mhealth_ci.yaml), [`scpi_lab`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/embedded_lab_pack/scpi_lab.yaml) |
-| `industrial_iiot_pack` | industrial monitoring | Protocols: modbus, mqtt, http, scpi, opcua<br>Services: modbus_tcp_gateway, mqtt_broker, http_gateway, scpi_tcp_stack, opcua_server | [`process_cell_quickstart`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/industrial_iiot_pack/process_cell_quickstart.yaml), [`iiot_monitoring`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/industrial_iiot_pack/iiot_monitoring.yaml) |
+| `industrial_iiot_pack` | industrial monitoring and PLC-style control | Protocols: modbus, mqtt, http, scpi, opcua<br>Services: modbus_tcp_gateway, mqtt_broker, http_gateway, scpi_tcp_stack, opcua_server | [`process_cell_quickstart`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/industrial_iiot_pack/process_cell_quickstart.yaml), [`iiot_monitoring`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/industrial_iiot_pack/iiot_monitoring.yaml), [`modbus_master_plc_demo`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/industrial_iiot_pack/modbus_master_plc_demo.yaml) |
 
 ## Examples (copy/paste)
 
@@ -75,6 +75,19 @@ python -m installer generate \
   --profile-ids scpi_lab \
   --no-ui
 ```
+
+Industrial Modbus master PLC demo:
+
+```bash
+python -m installer generate \
+  --packages industrial_iiot_pack \
+  --profile-ids modbus_master_plc_demo \
+  --no-ui
+```
+
+This profile demonstrates SPX as an active Modbus master/controller. See
+[Use SPX as a Modbus Client / PLC Controller](../getting-started/modbus-client-controller.md)
+for the guided workflow.
 
 For pack-specific details, see:
 

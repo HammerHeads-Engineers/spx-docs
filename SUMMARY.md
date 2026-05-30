@@ -14,6 +14,7 @@
   * [Build Your First Simulation](getting-started/build-your-first-simulation.md)
   * [Choose a protocol adapter](getting-started/choose-a-protocol-adapter.md)
   * [Add Modbus TCP/IP to Your Simulation](getting-started/add-communication-protocol.md)
+  * [Use SPX as a Modbus Client / PLC Controller](getting-started/modbus-client-controller.md)
   * [Extend with a Custom Component](getting-started/extend-with-custom-component.md)
 * [Advanced Setup & Automation](getting-started/advanced-setup.md)
   * [Loading Python Classes as Models](getting-started/code-defined-simulations.md)
