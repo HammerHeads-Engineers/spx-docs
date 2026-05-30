@@ -158,3 +158,9 @@ Write semantics:
 - Coils (`area: c_o`) and holding registers (`area: h_r`) are writable.
 - Discrete inputs (`d_i`) and input registers (`i_r`) are read-only (outbound writes will error).
 - Codec/length must match (for example `float` requires `length: 2`; `uint_16` requires `length: 1`).
+
+## Next steps on simplephysx.com
+
+Explore the Modbus TCP simulator workflow:
+
+- [Modbus TCP Simulator](https://www.simplephysx.com/modbus-simulator)

@@ -41,3 +41,9 @@ communication:
 
 - Dependency: requires `asyncua` in the SPX Server environment.
 - Bindings support either `attributes` (single attribute) or explicit `read_attribute` / `write_attribute` for bidirectional nodes.
+
+## Next steps on simplephysx.com
+
+Explore the OPC UA simulator workflow:
+
+- [OPC UA Simulator](https://www.simplephysx.com/opc-ua-simulator)

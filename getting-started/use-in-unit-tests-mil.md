@@ -223,3 +223,9 @@ if __name__ == "__main__":
 ## Next: CI integration
 
 In the next article we’ll wire these tests into **GitHub Actions**: provisioning Python, exporting `SPX_PRODUCT_KEY` as a secret, starting the SPX Server service, and running the suite headlessly.
+
+## Next steps on simplephysx.com
+
+Explore the embedded testing workflow behind SPX MiL tests:
+
+- [Embedded Software Testing](https://www.simplephysx.com/embedded-software-testing)

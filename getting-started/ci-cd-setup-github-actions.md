@@ -187,3 +187,9 @@ GitHub Actions workflows must be YAML (`.yml`/`.yaml`). This JSON is a reference
 - Add a test matrix (OS / Python) to widen coverage.
 - Add integration tests that call your API endpoints.
 - Wire this CI to **branch protection rules** so PRs must pass before merge.
+
+## Next steps on simplephysx.com
+
+Explore the embedded testing workflow that CI/CD supports:
+
+- [Embedded Software Testing](https://www.simplephysx.com/embedded-software-testing)

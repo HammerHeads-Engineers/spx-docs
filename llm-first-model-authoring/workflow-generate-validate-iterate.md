@@ -162,3 +162,9 @@ Include these in your final update/PR description:
 - files changed,
 - commands executed for validation,
 - assumptions and open questions.
+
+## Next steps on simplephysx.com
+
+Explore the embedded testing workflow for validating generated models:
+
+- [Embedded Software Testing](https://www.simplephysx.com/embedded-software-testing)

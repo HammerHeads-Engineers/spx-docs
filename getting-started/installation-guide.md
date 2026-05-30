@@ -252,3 +252,10 @@ an advanced fallback flow, debugging payload, or server-only setup.
 - Smart Building Pack walkthrough: [Smart Building Pack: First Run Walkthrough](first-run-smart-building-pack.md)
 - Build your own simulation: [Build Your First Simulation](build-your-first-simulation.md)
 - Troubleshooting runbook: [Common Issues and Solutions](../troubleshooting-and-support/common-issues-and-solutions.md)
+
+## Next steps on simplephysx.com
+
+Explore where SPX fits in testing and commissioning workflows:
+
+- [Embedded Software Testing](https://www.simplephysx.com/embedded-software-testing)
+- [Virtual Commissioning](https://www.simplephysx.com/virtual-commissioning)

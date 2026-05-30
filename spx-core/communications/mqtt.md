@@ -115,3 +115,9 @@ communication:
           topic: telemetry/temp
           direction: publish
 ```
+
+## Next steps on simplephysx.com
+
+Explore the MQTT simulator workflow:
+
+- [MQTT Simulator](https://www.simplephysx.com/mqtt-simulator)

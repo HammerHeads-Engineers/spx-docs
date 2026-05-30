@@ -51,3 +51,9 @@ communication:
 - Example models (spx-examples):
   - [`hvac_flexit_nordic__bacnet.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/hvac_flexit_nordic__bacnet.yaml)
   - [`fire_alarm_panel__bacnet.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/main/library/domains/iot/generic/fire_alarm_panel__bacnet.yaml)
+
+## Next steps on simplephysx.com
+
+Explore the BACnet simulator workflow:
+
+- [BACnet Simulator](https://www.simplephysx.com/bacnet-simulator)

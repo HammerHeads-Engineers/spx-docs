@@ -40,3 +40,9 @@ Related docs:
 * MiL tests: [`getting-started/use-in-unit-tests-mil.md`](../getting-started/use-in-unit-tests-mil.md)
 * Snapshots: [`getting-started/snapshots-guide.md`](../getting-started/snapshots-guide.md)
 * Custom extensions: [`getting-started/extend-with-custom-component.md`](../getting-started/extend-with-custom-component.md)
+
+## Next steps on simplephysx.com
+
+Explore the testing workflow that LLM-authored models should validate against:
+
+* [Embedded Software Testing](https://www.simplephysx.com/embedded-software-testing)

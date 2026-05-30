@@ -55,3 +55,9 @@ communication:
           read_attribute: "#attr(room_temperature_c)"
           write_attribute: "#attr(room_temperature_c)"
 ```
+
+## Next steps on simplephysx.com
+
+Explore the KNX simulator workflow:
+
+- [KNX Simulator](https://www.simplephysx.com/knx-simulator)

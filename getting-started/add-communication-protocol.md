@@ -60,6 +60,13 @@ for k in range(1, 51):  # ~5 seconds with dt=0.1
 ```
 {% endcode %}
 
+## Next steps on simplephysx.com
+
+Explore the Modbus pillar and testing workflow related to this guide:
+
+- [Modbus TCP Simulator](https://www.simplephysx.com/modbus-simulator)
+- [Embedded Software Testing](https://www.simplephysx.com/embedded-software-testing)
+
 In this configuration:
 
 * `port` and `host` define where the Modbus TCP server listens (inside the SPX Server container). Common default is `0.0.0.0:502`; in this example we set them explicitly for predictability.

@@ -118,3 +118,13 @@ instance.
 
 - See [Common Issues and Solutions](../troubleshooting-and-support/common-issues-and-solutions.md).
 - Use [How to Get Support](../troubleshooting-and-support/how-to-get-support.md) to collect logs and contact the team.
+
+## Next steps on simplephysx.com
+
+Explore the smart-building protocols and commissioning workflow behind this pack:
+
+- [Virtual Commissioning](https://www.simplephysx.com/virtual-commissioning)
+- [BACnet Simulator](https://www.simplephysx.com/bacnet-simulator)
+- [MQTT Simulator](https://www.simplephysx.com/mqtt-simulator)
+- [Modbus TCP Simulator](https://www.simplephysx.com/modbus-simulator)
+- [KNX Simulator](https://www.simplephysx.com/knx-simulator)
