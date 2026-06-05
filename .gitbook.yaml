@@ -1,0 +1,9 @@
+root: ./
+
+structure:
+  readme: README.md
+  summary: SUMMARY.md
+
+redirects:
+  spx-core/communications/bacnet: spx-development-guide/spx-core/system/templates/communications/bacnet
+  spx-core/communications/bacnet/: spx-development-guide/spx-core/system/templates/communications/bacnet

@@ -16,7 +16,7 @@ SPX Server registers protocol components via `@register_class(name="...")`.
 | `modbus_tcp` | `spx-core/communications/modbus.md` | Documented as a legacy/compat adapter (avoid for new models; prefer `modbus_slave`). |
 | `modbus_slave` | `spx-core/communications/modbus.md` | Documented (auto-port behaviour, mapping vs bindings, blackhole `detach/attach`). |
 | `modbus_master` | `spx-core/communications/modbus.md` | Documented (binding-based poller/client, inbound/outbound). |
-| `bacnet` | `spx-core/communications/bacnet.md` | Minimal config + links to spx-examples models. |
+| `bacnet` | [`spx-development-guide/spx-core/system/templates/communications/bacnet`](https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/bacnet) | Minimal config + links to spx-examples models. |
 | `coap_server` | `spx-core/communications/coap.md` | Minimal config example included. |
 | `dali` | `spx-core/communications/dali.md` | Minimal config example included. |
 | `knx_ip` | `spx-core/communications/knx.md` | Documented with a real spx-examples model. |

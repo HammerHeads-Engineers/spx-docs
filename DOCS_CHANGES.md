@@ -42,7 +42,7 @@ Validate:
 - `spx-core/communications/http.md` — Rewritten to match `http_endpoint` + `endpoints` schema and grounded in `spx-examples`.
 - `spx-core/communications/mqtt.md` — Rewritten to match bindings-based `mqtt` schema; added `mqtt-ha` coverage (brokers, availability, discovery).
 - `spx-core/communications/modbus.md` — Rewritten to cover `modbus_slave` / `modbus_tcp` / `modbus_master`, marked `modbus_tcp` as legacy (avoid for new models), and standardized Modbus area codes (`h_r/i_r/c_o/d_i`).
-- `spx-core/communications/bacnet.md` / `coap.md` / `dali.md` / `knx.md` / `lwm2m.md` / `matter.md` / `mbus.md` / `ocpp.md` / `opcua.md` / `profinet.md` / `redfish.md` / `snmp.md` — Added minimal, test-grounded pages for all remaining SPX Server communication adapters.
+- `BACnet` (`https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/bacnet`) / `coap.md` / `dali.md` / `knx.md` / `lwm2m.md` / `matter.md` / `mbus.md` / `ocpp.md` / `opcua.md` / `profinet.md` / `redfish.md` / `snmp.md` — Added minimal, test-grounded pages for all remaining SPX Server communication adapters.
 - `getting-started/add-communication-protocol.md` — Updated the tutorial to use `modbus_slave` (recommended) instead of legacy `modbus_tcp`; kept copy‑pasteable Modbus client validation and port exposure notes.
 - `troubleshooting-and-support/common-issues-and-solutions.md` — Expanded to 10 issues in Symptom/Cause/Fix format with concrete debug commands.
 - `troubleshooting-and-support/faqs.md` — Expanded to 14 FAQs for integrators/dev/QA (determinism, CI, version pinning, validation).
