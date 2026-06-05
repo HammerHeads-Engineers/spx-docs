@@ -22,6 +22,6 @@ Use the SDK for prototyping; deploy the same definitions to the core when you ne
 
 * [System Runtime](system/)
 * [Actions Library](actions.md)
-* [Communication Adapters](/broken/pages/Xj0Kch85KiFEX0H4nFce)
+* [Communication Adapters](communications/README.md)
 * [Snapshots](snapshots.md)
 * [Extending the Core](extending.md)
