@@ -13,7 +13,7 @@ Names and file names are aligned 1:1 with `spx-examples` so docs search can find
 > These are reference simulation models from `spx-examples`, not official digital twins certified by device manufacturers.
 > They are not officially supported by manufacturers and we do not guarantee a 100% functional match to real hardware behavior.
 
-Source snapshot: `spx-examples` commit `518d631ed9649810445ac9f0c5474ecd22880167` (2026-05-16T22:16:15+02:00)
+Source snapshot: `spx-examples` commit `6911e060c59f2319e8e7dc40f6e9da473fed5943` (2026-10-11T13:19:16Z)
 
 Generated from: `scripts/generate_device_catalog.py`.
 
