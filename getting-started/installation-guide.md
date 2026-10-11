@@ -15,9 +15,12 @@ Quick path:
 
 1. Make sure Docker is installed and running.
 2. Download the installer for your platform from
-   [simplephysx.com/keys](https://simplephysx.com/keys).
+   the signed-in download page. For RC testing use
+   [staging Downloads](https://staging.simplephysx.com/account/downloads),
+   channel **Development**.
 3. Run the native installer.
-4. Launch `SPX Setup` from the installed SPX Tools.
+4. On macOS, use the `SPX Setup` window opened automatically after installation.
+   Open it from SPX Tools if it did not launch; avoid running a second wizard.
 5. Let `SPX Setup` generate and start your local SPX environment.
 6. Verify the UI and API on localhost.
 7. Launch `SPX MCP Setup`, open the generated `SPX MCP Workspace` in Codex,
@@ -43,7 +46,9 @@ tests, use the public
 - Windows and macOS users should use Docker Desktop.
 - Linux users need Docker Engine with Docker Compose v2.
 - A valid SPX product key is required.
-- Python 3.10+ is required for `SPX MCP Setup`.
+- Native macOS and Windows packages provide Python 3.12, including MCP support.
+  Portable/Linux setup uses the host Python: 3.9+ for the installer and 3.10+
+  for `SPX MCP Setup`.
 - Local ports `3000` and `8000` should be available.
 
 > Security: treat your `SPX_PRODUCT_KEY` as a secret. Do not commit it to git
@@ -51,9 +56,12 @@ tests, use the public
 
 ## 1) Download the installer
 
-Download the current installer from
-[simplephysx.com/keys](https://simplephysx.com/keys). This page contains your
-available SPX product keys and the download links for the prepared installers.
+For the current public platform, download through
+[simplephysx.com/keys](https://simplephysx.com/keys). The new staging platform
+has separate [Downloads](https://staging.simplephysx.com/account/downloads) and
+[Product Keys](https://staging.simplephysx.com/account/product-keys) pages.
+Select **Development** to qualify a release candidate. Confirm the package
+version and compare its SHA-256 with the checksum on the download page.
 
 Use the package for your platform:
 
@@ -61,15 +69,10 @@ Use the package for your platform:
 - macOS: `spx-installer-macos-<version>.pkg`
 - Linux/Unix: `spx-installer-<version>.run`
 
-On Windows and Linux, the download page may wrap the installer in a delivery
-archive:
-
-- Windows: download the `.zip`, extract it, then run the `.exe`.
-- Linux/Unix: download the `.tar`, extract it, then run the `.run`.
-- macOS: download and open the `.pkg`.
-
-These are the recommended installer packages. Portable `.tgz` and `.zip`
-payloads are fallback artifacts for advanced or internal use.
+Use the file actually offered for the selected release. A portable `.tgz`
+contains the unpacked installer payload and shell launchers; it is not a `.tar`
+delivery wrapper containing a `.run`. If a Windows delivery `.zip` is offered,
+extract it before running its `.exe`. Open the macOS `.pkg` directly.
 
 ## 2) Run the native installer
 
@@ -89,16 +92,17 @@ Open `spx-installer-macos-<version>.pkg`.
 
 - Installs SPX Tools into `/Applications/SPX Tools/`.
 - Uses the native macOS Installer experience, including the license step.
+- Installs the official universal Python 3.12 runtime and opens Setup
+  automatically after installation for the signed-in user.
 - Installs launcher apps such as `SPX Setup.app`, `SPX Start.app`,
   `SPX MCP Setup.app`, `SPX Stop.app`, `SPX Cleanup.app`, and
   `SPX Uninstall.app`.
 
 ### Linux/Unix
 
-Extract the Linux archive if needed, make the `.run` executable, and run it:
+For a self-extracting `.run`, make it executable and run it:
 
 ```bash
-tar -xf <downloaded-file>.tar
 chmod +x spx-installer-<version>.run
 ./spx-installer-<version>.run
 ```
@@ -107,9 +111,18 @@ The `.run` package starts the same terminal setup flow used by SPX Setup. After
 setup, day-to-day work happens through the generated shell scripts such as
 `spx-start.sh` and `spx-stop.sh`.
 
+If Downloads offers a portable `.tgz`, use:
+
+```bash
+tar -xzf spx-installer-<version>.tgz
+cd spx-installer
+./spx-install.sh
+```
+
 ## 3) Run SPX Setup
 
-After the native installer finishes, launch `SPX Setup`.
+Use the automatically opened Setup on macOS. If it is absent, launch
+`SPX Setup` once from the location below.
 
 Where to find it:
 
@@ -130,6 +143,10 @@ If you accept the default package selection, setup uses the default protocol
 set (`Modbus + SCPI/ASCII` when available), keeps SPX UI enabled, and skips
 model installation. If you select a pack, decide explicitly whether to add
 models and starter instances.
+
+For a protocol-only first run, explicitly enable model installation. The UI
+initially has no instances; follow [First device in the UI](README.md#first-device-in-the-ui)
+to create one. Keep LAN exposure disabled for local checks.
 
 ## 4) Verify the local stack
 
@@ -153,6 +170,16 @@ After `SPX Setup` starts the stack, or after running `SPX Start`, verify:
 3. Open API docs at `http://localhost:8000/docs`.
 
 The expected health response includes `"status":"ok"`.
+
+Record the installer version and the SPX Server/UI image tags from the generated
+`docker-compose.generated.yml`. They have separate version series. The
+installer's `installer/compatibility.py` records the supported Server/UI pair;
+do not replace either image with an arbitrary newer tag during RC qualification.
+
+If Docker is unavailable, Setup explains whether the CLI, Engine or Compose is
+missing. Start or unpause Docker Desktop, wait for Engine to be running, and
+press Enter to retry. On macOS the tools search Docker Desktop's bundled CLI
+and the per-user Docker bin directory, so a manual PATH edit is not required.
 
 ## 5) Connect an LLM with SPX MCP
 
@@ -206,12 +233,17 @@ after setup has already generated the environment.
 
 ### `SPX Stop`
 
-Stops the generated SPX stack cleanly.
+Stops the services carrying this installation's ownership ID, including KNX
+and other selected auxiliary services. Rollback snapshots and unrelated
+containers are excluded. Verify the selected services are stopped before
+starting again.
 
 ### `SPX Cleanup`
 
-Removes the generated SPX environment and related Docker resources. It does not
-uninstall the native SPX Tools package.
+On macOS, stops the managed stack and removes the generated/runtime directories.
+This deletes local configuration and disk snapshots in those directories.
+It does not uninstall SPX Tools or remove Docker images, volumes or unrelated
+containers. Export snapshots you want to keep before using Cleanup.
 
 ### `SPX MCP Setup`
 
@@ -221,6 +253,10 @@ the SPX stack is generated and reachable on `http://localhost:8000`.
 ### `SPX Uninstall`
 
 macOS has a dedicated `SPX Uninstall.app` in `/Applications/SPX Tools/`.
+It stops the local stack, removes SPX support files and launcher apps, and
+forgets the SPX package receipt. The dialog lets you choose whether to remove
+the managed MCP workspace. Back up snapshots first. Docker Desktop and the
+shared Python framework are not removed by this SPX operation.
 
 On Windows, uninstall SPX Tools through the standard Windows Apps / installed
 app management flow.

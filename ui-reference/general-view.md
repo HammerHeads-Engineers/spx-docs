@@ -14,12 +14,13 @@ Use the UI for interactive inspection and debugging. It helps you confirm what i
 
 <figure><img src="../.gitbook/assets/Zrzut ekranu 2026-01-19 o 10.47.24.png" alt=""><figcaption></figcaption></figure>
 
-* [Instances](instances.md): inspect running instances, scenario triggers, and logs.
+* **System**: build a combined chart from selected instance attributes; Timer and Polling are tabs here.
+* [Instances](instances.md): inspect running instances, attributes, communication, scenario triggers, and logs; each instance also has Timer and Polling tabs.
 * [Models](models.md): review loaded models and their definitions.
-* [Connections](connections.md): wire attribute data flow between instances.
+* [Connections](connections.md): wire attribute data flow between instances; protocol adapters are shown in instance Communication.
 * [Logs](logs.md): inspect system and instance logs with filters and source selection.
-* [Timer & Polling](timer-and-polling.md): separate Timer and Polling pages for system attributes.
-* [Snapshots](snapshots.md): capture and restore known-good states during testing.
+* [Timer & Polling](timer-and-polling.md): timer and polling controls within System and instance details.
+* [Snapshots](snapshots.md): save configuration to disk and restore it during testing. Restore resets runtime measurements and requires a manual Start of restored instances.
 * [Settings](settings.md): review UI-level settings and connectivity details.
 
 #### What to keep in mind
