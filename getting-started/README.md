@@ -35,6 +35,9 @@ For the latest runnable models, installer profiles, generated bundle tooling,
 and MiL tests, use the public
 [spx-examples repository](https://github.com/HammerHeads-Engineers/spx-examples).
 
+Product installation and bundle generation are owned by private `spx-installer`.
+The public Examples repository does not contain the product installer or Compose bundle.
+
 What’s inside this page:
 
 * **Installation Guide** — sign in, download the platform installer, complete the native installation, use the automatically opened `SPX Setup` on macOS, and verify UI/API on localhost. RC qualification uses [staging Downloads](https://staging.simplephysx.com/downloads), channel **Development**, and a key from [Product Keys](https://staging.simplephysx.com/account/product-keys).
@@ -51,7 +54,7 @@ Prerequisites (at a glance):
 
 * Docker & Docker Compose (to run the server)
 * Native macOS and Windows installers provide Python 3.12; no separate Python installation is needed for that path
-* Portable/Linux or repository workflows require host Python `>=3.9`, or `>=3.10` when using MCP
+* Portable/Linux MCP requires host Python `>=3.10`; use Python 3.12 for public repository development
 * A valid `SPX_PRODUCT_KEY`
 * Network access to pull Docker images and install Python dependencies
 

@@ -40,5 +40,7 @@ Maintainers run `scripts/export_openapi.py --server <authorized-local-server-rep
 using the pinned server dependency environment. It reads the exact manifest
 commit and imports both actual routers. Public CI validates the committed
 schema and provenance without any private source access or credentials.
-Import this file into the existing `hammerheadsengineers-api` specification in
-GitBook, then verify its rendered operations before publication.
+The existing `hammerheadsengineers-api` specification imports this public file
+from `spx-docs/main`. GitBook checks the URL every six hours; an explicit Update
+can refresh it sooner. Approved schema changes therefore follow the same main
+review path as the portal. Verify rendered operations after each schema update.

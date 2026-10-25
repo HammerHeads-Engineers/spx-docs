@@ -51,6 +51,22 @@ registry. The same connection suite passed 27/27 in isolation; the API/model
 suite passed 85/85 separately. No runtime fix was introduced. Keep isolation
 until the shared registry fixture is restored reliably in the source test suite.
 
+## Publication and automation validation
+
+GitBook's existing space was reconfigured from version-1.0.0 to main with
+GitHub → GitBook as the initial direction. The same site/domain and OpenAPI
+identity are retained. `hammerheadsengineers-api` imports the checked-in schema
+from the public main URL, with GitBook's six-hour refresh interval.
+
+Both daily/manual workflows were executed on GitHub Actions. Unchanged canonical
+model/MCP pages and catalog content did not create new PRs or update provenance.
+A second catalog run after the Examples README/context merge also produced no
+changes, demonstrating that the two flows do not feed back into each other.
+Installer staging accepted all 160 committed context files with full offline
+provenance; existing agent/MCP guards, imports and tool inventory passed. The
+50 installer context/workspace documentation tests also passed. The released
+installer context pin was deliberately not changed by a documentation update.
+
 ## Page evidence inventory
 
 The source column identifies the implementation section used for the page's
