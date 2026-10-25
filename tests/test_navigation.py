@@ -20,6 +20,7 @@ class NavigationContracts(unittest.TestCase):
         preview = 'https://docs.simplephysx.com/~/revisions/reviewed'
         self.assertEqual(normalize(preview + '/readme', preview), '/')
         self.assertEqual(normalize(preview, preview), '/')
+        self.assertEqual(normalize(preview + '/.md', preview), '/readme.md')
         self.assertEqual(at_site(preview, preview), preview)
         self.assertEqual(normalize(preview + '/reference/model.md', preview), '/reference/model.md')
         self.assertEqual(at_site(preview + '/reference/model.md', preview), preview + '/reference/model.md')
