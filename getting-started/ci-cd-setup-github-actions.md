@@ -9,6 +9,12 @@ icon: github
 
 This guide shows how to run your SPX server in CI and execute your unit tests against it using **GitHub Actions**. The workflow below is intentionally minimal, production‑safe, and based on a CI secret for the license key ("Path B").
 
+Use a disposable CI deployment with pinned images from [Release Notes](../release-notes.md).
+Pin `spx-python==1.0.0rc3` (and `spx-sdk==1.0.0rc21` when used) in `requirements.txt`.
+This recipe is for a project-owned Compose deployment, not a managed desktop workspace.
+Do not send product keys to untrusted fork PRs; skip secret-dependent integration
+jobs there. A skipped job is not runtime verification.
+
 ## Prerequisites
 - A repository with your SPX project and a working `docker compose` setup that exposes the API on `http://localhost:8000`.
 - A valid **SPX_PRODUCT_KEY** for the runner to use.
@@ -35,7 +41,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.12"]
     env:
       SPX_PRODUCT_KEY: ${{ secrets.SPX_PRODUCT_KEY }}
       SPX_BASE_URL: http://localhost:8000
@@ -95,9 +101,6 @@ GitHub Actions workflows must be YAML (`.yml`/`.yaml`). This JSON is a reference
         "fail-fast": false,
         "matrix": {
           "python-version": [
-            "3.9",
-            "3.10",
-            "3.11",
             "3.12"
           ]
         }
@@ -150,7 +153,7 @@ GitHub Actions workflows must be YAML (`.yml`/`.yaml`). This JSON is a reference
 
 ## What this workflow does
 1. **Checks out** your repository (`actions/checkout`).
-2. **Sets up Python** using a matrix (3.9–3.12).
+2. **Sets up Python** using a matrix (Python 3.12 for the documented bundle).
 3. **Installs dependencies** from `requirements.txt`.
 4. **Starts the SPX server** via `docker compose up -d` (it uses the compose file in your repo).
 5. **Waits for readiness** by polling `http://localhost:8000/health`.

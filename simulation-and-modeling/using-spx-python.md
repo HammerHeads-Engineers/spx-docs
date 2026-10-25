@@ -1,294 +1,113 @@
 # Using spx-python for Simulation
 
-spx-python is a **Pythonic wrapper around the SPX Server API**. It exposes the SPX system as a **dictionary-like tree** so you can build, control, and inspect simulations directly from Python. With spx-python you can:
+`spx-python` RC3 is an HTTP client. It controls a running SPX Server; it does
+not execute the model locally like `spx_sdk.model.Model`.
 
-- Create models and instantiate them,
-- Read/write attributes (internal/external),
-- Control simulation time deterministically,
-- Run Model-in-the-Loop (MiL) tests, inject faults, and verify outcomes.
+## Prerequisites
 
-> **Key idea:** your production app (SUT) talks to the simulation over the real protocol (MQTT/HTTP/…); meanwhile your **tests** use spx-python as a **control channel** to set parameters, advance time, and check results.
+Use a disposable SPX Server RC76 and the [documented bundle versions](../release-notes.md).
+Do not run introductory scripts against a shared system. Use Python 3.12 in a
+virtual environment and install `spx-python==1.0.0rc3`. Set `SPX_PRODUCT_KEY` in
+your environment and optionally `SPX_BASE_URL` (default `http://localhost:8000`).
+For managed workspaces use [MCP onboarding](../getting-started/connect-llm-with-spx-mcp.md);
+do not replace the workspace's private connection binding with a guessed `.env`.
 
----
+## Complete program
 
-## Purpose
+Save as `client_sensor.py` in any working directory and run
+`python client_sensor.py`. It creates a model and instance with reserved demo
+names, refuses to overwrite existing objects, then stops and deletes only the
+objects it created. Expected output:
 
-spx-python provides **deterministic, programmable control** over SPX simulations:
-
-- Build systems programmatically (models → instances → connections),
-- Manipulate parameters and states during execution,
-- Advance time explicitly for **reproducible** scenarios,
-- Automate MiL tests and edge-case validation,
-- Prototype scenarios quickly without hardware.
-
----
-
-## Installation and Setup
-
-Install from PyPI:
-
-```bash
-pip install spx-python
+```text
+[(0.0, 31.25), (0.1, 31.25), (0.2, 31.25)]
 ```
 
-Connect to a running SPX Server:
-
+<!-- tutorial:client_sensor.py:start -->
 ```python
+"""Use a disposable server: this creates and removes docs_pt100/docs_sensor."""
 import os
 import spx_python
 
-client = spx_python.init(
-    address="http://localhost:8000",
-    product_key=os.environ.get("SPX_PRODUCT_KEY", ""),
-)
-
-# The client is dict-like. You can inspect top-level keys:
-print(list(client.keys()))  # e.g. ['models', 'instances', 'connections', 'timer', 'polling']
-```
-
----
-
-## Core Concepts Recap (client view)
-
-- **Models** – reusable templates. Create/replace with:  
-  `client["models"]["MyModel"] = {...}`
-- **Instances** – live objects created from models:  
-  `client["instances"]["sensor"] = "MyModel"`
-- **Attributes** – named values on instances, accessed via:  
-  `inst["attributes"]["temperature"].internal_value` (read/write)  
-  `inst["attributes"]["temperature"].external_value` (read/write)
-- **Connections** – links between attributes across instances:  
-  `client["connections"]["c1"] = {"from": "#ext(a.b)", "to": "#in(c.d)"}`
-- **Time & run loop** – you advance time and run explicitly:  
-  `inst["timer"]["time"] = t; client.prepare(); client.run()`
-
----
-
-## Quick Start Example (end‑to‑end)
-
-Minimal heater model that raises temperature based on power:
-
-```python
-import os
-import spx_python
-
-client = spx_python.init("http://localhost:8000", os.environ.get("SPX_PRODUCT_KEY", ""))
-
-# 1) Define a model
-client["models"]["Heater"] = {
-    "attributes": {
-        "temperature": 25.0,
-        "power": 0.0,          # control input
+DEFINITION = {
+    'name': 'docs_pt100',
+    'attributes': {
+        'k__temperature_c': {'type': 'float', 'default': 20.0, 'unit': 'degC'},
+        'temperature_c': {'type': 'float', 'default': 20.0, 'unit': 'degC'},
     },
-    "actions": [
-        # temperature <- temperature + 0.2 * power
-        {"function": "#ext(temperature)", "call": "#ext(temperature) + 0.2 * #ext(power)"}
-    ],
-    "timer": {"dt": 0.5},
+    'actions': [{'function': '$in(temperature_c)', 'call': '$in(k__temperature_c)'}],
 }
 
-# 2) Create an instance
-client["instances"]["room"] = "Heater"
-room = client["instances"]["room"]
 
-# 3) Control via internal/external values
-room["attributes"]["power"].internal_value = 3.0
+def simulate(client):
+    # Refuse to replace a user's existing model or instance.
+    if 'docs_pt100' in client['models'] or 'docs_sensor' in client['instances']:
+        raise RuntimeError('docs_pt100/docs_sensor already exists; use a disposable server')
+    client['models']['docs_pt100'] = DEFINITION
+    try:
+        client['instances']['docs_sensor'] = 'docs_pt100'
+        inst = client['instances']['docs_sensor']
+        inst.real_time = False
+        inst.prepare()
+        inst.start()
+        assert inst.state == 'RUNNING', inst.state
+        inst['attributes']['k__temperature_c'].internal_value = 31.25
+        rows = []
+        for tick in range(3):
+            # HTTP proxy: set the property, not inst['timer']['time'].
+            inst['timer'].time = tick / 10
+            inst.run(time_step=0.1)
+            rows.append((inst['timer'].time,
+                         inst['attributes']['temperature_c'].external_value))
+        return rows
+    finally:
+        if 'docs_sensor' in client['instances']:
+            client['instances']['docs_sensor'].stop()
+            del client['instances']['docs_sensor']
+        del client['models']['docs_pt100']
 
-# 4) Prepare and step the simulation
-client.prepare()
-for i in range(6):
-    room["timer"]["time"] = (i + 1) * room["timer"].get("dt", 0.5)
-    client.run()
 
-print("T =", room["attributes"]["temperature"].external_value)
+if __name__ == '__main__':
+    client = spx_python.init(
+        address=os.environ.get('SPX_BASE_URL', 'http://localhost:8000'),
+        product_key=os.environ['SPX_PRODUCT_KEY'],
+    )
+    print(simulate(client))
 ```
+<!-- tutorial:client_sensor.py:end -->
 
-**What to notice**
-1) You **assign** a Python dict to `client["models"]["Heater"]`.  
-2) You **instantiate** by assigning the model name under `client["instances"]`.  
-3) You **set inputs** via `internal_value` or `external_value`.  
-4) You **drive time** through `instance["timer"]["time"]` and call `client.run()`.  
-5) You **read outputs** from `external_value`.
+## Clock and lifecycle contract
 
----
+- `real_time = False` prevents automatic model polling. Prepare once, then start
+  the model before stepping. Do not prepare the whole system on every iteration.
+- The HTTP proxy writes the timer property with `inst["timer"].time = t`.
+  `inst["timer"]["time"] = t` is not the supported proxy property setter.
+- An absolute time write suppresses the next automatic increment: the next
+  explicit `run(time_step=0.1)` evaluates at that assigned time. A subsequent
+  step without another absolute write advances it by 0.1.
+- A single explicit run while a runtime model is paused executes one admitted
+  cycle and leaves it `PAUSED`; `start()` resumes it. SDK base components have
+  different lifecycle details; see [lifecycle reference](../spx-development-guide/spx-sdk/components/spxcomponent.md).
+- Check the actual clock and output, not just a successful request or `RUNNING`.
 
-## Attribute Access Cheat Sheet
+## Values, faults and connections
 
-```python
-inst = client["instances"]["room"]
+Read telemetry via `external_value`; write persistent simulation inputs through
+the appropriate `k__*` attribute. An internal write clears an external override.
+For a persistent fault, apply it after the model's internal update on each
+relevant cycle, or implement a fault action in the model.
 
-# Read current values
-T_int = inst["attributes"]["temperature"].internal_value
-T_ext = inst["attributes"]["temperature"].external_value
+For instance-to-instance wiring use the [connections reference](../spx-core/system/connections.md).
+An agent should prefer the structured MCP connection tools described in the
+[MCP reference](../getting-started/mcp-reference.md).
 
-# Write values
-inst["attributes"]["power"].internal_value = 1.5
-inst["attributes"]["power"].external_value = 1.5  # both styles are supported
-```
+## Repeatability and tests
 
-> Conventionally, **inputs** are written to `internal_value` and **reported/observable** values are read from `external_value`. Your model can map them as needed.
+A manual clock alone does not fix random numbers, network delivery or external
+process scheduling. Pin definitions and versions, seed local random generators,
+and assert expected values. [Custom actions](../getting-started/extend-with-custom-component.md)
+show a generator isolated per instance. Snapshot import restores structure;
+reapply test inputs explicitly after import.
 
----
-
-## Multiple Instances and Connections
-
-Create two instances and wire them together:
-
-```python
-# Producer: a simple ramp source
-client["models"]["Ramp"] = {
-    "attributes": {"y": 0.0},
-    "actions": [
-        {"function": "#ext(y)", "call": "#ext(y) + 1.0"}
-    ],
-    "timer": {"dt": 1.0},
-}
-
-# Consumer: holds an input 'u'
-client["models"]["Sink"] = {"attributes": {"u": 0.0}}
-
-client["instances"]["src"] = "Ramp"
-client["instances"]["dst"] = "Sink"
-
-# Connect src.y --> dst.u
-client["connections"]["c1"] = {
-    "from": "#ext(src.y)",
-    "to":   "#in(dst.u)"
-}
-
-client.prepare()
-for t in (1, 2, 3):
-    client["instances"]["src"]["timer"]["time"] = float(t)
-    client["instances"]["dst"]["timer"]["time"] = float(t)
-    client.run()
-
-print(client["instances"]["dst"]["attributes"]["u"].external_value)  # should follow the ramp
-```
-
----
-
-## Using spx-python in MiL Tests (pytest)
-
-Deterministic MiL test that advances time and asserts behavior:
-
-```python
-import os
-import spx_python
-import pytest
-
-@pytest.fixture(scope="module")
-def client():
-    c = spx_python.init("http://localhost:8000", os.environ.get("SPX_PRODUCT_KEY", ""))
-    yield c
-
-def test_heater_increases_temperature(client):
-    client["models"]["Heater"] = {
-        "attributes": {"temperature": 25.0, "power": 0.0},
-        "actions": [
-            {"function": "#ext(temperature)", "call": "#ext(temperature) + 0.5 * #ext(power)"}
-        ],
-        "timer": {"dt": 0.2},
-    }
-    client["instances"]["uut"] = "Heater"
-    inst = client["instances"]["uut"]
-
-    inst["attributes"]["power"].internal_value = 2.0
-    client.prepare()
-
-    # advance 1 second in 5 equal steps
-    for k in range(1, 6):
-        inst["timer"]["time"] = k * 0.2
-        client.run()
-
-    temp = inst["attributes"]["temperature"].external_value
-    assert temp > 25.0
-```
-
-> Your **SUT** can run alongside this test and communicate with the model over the real protocol. The test remains in full control of **time** and **parameters** via spx-python.
-
----
-
-## LLM Integration and Test Logging Patterns
-
-When you drive SPX with LLM-powered tooling or build test automation, keep these
-patterns in mind:
-
-- Treat the client as a dictionary-like tree (`models`, `instances`, `attributes`).
-- Keep secrets out of code and examples: set `SPX_PRODUCT_KEY` (and optionally
-  `SPX_BASE_URL`) in the environment.
-- Prefer helper functions in `spx_python.helpers` for idempotent setup and
-  polling (for example: `load_model`, `ensure_model`, `create_instance`,
-  `wait_for_attribute_value`, `wait_for_state`).
-- For structured test logging, use the helper utilities (for example:
-  `spx_log_test_case`, `spx_append_attribute_value`) instead of rolling your own.
-- Integration tests should **skip** when `SPX_PRODUCT_KEY` is missing or the
-  server is unavailable.
-
-Minimal pytest skip guard:
-
-```python
-import os
-import pytest
-
-if not os.environ.get("SPX_PRODUCT_KEY"):
-    pytest.skip("SPX_PRODUCT_KEY not set", allow_module_level=True)
-```
-
----
-
-## Fault Injection and Edge Cases
-
-Inject a sensor fault mid-run and verify system response:
-
-```python
-client["models"]["Sensor"] = {
-    "attributes": {"value": 0.0},
-    "actions": [{"function": "#ext(value)", "call": "#ext(value) + 0.1"}],
-    "timer": {"dt": 0.1},
-}
-client["instances"]["s1"] = "Sensor"
-s1 = client["instances"]["s1"]
-
-client.prepare()
-for i in range(5):
-    s1["timer"]["time"] = (i + 1) * 0.1
-    client.run()
-
-# Inject fault
-s1["attributes"]["value"].external_value = 999.0
-
-for i in range(5, 10):
-    s1["timer"]["time"] = (i + 1) * 0.1
-    client.run()
-```
-
----
-
-## Hot‑Reloading Components (server endpoint)
-
-If your server exposes an admin **reload** endpoint (e.g., `system.reload`), call it before creating new instances to make freshly registered components available. spx-python focuses on the system tree; for custom admin endpoints use `requests`:
-
-```python
-import requests
-
-address = "http://localhost:8000"
-resp = requests.post(f"{address}/system/reload")
-resp.raise_for_status()
-```
-
----
-
-## Best Practices
-
-- **Deterministic time**: always set `instance["timer"]["time"]` before `client.run()`. Keep `timer.dt` consistent for repeatability.
-- **Small, focused models**: compose simple units for clearer tests and faster iterations.
-- **Separate channels**: let the SUT use the protocol channel; keep spx-python for control/observation.
-- **Version scenarios**: store model defs and test seeds in your repo for stable CI.
-
----
-
-## Further Reading
-
-- [Core Concepts](./core-concepts.md)
-- [Model‑in‑the‑Loop](./model-in-the-loop.md)
-- API v3 Reference (server endpoints specific to your deployment)
+Run server integration tests only when the configured test server and key are
+available; a skipped integration test is not a passing runtime verification.

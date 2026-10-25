@@ -19,7 +19,7 @@
 - **Scenario**: a repeatable script of events (fault injection, parameter steps, sequencing) executed against an Instance.
 - **Fault**: a scenario (or scenario step) that intentionally degrades behavior (timeouts, overrange, disconnect, noise, stuck values).
 - **MiL test**: “Model-in-the-Loop” test where SPX is the deterministic plant/device and your Software Under Test is the real client.
-- **Snapshot**: captured simulation state that can be restored to get a known starting point for tests/debugging.
+- **Snapshot**: saved configuration/structure, not a checkpoint of runtime attribute values, timer progress, threads or external sessions.
 - **Protocol adapter**: a communication block (Modbus/MQTT/HTTP/ASCII/BLE, etc.) that exposes the simulation over a real interface.
 - **Communication binding**: a mapping between an Attribute and a protocol-level representation (register, topic, endpoint, GATT characteristic).
 - **Domain**: a top-level category for models (as in `library/domains/<domain>/...`).
@@ -31,6 +31,26 @@
 - **Assets**: supporting files copied into a bundle (configs for MQTT/KNX/Home Assistant, etc.).
 - **Profile**: a selection of models/services used for running a scenario set or CI pack (in spx-examples: `profiles/<pack>/*.yaml`).
 - **Pack**: a curated bundle of domains/models/profiles/tests intended to be used together (in spx-examples: `library/catalog/industries.yaml`).
-- **Timer**: a time base component used for deterministic stepping (`dt`, current time).
+- **Timer**: a time base component used for deterministic stepping (`time_step`/`step`, current time; see the Timer reference).
 - **Polling**: a background runner used by some components/adapters; should not replace MiL-driven deterministic stepping for model behavior.
 - **Determinism**: the property that simulation results depend only on inputs and the simulated time progression (not wall-clock timing).
+
+## Model identifiers
+
+These identifiers are related but not interchangeable. Example from the pinned
+public MQTT environment sensor, registered as `env_demo` and instantiated as
+`room_sensor`:
+
+| Identifier | Example | Meaning |
+| --- | --- | --- |
+| File | `library/domains/environment/sensor/generic/environment_sensor__mqtt.yaml` | Storage path; not a server lookup key |
+| Definition `name` | `environment_sensor__mqtt` | Metadata inside the definition |
+| Catalog ID (`model_id` in discovery tools) | `Env.EnvSensor.Mqtt` | Identifier in `library/catalog/models.yaml` (field `id`) |
+| Registry model key | `env_demo` | Key assigned under `client["models"]` |
+| Instance key | `room_sensor` | Key assigned under `client["instances"]` using `env_demo` |
+| Attribute path | `room_sensor.temperature_c` | Instance plus an actual attribute; inspect the loaded model for its names |
+
+Registering a definition does not require its registry key to equal its filename,
+metadata name or catalog ID. Query the actual catalog or server tree before
+wiring instances. An OpenAPI schema is a description of an HTTP payload, not a
+simulation device.

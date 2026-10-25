@@ -1,0 +1,4 @@
+# Reviewed runtime bundle in sources.json; run with Python 3.12.
+spx-sdk==1.0.0rc21
+spx-python==1.0.0rc3
+PyYAML==6.0.3

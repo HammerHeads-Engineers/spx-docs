@@ -6,9 +6,9 @@ No. The UI is optional. MiL tests should talk to SPX Server via the API (usually
 
 ## How do I keep simulations deterministic?
 
-* Drive time explicitly from the client/test (set `instance["timer"]["time"]`, call `client.run()`).
+* Drive time explicitly from the client/test (set `instance["timer"].time`, call `instance.run(time_step=0.1)` with `real_time=False`).
 * Avoid wall-clock sleeps for simulation behavior.
-* Use Snapshots for stable starting states.
+* Restore configuration snapshots, then set runtime inputs/seeds and repeat any required warmup. Use a per-instance RNG for random behavior.
 
 See: [Use in Unit Tests (MiL)](../getting-started/use-in-unit-tests-mil.md), [Snapshots — Getting Started](../getting-started/snapshots-guide.md).
 
@@ -30,7 +30,7 @@ See: [Extend with a Custom Component](../getting-started/extend-with-custom-comp
 
 ## Which Python versions are supported?
 
-Docs and reference repos target Python `>=3.9` (tested in CI on `3.9–3.12`). Use `>=3.9` unless a specific repo pins tighter constraints.
+Use Python 3.12 for these tutorials and public Examples development. SDK/client package minimums, MCP host requirements and server-container requirements are different; use the component-specific matrix below.
 
 See: [System Requirements and Capability](../overview/system-requirements-and-capability.md).
 
@@ -46,7 +46,7 @@ See: [Installation Guide](../getting-started/installation-guide.md).
 
 * Pin the server image tag in `docker-compose.yml` (for example `simplephysx/spx-server:<tag>`).
 * Pin `spx-python`/`spx-sdk` versions in your Python environment (`requirements.txt`/`pyproject.toml`).
-* Treat `spx-examples` tags as a known-good baseline for models/tests.
+* Use the installer bundle and exact commits in Release Notes as the runtime baseline. The latest public Examples catalog can advance independently.
 
 See: [Release Notes](../release-notes.md).
 
@@ -71,7 +71,7 @@ Start with:
 Use the same loop you use locally:
 
 1. `docker compose up -d`
-2. wait for `http://localhost:8000/` to respond
+2. wait for `/health`, then check authenticated API access
 3. run `pytest`
 4. `docker compose down`
 
@@ -81,8 +81,10 @@ See: [CI/CD Setup (GitHub Actions)](../getting-started/ci-cd-setup-github-action
 
 Use Snapshots to:
 
-* start tests from a known-good state without replaying long warmups,
-* debug a failing test by capturing and sharing the exact state.
+* restore model definitions, instance/template relationships and connections,
+* share sanitized configuration plus explicit steps, inputs and seeds to reproduce a failure.
+
+Snapshots do not restore live readings, timer progress or warmup state.
 
 See: [Snapshots — Getting Started](../getting-started/snapshots-guide.md).
 

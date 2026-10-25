@@ -50,7 +50,7 @@ code .devcontainer/devcontainer.json
 Paste the snippet below and save.
 
 {% code title=".devcontainer/devcontainer.json" %}
-```json
+```jsonc
 {
   // VS Code will use this file to build and run the container
   "name": "SPX Server Dev",

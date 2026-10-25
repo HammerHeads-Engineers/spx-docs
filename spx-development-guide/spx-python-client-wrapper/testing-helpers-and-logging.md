@@ -108,7 +108,7 @@ class HeaterTests(SpxAssertionLoggingMixin, unittest.TestCase):
     @spx_log_test_case()  # defaults to spx_log_attr ("_test_logs")
     def test_heater_can_start(self):
         self.instance.start()
-        self.assertEqual(self.instance.state, "running")
+        self.assertEqual(self.instance.state, "RUNNING")
 ```
 
 You can override the attribute path per test:

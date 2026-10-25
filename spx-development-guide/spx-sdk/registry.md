@@ -60,7 +60,6 @@ heater_instance:
   class: heater_device
   parameters:
     name: heater_instance
-    parent: !python/object:spx_sdk.components.SpxComponent { name: "root" }
 
 ```
 {% endtab %}
@@ -71,8 +70,7 @@ heater_instance:
   "heater_instance": {
     "class": "heater_device",
     "parameters": {
-      "name": "heater_instance",
-      "parent": "!python/object:spx_sdk.components.SpxComponent { name: \"root\" }"
+      "name": "heater_instance"
     }
   }
 }
@@ -80,6 +78,11 @@ heater_instance:
 ```
 {% endtab %}
 {% endtabs %}
+
+Import the module registering `heater_device` before loading. These definitions
+contain plain data; `yaml.safe_load` does not construct Python object tags.
+If a parent object is needed, pass it explicitly in Python rather than serializing
+a Python object in YAML/JSON.
 
 Use `load_instances_from_yaml(path)` or `load_instances_from_yaml_data(yaml_string)`. Each entry must include a registered `class` plus any constructor parameters. The helper stores the created objects in `instance_registry` so you can fetch them with `get_instance("heater_instance")`.
 

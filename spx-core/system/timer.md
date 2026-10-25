@@ -65,3 +65,14 @@ Run while paused performs one admitted cycle and keeps the model paused.
 - Set `auto_reset: true` when simulating periodic machines (e.g., rotating equipment) to avoid ever-growing time values.
 - For QA regression tests, disable real-time mode, set a small `step`, and drive the simulation with a fixed number of iterations.
 - Use `resolution` to match the precision of downstream systems—rounded timestamps make comparisons easier.
+
+## HTTP client versus local SDK
+
+For RC76/RC3 use `instance["timer"].time = t` to write an absolute clock value.
+The proxy's mapping assignment is not that property setter. An absolute write
+suppresses the next increment, so the next `run(time_step=0.1)` evaluates at `t`;
+a subsequent step without a new absolute write advances to `t + 0.1`.
+Use `real_time=False` to prevent background polling, and prepare outside the loop.
+See the [complete client program](../../simulation-and-modeling/using-spx-python.md).
+The local SDK `SimpleTimer` has a separate in-process interface; do not copy its
+object manipulation into an HTTP client example.
