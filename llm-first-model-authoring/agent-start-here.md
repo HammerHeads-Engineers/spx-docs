@@ -1,5 +1,5 @@
 ---
-description: Read first for agent work: authoritative sources, runtime/repository mode and completion criteria.
+description: "Read first for agent work: authoritative sources, runtime/repository mode and completion criteria."
 ---
 
 # Agent Start Here

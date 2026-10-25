@@ -8,7 +8,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from generate_device_catalog import get_source_snapshot
 from update_catalog import content
 from check_sources import checkout
-from check_docs import anchors
+from check_docs import anchors, frontmatter
+import yaml
 
 
 class DocumentationToolsTests(unittest.TestCase):
@@ -29,6 +30,12 @@ class DocumentationToolsTests(unittest.TestCase):
             checkout('/unused', {'repository': 'HammerHeads-Engineers/spx-installer', 'commit': 'a' * 40})
         with self.assertRaises(ValueError):
             checkout('/unused', {'repository': 'HammerHeads-Engineers/spx-examples', 'commit': 'main'})
+
+    def test_gitbook_frontmatter_rejects_unquoted_colon(self):
+        with self.assertRaises(yaml.YAMLError):
+            frontmatter('---\ndescription: Read first: sources and modes\n---\n# Agent')
+        self.assertEqual(frontmatter('---\ndescription: "Read first: sources and modes"\n---\n# Agent'),
+                         {'description': 'Read first: sources and modes'})
 
     def test_duplicate_heading_anchors_and_code_fences(self):
         self.assertEqual(anchors('# Hello `world`\n# Hello world\n```md\n# Hidden\n```\n'), {'hello-world', 'hello-world-1'})
