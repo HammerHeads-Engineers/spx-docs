@@ -82,14 +82,8 @@ def resolve_source_branch(spx_examples_path: Path, source_ref: str, source_branc
 
 
 def get_source_snapshot(spx_examples_path: Path, source_ref: str) -> str:
-    try:
-        commit = run_git(spx_examples_path, ["rev-parse", source_ref])
-    except subprocess.CalledProcessError:
-        commit = run_git(spx_examples_path, ["rev-parse", "HEAD"])
-    try:
-        commit_date = run_git(spx_examples_path, ["show", "-s", "--format=%cI", commit])
-    except subprocess.CalledProcessError:
-        commit_date = "unknown-date"
+    commit = run_git(spx_examples_path, ["rev-parse", "--verify", f"{source_ref}^{{commit}}"])
+    commit_date = run_git(spx_examples_path, ["show", "-s", "--format=%cI", commit])
     return f"`spx-examples` commit `{commit}` ({commit_date})"
 
 
@@ -141,13 +135,13 @@ def render_catalog(spx_examples_path: Path, source_ref: str, source_branch: str 
     protocol_totals = Counter()
 
     for model in models_data:
-        domain_totals[model.get("domain", "")] += 1
+        domain_totals[model.get("domain_group", model.get("domain", ""))] += 1
         for protocol in model.get("protocols", []) or []:
             protocol_totals[protocol] += 1
         entry = {
             "id": model.get("id", ""),
             "name": model.get("name", ""),
-            "domain": normalized_model_field(model, "domain", "unknown"),
+            "domain": normalized_model_field(model, "domain_group", model.get("domain", "unknown")),
             "device_class": normalized_model_field(model, "device_class", "generic"),
             "path": model["path"],
             "filename": model_filename(model["path"]),
@@ -170,21 +164,21 @@ def render_catalog(spx_examples_path: Path, source_ref: str, source_branch: str 
                     )
 
     snapshot = get_source_snapshot(spx_examples_path, source_ref)
-    resolved_source_branch = resolve_source_branch(spx_examples_path, source_ref, source_branch)
+    resolved_source_branch = run_git(spx_examples_path, ["rev-parse", "--verify", f"{source_ref}^{{commit}}"] )
 
     lines: List[str] = []
     lines.extend(
         [
             "---",
             "description: >-",
-            "  Searchable catalog of device models available per installer pack, generated from "
+            "  Searchable catalog of public reference models, grouped by pack, generated from "
             f"spx-examples {resolved_source_branch}.",
             "icon: list",
             "---",
             "",
             "# Device Catalog (spx-examples)",
             "",
-            "This page lists device models available in each installer pack.",
+            "This page lists the public model library grouped by pack. An installed bundle contains the selection pinned by its installer release; it may differ from this catalog.",
             "Names and file names are aligned 1:1 with `spx-examples` so docs search can find exact device strings quickly.",
             "",
             "> Important",

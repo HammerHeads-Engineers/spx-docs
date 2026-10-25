@@ -1,40 +1,21 @@
-name: Generated Docs Check
-
+name: Documentation checks
 on:
   pull_request:
   push:
-    branches:
-      - codex/docs-sync-latest-commits-v1-0-0
+    branches: [main]
   workflow_dispatch:
-
+permissions:
+  contents: read
 jobs:
-  device-catalog-drift:
-    name: Device Catalog Drift
+  documentation:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout spx-docs
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install pyyaml
-
-      - name: Checkout spx-examples develop
-        run: |
-          git clone --depth 1 --branch develop https://github.com/HammerHeads-Engineers/spx-examples.git .tmp/spx-examples
-
-      - name: Check generated docs drift
-        run: |
-          python scripts/generate_device_catalog.py \
-            --spx-examples .tmp/spx-examples \
-            --source-ref origin/develop \
-            --source-branch develop \
-            --check
+          python-version: '3.12'
+      - run: pip install PyYAML==6.0.3
+      - name: Fetch pinned public examples
+        run: python scripts/check_sources.py --checkout .tmp/spx-examples
+      - name: Check generated catalog
+        run: python scripts/generate_device_catalog.py --spx-examples .tmp/spx-examples --source-ref $(python -c 'import json; print(json.load(open("sources.json"))["sources"]["spx-examples"]["commit"])') --check
