@@ -40,27 +40,16 @@ Source files:
 - [`profiles/industrial_iiot_pack/modbus_master_plc_demo.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/profiles/industrial_iiot_pack/modbus_master_plc_demo.yaml)
 - [`library/domains/industrial/controller/generic/plc_controller__modbus_master.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/industrial/controller/generic/plc_controller__modbus_master.yaml)
 
-## Generate the demo bundle
+## Prepare the demo environment
 
-From `spx-examples`, generate an Industrial IIoT bundle with the Modbus master
-profile:
+Use [SPX Setup](installation-guide.md) with the Industrial IIoT pack and its
+`modbus_master_plc_demo` profile. Include the controller, VFD and meter models
+and their instances, then start the environment. Confirm the profile selection
+in the generated `bundle.json`; avoid enabling unrelated instances.
 
-```bash
-python -m installer generate \
-  --packages industrial_iiot_pack \
-  --profile-ids modbus_master_plc_demo \
-  --no-ui \
-  --output build/spx-generated
-```
-
-Then start the generated stack:
-
-```bash
-cd build/spx-generated
-./spx-start.sh
-```
-
-On Windows PowerShell, use `pwsh ./spx-start.ps1` instead.
+For automated bundle generation, maintainers use the private installer CLI.
+The public Examples checkout supplies the profile and models, but does not
+contain `python -m installer` or the product Compose configuration.
 
 ## How the controller is wired
 

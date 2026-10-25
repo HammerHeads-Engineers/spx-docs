@@ -1,58 +1,45 @@
 # Connections
 
-Connections (`spx_core/system/connections.py`) copy values between attributes each time the simulation runs. They are handy for routing sensor data into controllers without writing custom actions.
+Connections propagate a source attribute value into a target input. They are
+runtime components under the System `connections` container.
 
-## Configuration Example
-
-{% tabs %}
-{% tab title="YAML" %}
 ```yaml
 connections:
-  - sensor_to_controller:
-      from: sensor.attributes.temperature
-      to: controller.attributes.input_temperature
-  - flow_feedback:
-      from: "#attr(pump.flow)"
-      to: "#external(tank.inflow)"
+  weather_to_building:
+    from: $out(weather.outdoor_temperature_c)
+    to: $in(building.k__outdoor_temperature_c)
 ```
-{% endtab %}
 
-{% tab title="JSON" %}
+Equivalent JSON:
+
 ```json
 {
-  "connections": [
-    {
-      "sensor_to_controller": {
-        "from": "sensor.attributes.temperature",
-        "to": "controller.attributes.input_temperature"
-      }
-    },
-    {
-      "flow_feedback": {
-        "from": "#attr(pump.flow)",
-        "to": "#external(tank.inflow)"
-      }
+  "connections": {
+    "weather_to_building": {
+      "from": "$out(weather.outdoor_temperature_c)",
+      "to": "$in(building.k__outdoor_temperature_c)"
     }
-  ]
+  }
 }
 ```
-{% endtab %}
-{% endtabs %}
 
-### How it works
+The referenced instances must already exist. `from` is read, and `to` is
+written. `$out` selects external telemetry; `$in` selects internal control
+state. Prefer persistent inputs, commonly `k__*`, as targets. `cmd__*` is for
+explicit one-shot command flows rather than continuous propagation.
 
-- Each entry becomes a `Connection` component with a `run()` method that reads the source wrapper and writes the destination wrapper.
-- Sources and destinations can use plain dotted paths (`sensor.attributes.temperature`) or explicit wrapper syntax (`#attr(...)`, `#external(...)`).
-- Connections run as part of the standard model loop, so values stay in sync automatically.
+## Lifecycle and propagation
 
-### Validation & logging
+Start both the global connections container and the individual connection.
+A loaded/imported connection can still be `INITIALIZED`; existence alone does
+not prove it is active. Running connections subscribe to source changes and
+also support an explicit `run()` for immediate propagation. Stop/disable detaches
+the source hook. Unresolved endpoints are reported during load or diagnostics;
+recreated instances require the connection to resolve its live endpoints again.
 
-- The container accepts lists or dicts; mixed formats are normalized internally.
-- If the source or destination cannot be resolved, the connection raises a `ValueError` during load so you catch mistakes early.
-- At runtime, errors are logged with the connection name; this helps QA trace broken signal paths.
-
-### Tips
-
-- Use connections for simple mirroring. If you need math (scaling, offsets), combine them with actions (e.g., a `function` action that multiplies before writing to the target).
-- Group related connections in the YAML and comment them; you will thank yourself during troubleshooting.
-- Remember that connections overwrite the destination every cycle—do not point them at values users need to edit manually unless you intend to clamp those values.
+For MCP work, prefer structured endpoint arguments on `server_upsert_connection`,
+then check state and propagation as described in the
+[MCP reference](../../getting-started/mcp-reference.md#runtime-connection-workflow).
+Use a calculated source action if scaling or arithmetic is needed. Continuous
+propagation can overwrite a target user's manual input, so choose the target
+according to the requested control relationship.

@@ -14,11 +14,10 @@ Start it from one of these supported places:
   `SPX Start`.
 - Generated installer bundle: from the generated folder, run `./spx-start.sh`
   on macOS/Linux or `pwsh ./spx-start.ps1` on Windows.
-- `spx-examples` development checkout: from the `spx-examples` repo root, create
-  `.env` with `SPX_PRODUCT_KEY=...`, then run `docker compose up --detach`.
+- For a server-only setup, follow [Manual Docker Compose](manual-docker-compose.md).
 
-Do not run `docker compose up` from the `spx-docs` repository. The Compose files
-and runnable examples live in the generated bundle or in `spx-examples`.
+The public Examples checkout contains models and scripts. Start SPX using the
+installed environment; it does not contain the product Compose bundle.
 
 ## Verify the server
 
@@ -53,7 +52,7 @@ Expected response includes:
 Install the Python client and YAML dependency in your local virtual environment:
 
 ```bash
-pip install spx-python pyyaml
+pip install "spx-python==1.0.0rc3" pyyaml
 ```
 
 Quick client smoke test:
@@ -93,7 +92,7 @@ pt_100_yaml = """
 attributes:
   temperature: 0.0
 actions:
-  - { ramp: $in(temperature), stop_value: 150, duration: 5, type: overshoot, overshoot: 5 }
+  - { ramp: $in(temperature), stop_value: 150, duration: 5, type: spline, overshoot: 5 }
   - { noise: $out(temperature), std: 0.01, mode: proportional }
 """
 
@@ -127,8 +126,7 @@ For plotting and a longer console trace, run the canonical example from
 ```bash
 cd /path/to/spx-examples
 export SPX_PRODUCT_KEY="YOUR_REAL_KEY"
-docker compose up --detach
-python examples/core/first_simulation.py
+poetry run python examples/core/first_simulation.py
 ```
 
 The script writes an interactive Plotly chart to

@@ -1,29 +1,32 @@
 # Release Notes
 
-SPX ships as multiple versioned artifacts (server image, client libraries, model/examples repo). Treat releases and tags in the upstream repos as the source of truth and **pin versions in CI**.
+## Coherent documentation baseline
 
-## Source of truth
+This documentation targets the released installer bundle below. Independent
+repository tag counters are not compatibility guarantees.
 
-- SPX Server releases: https://github.com/HammerHeads-Engineers/spx-server/releases
-- spx-python releases: https://github.com/HammerHeads-Engineers/spx-python/releases
-- SPX SDK releases: https://github.com/HammerHeads-Engineers/spx-sdk/releases
-- spx-examples tags (models + tests baseline): https://github.com/HammerHeads-Engineers/spx-examples/tags
+| Artifact | Version | Exact commit |
+| --- | --- | --- |
+| `spx-installer` | `v1.1.0-rc.115` | `fed6e2ab3e21efd07b7307ad7a22dcef3cfece17` |
+| `spx-server` | `v1.0.0-rc.76` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` |
+| `spx-ui` | `v1.0.0-rc.76` | `e339deb98b9f83e4bbd0333ae7406320805e5252` |
+| `spx-sdk` | `v1.0.0-rc.21` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` |
+| `spx-python` | `v1.0.0-rc.3` | `08e9bab29505b5e3fc6c35b068768cb6a99fdfa5` |
+| `spx-examples` | `public context snapshot` | `be71a161e97eb7a112d0581136a7b702b34cd98a` |
 
-## Versioning (what to expect)
+The machine-readable manifest is `sources.json` in `spx-docs`. The public device
+catalog may advance independently through a reviewed catalog-sync PR; it does
+not silently update this runtime baseline or the installer's context pin.
 
-The public repos use SemVer-style tags such as `v0.3.0-alpha.N` / `v0.3.0-rc.N` / `vX.Y.Z`. Pre-releases may change behavior; treat them as “moving fast” and always pin exact versions.
+## Upgrade
 
-## Compatibility strategy
+Obtain the chosen installer from [staging Downloads](https://staging.simplephysx.com/downloads).
+Record its version and the generated server/UI image tags. Use the supported
+pair selected by the installer; do not substitute a newer alpha image because
+its tag sorts later. Validate your MiL suite and any protocol integration you use
+before adopting the new bundle. Export important snapshots before an upgrade.
 
-- **Keep versions aligned**: upgrade SPX Server + clients together and re-run your full MiL suite.
-- **Use `spx-examples` as a known-good baseline** when you need a reference set of models/tests that match a specific stack version.
-- **Pin everything in CI** (image tags + Python dependencies) so failures are actionable.
-
-## Practical upgrade checklist
-
-- Pin `simplephysx/spx-server:<tag>` in `docker-compose.yml`.
-- Pin `spx-python`/`spx-sdk` versions in your Python environment.
-- When upgrading:
-  - `docker compose pull && docker compose up -d`
-  - run your full MiL test suite (`pytest`)
-  - refresh Snapshots only if your tests intentionally depend on them ([Snapshots — Getting Started](getting-started/snapshots-guide.md))
+Server, SDK and installer source repositories are private. Public Examples is
+for models and runtime MCP modules; its fresh history does not retain the
+installer's historical releases. Product packages are delivered through the
+protected Downloads portal and its file-delivery host.

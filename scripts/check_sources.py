@@ -25,4 +25,4 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--checkout', required=True)
     args = parser.parse_args()
-    checkout(args.checkout, json.loads(Path('sources.json').read_text())['sources']['spx-examples'])
+    checkout(args.checkout, json.loads(Path('sources.json').read_text())['catalog'])

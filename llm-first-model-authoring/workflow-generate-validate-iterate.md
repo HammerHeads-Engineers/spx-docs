@@ -2,17 +2,11 @@
 
 This workflow assumes you are contributing to `spx-examples` (or mirroring its conventions in your own model repo).
 
-## Branch synchronization first (for docs automation)
+## Branch synchronization
 
-If you are updating `spx-docs`, work from the single sync branch and rebase before making changes:
-
-```bash
-git fetch origin
-git checkout codex/docs-sync-latest-commits-v1-0-0
-git rebase origin/version-1.0.0
-```
-
-Do this at the start of each run and again before opening/updating a PR.
+Documentation changes target `spx-docs/main`; model changes target
+`spx-examples/develop`. Follow the [automation contract](docs-automation-guidelines.md)
+for generated content. Capture source commits before reviewing semantic changes.
 
 ## Prereqs (one-time)
 
@@ -32,11 +26,8 @@ Install Python tooling:
 poetry install --with dev
 ```
 
-Start SPX Server:
-
-```bash
-docker compose up -d
-```
+Start the installed environment with **SPX Start**, or follow the
+[server-only Compose guide](../getting-started/manual-docker-compose.md).
 
 ## Generate
 
@@ -62,7 +53,7 @@ Model validation passed.
 If your change touches generated docs pages in `spx-docs`, also run:
 
 ```bash
-python scripts/generate_device_catalog.py --spx-examples ../spx-examples --source-ref origin/develop --source-branch develop --check
+python scripts/generate_device_catalog.py --spx-examples /path/to/public-examples --source-ref <pinned-public-commit> --check
 ```
 
 And verify the change boundary before PR:
@@ -150,8 +141,7 @@ poetry run pytest -k scpi_multimeter
 
 7) Inspect in UI (optional):
 
-- Start the UI container (see `spx-examples/docker-compose.yml` for the `spx-ui` service):
-  - https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docker-compose.yml
+- Start the installed environment with UI enabled using SPX Start.
 - Open the UI and inspect the instance attributes/scenarios.
 
 ## Output contract for automation runs

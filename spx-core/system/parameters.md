@@ -1,47 +1,40 @@
 # Parameters
 
-The `Parameters` container (`spx_core/system/parameters.py`) is the simplest way to push constant values into your model when it starts. Think of it as a batch of assignments that run during `prepare()`.
+SPX distinguishes deployment inputs from initial model state.
 
-## Configuration Example
+## Communication and provisioning parameters
 
-{% tabs %}
-{% tab title="YAML" %}
+Declare `meta_parameters` in a reusable model and bind values with `$param(...)`.
+Provide the instance's concrete `meta_parameters` at creation. Use this for
+hostnames, ports, unit IDs, topics and other instance-specific transport wiring.
+Keep ordinary simulation tuning in model attributes.
+
 ```yaml
-parameters:
-  attributes.voltage.default: 230.0
-  attributes.mode.default: "production"
-  instances.controller.parameters.gain: 1.2
+meta_parameters:
+  ascii_port: {type: int, default: 0}
+communication:
+  - ascii:
+      port: $param(ascii_port)
+      bindings: []
 ```
 
-{% endtab %}
+Port zero permits runtime assignment for multi-instance ASCII devices.
 
-{% tab title="JSON" %}
-```json
-{
-  "parameters": {
-    "attributes.voltage.default": 230.0,
-    "attributes.mode.default": "production",
-    "instances.controller.parameters.gain": 1.2
-  }
-}
+## Initial attribute values
 
+`init_parameters` is the registered initialization container in the RC76 runtime
+(`spx_core/system/init_parameters.py`). It assigns existing attribute wrappers
+when the definition is populated; it is not a generic `parameters` container.
+
+```yaml
+attributes:
+  k__setpoint_c: {type: float, default: 20.0, unit: degC}
+init_parameters:
+  $in(k__setpoint_c): 25.0
 ```
-{% endtab %}
-{% endtabs %}
 
-### How it works
-
-- Each key is an attribute reference resolved via `resolve_attribute_reference_hierarchical`.
-- The container sets the attribute's internal value by default.
-- If the reference points at an external wrapper (`#external(...)`), the external value is updated instead.
-
-### Validation
-
-- The container expects a mapping; any other type raises an error.
-- If a reference cannot be resolved, a `KeyError` is raised with the full component path. This usually means the attribute name changed or the instance was not loaded yet.
-
-### Best practices
-
-- Use environment variables for deployment-specific values by combining parameters with templates or SDK tooling: generate YAML where `default` values read from `os.environ` before shipping it to the server.
-- Keep parameter entries close to the attributes they configure—long dotted paths are harder to maintain.
-- Document critical parameters (e.g., safety limits) so QA knows what to tweak when running experiments.
+The mapping must refer to attributes that already exist. An unknown name is an
+error. `$in` selects the internal value; `$ext` selects the external value.
+For API/client construction examples, use the
+[model reference](../../simulation-and-modeling/model-definition-reference.md)
+and the matching Python client helper documentation.

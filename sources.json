@@ -31,5 +31,9 @@
       "repository": "HammerHeads-Engineers/spx-examples",
       "commit": "be71a161e97eb7a112d0581136a7b702b34cd98a"
     }
+  },
+  "catalog": {
+    "repository": "HammerHeads-Engineers/spx-examples",
+    "commit": "be71a161e97eb7a112d0581136a7b702b34cd98a"
   }
 }

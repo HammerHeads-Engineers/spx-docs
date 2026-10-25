@@ -91,7 +91,7 @@ See: [Snapshots — Getting Started](../getting-started/snapshots-guide.md).
 * Confirm the adapter port is exposed on the host (`docker compose ps`).
 * If the adapter talks to a host-side service, don’t use `127.0.0.1` from inside Docker; prefer `host.docker.internal` (where supported).
 
-See: [Communication Adapters](/broken/pages/Xj0Kch85KiFEX0H4nFce).
+See: [Communication Adapters](../spx-core/communications/README.md).
 
 ## What should I include in a support request?
 

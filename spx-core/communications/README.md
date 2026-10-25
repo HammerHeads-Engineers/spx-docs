@@ -53,6 +53,20 @@ SPX Server implements protocol adapters in its server runtime.
 
 Tips:
 
-* Keep protocol ports/config in `parameters` so deployments can override them per environment.
+* Keep instance-specific protocol ports/config in `meta_parameters` and bind with `$param(...)` so deployments can override them per environment.
 * Prefer spx-examples models as runnable references for adapter behavior.
 * Use scenarios for chaos testing (`detach`, delay spikes, message drops) and validate via MiL tests.
+
+## Scope of support and verification
+
+Adapter implementation does not imply that every physical bus or vendor device
+has been hardware-qualified. The reference models are simulations, not certified
+manufacturer twins. Read each adapter page for roles, transport limitations and
+optional external bridges. In particular, a Snap7 bridge is not proof of a full
+PROFINET IO device stack, Matter requires a controller service, and BLE requires
+the separately installed host adapter and suitable host Bluetooth support.
+
+Bind configurable hostnames, ports, device identifiers and topics using
+`meta_parameters`; keep these independent from model behavior attributes.
+The documentation audit records source review separately from protocol and
+hardware execution evidence.

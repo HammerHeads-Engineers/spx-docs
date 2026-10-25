@@ -1,27 +1,16 @@
 ---
 description: >-
   First-run UI walkthrough after installing the Smart Building Pack with the
-  current spx-examples installer.
+  released SPX installer.
 icon: buildings
 ---
 
 # Smart Building Pack: First Run Walkthrough
 
-This walkthrough assumes you generated and started the Smart Building Pack from
-the installer or from `spx-examples`:
-
-```bash
-python -m installer generate \
-  --packages smart_building_pack \
-  --profile-ids bms_quickstart \
-  --with-ui \
-  --output build/spx-generated
-
-cd build/spx-generated
-./spx-start.sh
-```
-
-On Windows, use `pwsh ./spx-start.ps1` from the generated folder.
+Install through [SPX Setup](installation-guide.md), select `smart_building_pack`,
+include models, starter instances and UI, then start the environment. The
+`bms_quickstart` profile is defined in the public Examples catalog; provisioning
+is performed by the installed product. The public checkout has no installer CLI.
 
 The current `bms_quickstart` profile includes MQTT, LwM2M/CoAP, HTTP, Modbus,
 OPC UA, KNX, Matter, BACnet, Home Assistant, and SPX UI. The installer caps the

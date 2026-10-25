@@ -59,7 +59,7 @@ communication:
   - A mapping updates attributes or invokes handlers; optional `response` overrides the reply.
 - `bindings`: explicit binding definitions (see the spx-examples SCPI multimeter model for a concrete pattern).
 
-> Tip: In `spx-examples`, the SCPI multimeter model omits `port` so it can run multiple instances without collisions. See [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/lab/instrument/generic/multimeter__scpi.yaml).
+> Tip: In `spx-examples`, prefer `meta_parameters.ascii_port` with `default: 0` and bind `port: $param(ascii_port)` for multi-instance models, allowing runtime port assignment. See [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/lab/instrument/generic/multimeter__scpi.yaml).
 
 ### Placeholders
 

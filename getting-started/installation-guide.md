@@ -16,7 +16,7 @@ Quick path:
 1. Make sure Docker is installed and running.
 2. Download the installer for your platform from
    the signed-in download page. For RC testing use
-   [staging Downloads](https://staging.simplephysx.com/account/downloads),
+   [staging Downloads](https://staging.simplephysx.com/downloads),
    channel **Development**.
 3. Run the native installer.
 4. On macOS, use the `SPX Setup` window opened automatically after installation.
@@ -35,10 +35,10 @@ After setup, verify:
 
 ## Reference repository: spx-examples
 
-Native installers are the recommended first path. For advanced bundle
-generation, installer profiles, pack definitions, runnable models, and MiL
-tests, use the public
-[spx-examples repository](https://github.com/HammerHeads-Engineers/spx-examples).
+The public [spx-examples repository](https://github.com/HammerHeads-Engineers/spx-examples)
+contains models, catalogs, profiles, examples, tests and runtime MCP modules.
+You may clone it independently. Product installation and packaging are maintained
+in private `spx-installer`; use the downloaded SPX Setup for bundle generation.
 
 ## Prerequisites
 
@@ -56,23 +56,16 @@ tests, use the public
 
 ## 1) Download the installer
 
-For the current public platform, download through
-[simplephysx.com/keys](https://simplephysx.com/keys). The new staging platform
-has separate [Downloads](https://staging.simplephysx.com/account/downloads) and
-[Product Keys](https://staging.simplephysx.com/account/product-keys) pages.
-Select **Development** to qualify a release candidate. Confirm the package
-version and compare its SHA-256 with the checksum on the download page.
+For release-candidate testing, sign in at [staging Downloads](https://staging.simplephysx.com/downloads)
+and select **Development**. Product keys are managed under
+[Product Keys](https://staging.simplephysx.com/account/product-keys).
+The main `simplephysx.com` site remains the public website; these instructions
+refer to the staging application.
 
-Use the package for your platform:
-
-- Windows: `spx-installer-<version>.exe`
-- macOS: `spx-installer-macos-<version>.pkg`
-- Linux/Unix: `spx-installer-<version>.run`
-
-Use the file actually offered for the selected release. A portable `.tgz`
-contains the unpacked installer payload and shell launchers; it is not a `.tar`
-delivery wrapper containing a `.run`. If a Windows delivery `.zip` is offered,
-extract it before running its `.exe`. Open the macOS `.pkg` directly.
+Use the offered Windows `.exe`, macOS `.pkg`, or Linux/Unix portable `.tgz`.
+Check the version and SHA-256 shown on Downloads. `downloads.simplephysx.com`
+is the file-delivery host, not the sign-in or download-selection UI. Direct
+file links are authorized and temporary; use the portal for a fresh link.
 
 ## 2) Run the native installer
 
@@ -100,24 +93,16 @@ Open `spx-installer-macos-<version>.pkg`.
 
 ### Linux/Unix
 
-For a self-extracting `.run`, make it executable and run it:
-
-```bash
-chmod +x spx-installer-<version>.run
-./spx-installer-<version>.run
-```
-
-The `.run` package starts the same terminal setup flow used by SPX Setup. After
-setup, day-to-day work happens through the generated shell scripts such as
-`spx-start.sh` and `spx-stop.sh`.
-
-If Downloads offers a portable `.tgz`, use:
+Extract the portable archive and run its setup launcher:
 
 ```bash
 tar -xzf spx-installer-<version>.tgz
 cd spx-installer
 ./spx-install.sh
 ```
+
+Use the actual extracted directory name. Generated `spx-start.sh` and
+`spx-stop.sh` helpers manage the environment after setup.
 
 ## 3) Run SPX Setup
 
@@ -128,7 +113,7 @@ Where to find it:
 
 - Windows: Start Menu / Windows Apps under `SPX Tools`.
 - macOS: `/Applications/SPX Tools/SPX Setup.app`.
-- Linux/Unix: the `.run` package launches the setup flow; generated scripts are
+- Linux/Unix: the extracted portable package provides the setup flow; generated scripts are
   used after setup.
 
 `SPX Setup` is the main environment wizard. It:

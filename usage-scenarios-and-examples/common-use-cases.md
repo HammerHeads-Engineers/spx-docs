@@ -30,7 +30,7 @@ profiles.
 * Start from one model + one scenario.
 * Make one change (attribute, mapping, scenario override) and re-run the same tests.
 
-See: [Use in Unit Tests (MiL)](../getting-started/use-in-unit-tests-mil.md), [Snapshots — Getting Started](../getting-started/snapshots-guide.md), [Communication Adapters](/broken/pages/Xj0Kch85KiFEX0H4nFce).
+See: [Use in Unit Tests (MiL)](../getting-started/use-in-unit-tests-mil.md), [Snapshots — Getting Started](../getting-started/snapshots-guide.md), [Communication Adapters](../spx-core/communications/README.md).
 
 ## Step-by-Step Walkthroughs
 

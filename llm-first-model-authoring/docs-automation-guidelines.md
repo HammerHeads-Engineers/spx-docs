@@ -1,108 +1,63 @@
----
-icon: wand-magic-sparkles
----
-
 # Docs automation guidelines
 
-Use this page as the operational contract for automated documentation updates in `spx-docs`.
-The goal is simple: keep docs continuously aligned with `spx-examples` and `version-1.0.0` with low-risk PRs.
+## Sources and ownership
 
-## Branch strategy (mandatory)
+`spx-docs/main` is the canonical product reference and publishing branch.
+`version-1.0.0` is retained as historical rollback input. Public Examples owns
+models, catalogs, profiles, runtime MCP modules, `AGENTS.md`, the modeling
+playbook and task templates. Private installer sources are never CI inputs to
+these public repositories.
 
-- Use one long-lived docs branch: `codex/docs-sync-latest-commits-v1-0-0`.
-- Keep that branch rebased on `origin/version-1.0.0`.
-- Open PRs from that single branch into `version-1.0.0`.
-- Rebase cadence:
-  - before every automation run,
-  - before opening or updating a PR,
-  - and at least once per working day when active.
+`sources.json` records the coherent released runtime baseline. Its separate
+`catalog` entry records the public Examples revision used for the generated
+catalog. A catalog refresh must not silently change the released bundle baseline.
+Examples uses `docs-source.json` to pin its generated offline model/MCP references.
 
-Recommended command sequence:
+## Two independent update flows
 
-```bash
-git fetch origin
-git checkout codex/docs-sync-latest-commits-v1-0-0
-git rebase origin/version-1.0.0
-```
+| Destination | Source paths | Reused branch | PR base |
+| --- | --- | --- | --- |
+| Docs device catalog | Public Examples catalog metadata on main | `codex/sync-examples-catalog` | Docs `main` |
+| Examples offline context | Docs model definition and MCP reference on main | `codex/sync-docs-context` | Examples `develop` |
 
-If rebase conflicts appear, resolve immediately in the same run. Do not continue with stale branch state.
+Each runs daily or by `workflow_dispatch`, resolves a full source commit, and
+opens or updates one review PR. Neither merges automatically. Promote reviewed
+Examples changes from develop to main through the normal repository workflow.
+Publishing follows approved Docs PR merges to main via GitBook Git Sync.
+Use GitBook change requests for editorial changes; do not bypass source review.
 
-## Run preflight checklist
+## Reproducibility and permissions
 
-Before generating/updating docs in automation:
+Checks fetch the exact manifest revision and fail if it is missing. They never
+substitute HEAD or a floating branch. Updaters compare meaningful generated
+content before updating provenance, so unrelated source commits do not create
+metadata-only PRs. Offline sync reads only the two canonical source pages;
+catalog sync does not read offline snapshots. This prevents feedback loops.
 
-- Confirm you are on `codex/docs-sync-latest-commits-v1-0-0`.
-- Confirm rebase base is `origin/version-1.0.0`.
-- Confirm working tree is clean before starting a new run.
-- Confirm source repo path exists (or clone it in the run).
+Normal validation has `contents: read`. Only the updater has own-repository
+`contents: write`, `pull-requests: write`, and `actions: write` for explicit
+validation dispatch. It uses the job's GITHUB_TOKEN; no PAT, private repository
+token or GitBook credential belongs in public CI. Explicit workflow dispatch
+runs validation on bot branches without relying on bot-generated PR events.
+A reviewer still decides whether to merge.
 
-## Top 10 rules
+## Validation and evidence
 
-1. **Single branch + rebase discipline**
-   - Never create ad-hoc docs branches for routine sync work.
-   - Keep all automation history in the single sync branch.
-2. **Pin source inputs**
-   - For each automated change, record the exact `spx-examples` commit SHA used as source.
-   - Do not rely on unpinned `main` in change summaries.
-3. **Evidence table for every substantial docs update**
-   - Include: `doc section -> source file/url -> source commit -> change rationale`.
-4. **Separate execution mode**
-   - Distinguish `web LLM` mode from `local agent` mode in instructions.
-   - Never claim local command execution in web-only flows.
-5. **Use a dedicated docs-update prompt**
-   - Require scope, target pages, source references, and expected output format.
-   - Require explicit assumptions and open questions.
-6. **Docs-specific Definition of Done**
-   - Verify navigation (`SUMMARY.md`) updates when adding/removing pages.
-   - Verify link integrity, naming consistency, and disclaimers where required.
-7. **Generated pages must be reproducible**
-   - Regenerate from script, never by manual editing.
-   - Current generator:
-     - `python scripts/generate_device_catalog.py --spx-examples ../spx-examples --source-ref origin/develop --source-branch develop`
-8. **CI drift guard is required**
-   - Generated pages must be validated in CI (`--check` mode) to prevent silent drift.
-   - This is required regardless of CI platform (GitLab CI or GitHub Actions).
-9. **Safety and wording**
-   - No secrets in docs examples.
-   - Do not mark vendor models as official unless formally certified.
-   - Keep risk disclaimers explicit for reference simulations.
-10. **Stop on ambiguity, do not invent**
-    - If source docs are incomplete or conflicting, stop and list blocking questions.
-    - Do not fabricate mappings, features, or compatibility claims.
+Run `python scripts/check_docs.py`, then generate/check the catalog with the
+full commit from `sources.json` and a public Examples checkout. For semantic
+updates, review the source version and affected implementation/tests, record
+page → source path → exact commit → evidence in `docs/source-audit.md`, and
+separate source inspection, simulated tests, live protocol tests and physical
+hardware qualification. Do not claim any verification that was not executed.
 
-## Standard output contract for automation runs
+Keep URLs, SUMMARY navigation, local assets and the existing OpenAPI spec name
+`hammerheadsengineers-api` stable. New API exports come from the pinned runtime
+routes, not a stale committed schema. Model/MCP export pages must remain portable
+Markdown so offline agents have complete local context.
 
-Every automated docs update should produce:
+## Rollback
 
-- Files changed.
-- Source snapshot(s): repo + commit SHA.
-- Validation performed (commands and results).
-- Open risks/assumptions.
-
-## Generated docs policy
-
-For generated pages in this repository:
-
-- Source-of-truth data lives outside `spx-docs` (for example `spx-examples` catalogs).
-- Regeneration command must be documented in the page or nearby guideline.
-- CI must fail when generated output is stale.
-
-Current check command:
-
-```bash
-python scripts/generate_device_catalog.py --spx-examples ../spx-examples --source-ref origin/develop --source-branch develop --check
-```
-
-## GitLab CI example (recommended)
-
-If your canonical pipeline is GitLab CI, add a drift check job equivalent to GitHub Actions:
-
-```yaml
-docs:generated-check:
-  stage: test
-  image: python:3.11
-  script:
-    - pip install pyyaml
-    - git clone --depth 1 --branch develop https://github.com/HammerHeads-Engineers/spx-examples.git .tmp/spx-examples
-    - python scripts/generate_device_catalog.py --spx-examples .tmp/spx-examples --source-ref origin/develop --source-branch develop --check
-```
+Revert the relevant main merge to restore source content and let Git Sync
+publish it. The version branch and the pre-migration Git bundle retain the old
+state. For a Git Sync problem, restore the previous branch/direction in the
+existing space; do not create a replacement public site or change its domain.

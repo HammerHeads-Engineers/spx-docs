@@ -37,7 +37,7 @@ and MiL tests, use the public
 
 What’s inside this page:
 
-* **Installation Guide** — sign in, download the platform installer, complete the native installation, use the automatically opened `SPX Setup` on macOS, and verify UI/API on localhost. RC qualification uses [staging Downloads](https://staging.simplephysx.com/account/downloads), channel **Development**, and a key from [Product Keys](https://staging.simplephysx.com/account/product-keys).
+* **Installation Guide** — sign in, download the platform installer, complete the native installation, use the automatically opened `SPX Setup` on macOS, and verify UI/API on localhost. RC qualification uses [staging Downloads](https://staging.simplephysx.com/downloads), channel **Development**, and a key from [Product Keys](https://staging.simplephysx.com/account/product-keys).
 * **Connect an LLM with SPX MCP** — run `SPX MCP Setup`, open the generated SPX MCP workspace, and use MCP tools against the local SPX server.
 * **Advanced: Manual Docker Compose** — run the SPX Server API via Compose without the wizard (server-only).
 * **Modbus Client / PLC Controller** — use SPX as an active Modbus master that polls and controls downstream Modbus devices.

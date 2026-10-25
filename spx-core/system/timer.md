@@ -46,21 +46,19 @@ timer:
 | `resolution` | Quantizes reported time to fixed increments (useful for UI displays). |
 | `decimal_places` | Number of decimals to keep when rounding. |
 
-### Runtime API
+### Runtime API and manual stepping
 
-- `GET /timer` returns the current `time`, `running` state, and configuration.
-- `PATCH /timer` with `{"time": 120.0}` sets an absolute value (the timer pauses first to avoid skipping).
-- `POST /timer/start` / `stop` control real-time accumulation.
+Timers are nodes in API v3, not standalone `/timer` routes. For an instance
+`demo`, inspect `/api/v3/system/instances/demo/timer`. Component properties use
+`/attr/<name>`; methods use `/method/<name>`. Pass request bodies as described
+in the [API v3 reference](../../api-v3-reference/README.md).
 
-### Manual stepping
-
-When `model.real_time` is `false`, you can advance the simulation deterministically:
-
-```bash
-POST /run { "time_step": 0.1 }
-```
-
-The timer records the last step value so consecutive `run` calls without parameters reuse the same increment.
+For deterministic client-driven work, disable real-time operation before starting
+the instance. `instance.run(time_step=0.1)` advances its stopped timer by one
+step. You can also set `instance["timer"].time` explicitly; assigning time stops
+the clock first. A run without an explicit step uses the timer's configured or
+last step value. Pause preserves execution state and transports; an explicit
+Run while paused performs one admitted cycle and keeps the model paused.
 
 ### Tips
 

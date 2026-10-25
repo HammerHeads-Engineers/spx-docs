@@ -18,4 +18,8 @@ jobs:
       - name: Fetch pinned public examples
         run: python scripts/check_sources.py --checkout .tmp/spx-examples
       - name: Check generated catalog
-        run: python scripts/generate_device_catalog.py --spx-examples .tmp/spx-examples --source-ref $(python -c 'import json; print(json.load(open("sources.json"))["sources"]["spx-examples"]["commit"])') --check
+        run: python scripts/generate_device_catalog.py --spx-examples .tmp/spx-examples --source-ref $(python -c 'import json; print(json.load(open("sources.json"))["catalog"]["commit"])') --check
+      - name: Check Markdown navigation and model samples
+        run: python scripts/check_docs.py
+      - name: Check generator failure and idempotence guards
+        run: python -m unittest discover -s tests -v

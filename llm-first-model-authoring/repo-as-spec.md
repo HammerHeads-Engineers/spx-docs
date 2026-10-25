@@ -1,19 +1,17 @@
 # Repo-as-spec (spx-examples)
 
-Use `spx-examples` as the canonical reference for:
+The [documentation portal](https://docs.simplephysx.com) defines the product
+language and runtime semantics. Start with the
+[Model definition reference](../simulation-and-modeling/model-definition-reference.md).
 
-- directory layout and naming,
-- YAML structure and expressions,
-- catalog metadata (what shows up in installers/profiles),
-- MiL test conventions.
-
-Spec files (GitHub, main):
-
-- [`docs/LLM_SPEC.md`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/LLM_SPEC.md)
-- [`docs/MODEL_LANGUAGE.md`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/MODEL_LANGUAGE.md)
-- [`docs/LLM_TASK_TEMPLATE.md`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/LLM_TASK_TEMPLATE.md)
-
-Repo root (browse): [spx-examples/tree/develop](https://github.com/HammerHeads-Engineers/spx-examples/tree/develop)
+The [public Examples repository](https://github.com/HammerHeads-Engineers/spx-examples)
+is the source of truth for committed model contents, catalog membership,
+directory layout, contribution rules, agent tasks and MiL test conventions.
+Its `docs/MODEL_LANGUAGE.md` and `docs/MCP.md` are generated offline snapshots of
+canonical documentation, with source revision and URL recorded in each file.
+`AGENTS.md`, `docs/LLM_SPEC.md` and `docs/LLM_TASK_TEMPLATE.md` remain repo-local
+operating instructions. Read the installed client's `SPX_PYTHON_LLM.md` for
+client-specific API guidance.
 
 ## Source pinning rule
 
@@ -36,7 +34,7 @@ For larger updates, include a compact table in PR notes:
 
 ## Key directories (real paths)
 
-- Models: `library/domains/<domain>/<vendor|generic>/*.yaml`
+- Models: `library/domains/<domain_group>/<device_class>/<vendor|generic>/*.yaml`
   - Browse: [library/domains](https://github.com/HammerHeads-Engineers/spx-examples/tree/develop/library/domains)
   - Example (SCPI): [`multimeter__scpi.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/lab/instrument/generic/multimeter__scpi.yaml)
   - Example (Modbus): [`thermal_controller__modbus.yaml`](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/industrial/controller/generic/thermal_controller__modbus.yaml)
@@ -83,5 +81,5 @@ When you add a new model file:
 ## What to keep stable
 
 - **Determinism**: time is driven explicitly from tests (MiL). Avoid wall-clock sleeps for simulation behavior.
-- **Ports and services**: if a model relies on a protocol adapter, ensure `docker-compose.yml` exposes the required ports/services for the test suite.
+- **Ports and services**: if a model relies on a protocol adapter, configure the installed environment or your own server-only Compose file with the required ports/services.
 - **Terminology**: use consistent terms across docs/tests: SPX Server, Models, Instances, Scenarios, MiL tests, Snapshots.

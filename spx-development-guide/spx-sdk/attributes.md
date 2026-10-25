@@ -134,7 +134,7 @@ Attribute references appear throughout the SDK. The prefix indicates which wrapp
 - `#attr(name)` or `#internal(name)`: read/write the internal value.
 - `#external(name)` or `#ext(name)`: read/write the external value (what protocols see).
 - `$in(...)` / `$out(...)`: historical aliases used by protocol and action builders.
-- `$(.path.to.attribute)`: nested chain from the root; returns a static wrapper (see `resolve_nested_chain_reference`).
+- `$(.path.to.attribute)`: nested chain from the current component (`..` goes to its parent, `~` starts at the root); returns a static wrapper (see `resolve_nested_chain_reference`).
 
 Actions, conditions, and custom components rely on these patterns. The diagnostics in `tests/test_actions/test_actions.py` and `tests/test_attributes/test_resolve_attributes.py` illustrate the end to end behaviour.
 

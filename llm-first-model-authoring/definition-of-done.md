@@ -6,7 +6,7 @@ This checklist is intentionally aligned with `spx-examples/docs/LLM_SPEC.md`:
 
 ## DoD checklist
 
-- [ ] Model YAML is under `library/domains/<domain>/<vendor|generic>/` and uses `lower_snake_case`.
+- [ ] Model YAML is under `library/domains/<domain_group>/<device_class>/<vendor|generic>/` and uses `lower_snake_case`.
 - [ ] `name:` matches the file stem (for new/updated models).
 - [ ] `attributes` is present and valid (types/defaults where needed).
 - [ ] Protocol mappings follow existing patterns (no invented keys).
@@ -22,12 +22,12 @@ This checklist is intentionally aligned with `spx-examples/docs/LLM_SPEC.md`:
 
 ## DoD checklist (docs automation addendum)
 
-- [ ] Working branch is `codex/docs-sync-latest-commits-v1-0-0` and rebased on `origin/version-1.0.0`.
+- [ ] Working branch is `codex/sync-examples-catalog` and rebased on `origin/main`.
 - [ ] Source snapshot commit SHA(s) are captured in updated docs/PR notes.
 - [ ] Navigation is updated when needed (`SUMMARY.md`, chapter `README.md` pages).
 - [ ] Generated pages were regenerated from script (no manual table edits).
 - [ ] Generated docs check passes:
-  - [ ] `python scripts/generate_device_catalog.py --spx-examples ../spx-examples --source-ref origin/develop --source-branch develop --check`
+  - [ ] `python scripts/generate_device_catalog.py --spx-examples ../spx-examples --source-ref <pinned-public-commit> --check`
   - [ ] Equivalent CI check is configured in your platform (GitLab CI or GitHub Actions).
 - [ ] Claims about device models do not imply official manufacturer support unless formally verified.
 - [ ] No secrets/tokens were added to docs examples.
@@ -46,7 +46,7 @@ This checklist is intentionally aligned with `spx-examples/docs/LLM_SPEC.md`:
   - SPX Server not running (`docker compose ps`) or not reachable (`http://localhost:8000/`)
 
 - **Scenario does nothing**
-  - Scenario not `enabled: true`
+  - Scenario has not been started explicitly (or automatic start was intentionally disabled)
   - Overrides target the wrong path/key (copy a working pattern from a nearby model)
   - Instance needs a restart/recreate after changing the model definition
 
@@ -60,6 +60,6 @@ This checklist is intentionally aligned with `spx-examples/docs/LLM_SPEC.md`:
   - Product key missing (`SPX_PRODUCT_KEY`)
 
 - **Docs PR has avoidable conflicts**
-  - Branch was not rebased on `origin/version-1.0.0` before editing
+  - Branch was not rebased on `origin/main` before editing
   - Generated docs were edited manually instead of regenerated
   - Navigation updates were skipped (`SUMMARY.md`)
