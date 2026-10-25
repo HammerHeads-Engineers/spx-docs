@@ -1,29 +1,37 @@
-# Build Simulations
+---
+description: Task guides for models, connections, scenarios, tests and extensions.
+---
 
-This chapter is the reference for model concepts, SDK components, server runtime
-and the Python HTTP client. For a task-oriented start use
-[Start here](../overview/start-here.md).
+# Guides
 
-## Choose the execution layer
+Pick the result you need. For a first installation or first device, use
+[Start here](../README.md). These guides assume the stated prerequisites and
+link to the relevant reference when more detail is needed.
 
-- **Local logic:** [SDK Quickstart](quick-start-spx-sdk-in-5-minutes.md), no server
-  or product key. Use it to test actions and calculations in Python.
-- **Hosted simulation:** [Python client tutorial](../simulation-and-modeling/using-spx-python.md),
-  operating on a running server through API v3.
-- **Agent-driven runtime:** [MCP onboarding](../getting-started/connect-llm-with-spx-mcp.md).
-- **Model definitions:** [YAML/JSON reference](../simulation-and-modeling/model-definition-reference.md).
-- **SUT communication:** [protocol capabilities](../spx-core/communications/capabilities.md).
+## Build a simulation
 
-A local SDK object and a remote client proxy do not have interchangeable timer
-or lifecycle semantics. The runnable tutorials show the supported loop for each.
-Use the [released version set](../release-notes.md), apply deployment-specific
-communication parameters, and verify the actual output expected by your test.
+- [Create your first model](../getting-started/build-your-first-simulation.md)
+- [Understand model concepts](../simulation-and-modeling/core-concepts.md)
+- [Connect two instances](../guides/connect-instances.md)
+- [Run an existing scenario](../guides/run-scenarios.md)
 
-## Reference chapters
+## Test behavior
 
-[SDK](spx-sdk/README.md) describes local building blocks;
-[Core](../spx-core/README.md) describes hosted runtime services;
-[Python client](spx-python-client-wrapper/README.md) describes remote control.
-Protocol reference examples are configuration fragments unless explicitly
-identified as complete programs. Source or unit tests alone do not certify a
-physical protocol implementation or manufacturer device.
+- [Drive the server from Python](../simulation-and-modeling/using-spx-python.md)
+- [Model-in-the-Loop concepts](../simulation-and-modeling/model-in-the-loop.md)
+- [Test a client over Modbus](../getting-started/use-in-unit-tests-mil.md)
+- [Run tests in CI](../getting-started/ci-cd-setup-github-actions.md)
+
+## Extend model logic
+
+- [Local model with SDK](quick-start-spx-sdk-in-5-minutes.md), without a server
+- [Write a custom action](../getting-started/extend-with-custom-component.md)
+- [Load a Python class](../getting-started/code-defined-simulations.md)
+- [Filter a signal](../simulation-and-modeling/extending-simulations/filters-and-signal-processing.md)
+- [Test and reload extensions](../simulation-and-modeling/extending-simulations/testing-and-hot-reload.md)
+
+## Continue with…
+
+[Models and packs](../usage-scenarios-and-examples/README.md) for reusable devices,
+[Integrations](../spx-core/communications/README.md) for SUT communication, or
+[Reference](../reference/README.md) for fields, methods and contracts.

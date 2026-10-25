@@ -1,9 +1,9 @@
 ---
-description: Capture and restore system snapshots.
+description: Use browser controls to save and restore configuration, then start restored instances.
 icon: floppy-disks
 ---
 
-# Snapshots
+# Snapshots in the UI
 
 ## Purpose
 

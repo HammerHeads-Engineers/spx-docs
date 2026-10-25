@@ -1,4 +1,4 @@
-# Quick Start — SPX-SDK in 5 Minutes
+# Local model with SDK
 
 Run a local SDK model without Docker, a server or a product key. This is the
 SDK RC21 workflow; HTTP client/runtime examples use a different timer interface.
@@ -6,12 +6,31 @@ See the [version matrix](../overview/system-requirements-and-capability.md).
 
 ## Prepare a working directory
 
-Use Python 3.12 for this tutorial. In a new directory, create a virtual environment
-(`python -m venv .venv`), activate it, then install:
+Use Python 3.12 and choose the commands for your shell. Work in a new directory.
+
+### macOS/Linux (POSIX shell)
 
 ```bash
+mkdir spx-sdk-demo
+cd spx-sdk-demo
+python3.12 -m venv .venv
+. .venv/bin/activate
 python -m pip install spx-sdk==1.0.0rc21 PyYAML==6.0.3
 ```
+
+### Windows PowerShell
+
+```powershell
+mkdir spx-sdk-demo
+cd spx-sdk-demo
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install spx-sdk==1.0.0rc21 PyYAML==6.0.3
+```
+
+If your organization's policy does not allow activation scripts, run commands
+with `.\.venv\Scripts\python.exe` directly instead of changing execution policy.
+For example: `.\.venv\Scripts\python.exe sdk_sensor.py yaml`.
 
 Do not clone the private SDK repository to follow this public tutorial.
 The package metadata allows Python >=3.9,<4; that is not a claim that the full
@@ -31,7 +50,7 @@ python sdk_sensor.py dict
 
 <!-- tutorial:sdk_sensor.py:start -->
 ```python
-"""Run from the Docs checkout: python examples/tutorials/sdk_sensor.py yaml."""
+"""Save as sdk_sensor.py; run python sdk_sensor.py yaml in that directory."""
 import argparse
 import copy
 import json
@@ -91,7 +110,7 @@ this module is imported; a server must import it before loading the definition.
 
 <!-- tutorial:heat_loss.py:start -->
 ```python
-"""SDK-only cooling action; run python examples/tutorials/heat_loss.py."""
+"""Save as heat_loss.py; run python heat_loss.py in that directory."""
 from spx_sdk.actions import Action
 from spx_sdk.model import Model
 from spx_sdk.registry import register_class

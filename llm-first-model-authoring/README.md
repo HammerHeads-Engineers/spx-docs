@@ -1,22 +1,36 @@
-# LLM-first model authoring
+---
+description: Connect an agent, choose runtime or repository work, and use a matching prompt.
+---
 
-Start with [Agent Start Here](agent-start-here.md). Choose the mode before asking
-an agent to change a model or control the running server.
+# Agents & MCP
 
-- **Live work:** use the installed MCP workspace and `runtime_mcp`. Stop at the
-  requested runtime result; repository changes are optional promotion work.
-- **Durable contribution:** use public Examples and `repo_dev`. Read its
-  `AGENTS.md`, `docs/LLM_SPEC.md` and generated `docs/MODEL_LANGUAGE.md`; update
-  models, catalogs, packs and tests as required by that repository.
-- **Documentation:** edit spx-docs/main and follow the
-  [docs automation guidelines](docs-automation-guidelines.md).
+## Connect your agent
 
-Public [spx-examples](https://github.com/HammerHeads-Engineers/spx-examples)
-contains authoring context and runtime MCP modules. Installation, client
-provisioning and releases belong to private spx-installer. Product documentation
-is canonical here; offline copies in Examples identify the source commit.
+[Connect your MCP client](../getting-started/connect-llm-with-spx-mcp.md) to the
+installed environment, then read [Agent Start Here](agent-start-here.md).
 
-For durable work use the [Model Brief](model-brief-template.md),
-[generate/validate workflow](workflow-generate-validate-iterate.md),
-[prompt recipes](prompt-recipes.md) and [definition of done](definition-of-done.md).
-For live setup use [MCP onboarding](../getting-started/connect-llm-with-spx-mcp.md).
+## Choose the result
+
+- **Live result — runtime_mcp:** operate the running server. Use the
+  [runtime prompt](prompt-recipes.md#live-runtime-task). Stop at the requested
+  live result; promote it to a repository only when asked.
+- **Durable contribution — repo_dev:** change public Examples. Use the
+  [repository prompt](prompt-recipes.md#id-2-create-a-new-model-copy-the-closest-template),
+  [model brief](model-brief-template.md) and
+  [completion criteria](definition-of-done.md).
+
+A local agent may do either task. A web-only assistant can prepare instructions
+or a patch, but cannot report local execution it did not perform. Tool access is
+separate from the purpose of the work.
+
+## Source ownership
+
+This portal defines product behavior. Public Examples owns model/contribution
+rules and runtime MCP modules. Private spx-installer owns setup, client
+provisioning and releases. Generated offline references are updated from Docs,
+not edited by hand. See the [source order](agent-start-here.md#source-order).
+
+## Continue with…
+
+[Prompt recipes](prompt-recipes.md) for a ready task, or
+[MCP reference](../getting-started/mcp-reference.md) for individual tools.

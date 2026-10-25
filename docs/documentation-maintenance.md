@@ -2,7 +2,7 @@
 
 Canonical source: spx-docs/main. Product version inputs live in `sources.json`;
 changing a catalog pin does not change the runtime baseline. Current public
-entry point: [Start here](../overview/start-here.md).
+entry point: [Start here](../README.md).
 
 ## Page contract
 
@@ -24,6 +24,7 @@ In a virtual environment from the Docs checkout:
 python -m pip install -r requirements-tutorials.txt
 python scripts/render_tutorials.py --check
 python scripts/check_docs.py
+python scripts/check_navigation.py
 python -m unittest discover -s tests -v
 ```
 
@@ -55,12 +56,36 @@ After a reviewed merge, wait for GitBook main publication. Run:
 python scripts/check_published.py --output /tmp/spx-published-check.json
 ```
 
-This reads every URL in `llms.txt`, verifies corrected pages and the archive
-redirect, and rejects unfinished UI/link placeholders. It is a deployment check,
-not a required pre-merge check against the still-old site.
+The migration manifest records all 134 previous public pages, including generated
+API pages. Before merging a navigation change, use the exact GitBook PR preview:
+
+```bash
+python scripts/check_published.py --site https://docs.simplephysx.com/~/revisions/<preview-id> --navigation-file /tmp/observed-preview-sidebar.json --record-routes --output /tmp/spx-preview-check.json
+```
+
+GitBook preview llms.txt can describe the current production tree. For previews,
+collect the rendered sidebar links through the browser into the navigation JSON
+(`title` and `url` per entry), including the expanded reference branches. Do not
+use the production index as evidence of preview routes.
+
+Review the observed routes and configure changed-page redirects. The checker
+reads the current index and verifies both HTML and Markdown forms of every old
+page, including the expected destination; it also checks key content corrections.
+Preview requests must stay in the preview rather than quietly reading production.
+Record routes only from a reviewed preview. The ordinary post-publication command
+compares the live site against that exact route map without rewriting it.
+
+`check_navigation.py` enforces seven task sections, unique page placement, depth
+and coverage of all legacy source pages. `check_docs.py` additionally validates
+YAML frontmatter so malformed page metadata fails locally, before GitBook import.
 
 In public Examples use the existing `scripts/sync_docs_context.py` with the
 exact merged Docs commit; never hand-edit generated MODEL_LANGUAGE/MCP exports.
 Check the pinned export, README catalog and docs tests, then release the context
 through the normal develop → main process. Do not change an installer pin or
 publish a product release as a side effect of refreshing documentation.
+
+Site redirect CSV imports use `source,destination,intent` (draft then publish).
+The reviewed map in `docs/navigation/legacy-pages.json` includes generated API
+URLs. Verify redirects after main publication: preview redirect resolution can
+differ from the live space. A 200 Markdown missing-page response is a failure.

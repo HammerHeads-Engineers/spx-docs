@@ -1,74 +1,74 @@
 ---
-description: Get up and running with the SPX simulation stack.
-icon: flag-checkered
-layout:
-  width: default
-  title:
-    visible: true
-  description:
-    visible: true
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
-  metadata:
-    visible: true
+description: Create one temperature sensor in the browser and verify a 31.25 degree readback.
 ---
 
-# Getting Started
+# First device in the UI
 
-Choose your workflow in [Start here](../overview/start-here.md). This page
-contains the browser/UI first-device walkthrough.
+## Before you start {#first-device-in-the-ui}
 
-Install with [SPX Setup](installation-guide.md), verify the UI/API, then follow
-the steps below. For agents use [MCP onboarding](connect-llm-with-spx-mcp.md);
-for code use the [client tutorial](../simulation-and-modeling/using-spx-python.md).
-The [version matrix](../overview/system-requirements-and-capability.md) explains
-which Python belongs to the installer, MCP, SDK or server container.
+**Prerequisites:** [SPX installed](installation-guide.md), UI open at
+`http://localhost:3000`, and a connection to your local server selected in
+[Settings](../ui-reference/settings.md).
 
-Public [spx-examples](https://github.com/HammerHeads-Engineers/spx-examples)
-contains models, catalogs, profiles, examples and runtime MCP modules. Bundle
-generation and product installation belong to private `spx-installer`.
+**Result:** instance `my_temperature_sensor` is **RUNNING**; setting its input to
+**31.25°C** produces a telemetry reading of **31.25°C**. No MCP, Python or external
+protocol client is needed. This is a simulation exercise, not a hardware check.
 
-## First device in the UI
+## Create the model
 
-For a basic communication check, select Modbus, MQTT, BACnet, KNX or OPC UA in
-local Setup, enable model installation and SPX UI, then start the stack. Protocol
-selection installs models but does not automatically create device instances.
+1. Open **Models** and create a new model. Set the model registry name to
+   `my_temperature_model`. Use a different name if that name already exists.
+2. Select YAML in the editor and paste the complete definition below.
+3. Choose **Save** and check the Validation panel for success.
 
-1. Open `http://localhost:3000/instances` and choose **New instance**.
-2. Select a model from the table below, enter an instance name, and keep its
-   default communication meta parameters for a local test.
-3. Create and start it. Open its details and verify **RUNNING**,
-   **Attributes** and **Communication**.
-4. Connect a protocol client using the listed endpoint; read a value, change
-   the control input and check the readback in both the client and SPX UI.
+<!-- model:pt100:start -->
+```yaml
+name: pt100_demo
+description: Minimal deterministic temperature sensor
+attributes:
+  k__temperature_c:
+    type: float
+    default: 20.0
+    unit: degC
+  temperature_c:
+    type: float
+    default: 20.0
+    unit: degC
+actions:
+  - function: $in(temperature_c)
+    name: update_temperature
+    call: $in(k__temperature_c)
+```
+<!-- model:pt100:end -->
 
-| Protocol | Model | Local endpoint and control input |
-|---|---|---|
-| Modbus TCP | `Process.ThermalController.Modbus` | port 502, unit 1; holding registers 2–3, big-endian Float32 `setpoint` |
-| MQTT | `Building.RobotVacuum.Mqtt` | port 1883; publish `1` to `spx/examples/robot_vacuum/command/desired_cleaning`, observe `telemetry/cleaning_active`, then publish `0` |
-| BACnet/IP | `Building.HvacFlexitNordic.Bacnet` | UDP 47808, device 2; analogValue 1994 `presentValue` |
-| KNXnet/IP | `Building.RoomController.Knx` | UDP 3671 tunnel; temperature at `2/0/1`, setpoint at `2/0/2`, DPT 9.001 |
-| OPC UA | `Building.BMSController.OpcUa` | `opc.tcp://localhost:4843/spx/bms-controller`; namespace `urn:spx:examples:opcua:bms-controller`, node `BMS/HVACMode` (`auto`/`heating`) |
+The definition's `name` is metadata; the registry name you saved is the model
+selected when creating an instance. See [model identifiers](../appendices/glossary-of-terms.md#model-identifiers)
+if these names differ in your project.
 
-The Community limit is five instances. These five examples can run together.
-MQTT telemetry is published when values change; without retained messages a
-late subscriber may need to send a command before receiving telemetry.
+## Create and start an instance
 
-Save a disk snapshot before replacing your stack. **Restore** recreates
-configuration and resets runtime measurements; manually start the restored
-instances. **Connections** represents links between SPX attributes, rather
-than the device's protocol adapters.
+1. Open **Instances**, choose **New instance**, select `my_temperature_model`
+   and enter `my_temperature_sensor` (or another unused name).
+2. Create the instance and choose **Start** in Continuous mode.
+3. Open its details and confirm **RUNNING**. In **Attributes**, locate
+   `k__temperature_c` (input) and `temperature_c` (telemetry).
 
-## Next steps on simplephysx.com
+## Change an input and verify the result
 
-Explore the main protocol simulator pages for SPX runtime workflows:
+1. Set the **internal value** of `k__temperature_c` to **31.25** and submit the edit.
+2. Wait for the next UI refresh. `temperature_c` should read **31.25**.
+3. Change the input to **18.0** and confirm telemetry follows to **18.0**.
 
-* [MQTT Simulator](https://www.simplephysx.com/mqtt-simulator)
-* [Modbus TCP Simulator](https://www.simplephysx.com/modbus-simulator)
-* [OPC UA Simulator](https://www.simplephysx.com/opc-ua-simulator)
-* [BACnet Simulator](https://www.simplephysx.com/bacnet-simulator)
-* [KNX Simulator](https://www.simplephysx.com/knx-simulator)
+If the reading does not follow, confirm that the instance is RUNNING and the
+input was saved. See the [Instances UI reference](../ui-reference/instances.md)
+for the current controls. A successful edit alone is not proof of propagation.
+
+## Finish and continue
+
+Stop `my_temperature_sensor` when finished. On a disposable environment you can
+also delete this instance and then `my_temperature_model`; keep unrelated
+models and instances intact.
+
+**You have completed the first UI exercise.** Continue with
+[Connect two instances](../guides/connect-instances.md), or choose an optional
+[protocol walkthrough](choose-a-protocol-adapter.md) to test an external client.

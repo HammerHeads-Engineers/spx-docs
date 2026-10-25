@@ -1,4 +1,4 @@
-"""Run from the Docs checkout: python examples/tutorials/sdk_sensor.py yaml."""
+"""Save as sdk_sensor.py; run python sdk_sensor.py yaml in that directory."""
 import argparse
 import copy
 import json
