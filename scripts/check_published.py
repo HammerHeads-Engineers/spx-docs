@@ -40,7 +40,7 @@ def normalize(url, site):
     if prefix and (path == prefix or path.startswith(prefix + '/')):
         path = path[len(prefix):]
     path = path.rstrip('/') or '/'
-    if path in ('/readme', '/readme.md'):
+    if path in ('/readme', '/readme.md', '/.md'):
         return '/' if not path.endswith('.md') else '/readme.md'
     return path
 
