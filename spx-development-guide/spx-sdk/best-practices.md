@@ -17,7 +17,7 @@ This page collects practical conventions for authoring models with the SDK and k
 ## Validation and upgrades
 
 - Run schema/definition validation early: [Validation](validation.md).
-- Prefer explicit imports and registries for custom classes: [Registry](registry.md), [Imports](imports/README.md).
+- Prefer explicit imports and registries for custom classes: [Registry](registry.md), [Imports](imports/pythonfile.md).
 
 ## Where to look next
 

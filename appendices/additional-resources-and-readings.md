@@ -15,3 +15,9 @@ Do not treat a private GitHub 404 as an installation failure.
 
 [Product website](https://simplephysx.com) ·
 [Support](../troubleshooting-and-support/how-to-get-support.md)
+
+## Documentation maintainers
+
+For spx-docs changes use the [documentation maintenance guide](https://github.com/HammerHeads-Engineers/spx-docs/blob/main/docs/documentation-maintenance.md)
+and [Git Sync/automation contract](https://github.com/HammerHeads-Engineers/spx-docs/blob/main/llm-first-model-authoring/docs-automation-guidelines.md).
+These are maintainer workflows, separate from live MCP or model contributions.

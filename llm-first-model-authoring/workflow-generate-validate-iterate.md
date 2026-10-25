@@ -5,7 +5,7 @@ This workflow assumes you are contributing to `spx-examples` (or mirroring its c
 ## Branch synchronization
 
 Documentation changes target `spx-docs/main`; model changes target
-`spx-examples/develop`. Follow the [automation contract](docs-automation-guidelines.md)
+`spx-examples/develop`. Follow the [automation contract](../appendices/additional-resources-and-readings.md)
 for generated content. Capture source commits before reviewing semantic changes.
 
 ## Prereqs (one-time)

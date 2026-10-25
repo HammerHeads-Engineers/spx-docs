@@ -1,8 +1,11 @@
-# SPX MCP reference
+# MCP tools and runtime rules
 
 `spx-examples` includes a local MCP tool intended for code-oriented LLM workflows.
 It is a repo tool, not an example project: the MCP server understands the local
 catalog, profiles, packs, model validation rules, and a running SPX server.
+
+For the shortest task path, read [Agent Start Here](https://docs.simplephysx.com/llm-first-model-authoring/agent-start-here).
+This full reference is also exported offline to public Examples.
 
 ## Scope
 

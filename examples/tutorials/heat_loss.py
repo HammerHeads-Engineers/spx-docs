@@ -1,4 +1,4 @@
-"""SDK-only cooling action; run python examples/tutorials/heat_loss.py."""
+"""Save as heat_loss.py; run python heat_loss.py in that directory."""
 from spx_sdk.actions import Action
 from spx_sdk.model import Model
 from spx_sdk.registry import register_class

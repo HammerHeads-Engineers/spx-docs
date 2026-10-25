@@ -1,29 +1,51 @@
-# Overview
+---
+description: Choose UI, agent or Python and get your first SPX result.
+---
 
-SPX (SimplePhysX) is a deterministic simulation stack you can run locally (Docker) and drive from code for repeatable testing.
+# Start here
 
-SPX is split into:
+<a id="what-is-spx"></a>
+SPX simulates devices and systems on your computer. Use its browser UI, an AI
+agent or Python to create a simulation, change inputs and observe the result.
 
-- **SPX Server**: runtime that loads **Models**, runs live **Instances**, executes **Scenarios**, serves **Snapshots**, and exposes a REST API (default `http://localhost:8000`).
-- **SPX SDK**: author models/components in a structured way (YAML definitions + Python extension points).
-- **SPX UI**: inspect Instances, attributes/state, scenarios, logs, and snapshots while debugging.
+## Use the browser UI
 
-Choose your task in [Start here](overview/start-here.md): browser UI,
-agent/MCP, or Python tests and extensions. That page is the primary entry point.
+Create one temperature sensor, start it, set an input to **31.25°C** and read
+**31.25°C** back. No protocol client or Python code is needed.
 
-Time can be controlled explicitly for tests. Repeatable outputs also require
-controlled inputs, random seeds and external dependencies. Snapshots restore
-configuration and structure; they do not checkpoint live simulation state.
+**[Start with installation](getting-started/installation-guide.md)** →
+[First device in the UI](getting-started/README.md).
 
+## Work with an agent
+
+Connect your MCP client to the installed SPX environment. Ask the agent to start
+one model instance and report its identity and **RUNNING** state.
+
+**[Connect your MCP client](getting-started/connect-llm-with-spx-mcp.md)** →
+[Agent Start Here](llm-first-model-authoring/agent-start-here.md).
+
+## Write Python
+
+Run a complete program against your SPX Server and check the expected time and
+temperature values. The program cleans up its own demo resources.
+
+**[Run your first Python program](simulation-and-modeling/using-spx-python.md)**.
+For local logic without a server, use [Local model with SDK](spx-development-guide/quick-start-spx-sdk-in-5-minutes.md).
+
+## Find something specific
+
+[Find a model or pack](usage-scenarios-and-examples/README.md) ·
+[Choose a protocol](getting-started/choose-a-protocol-adapter.md) ·
+[Read the reference](reference/README.md) ·
+[Get help](troubleshooting-and-support/README.md).
+
+<a id="where-to-start"></a>
+<a id="mental-model"></a>
+<a id="which-repository-or-workspace"></a>
 ## Documentation and repository responsibilities
 
-This portal is the canonical product documentation, maintained on `spx-docs/main`.
-[Public spx-examples](https://github.com/HammerHeads-Engineers/spx-examples) owns
-models, catalogs, profiles, runnable examples, runtime MCP modules and agent
-working instructions. Its README links back here; its model and MCP reference
-files are generated offline snapshots. The private `spx-installer` owns
-installation, Python/MCP preparation, packaging, signing and release publication.
-
-This edition targets installer **v1.1.0-rc.115**, server/UI **v1.0.0-rc.76**,
-SDK **v1.0.0-rc.21** and Python client **1.0.0-rc.3**. See the
-[release baseline](release-notes.md) before mixing independently published versions.
+Product instructions live here. Public Examples contains models and agent
+contribution rules; its offline references identify their source revision.
+See [Agent source order](llm-first-model-authoring/agent-start-here.md#source-order)
+and [requirements and versions](overview/system-requirements-and-capability.md)
+when working across environments. Snapshots restore configuration, not live state.

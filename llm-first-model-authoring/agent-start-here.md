@@ -1,52 +1,84 @@
+---
+description: Read first for agent work: authoritative sources, runtime/repository mode and completion criteria.
+---
+
 # Agent Start Here
 
-Read this before selecting a workflow or interpreting a model example as a rule.
-The current product contract is the [released version set](../release-notes.md).
-
-## Source order
-
-1. User intent selects the task and whether the result must persist.
-2. Workspace `AGENTS.md` provides operating rules and mode resolution.
-3. Canonical [model language](../simulation-and-modeling/model-definition-reference.md)
-   and [MCP reference](../getting-started/mcp-reference.md) define documented contracts.
-4. Public Examples `docs/LLM_SPEC.md` defines contribution conventions; the
-   generated offline references identify their canonical Docs commit.
-5. Examples illustrate use; an older example does not override a normative rule.
-
-Match behavior to the installed bundle. Newer catalog content does not implicitly
-upgrade server, SDK, client or installed MCP modules. Do not infer work mode from
-a running server or MCP availability alone.
+Choose the result, read the matching sources, then act. For a new connection use
+[Connect your MCP client](../getting-started/connect-llm-with-spx-mcp.md).
+The [prompt recipes](prompt-recipes.md) provide ready-to-copy tasks.
 
 ## Choose the task and stopping point
 
-| Task | Workspace/repository | Completion |
-| --- | --- | --- |
-| Live model/instance/connection work | managed workspace, `runtime_mcp` | Requested live result; normally valid model, instance RUNNING, reported keys/endpoints. Connections must be RUNNING and propagate. Protocol verification only when requested or needed to diagnose failure |
-| Durable model/library contribution | public Examples, `repo_dev` | Relevant model, catalog/pack updates and tests; validator passes; follow repo instructions |
-| Product documentation | spx-docs/main | Source-backed prose, working examples, navigation and applicable checks |
-| Installation/packaging/signing | private spx-installer | Maintainer workflow, not public Examples compatibility shims |
+### Live runtime task — runtime_mcp
 
-For runtime tasks prefer host-managed MCP tools. Inspect exact instance keys and
-attribute names before writes. Use structured connection endpoints, telemetry as
-sources and persistent `k__*` controls as continuous targets. A one-shot `cmd__*`
-is not an ordinary continuous input. Do not add repo tests/catalogs merely to
-finish a local experiment; persist only when requested.
+Use the managed workspace and host-provided MCP tools. Complete the requested
+live result; for a model/instance task normally report model ID, instance key,
+**RUNNING** state and relevant endpoints. For a connection, verify RUNNING and
+actual propagation. Do not add repo tests, catalogs or pack changes by default.
+Protocol checks are requested explicitly or driven by a failure.
+
+### Durable model contribution — repo_dev
+
+Use the public Examples checkout. Update the relevant model, catalog/pack
+metadata and tests according to its AGENTS.md, then validate the touched area.
+A running server or available MCP tool does not by itself select this mode.
+
+Local agents can do either task. Web-only assistants can prepare a patch or
+instructions; they cannot report local execution they did not perform.
+
+## Source order
+
+1. User intent selects the task and whether it must persist.
+2. Read the active workspace's `AGENTS.md`. Without a checkout, start with
+   [public Examples AGENTS.md](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/AGENTS.md).
+3. For runtime work read [MCP tools and runtime rules](../getting-started/mcp-reference.md);
+   for model syntax read [Model language: YAML and JSON](../simulation-and-modeling/model-definition-reference.md).
+4. For contributions also read the
+   [Examples modeling playbook](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/LLM_SPEC.md)
+   and [task template](https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/LLM_TASK_TEMPLATE.md).
+5. Examples illustrate use; an older sample does not override the current
+   normative contract. The [release baseline](../release-notes.md) identifies
+   the documented versions. Installed context follows its installer pin.
+
+For indexed retrieval, use this page as the curated task map. GitBook's
+[llms.txt](https://docs.simplephysx.com/llms.txt) is the complete generated catalog,
+and each page is also available as Markdown. Do not treat all indexed pages as
+an instruction to read the whole site before a small runtime task.
+
+## Which repository or workspace?
+
+- Managed workspace: live runtime tasks and its private server binding.
+- Public Examples: models, runtime MCP modules, AGENTS, playbook and task templates.
+- spx-docs/main: canonical product documentation.
+- Private spx-installer: installation, client preparation, packaging and releases.
+
+`docs/MODEL_LANGUAGE.md` and `docs/MCP.md` in Examples are generated offline
+references. Propose semantic changes in spx-docs and run the normal export sync;
+never hand-edit those exports. `docs/LLM_SPEC.md` is a separate local playbook.
+A new DSL feature needs runtime support; prose alone cannot implement it.
 
 ## Names, layers and clocks
 
 Use the [identifier glossary](../appendices/glossary-of-terms.md#model-identifiers)
-to distinguish catalog ID, definition name, model registry key and instance key.
-SDK Model is a Python object; spx-python is an HTTP proxy; runtime Model is the
-hosted execution object. Their APIs are related but not identical.
+for catalog ID, metadata name, registry key and instance key. Inspect exact keys
+and attributes before writes. SDK objects, HTTP client proxies and runtime
+components have related but different execution semantics.
 
-`$in`/`$ext` select value wrappers, not read/write permissions. An internal write
-clears an external override. A controlled clock does not seed random generators.
-Snapshot import rebuilds structure and defaults, not a runtime checkpoint.
+`$in` and `$ext` select wrappers, not read/write permissions. An internal write
+clears an external override. Use telemetry as continuous connection sources and
+persistent `k__*` controls as targets; `cmd__*` normally represents one-shot input.
+A controlled clock does not seed random generators. A snapshot restores
+structure/defaults, not live values or elapsed time.
 
 ## Validation claims
 
-Separate YAML/JSON parsing, catalog validation, SDK execution, runtime/API checks,
-protocol exchange and physical-hardware verification. Report exactly which ran.
-There is no complete published JSON Schema covering every DSL extension and
-adapter. Use the validator plus runtime registration; a schema or parser passing
-alone does not prove arbitrary adapter fields are supported.
+Distinguish parse/catalog validation, SDK execution, runtime/API verification,
+protocol exchange and physical hardware checks. Report only checks actually run.
+There is no complete JSON Schema for arbitrary DSL extensions and adapters;
+parsing alone does not prove runtime or protocol behavior.
+
+## Continue with…
+
+[Live runtime prompt](prompt-recipes.md#live-runtime-task) or
+[durable contribution prompt](prompt-recipes.md#durable-model-contribution).

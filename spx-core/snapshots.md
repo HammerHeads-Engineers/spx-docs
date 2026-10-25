@@ -1,8 +1,9 @@
 ---
+description: Runtime snapshot fields and restore behavior; no live-value checkpoint.
 icon: floppy-disks
 ---
 
-# Snapshots
+# Snapshot runtime reference
 
 Snapshots save model definitions, instance/template relationships and connections.
 They restore configuration and structure, not live attribute values, elapsed

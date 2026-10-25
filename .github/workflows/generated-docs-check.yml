@@ -21,6 +21,8 @@ jobs:
         run: python scripts/generate_device_catalog.py --spx-examples .tmp/spx-examples --source-ref $(python -c 'import json; print(json.load(open("sources.json"))["catalog"]["commit"])') --check
       - name: Check Markdown navigation and model samples
         run: python scripts/check_docs.py
+      - name: Check task navigation and legacy coverage
+        run: python scripts/check_navigation.py
       - name: Check executable tutorial blocks
         run: python scripts/render_tutorials.py --check
       - name: Check generator failure and idempotence guards

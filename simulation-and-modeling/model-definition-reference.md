@@ -72,11 +72,31 @@ example `temperature_c` with `degC` or `energy_total_kwh` with `kWh`.
 - `python_file` / `import`: optional Python class bindings.
 - `timer`: optional time base for time-aware actions.
 - `polling`: optional background runner for parent components.
-- System components (advanced): `connections`, `modules`, `meta_parameters`, `init_parameters`,
-  `instances`/`units`, `templates`/`models`, `snapshots`, `logs`.
+- `meta_parameters`: per-instance/deployment inputs, including communication host, port and IDs.
+- `init_parameters`: parameters consumed when constructing the model.
+- System configuration (advanced): `connections`, `modules`, `instances`/`units`,
+  `templates`/`models`, `snapshots`, `logs`.
 
-System components are typically used in system-level configs; avoid them in per-model YAML
-unless the model explicitly needs them.
+### Deployment and communication parameters
+
+`meta_parameters` belongs in an ordinary device model when its deployment values
+vary between instances. Bind configurable adapter fields through `$param(...)`.
+For example, this is a model fragment, not a complete definition:
+
+```yaml
+meta_parameters:
+  modbus_port:
+    type: int
+    default: 502
+communication:
+  - modbus_slave:
+      port: $param(modbus_port)
+```
+
+Provide the complete adapter host/unit/bindings from the chosen protocol reference.
+Use attributes for simulation controls and telemetry, meta parameters for wiring.
+System-only containers usually belong in system configuration rather than every
+device definition. See the full Communication section for a complete example.
 
 ## Attributes
 `attributes` is a mapping from attribute name to either:

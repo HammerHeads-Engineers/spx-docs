@@ -1,8 +1,9 @@
 ---
+description: Python workflow to save and restore model, instance and connection configuration.
 icon: floppy-disks
 ---
 
-# Snapshots — Getting Started
+# Save configuration with Python
 
 This guide shows how to **save**, **list**, and **load** system snapshots using SPX. Snapshots capture the **structure** of your system (models, instances, and connections) so you can quickly persist and restore configurations.
 

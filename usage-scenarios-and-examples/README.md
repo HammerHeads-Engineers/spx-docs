@@ -1,27 +1,27 @@
 ---
-icon: vial
+description: Find reusable devices, industry packs and runnable SPX examples.
 ---
 
-# Usage Scenarios and Examples
+# Models & packs
 
-This chapter collects end-to-end workflows that combine:
+Find an existing simulation before writing a new one.
 
-* **Models** (definitions you load into SPX Server),
-* live **Instances** (runtime state you inspect and mutate),
-* **Scenarios** (repeatable event scripts),
-* and **MiL tests** (pytest suites that drive deterministic time).
+1. Browse the [device catalog](device-catalog.md) by device or protocol.
+2. Choose an [industry pack or profile](industry-packs.md) for a complete setup.
+3. For a worked pack example, follow the
+   [Smart Building walkthrough](../getting-started/first-run-smart-building-pack.md).
 
-For runnable reference implementations, use `spx-examples` as the canonical source of models + tests.
+[Use cases](../overview/use-case-and-applications.md) and
+[scenario examples](common-use-cases.md) show where these models fit.
 
-## Reference repository: spx-examples
+The public [spx-examples repository](https://github.com/HammerHeads-Engineers/spx-examples)
+owns models, catalogs, profiles, examples, tests and runtime MCP modules. Its
+library may be newer than the context pinned by your installer. Use
+[Release Notes](../release-notes.md) to identify the installed version set.
+Product installation and bundle generation belong to private spx-installer.
 
-Browse the public
-[spx-examples repository](https://github.com/HammerHeads-Engineers/spx-examples)
-for the current model catalog, installer profiles, generated bundle tooling,
-and MiL test suites.
+## Continue with…
 
-Next pages:
-
-* [Guided Use Cases & Scenarios](common-use-cases.md)
-* [Industry Packs and Profiles](industry-packs.md)
-* [Device Catalog (Pack Device Models)](device-catalog.md)
+[First device in the UI](../getting-started/README.md) to operate a model,
+[Create your first model](../getting-started/build-your-first-simulation.md) to
+adapt one, or [Integrations](../spx-core/communications/README.md) to connect a SUT.

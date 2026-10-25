@@ -91,6 +91,30 @@ class RuntimeContracts(unittest.TestCase):
         restored.run(time_step=0.1)
         self.assertEqual(restored['attributes']['temperature_c'].external_value, 42.0)
 
+    def test_first_ui_exercise_continuous_temperature_readback(self):
+        import re
+        import yaml
+        docs = Path(__file__).resolve().parents[1]
+        text = (docs / 'getting-started/README.md').read_text()
+        definition = yaml.safe_load(re.search(r'```yaml\n(.*?)\n```', text, re.S).group(1))
+        self.client['models']['my_temperature_model'] = definition
+        self.client['instances']['my_temperature_sensor'] = 'my_temperature_model'
+        instance = self.client['instances']['my_temperature_sensor']
+        instance.start()
+        self.assertEqual(instance.state, 'RUNNING')
+        for value in (31.25, 18.0):
+            instance['attributes']['k__temperature_c'].internal_value = value
+            deadline = time.monotonic() + 2.0
+            while time.monotonic() < deadline:
+                observed = instance['attributes']['temperature_c'].external_value
+                if observed == value:
+                    break
+                time.sleep(0.01)
+            self.assertEqual(observed, value)
+        instance.stop()
+        del self.client['instances']['my_temperature_sensor']
+        del self.client['models']['my_temperature_model']
+
     def test_auth_and_yaml_json_reference(self):
         self.assertEqual(self.http.get('/health').status_code, 200)
         self.assertIn(self.http.get('/api/v3/system').status_code, (401, 403))

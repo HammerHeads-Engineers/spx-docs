@@ -2,15 +2,18 @@
 icon: satellite-dish
 ---
 
-# Communication Adapters
+# Integrations
 
-SPX Server implements protocol adapters in its server runtime.
+Connect the simulation to your Software Under Test (SUT) using a device protocol.
+First choose the role SPX must play, then check the required ports, services and
+hardware. The control API/MCP channel is separate from these device protocols.
 
-**Source of truth (in priority order):**
+1. [Choose a protocol](../../getting-started/choose-a-protocol-adapter.md).
+2. Check [capabilities and prerequisites](capabilities.md).
+3. Follow the adapter page below, or the [Modbus walkthrough](../../getting-started/add-communication-protocol.md).
 
-1) Implementation: SPX Server runtime
-   - The YAML key is the `@register_class(name="...")` value.
-2) Runnable examples: `spx-examples/library/domains/**`
+For your first result without an external protocol client, use
+[First device in the UI](../../getting-started/README.md).
 
 ## Shared concepts
 
