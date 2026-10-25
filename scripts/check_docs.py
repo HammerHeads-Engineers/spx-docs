@@ -48,6 +48,11 @@ def check():
             elif url.fragment and local.is_file() and local.suffix == '.md' and unquote(url.fragment) not in anchors(local.read_text()):
                 errors.append(f'{path.relative_to(ROOT)}: missing anchor: {target}')
     import yaml
+    config = yaml.safe_load((ROOT / '.gitbook.yaml').read_text())
+    for old_url, target in config.get('redirects', {}).items():
+        destination = ROOT / target
+        if not destination.is_file() or not destination.resolve().is_relative_to(ROOT):
+            errors.append(f'Invalid GitBook redirect target: {old_url} -> {target}')
     sample = (ROOT / 'simulation-and-modeling/model-definition-reference.md').read_text()
     yml = re.search(r'```yaml\n(.*?)\n```', sample, re.S).group(1)
     jsn = re.search(r'```json\n(.*?)\n```', sample, re.S).group(1)
