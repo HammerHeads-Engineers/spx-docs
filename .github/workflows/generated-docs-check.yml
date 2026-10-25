@@ -1,0 +1,21 @@
+name: Documentation checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  documentation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install PyYAML==6.0.3
+      - name: Fetch pinned public examples
+        run: python scripts/check_sources.py --checkout .tmp/spx-examples
+      - name: Check generated catalog
+        run: python scripts/generate_device_catalog.py --spx-examples .tmp/spx-examples --source-ref $(python -c 'import json; print(json.load(open("sources.json"))["sources"]["spx-examples"]["commit"])') --check

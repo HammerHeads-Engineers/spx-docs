@@ -1,0 +1,324 @@
+#!/usr/bin/env python3
+"""Generate usage-scenarios-and-examples/device-catalog.md from spx-examples catalogs.
+
+Usage:
+  python scripts/generate_device_catalog.py --spx-examples ../spx-examples
+  python scripts/generate_device_catalog.py --spx-examples ../spx-examples --source-ref origin/develop --source-branch develop
+  python scripts/generate_device_catalog.py --spx-examples ../spx-examples --check
+"""
+
+from __future__ import annotations
+
+import argparse
+import difflib
+import subprocess
+import sys
+from collections import Counter, defaultdict
+from pathlib import Path
+from typing import Dict, List
+
+import yaml
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--spx-examples",
+        type=Path,
+        default=Path("../spx-examples"),
+        help="Path to local spx-examples repository (default: ../spx-examples).",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=Path("usage-scenarios-and-examples/device-catalog.md"),
+        help="Output markdown path (default: usage-scenarios-and-examples/device-catalog.md).",
+    )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="Do not write output; fail if file content differs from generated content.",
+    )
+    parser.add_argument(
+        "--source-ref",
+        default="HEAD",
+        help=(
+            "Git ref used for source snapshot metadata (default: HEAD). "
+            "Examples: HEAD, origin/main, origin/develop."
+        ),
+    )
+    parser.add_argument(
+        "--source-branch",
+        default=None,
+        help=(
+            "Branch name used in GitHub blob links and page description. "
+            "If omitted, inferred from --source-ref, then falls back to main."
+        ),
+    )
+    return parser.parse_args()
+
+
+def run_git(spx_examples_path: Path, args: List[str]) -> str:
+    return subprocess.check_output(
+        ["git", "-C", str(spx_examples_path), *args],
+        text=True,
+    ).strip()
+
+
+def resolve_source_branch(spx_examples_path: Path, source_ref: str, source_branch: str | None) -> str:
+    if source_branch:
+        return source_branch
+    if source_ref.startswith("origin/"):
+        return source_ref.split("/", 1)[1]
+    if source_ref.startswith("refs/heads/"):
+        return source_ref.split("/", 2)[2]
+    try:
+        resolved = run_git(spx_examples_path, ["rev-parse", "--abbrev-ref", source_ref])
+        if resolved and resolved != "HEAD":
+            return resolved
+    except subprocess.CalledProcessError:
+        pass
+    return "main"
+
+
+def get_source_snapshot(spx_examples_path: Path, source_ref: str) -> str:
+    commit = run_git(spx_examples_path, ["rev-parse", "--verify", f"{source_ref}^{{commit}}"])
+    commit_date = run_git(spx_examples_path, ["show", "-s", "--format=%cI", commit])
+    return f"`spx-examples` commit `{commit}` ({commit_date})"
+
+
+def load_yaml_from_ref(spx_examples_path: Path, source_ref: str, repo_relative_path: str) -> dict:
+    raw = run_git(spx_examples_path, ["show", f"{source_ref}:{repo_relative_path}"])
+    return yaml.safe_load(raw)
+
+
+def make_title_case_domain_sort_key(domain_id: str, domain_name_by_id: Dict[str, str]) -> str:
+    return domain_name_by_id.get(domain_id, domain_id).lower()
+
+
+def model_filename(path: str) -> str:
+    return path.split("/")[-1]
+
+
+def normalized_model_field(model: dict, field: str, fallback: str) -> str:
+    value = model.get(field)
+    if isinstance(value, str) and value.strip():
+        return value.strip()
+    return fallback
+
+
+def render_catalog(spx_examples_path: Path, source_ref: str, source_branch: str | None) -> str:
+    models_repo_path = "library/catalog/models.yaml"
+    industries_repo_path = "library/catalog/industries.yaml"
+    domains_repo_path = "library/catalog/domains.yaml"
+
+    models_data = load_yaml_from_ref(spx_examples_path, source_ref, models_repo_path)["models"]
+    industries_data = load_yaml_from_ref(spx_examples_path, source_ref, industries_repo_path)["industries"]
+    domains_data = load_yaml_from_ref(spx_examples_path, source_ref, domains_repo_path)["domains"]
+    total_models = len(models_data)
+
+    domain_name_by_id = {d["id"]: d["name"] for d in domains_data}
+    pack_name_by_id = {p["id"]: p["name"] for p in industries_data}
+    pack_order = [p["id"] for p in industries_data]
+
+    pack_profiles: Dict[str, set] = {}
+    for pack in industries_data:
+        ids = set()
+        for profile_path in pack.get("profiles", []) or []:
+            profile = Path(profile_path).stem
+            ids.add(profile)
+        pack_profiles[pack["id"]] = ids
+
+    # pack -> domain -> device_class -> vendor -> entries
+    catalog = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(list))))
+    domain_totals = Counter()
+    protocol_totals = Counter()
+
+    for model in models_data:
+        domain_totals[model.get("domain_group", model.get("domain", ""))] += 1
+        for protocol in model.get("protocols", []) or []:
+            protocol_totals[protocol] += 1
+        entry = {
+            "id": model.get("id", ""),
+            "name": model.get("name", ""),
+            "domain": normalized_model_field(model, "domain_group", model.get("domain", "unknown")),
+            "device_class": normalized_model_field(model, "device_class", "generic"),
+            "path": model["path"],
+            "filename": model_filename(model["path"]),
+            "vendor": normalized_model_field(model, "vendor", "generic"),
+            "protocols": model.get("protocols", []) or [],
+        }
+        model_profiles = set(model.get("profiles", []) or [])
+
+        for pack in model.get("packages", []) or []:
+            entry_copy = dict(entry)
+            entry_copy["profiles"] = sorted(model_profiles.intersection(pack_profiles.get(pack, set())))
+            catalog[pack][entry_copy["domain"]][entry_copy["device_class"]][entry_copy["vendor"]].append(entry_copy)
+
+    for pack_id in list(catalog.keys()):
+        for domain_id in list(catalog[pack_id].keys()):
+            for device_class in list(catalog[pack_id][domain_id].keys()):
+                for vendor in list(catalog[pack_id][domain_id][device_class].keys()):
+                    catalog[pack_id][domain_id][device_class][vendor].sort(
+                        key=lambda item: (item["name"].lower(), item["filename"].lower())
+                    )
+
+    snapshot = get_source_snapshot(spx_examples_path, source_ref)
+    resolved_source_branch = run_git(spx_examples_path, ["rev-parse", "--verify", f"{source_ref}^{{commit}}"] )
+
+    lines: List[str] = []
+    lines.extend(
+        [
+            "---",
+            "description: >-",
+            "  Searchable catalog of public reference models, grouped by pack, generated from "
+            f"spx-examples {resolved_source_branch}.",
+            "icon: list",
+            "---",
+            "",
+            "# Device Catalog (spx-examples)",
+            "",
+            "This page lists the public model library grouped by pack. An installed bundle contains the selection pinned by its installer release; it may differ from this catalog.",
+            "Names and file names are aligned 1:1 with `spx-examples` so docs search can find exact device strings quickly.",
+            "",
+            "> Important",
+            "> These are reference simulation models from `spx-examples`, not official digital twins certified by device manufacturers.",
+            "> They are not officially supported by manufacturers and we do not guarantee a 100% functional match to real hardware behavior.",
+            "",
+            f"Source snapshot: {snapshot}",
+            "",
+            "Generated from: `scripts/generate_device_catalog.py`.",
+            "",
+            "Grouping on this page: **Pack -> Domain -> Device Class -> Vendor**.",
+            "",
+            "Snapshot summary:",
+            f"- Model entries in `library/catalog/models.yaml`: **{total_models}**",
+            "- Domains in catalog: "
+            + ", ".join(
+                f"`{domain}` (**{count}**)" for domain, count in sorted(domain_totals.items(), key=lambda item: item[0])
+            ),
+            "- Protocol tags in catalog: "
+            + ", ".join(
+                f"`{protocol}` (**{count}**)"
+                for protocol, count in sorted(protocol_totals.items(), key=lambda item: item[0])
+            ),
+            "",
+            "## Conventions",
+            "",
+            "- `Device name`: official `name` from `library/catalog/models.yaml`.",
+            "- `Model file`: exact YAML file name used in the library.",
+            "- `Device Class`: official `device_class` from `library/catalog/models.yaml`.",
+            "- `Vendor`: official `vendor` from `library/catalog/models.yaml`.",
+            "- `Profiles`: only profiles that belong to the current pack.",
+            "",
+        ]
+    )
+
+    for pack_id in pack_order:
+        pack_entries = catalog.get(pack_id)
+        if not pack_entries:
+            continue
+
+        pack_name = pack_name_by_id.get(pack_id, pack_id)
+        profiles = sorted(pack_profiles.get(pack_id, set()))
+        profile_text = ", ".join(f"`{p}`" for p in profiles) if profiles else "-"
+
+        all_items: List[dict] = []
+        for domain_group in pack_entries.values():
+            for class_group in domain_group.values():
+                for vendor_group in class_group.values():
+                    all_items.extend(vendor_group)
+
+        lines.append(f"## `{pack_id}` - {pack_name}")
+        lines.append("")
+        lines.append(f"Devices in pack: **{len(all_items)}**")
+        lines.append("")
+        lines.append(f"Pack profiles: {profile_text}")
+        lines.append("")
+
+        sorted_domains = sorted(
+            pack_entries.keys(),
+            key=lambda domain: make_title_case_domain_sort_key(domain, domain_name_by_id),
+        )
+        for domain_id in sorted_domains:
+            domain_name = domain_name_by_id.get(domain_id, domain_id)
+            domain_items: List[dict] = []
+            for class_group in pack_entries[domain_id].values():
+                for vendor_items in class_group.values():
+                    domain_items.extend(vendor_items)
+
+            lines.append(f"### Domain: `{domain_id}` - {domain_name}")
+            lines.append("")
+            lines.append(f"Device count in domain: **{len(domain_items)}**")
+            lines.append("")
+
+            for device_class in sorted(pack_entries[domain_id].keys(), key=str.lower):
+                class_items: List[dict] = []
+                for vendor_items in pack_entries[domain_id][device_class].values():
+                    class_items.extend(vendor_items)
+
+                lines.append(f"#### Device Class: `{device_class}`")
+                lines.append("")
+                lines.append(f"Device count in class: **{len(class_items)}**")
+                lines.append("")
+
+                for vendor in sorted(pack_entries[domain_id][device_class].keys(), key=str.lower):
+                    entries = pack_entries[domain_id][device_class][vendor]
+                    lines.append(f"##### Vendor: `{vendor}`")
+                    lines.append("")
+                    lines.append("| Device name | Model file | Model ID | Protocols | Profiles |")
+                    lines.append("| --- | --- | --- | --- | --- |")
+                    for entry in entries:
+                        url = (
+                            "https://github.com/HammerHeads-Engineers/spx-examples/blob/"
+                            f"{resolved_source_branch}/{entry['path']}"
+                        )
+                        protocols = ", ".join(entry["protocols"]) if entry["protocols"] else "-"
+                        profiles_cell = ", ".join(f"`{p}`" for p in entry["profiles"]) if entry["profiles"] else "-"
+                        lines.append(
+                            f"| {entry['name']} | [`{entry['filename']}`]({url}) | "
+                            f"`{entry['id']}` | `{protocols}` | {profiles_cell} |"
+                        )
+                    lines.append("")
+
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def main() -> int:
+    args = parse_args()
+    repo_root = Path.cwd()
+    spx_examples_path = (repo_root / args.spx_examples).resolve()
+    output_path = (repo_root / args.output).resolve()
+
+    if not spx_examples_path.exists():
+        print(f"error: spx-examples path not found: {spx_examples_path}", file=sys.stderr)
+        return 2
+    if not (spx_examples_path / ".git").exists():
+        print(f"error: not a git repository: {spx_examples_path}", file=sys.stderr)
+        return 2
+
+    generated = render_catalog(spx_examples_path, args.source_ref, args.source_branch)
+
+    if args.check:
+        current = output_path.read_text(encoding="utf-8") if output_path.exists() else ""
+        if current != generated:
+            print(f"error: generated content differs: {output_path}", file=sys.stderr)
+            diff = difflib.unified_diff(
+                current.splitlines(keepends=True),
+                generated.splitlines(keepends=True),
+                fromfile=str(output_path),
+                tofile="generated/device-catalog.md",
+            )
+            sys.stdout.writelines(diff)
+            return 1
+        print(f"ok: generated content matches: {output_path}")
+        return 0
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(generated, encoding="utf-8")
+    print(f"wrote: {output_path}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
