@@ -15,13 +15,19 @@ We will:
 
 ---
 
+This is a protocol integration recipe for a disposable server, not an SDK-only
+unit test. Run the actual Modbus read/write checks before claiming protocol
+verification. The example uses noise, so assert ranges/tolerances rather than
+assuming exact repeatability from a controlled clock. Stop and delete its demo
+instance/model after the suite; do not overwrite names on a shared server.
+
 ## Prerequisites
 
 - A running **SPX Server** (e.g., `http://localhost:8000`) and a valid `SPX_PRODUCT_KEY` in your environment.  
 - If SPX Server runs in Docker, expose Modbus TCP from the container (for example `- "1502:502"` in Compose) and point your SUT at `127.0.0.1:1502`.
 - Python packages:
   ```bash
-  pip install spx-python modbus-tk pyyaml
+  python -m pip install spx-python==1.0.0rc3 modbus-tk pyyaml
   ```
 - The example uses **`modbus-tk`** in the SUT. You can adapt it to your own stack (`pymodbus`, embedded code, etc.).
 
@@ -124,9 +130,9 @@ class TestSUT_MiL_Modbus(unittest.TestCase):
         cls.client["instances"]["pt100_mb_1"] = "pt_100_modbus"
         cls.inst = cls.client["instances"]["pt100_mb_1"]
 
-        # 3) Prefer deterministic time stepping in unit tests
-        # (We won't call .start(); we will advance time via prepare() + run()).
-        cls.client.prepare()
+        # Manual clock; start only the protocol transport below.
+        cls.inst.real_time = False
+        cls.inst.prepare()
         # Start the Modbus TCP server inside the model after prepare() built binding contexts.
         cls.inst["communication"]["modbus_slave"].start()
 
@@ -149,16 +155,10 @@ class TestSUT_MiL_Modbus(unittest.TestCase):
     # --- Helpers ---
     def _step(self, seconds, dt=0.1):
         """Deterministically advance the simulation by 'seconds'."""
-        # Use the instance's timer if available; otherwise use client.run() directly.
-        # Many systems expose a timer and accept direct time setting:
-        # self.inst["timer"]["time"] = t
         steps = int(round(seconds / dt))
-        for k in range(steps):
-            # If your system exposes a time attribute, set it here before run()
-            # Example:
-            #   current = self.inst["timer"]["time"]
-            #   self.inst["timer"]["time"] = current + dt
-            self.client.run()
+        for _ in range(steps):
+            self.inst["timer"].time = self.inst["timer"].time + dt
+            self.inst.run(time_step=dt)
 
     # --- Tests ---
     def test_connectivity_and_first_read(self):
@@ -216,7 +216,7 @@ if __name__ == "__main__":
 - **“Connection refused”**: Ensure the SPX model’s Modbus server is started:  
   `inst["communication"]["modbus_slave"].start()`.
 - **No change in values**: If you used deterministic stepping, make sure you call `client.run()` in your test loop, or explicitly advance model time if your system expects it.
-- **Racey reads with `start()`**: In real‑time mode, add small sleeps (e.g., `time.sleep(0.1)`) to align with `timer.dt`, or switch back to deterministic stepping for unit tests.
+- **Racey reads with `start()`**: In real‑time mode, add small sleeps (e.g., `time.sleep(0.1)`) to observe the configured polling interval, or switch back to deterministic stepping for unit tests.
 
 ---
 

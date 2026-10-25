@@ -495,3 +495,19 @@ connections:
 The source endpoint should normally be telemetry or a calculated output. The
 target endpoint should normally be a persistent input, commonly a `k__*`
 attribute. Use `cmd__*` targets only for explicit command or trigger behavior.
+
+## Agent source order and runtime semantics
+
+Read [Agent Start Here](https://docs.simplephysx.com/llm-first-model-authoring/agent-start-here)
+and workspace AGENTS.md before authoring. Contribution naming rules live in the
+public Examples modeling playbook; this canonical reference defines model syntax.
+Examples are illustrative and do not override the specification or the documented
+release baseline. There is no complete JSON Schema for arbitrary adapter/extension
+fields: parsing and catalog validation are not proof of runtime or protocol success.
+
+`$in`/`$ext` choose internal/external wrappers, not read/write permission. An
+internal write clears an external override; persistent faults must be reapplied
+at the intended point in execution. Snapshots restore structure/defaults, not
+live readings or elapsed time. Manual clock control does not seed randomness.
+For identifiers see the [glossary](https://docs.simplephysx.com/appendices/glossary-of-terms#model-identifiers);
+for verified stepping use the [client tutorial](https://docs.simplephysx.com/spx-development-guide/simulation-and-modeling/using-spx-python).

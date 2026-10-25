@@ -29,13 +29,13 @@ In the UI navigation, select **Models**. The list shows loaded models; editing o
 
 The table shows model names and a compact definition preview. Clicking the preview opens a full-definition modal; selecting rows enables bulk actions in the header.
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>Models list with search, counts, and actions</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image.png" alt="Models list with search, counts, and actions"><figcaption><p>Models list with search, counts, and actions</figcaption></figure>
 
-<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption><p>Model definition modal with copy action</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2).png" alt="Model definition modal with copy action"><figcaption><p>Model definition modal with copy action</figcaption></figure>
 
-<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption><p>Models list with selection + bulk actions</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3).png" alt="Models list with selection + bulk actions"><figcaption><p>Models list with selection + bulk actions</figcaption></figure>
 
-<figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption><p>Import/Export configuration modal (Models page)</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4).png" alt="Import/Export configuration modal (Models page)"><figcaption><p>Import/Export configuration modal (Models page)</figcaption></figure>
 
 ### Model view (editor)
 
@@ -49,11 +49,11 @@ The Model View opens in a new tab when you create or edit a model. It is a split
 
 The header shows the editable model name; the toolbar groups model actions (save/test/delete) and file helpers (load/save/copy/search/format).
 
-<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption><p>Model view header with editable name</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (5).png" alt="Model view header with editable name"><figcaption><p>Model view header with editable name</figcaption></figure>
 
-<figure><img src="../.gitbook/assets/image (6).png" alt=""><figcaption><p>Model editor with JSON/YAML tabs + action toolbar</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (6).png" alt="Model editor with JSON/YAML tabs + action toolbar"><figcaption><p>Model editor with JSON/YAML tabs + action toolbar</figcaption></figure>
 
-<figure><img src="../.gitbook/assets/image (7).png" alt=""><figcaption><p>Validation panel with test/save results</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (7).png" alt="Validation panel with test/save results"><figcaption><p>Validation panel with test/save results</figcaption></figure>
 
 ### Test model with meta parameters
 
@@ -63,7 +63,7 @@ If the model defines `meta_parameters`, clicking **Test model** opens a modal to
 * Existing test instances can be reopened or updated with new values.
 * Parameter values are stored locally for faster retesting of the same model.
 
-> Image placeholder: Test model modal with meta-parameter fields and validation hints.
+In Test model, provide the instance-specific meta parameters, inspect validation hints, then verify the created instance and its Communication tree. Model installation alone does not create an instance.
 
 ## Typical workflow
 
@@ -87,3 +87,5 @@ If the model defines `meta_parameters`, clicking **Test model** opens a modal to
 * Load model fails: validate JSON/YAML syntax and ensure the model name is unique.
 * Edit/Create opens in a new tab: allow pop-ups if your browser blocks them.
 * Definition looks stale: refresh the page or restart the stack after updates.
+
+These instructions describe UI RC76. Screenshots illustrate the controls; use the text and expected runtime state when the visual layout differs.

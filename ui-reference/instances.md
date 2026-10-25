@@ -23,19 +23,19 @@ The list shows active instances with Name, Model, and Status. It also provides m
 {% step %}
 #### Filter the list by model to focus on a specific group.
 
-<figure><img src="../.gitbook/assets/image (4) (1).png" alt=""><figcaption><p>Filter instances by model name</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4) (1).png" alt="Filter instances by model name"><figcaption><p>Filter instances by model name</figcaption></figure>
 {% endstep %}
 
 {% step %}
 #### Create a new instance (single or bulk) by choosing a model and name or name prefix.
 
-<figure><img src="../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption><p>Adding new instance</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1).png" alt="Adding new instance"><figcaption><p>Adding new instance</figcaption></figure>
 {% endstep %}
 
 {% step %}
 #### Select instances and use bulk actions to start, stop, delete, or open multiple rows.
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption><p>Bulk operations on selected instances</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt="Bulk operations on selected instances"><figcaption><p>Bulk operations on selected instances</figcaption></figure>
 
 
 {% endstep %}
@@ -49,7 +49,7 @@ The list shows active instances with Name, Model, and Status. It also provides m
 
 Open the Instance View in a new tab from the list. The header shows the instance name, model, and current status, and the control bar provides action buttons.
 
-<figure><img src="../.gitbook/assets/image (3) (1) (1).png" alt=""><figcaption><p>Instance view</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1) (1).png" alt="Instance view"><figcaption><p>Instance view</figcaption></figure>
 
 ### Controls and modes
 
@@ -62,35 +62,35 @@ Open the Instance View in a new tab from the list. The header shows the instance
 
 * **Attributes**: view and edit attribute values, select axes, and inspect the time-series chart (range, refresh rate, clear, export CSV, print). The table also shows a responsive **UNIT** column (when space allows), command/key attribute styling, and a short “Command sent” badge after command writes.
 
-<figure><img src="../.gitbook/assets/image (14).png" alt=""><figcaption><p>Instance attributes, and time-series chart</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (14).png" alt="Instance attributes, and time-series chart"><figcaption><p>Instance attributes, and time-series chart</figcaption></figure>
 
-> Image placeholder: Attributes table with UNIT column and command feedback badge.
+In the Attributes table, use the UNIT column to interpret values. After a command, inspect its feedback and read back the affected value; a successful click alone does not prove the requested behavior.
 
 * **Physics**: review actions, toggle enabled state, and inspect action attributes.
 
-<figure><img src="../.gitbook/assets/image (7) (1).png" alt=""><figcaption><p>Physics tab (actions)</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (7) (1).png" alt="Physics tab (actions)"><figcaption><p>Physics tab (actions)</figcaption></figure>
 
 * **Scenarios**: start or stop scenarios and confirm state transitions.
 
-<figure><img src="../.gitbook/assets/image (9).png" alt=""><figcaption><p>Defined ready to use scenarios</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (9).png" alt="Defined ready to use scenarios"><figcaption><p>Defined ready to use scenarios</figcaption></figure>
 
 * **Communication**: review protocol bindings, toggle enabled state, and open per-binding logs. When a log row is expanded, live updates are temporarily held to keep the view stable.
 
-<figure><img src="../.gitbook/assets/image (10).png" alt=""><figcaption><p>Communication with protocols</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (10).png" alt="Communication with protocols"><figcaption><p>Communication with protocols</figcaption></figure>
 
-<figure><img src="../.gitbook/assets/image (11).png" alt=""><figcaption><p>Communication logs (per attribute/register/binding)</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (11).png" alt="Communication logs (per attribute/register/binding)"><figcaption><p>Communication logs (per attribute/register/binding)</figcaption></figure>
 
 * **Polling**: inspect per-instance polling attributes and adjust settable values.
 
-<figure><img src="../.gitbook/assets/image (12).png" alt=""><figcaption><p>Instance polling parameters</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (12).png" alt="Instance polling parameters"><figcaption><p>Instance polling parameters</figcaption></figure>
 
 * **Timer**: inspect per-instance timer attributes and adjust settable values.
 
-<figure><img src="../.gitbook/assets/image (13).png" alt=""><figcaption><p>Instance timer parameters</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (13).png" alt="Instance timer parameters"><figcaption><p>Instance timer parameters</figcaption></figure>
 
 * **Logger**: view instance logs and confirm there are no errors. For cross-instance diagnostics, use the dedicated [Logs](logs.md) page.
 
-<figure><img src="../.gitbook/assets/image (15).png" alt=""><figcaption><p>Instance logs</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (15).png" alt="Instance logs"><figcaption><p>Instance logs</figcaption></figure>
 
 ## Typical workflow
 
@@ -115,3 +115,5 @@ Open the Instance View in a new tab from the list. The header shows the instance
 * Commands disabled: check the instance state and selected mode (Continuous vs Stepper).
 * Logger shows errors: align timestamps with recent changes and check model logs.
 * Chart feels “too short”: the history buffer is large (up to 100000 entries), so use range controls to focus the view.
+
+These instructions describe UI RC76. Screenshots illustrate the controls; use the text and expected runtime state when the visual layout differs.

@@ -113,7 +113,7 @@ class HeaterTests(SpxAssertionLoggingMixin, unittest.TestCase):
 
 You can override the attribute path per test:
 
-```python
+```text
     @spx_log_test_case(attr_path="attributes/custom_trace")
     def test_custom_channel(self):
         ...

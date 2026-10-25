@@ -8,20 +8,12 @@ SPX is split into:
 - **SPX SDK**: author models/components in a structured way (YAML definitions + Python extension points).
 - **SPX UI**: inspect Instances, attributes/state, scenarios, logs, and snapshots while debugging.
 
-Core workflow (the “happy path”):
+Choose your task in [Start here](overview/start-here.md): browser UI,
+agent/MCP, or Python tests and extensions. That page is the primary entry point.
 
-1. Install SPX with [SPX Setup](getting-started/installation-guide.md), then start the installed environment.
-2. Load or edit a Model definition (YAML/Python).
-3. Create an Instance.
-4. Drive simulation time deterministically from tests (**MiL tests**) and validate outcomes.
-5. Use Snapshots for reproducible starting states and fast iteration.
-
-Start here:
-
-- [Installation Guide](getting-started/installation-guide.md)
-- [Build Your First Simulation](getting-started/build-your-first-simulation.md)
-- [Snapshots — Getting Started](getting-started/snapshots-guide.md)
-- [Use in Unit Tests (MiL)](getting-started/use-in-unit-tests-mil.md)
+Time can be controlled explicitly for tests. Repeatable outputs also require
+controlled inputs, random seeds and external dependencies. Snapshots restore
+configuration and structure; they do not checkpoint live simulation state.
 
 ## Documentation and repository responsibilities
 

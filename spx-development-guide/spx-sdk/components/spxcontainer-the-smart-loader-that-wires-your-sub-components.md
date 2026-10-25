@@ -29,7 +29,7 @@ You write concise YAML/JSON/Python Dict; SPX builds a full object graph ready fo
 
 ### Constructor & API
 
-```python
+```text
 from spx_sdk.components import SpxComponent, SpxContainer, SpxItem
 
 cont = SpxContainer(

@@ -4,7 +4,14 @@ This checklist is intentionally aligned with `spx-examples/docs/LLM_SPEC.md`:
 
 - https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/LLM_SPEC.md
 
-## DoD checklist
+## Live runtime tasks
+
+Use the [Agent Start Here](agent-start-here.md) stopping criteria. For a local
+model/instance task report model ID, instance key, RUNNING state and required
+endpoint details. Do not apply the repository checklist below unless persistence
+is requested. Verify protocols only when requested or needed for diagnosis.
+
+## Durable model contribution checklist
 
 - [ ] Model YAML is under `library/domains/<domain_group>/<device_class>/<vendor|generic>/` and uses `lower_snake_case`.
 - [ ] `name:` matches the file stem (for new/updated models).
@@ -22,7 +29,7 @@ This checklist is intentionally aligned with `spx-examples/docs/LLM_SPEC.md`:
 
 ## DoD checklist (docs automation addendum)
 
-- [ ] Working branch is `codex/sync-examples-catalog` and rebased on `origin/main`.
+- [ ] Documentation branch is based on `origin/main`; use `codex/sync-examples-catalog` only for the generated catalog-sync workflow.
 - [ ] Source snapshot commit SHA(s) are captured in updated docs/PR notes.
 - [ ] Navigation is updated when needed (`SUMMARY.md`, chapter `README.md` pages).
 - [ ] Generated pages were regenerated from script (no manual table edits).
