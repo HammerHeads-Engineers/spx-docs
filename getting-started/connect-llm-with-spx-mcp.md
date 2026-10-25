@@ -121,3 +121,10 @@ run Python from the workspace `.venv`, execute `-m spx_mcp stdio`, and include
 - If runtime tools cannot reach SPX, start the stack with `SPX Start` and verify
   `http://localhost:8000/health`.
 - If you only need inspection, rerun the setup in read-only mode.
+
+## Complete runtime reference
+
+For tool groups, work modes, permissions, scenarios and connections, read the
+[SPX MCP reference](mcp-reference.md). Public Examples contains a complete
+generated offline copy at `docs/MCP.md`; client provisioning remains part of
+the private product installer.
