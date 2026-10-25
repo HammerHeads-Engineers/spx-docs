@@ -20,6 +20,9 @@ simulation audit, not physical device or manufacturer certification.
   RUNNING instances, deterministic input-to-telemetry propagation and cleanup.
 - OpenAPI regenerated from both released routers: 10 path templates, correct
   product title/version, bearer security on API v3 and public health/version routes.
+- UI RC76: 13 Jest suites / 55 unit tests passed with locked dependencies
+  under the available Node 24 runtime; the application declares Node 22. This
+  verifies client/state utilities, not a fresh browser/hardware qualification.
 - Generator guards cover invalid/missing revisions, public-source allowlisting,
   meaningful-content comparison and Markdown anchors.
 
