@@ -79,13 +79,31 @@ def index_routes(index, summary, site):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--site', default=ORIGIN, help='Public site or exact GitBook PR preview root')
+    parser.add_argument('--navigation-file', type=Path, help='Observed preview sidebar links; preview llms.txt reflects production')
     parser.add_argument('--record-routes', action='store_true', help='Record observed canonical routes in the migration manifest')
     parser.add_argument('--output', help='Optional JSON evidence file')
     args = parser.parse_args()
     site = args.site.rstrip('/')
     if urlsplit(site).netloc != 'docs.simplephysx.com' or urlsplit(site).scheme != 'https':
         parser.error('Use the existing HTTPS documentation site or its revision preview')
-    _, _, index = fetch(site + '/llms.txt')
+    if args.navigation_file:
+        if not urlsplit(site).path.startswith('/~/revisions/'):
+            parser.error('--navigation-file is only for preview verification')
+        observed = json.loads(args.navigation_file.read_text())
+        seen = set()
+        lines = []
+        for item in observed:
+            title, url = item['title'], item['url']
+            if not title or not url.startswith(site) or (title, url) in seen:
+                continue
+            seen.add((title, url))
+            route = '/readme' if url.rstrip('/') == site else normalize(url, site)
+            lines.append(f'- [{title}]({ORIGIN}{route}.md)')
+        index = '\n'.join(lines)
+    else:
+        if urlsplit(site).path:
+            parser.error('Preview verification requires --navigation-file from its rendered sidebar')
+        _, _, index = fetch(site + '/llms.txt')
     manifest = json.loads(MANIFEST.read_text())
     links, routes = index_routes(index, (ROOT / 'SUMMARY.md').read_text(), site)
     errors = []
@@ -138,7 +156,7 @@ def main():
             errors.append('Unfinished production content: ' + path)
     evidence = {'checked_at': datetime.now(timezone.utc).isoformat(), 'site': site,
                 'sections': SECTIONS, 'indexed_pages': len(links),
-                'legacy_pages': len(manifest['pages']), 'checks': results, 'errors': errors}
+                'legacy_pages': len(manifest['pages']), 'index_source': 'observed-preview-sidebar' if args.navigation_file else 'published-llms', 'checks': results, 'errors': errors}
     if args.output:
         Path(args.output).write_text(json.dumps(evidence, indent=2) + '\n')
     print(json.dumps({'site': site, 'indexed_pages': len(links), 'legacy_pages': len(manifest['pages']),

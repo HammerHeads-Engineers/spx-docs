@@ -2,8 +2,9 @@
 description: Create one temperature sensor in the browser and verify a 31.25 degree readback.
 ---
 
-<a id="first-device-in-the-ui"></a>
 # First device in the UI
+
+## Before you start {#first-device-in-the-ui}
 
 **Prerequisites:** [SPX installed](installation-guide.md), UI open at
 `http://localhost:3000`, and a connection to your local server selected in

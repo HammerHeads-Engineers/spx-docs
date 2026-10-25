@@ -19,6 +19,10 @@ def anchors(text):
     found = set(re.findall(r'<a\s+(?:id|name)=[\"\']([^\"\']+)', text))
     counts = {}
     for title in re.findall(r'^#{1,6}\s+(.+?)\s*#*$', prose(text), re.M):
+        explicit = re.search(r'\s*\{#([^}]+)\}\s*$', title)
+        if explicit:
+            found.add(explicit.group(1))
+            continue
         title = re.sub(r'\[([^]]+)\]\([^)]*\)', r'\1', title)
         slug = ''.join(c for c in unicodedata.normalize('NFKC', title.lower()) if c.isalnum() or c in ' _-')
         slug = re.sub(r'\s', '-', slug)
