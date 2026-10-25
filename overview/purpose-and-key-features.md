@@ -32,7 +32,7 @@ Start here: [Communication Adapters](../spx-core/communications/README.md).
 ## Scenarios, snapshots, and testing
 
 * Use **Scenarios** to script repeatable events (fault injection, step changes, sequencing).
-* Use **Snapshots** to capture/restore state for fast iteration and stable tests.
+* Use **Snapshots** to restore configuration and structure; reapply runtime values and warmup explicitly in tests.
 * Wire everything into `pytest`/CI using `docker compose` + MiL test helpers.
 
 Start here:

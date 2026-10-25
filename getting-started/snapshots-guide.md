@@ -12,7 +12,7 @@ This guide shows how to **save**, **list**, and **load** system snapshots using 
 > * Instances (which instance uses which template)
 > * Connections (wiring between instances)
 >
-> **What it does not capture (MVP)**
+> **What RC76 does not capture**
 >
 > * Runtime state (thread state, attribute runtime values, timers, …)\
 >   Snapshots currently rebuild structure; runtime state always starts “fresh”.
@@ -128,7 +128,7 @@ client["snapshots"].save(
 ## Persistence behavior
 
 * **Durable-by-default**: The default `save()` persists to disk (and still returns an `id` for convenience).
-*   **In-memory only**: If your setup is configured for _non-durable_ mode, in-memory saves do not create a file (the response will have `persisted_path: ""`). You can later persist all in-memory snapshots with:
+*   **In-memory only**: request `save(in_memory=True, persist_to_disk=False)` explicitly. Merely setting the component configuration to non-durable does not change the disk-first default of `save()`. You can later persist all in-memory snapshots with:
 
     ```python
     client["snapshots"].persist_all_in_memory()
@@ -208,3 +208,14 @@ client["snapshots"].load(id=snap_id)
 ```
 
 That’s it! You now know how to persist and restore system structure using SPX Snapshots.
+
+## Configuration restore is not a checkpoint
+
+Verified example: define an input with default **20°C**, write **42°C** at runtime,
+then save. Change the input to **77°C** and load the saved snapshot. The rebuilt
+instance reads **20°C**, not 42°C. Disk persistence does not change this scope.
+
+For a fixture, restore the structure, reacquire the instance from the client,
+set `real_time=False`, prepare/start as appropriate, and explicitly apply runtime
+inputs and seeds. Repeat warmup if needed. Do not rely on a proxy retained from
+before replacement to represent the same runtime object.

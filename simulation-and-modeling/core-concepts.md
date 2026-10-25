@@ -1,46 +1,48 @@
 # Core Concepts
 
-This page describes the foundational elements of simulation and modeling in SPX. Understanding these core concepts is essential for effectively creating, controlling, and interacting with simulations within the SPX framework.
+A **model definition** describes attributes, behavior and communication. A
+**model registry key** identifies that definition on a server. An **instance**
+is a live copy with its own state. A **connection** transfers values between
+instances; a protocol adapter connects the simulation to an external SUT.
+See the [identifier glossary](../appendices/glossary-of-terms.md#model-identifiers).
 
-## Models, Instances, and Connections
+## Internal and external values
 
-A model in SPX serves as a template that defines the structure and behavior of a simulated entity. An instance is a live object created from a model that participates in the simulation, maintaining its own state and attributes. Connections represent links between attributes of different instances, enabling data flow and interaction within the simulation environment.
+`$in(name)` selects the internal value wrapper and `$ext(name)` selects the
+external wrapper. Both may appear as a source or destination. Direction comes
+from the action or binding, not from the prefix. Neither is an access-control rule.
 
-## Attributes and Their Values
+| Operation, starting from internal=20 | Internal afterwards | External afterwards |
+| --- | --- | --- |
+| Write external=99 | 20 | 99 |
+| Then write internal=21 | 21 | 21 |
 
-Attributes hold data defining the state of a simulation instance. SPX distinguishes between two types of attribute values, which are exposed in the API as `internal_value` and `external_value` properties:
+An internal write **clears** the external override. A noise/fault action can
+reapply an external value after each internal update. Protocol bindings choose
+which view they expose and whether the protocol permits writes.
 
-- `internal_value`: This is used exclusively within the simulation’s internal logic and calculations, representing the “true” state of the attribute. It forms the basis for all simulation computations and state changes.
-- `external_value`: This is used for exposing values externally, often to communication protocols or user interfaces. It may contain modified or noisy versions of the internal value without impacting the internal state. This separation ensures that any noise, filtering, or transformations added for output purposes do not affect the internal logic unless explicitly intended.
+Use `k__*` for persistent control inputs, `cmd__*` for command/trigger inputs,
+plain names for ordinary telemetry, and leading `_` for internal helpers.
+Those naming conventions do not themselves make an attribute writable or hidden
+in every API. Use explicit units and deployment meta parameters; see the
+[model language reference](model-definition-reference.md).
 
-Developers have the option to feed the `external_value` back into the internal logic if desired, but this must be done intentionally to maintain full control and avoid unintended side effects.
+## Execution, clocks and repeatability
 
-The update flow between these values is one-way:
+The runtime supports real-time polling and explicitly stepped execution.
+For manual tests use `real_time=False` and the verified
+[client loop](using-spx-python.md). Do not infer runtime pause semantics from a
+local SDK base component.
 
-- Updating `internal_value` automatically updates `external_value` unless the external value is explicitly overridden.
-- Updating `external_value` does not change the `internal_value`.
+A controlled clock makes the time sequence reproducible. Repeatable outputs also
+require fixed inputs, seeded per-instance random generators and control of
+external processes. Network adapters and a real SUT may execute asynchronously.
+A snapshot restores model/instance/connection structure, not current measurements,
+clock progress, open network sessions or a fully warmed-up simulation.
 
-Simple update flow:
+## Control and protocol channels
 
-```
-Internal → External (external is updated)
-External → Internal (only external updated and internal not)
-```
-
-## Actions, Conditions, and Hooks
-
-Actions are operations that perform calculations or modify the simulation state. Conditions control whether actions execute based on logical criteria, enabling dynamic decision-making within the simulation. Hooks provide event-driven behavior by triggering actions in response to specific simulation events or changes.
-
-## Timer and Poller
-
-SPX simulations operate with deterministic timing, where simulation time advances explicitly rather than in real time. The timer mechanism allows manual control of time progression, ensuring reproducibility. Pollers enable periodic execution of actions by polling at defined intervals, facilitating time-based behaviors within the simulation.
-
-## Deterministic Control with Client Libraries
-
-To achieve reproducible tests and explore edge-case scenarios, SPX provides client libraries such as SPX Python and SPX C++. These clients allow precise control over simulation state, parameters, and time advancement. This deterministic control is vital for debugging, validation, and automated testing of complex systems.
-
-## Control Channel vs Protocol Channel
-
-SPX separates simulation manipulation and communication through two distinct channels. The control channel is used to manage and modify the simulation state and parameters, while the protocol channel handles communication between the system under test (SUT) and the simulation model. This separation ensures clear boundaries between control logic and protocol interactions.
-
-Together, these core concepts provide a comprehensive framework for building robust, testable, and repeatable simulation environments in SPX. By leveraging models, controlled timing, and precise client interaction, users can create sophisticated simulations that accurately represent and test complex systems.
+API/MCP is the control channel for setup, state inspection and stepping. The SUT
+uses the chosen device protocol. A successful control-channel read is not proof
+of a successful Modbus/MQTT/OPC UA exchange. Verify protocols when required by
+the task, using the [capabilities matrix](../spx-core/communications/capabilities.md).

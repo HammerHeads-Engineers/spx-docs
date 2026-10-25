@@ -38,7 +38,7 @@ blocks—that plug into MiL workflows.
 
 ### Child Management
 
-```python
+```text
 component.add_child(child: SpxComponent)      # Add or replace a named child
 component.remove_child(child: SpxComponent)   # Remove a child and clear its parent
 component.get_children() -> Dict[str, SpxComponent]
@@ -75,14 +75,24 @@ Each lifecycle call:
 2. Updates self.state
 3. Propagates the call to all children
 
-| prepare() | Sets state → PREPARING; children → prepare(); → PREPARED         |
-| --------- | ---------------------------------------------------------------- |
-| run()     | → RUNNING; children → run(); → STOPPED                           |
-| start()   | Alias for run().                                                 |
-| pause()   | → PAUSING; children → pause(); → PAUSED                          |
-| stop()    | → STOPPING; children → stop(); → STOPPED                         |
-| reset()   | → STOPPING; children → reset(); → STOPPED                        |
-| destroy() | → DESTROYING; children → destroy(); clears children; → DESTROYED |
+| Method | Base SDK RC21 result |
+| --- | --- |
+| `prepare()` | PREPARING → PREPARED |
+| `run()` | RUNNING; executes one call, does not automatically stop |
+| `start()` | STARTING → RUNNING; invokes start hooks and children |
+| `pause()` | PAUSING → PAUSED |
+| `stop()` | STOPPING → STOPPED |
+| `reset()` | RESETTING → RESET |
+| `destroy()` | DESTROYING → DESTROYED; releases children |
+
+API states are uppercase strings. In local SDK code compare the enum or its
+string representation. `start` and `run` have separate implementations.
+
+The server RC76 **runtime Model** adds execution gates: a single `run()` while
+paused leaves the model PAUSED, while `start()` resumes preserved execution.
+With `real_time=False`, start does not launch a polling loop. A useful sequence
+is `prepare → start → pause → run → start → stop`; the state after the paused
+run differs from a base SDK component. See the [client tutorial](../../../simulation-and-modeling/using-spx-python.md).
 
 ***
 

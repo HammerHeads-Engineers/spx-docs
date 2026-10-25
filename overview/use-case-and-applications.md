@@ -37,7 +37,7 @@ Docs: [BLE Adapter](../spx-core/communications/ble.md), [BLE Device Simulation W
 
 ## Snapshot-driven regression suites
 
-* Capture a known-good state as a Snapshot.
-* Restore it before a test so every run starts from the same simulation state.
+* Save the model/instance/connection configuration as a Snapshot.
+* Restore structure before a test, then explicitly set inputs, random seeds and any warmup. Runtime measurements and timer progress are not checkpointed.
 
 Docs: [Snapshots — Getting Started](../getting-started/snapshots-guide.md), [Snapshots (Core)](../spx-core/snapshots.md).

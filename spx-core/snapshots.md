@@ -4,10 +4,11 @@ icon: floppy-disks
 
 # Snapshots
 
-Snapshots save configuration and serialized state supported by the runtime.
-Use them for repeatable setups, sharing a sanitized model configuration and
-restoring test baselines. They are not a checkpoint of external devices or
-network sessions; validate restoration for the state your test relies on.
+Snapshots save model definitions, instance/template relationships and connections.
+They restore configuration and structure, not live attribute values, elapsed
+time, scenario progress, threads or network sessions. Reapply runtime inputs,
+seeds and warmup after import. A default of 20°C saved while the runtime reads
+42°C restores 20°C, not 42°C.
 
 ## YAML and API integration
 
