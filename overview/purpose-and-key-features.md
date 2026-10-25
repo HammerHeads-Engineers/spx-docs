@@ -27,7 +27,7 @@ Start here:
 
 SPX ships with built-in communication adapters (e.g., Modbus, MQTT, HTTP, ASCII/SCPI, BLE) so your Software Under Test can talk to the simulation over the same interfaces as real hardware.
 
-Start here: [Communication Adapters](/broken/pages/Xj0Kch85KiFEX0H4nFce).
+Start here: [Communication Adapters](../spx-core/communications/README.md).
 
 ## Scenarios, snapshots, and testing
 

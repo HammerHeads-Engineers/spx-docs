@@ -1,0 +1,717 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "SPX Server API",
+    "version": "3.0.0"
+  },
+  "paths": {
+    "/versions": {
+      "get": {
+        "summary": "Versions",
+        "operationId": "versions_versions_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api": {
+      "get": {
+        "summary": "Versions",
+        "operationId": "versions_api_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/versions": {
+      "get": {
+        "summary": "Versions",
+        "operationId": "versions_api_versions_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Root",
+        "operationId": "root__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "description": "Lightweight health endpoint for readiness probes.",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3/system": {
+      "get": {
+        "summary": "View root of System hierarchy",
+        "description": "Return the root system hierarchy using the requested filters.\n\nParameters\n----------\ninclude : Optional[str]\n    Optional comma-separated hierarchy sections to include.\nattr_fields : Optional[str]\n    Optional comma-separated attribute names to include.\nattr_details : Optional[str]\n    Optional comma-separated attribute detail keys to include.\nsystem : System\n    Root SPX system provided by the API dependency.\n\nReturns\n-------\nobject\n    JSON response containing the filtered system hierarchy.",
+        "operationId": "view_root_api_v3_system_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "include",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Include"
+            }
+          },
+          {
+            "name": "attr_fields",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Attr Fields"
+            }
+          },
+          {
+            "name": "attr_details",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Attr Details"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Bulk update root of System hierarchy",
+        "description": "Apply a bulk update to the root system hierarchy.\n\nParameters\n----------\npayload : Union[Dict[str, Any], List[Any]]\n    Payload to encode, apply or inspect.\nsystem : System\n    Root SPX system provided by the API dependency.\n\nReturns\n-------\nobject\n    JSON response containing the updated system hierarchy.",
+        "operationId": "update_system_root_api_v3_system_put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "array",
+                    "items": {}
+                  }
+                ],
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3/system/{path}/attr/{attr_name}": {
+      "get": {
+        "summary": "Get Attribute",
+        "description": "Return a serialized attribute or method on a component.\n\nParameters\n----------\npath : str\n    Component or parameter path to traverse.\nattr_name : str\n    Component attribute or method name.\nsystem : Union[System, SpxComponent]\n    Root SPX system provided by the API dependency.\n\nReturns\n-------\nobject\n    JSON response describing the requested attribute or method.",
+        "operationId": "get_attribute_api_v3_system__path__attr__attr_name__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Path"
+            }
+          },
+          {
+            "name": "attr_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Attr Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Set Attribute",
+        "description": "Set a component attribute and return its updated description.\n\nParameters\n----------\npath : str\n    Component or parameter path to traverse.\nattr_name : str\n    Component attribute or method name.\npayload : object\n    Payload to encode, apply or inspect.\nsystem : System\n    Root SPX system provided by the API dependency.\n\nReturns\n-------\nobject\n    JSON response describing the updated attribute.",
+        "operationId": "set_attribute_api_v3_system__path__attr__attr_name__put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Path"
+            }
+          },
+          {
+            "name": "attr_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Attr Name"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3/system/{path}": {
+      "get": {
+        "summary": "Get Node",
+        "description": "Return the component hierarchy at the requested path.\n\nParameters\n----------\npath : str\n    Component or parameter path to traverse.\ninclude : Optional[str]\n    Optional comma-separated hierarchy sections to include.\nattr_fields : Optional[str]\n    Optional comma-separated attribute names to include.\nattr_details : Optional[str]\n    Optional comma-separated attribute detail keys to include.\nsystem : System\n    Root SPX system provided by the API dependency.\n\nReturns\n-------\nobject\n    JSON response containing the requested component hierarchy.",
+        "operationId": "get_node_api_v3_system__path__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Path"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Include"
+            }
+          },
+          {
+            "name": "attr_fields",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Attr Fields"
+            }
+          },
+          {
+            "name": "attr_details",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Attr Details"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Bulk update attributes on a component",
+        "description": "Apply a bulk update to the component at the requested path.\n\nParameters\n----------\npath : str\n    Component or parameter path to traverse.\npayload : Union[Dict[str, Any], List[Any]]\n    Payload to encode, apply or inspect.\nsystem : System\n    Root SPX system provided by the API dependency.\n\nReturns\n-------\nobject\n    JSON response containing the updated component hierarchy.",
+        "operationId": "update_node_api_v3_system__path__put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Path"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "array",
+                    "items": {}
+                  }
+                ],
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a component node",
+        "description": "Destroy and remove the component at the requested path.\n\nParameters\n----------\npath : str\n    Component or parameter path to traverse.\nsystem : System\n    Root SPX system provided by the API dependency.\n\nReturns\n-------\nobject\n    JSON response confirming removal of the component.",
+        "operationId": "delete_node_api_v3_system__path__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3/system/method/{method_name}": {
+      "post": {
+        "summary": "Invoke a method on the root component",
+        "description": "Invoke a method on the root system component.\n\nParameters\n----------\nmethod_name : str\n    Name of the component method to invoke.\npayload : Union[Dict[str, Any], List[Any]]\n    Payload to encode, apply or inspect.\nsystem : System\n    Root SPX system provided by the API dependency.\n\nReturns\n-------\nobject\n    JSON response containing the root method result.",
+        "operationId": "call_method_root_api_v3_system_method__method_name__post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "method_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Method Name"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "array",
+                    "items": {}
+                  }
+                ],
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v3/system/{path}/method/{method_name}": {
+      "post": {
+        "summary": "Invoke a method on a component",
+        "description": "Invoke a component method with positional and keyword arguments.\n\nParameters\n----------\npath : str\n    Component or parameter path to traverse.\nmethod_name : str\n    Name of the component method to invoke.\npayload : Union[Dict[str, Any], List[Any]]\n    Payload to encode, apply or inspect.\nsystem : System\n    Root SPX system provided by the API dependency.\n\nReturns\n-------\nobject\n    JSON response containing the invoked method result.",
+        "operationId": "call_method_api_v3_system__path__method__method_name__post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Path"
+            }
+          },
+          {
+            "name": "method_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Method Name"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "array",
+                    "items": {}
+                  }
+                ],
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "x-spx-source-commit": "bc23bdb4fc6c9391981bb5e2180d24081993a3bf"
+}

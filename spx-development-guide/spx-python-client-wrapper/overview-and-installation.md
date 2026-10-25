@@ -12,10 +12,10 @@ Under the hood the client normalises faults, logs correlation identifiers, and s
 
 ## Installation
 
-`spx-python` is published on the internal package index. Install it into your virtual environment:
+Install the Python client version used by this documentation baseline into your virtual environment:
 
 ```bash
-pip install spx-python
+pip install "spx-python==1.0.0rc3"
 ```
 
 The package depends on:
@@ -28,6 +28,7 @@ Both are installed automatically through the package metadata.
 ## Initialising a client
 
 ```python
+import os
 import spx_python
 
 client = spx_python.init(

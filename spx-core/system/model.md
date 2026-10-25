@@ -6,66 +6,14 @@
 - Spinning up dedicated `Timer`, `Polling`, and `Scenarios` children when those sections appear in YAML.
 - Driving the lifecycle (`prepare`, `start`, `run`) for the entire simulation.
 
-## Configuration Example
+## Model definitions
 
-{% tabs %}
-{% tab title="YAML" %}
-```yaml
-model:
-  name: plant
-  timer:
-    step: 0.1
-  polling:
-    interval: 0.05
-  scenarios:
-    voltage_drift:
-      enabled: true
-      duration: 5.0
-      actions:
-        - noise:
-            output: "#attr(voltage)"
-            std: 0.01
-  attributes: { ... }
-  actions: [ ... ]
-  communication: { ... }
-
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-```json
-{
-  "model": {
-    "name": "plant",
-    "timer": {
-      "step": 0.1
-    },
-    "polling": {
-      "interval": 0.05
-    },
-    "scenarios": {
-      "voltage_drift": {
-        "enabled": true,
-        "duration": 5.0,
-        "actions": [
-          {
-            "noise": {
-              "output": "#attr(voltage)",
-              "std": 0.01
-            }
-          }
-        ]
-      }
-    },
-    "attributes": { "...": "..." },
-    "actions": [ "..." ],
-    "communication": { "...": "..." }
-  }
-}
-
-```
-{% endtab %}
-{% endtabs %}
+Use the complete [Model definition reference](../../simulation-and-modeling/model-definition-reference.md)
+for equivalent runnable YAML and JSON examples. When registering through
+`client["models"]["name"]`, pass the definition directly with top-level
+`attributes`, `actions`, `communication` and optional timer/scenario sections.
+Do not add an extra `model:` envelope. Examples with ellipses are schematic,
+not copy-paste payloads.
 
 ### Key behaviors
 
@@ -77,10 +25,14 @@ model:
 
 1. `prepare()` is called on every child (attributes, actions, communication, timer, polling, scenarios).
 2. `start()` launches timer/polling threads when `real_time` is true.
-3. `run()` is driven by either the polling loop or manual API calls (`POST /run`).
+3. `run()` is driven by either the polling loop or manual API calls through the API v3 method endpoint.
 
 ### Practical tips
 
 - Always keep `attributes`, `actions`, and `communication` at the top level—nested models inherit the same pattern.
 - Use the SDK to validate the structure before deploying; the server loader relies on the same class registry.
-- To disable real-time execution in tests, call `PATCH /models/<id>` with `{ "real_time": false }` and then trigger `run()` steps manually.
+- For deterministic tests, configure the instance's `real_time` property before
+  starting it and call its `run` method explicitly. API v3 component properties
+  use `PUT /api/v3/system/instances/<id>/attr/real_time`; method calls use
+  `POST /api/v3/system/instances/<id>/method/run`. See the generated OpenAPI for
+  request bodies; `/models/<id>` and `/run` are not standalone REST routes.

@@ -7,7 +7,7 @@ icon: gear
 
 ## Purpose
 
-The Settings view shows the managed connection from SPX UI to SPX Server, UI layout sessions, display preferences, and subscription information. These instructions describe UI 1.0.0-rc.75 shipped with SPX 1.1.0-rc.107.
+The Settings view shows the managed connection from SPX UI to SPX Server, UI layout sessions, display preferences, and subscription information. These instructions describe UI 1.0.0-rc.76 shipped with installer 1.1.0-rc.115.
 
 Back to UI Overview: [UI Overview](general-view.md).
 

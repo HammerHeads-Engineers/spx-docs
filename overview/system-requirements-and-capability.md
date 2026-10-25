@@ -10,11 +10,11 @@ This page lists the practical prerequisites for running SPX locally (Docker) and
 
 If you enable protocol adapters, you may need to expose additional ports (for example Modbus TCP `502`, SCPI/ASCII instrument ports, MQTT, BLE adapter HTTP). Keep port mappings in your `docker-compose.yml` aligned with the models you run.
 
-See: [Communication Adapters](/broken/pages/Xj0Kch85KiFEX0H4nFce).
+See: [Communication Adapters](../spx-core/communications/README.md).
 
 ## Authoring/testing prerequisites (SDK + MiL tests)
 
-* **Python**: `>=3.9` (tested in CI on `3.9–3.12`).
+* **Python**: use Python 3.12 for public Examples development (its CI baseline). Server RC76 requires Python `>=3.12,<3.14`; its container provides the runtime. MCP requires Python 3.10+.
 * **Test runner**: `pytest` (recommended) for MiL test suites.
 * **HTTP tooling**: `curl` or similar for quick API checks.
 

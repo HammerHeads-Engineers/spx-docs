@@ -4,85 +4,41 @@ icon: floppy-disks
 
 # Snapshots
 
-Snapshots capture the entire state of a running simulation (attributes, timers, scenarios, and protocol settings) so you can restore it later or move it between environments.
+Snapshots save configuration and serialized state supported by the runtime.
+Use them for repeatable setups, sharing a sanitized model configuration and
+restoring test baselines. They are not a checkpoint of external devices or
+network sessions; validate restoration for the state your test relies on.
 
-The core implements snapshots in `spx_core/snapshots/snapshot_manager.py` and `snapshots.py`.
+## YAML and API integration
 
-## When to use snapshots
+The registered `snapshots` component uses these configuration fields:
 
-* **Regression testing**: freeze a known-good state before running destructive tests and restore afterward.
-* **Support diagnostics**: capture a user's environment to reproduce issues.
-* **Warm starts**: preload complex rigs with initialized state (e.g., machine is mid-cycle).
-
-## YAML & API integration
-
-Snapshots are usually triggered via API (`POST /snapshots`). YAML controls defaults:
-
-{% tabs %}
-{% tab title="YAML" %}
 ```yaml
 snapshots:
-  directory: /var/spx/snapshots
-  auto_on_shutdown: true
-  retention: 5
-
-```
-{% endtab %}
-
-{% tab title="JSON" %}
-```json
-{
-  "snapshots": {
-    "directory": "/var/spx/snapshots",
-    "auto_on_shutdown": true,
-    "retention": 5
-  }
-}
-
-```
-{% endtab %}
-{% endtabs %}
-
-Fields:
-
-* `directory`: where to store files (server must have write access).
-* `auto_on_shutdown`: automatically save on orderly shutdown.
-* `retention`: number of snapshots to keep (older files are deleted).
-
-## CLI usage
-
-```bash
-spx snapshots create --name baseline
-spx snapshots list
-spx snapshots restore --name baseline
+  base_dir: ./snapshots
+  persist_memory_to_disk: false
+  memory_subdir: memory
 ```
 
-The CLI proxies API calls; ensure the server is running and credentials are configured.
+`base_dir` must be writable by the server. `persist_memory_to_disk` optionally
+persists in-memory snapshots under `memory_subdir`. The runtime does not expose
+`directory`, `auto_on_shutdown` or `retention` as the documented configuration
+contract; manage retention explicitly in your operational process.
 
-## What gets stored?
+Use the UI or Python client. API v3 invokes snapshot component methods under
+`/api/v3/system/snapshots/method/<method>`, for example `save`, `list` and `load`.
+See [Snapshots — Getting Started](../getting-started/snapshots-guide.md) for
+request bodies and client examples. There is no product `spx snapshots create`
+CLI documented for this release.
 
-* Attribute values (internal & external).
-* Active scenarios and their progress.
-* Timer state (current time, step mode).
-* Communication adapter overrides.
-* Parameter overrides.
-* Instance `meta_parameters` values (when instances are created from templates/meta params).
+## Import behavior
 
-Sensitive data (credentials, secrets) should be kept out of snapshots; store them in parameters or vault-backed configs.
+Runtime replacement stops and tears down existing children before rebuilding
+the tree. Active license/configuration limits remain enforced. Import can load
+structure without automatically starting all instances; verify and start the
+required instances and connections after restoration. Keep the exported model
+and runtime versions with your snapshot.
 
-## Import behavior (runtime replace)
-
-When importing with runtime replacement (`replace_runtime: true`), the server performs additional safety steps:
-
-* Existing runtime children are torn down before rebuilding the system tree (best-effort cleanup for running threads/servers).
-* Runtime license/config limits are preserved (for example `instance_limit`), and imported values are clamped to active runtime limits.
-* `core_dir`, `extensions_dir`, and runtime directories are preserved when missing in imported data.
-
-UI import dialogs can optionally include or skip `run.instances` startup directives, so you can import structure without forcing startup state.
-
-## Best practices
-
-* Keep snapshot directories on fast storage; large models can produce sizeable files.
-* Version snapshots alongside model definitions so they match schema changes.
-* Use `retention` to avoid filling disks.
-* Document which tests rely on specific snapshots and refresh them regularly.
+Snapshots and exported configuration can contain instance metadata or values
+that are sensitive. Inspect and sanitize them before sharing. Do not assume
+that placing a key in a model parameter removes it from an export.

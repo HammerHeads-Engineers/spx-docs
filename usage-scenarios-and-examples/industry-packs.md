@@ -15,51 +15,14 @@ ready-to-run bundles.
 Source of truth:
 https://github.com/HammerHeads-Engineers/spx-examples
 
-Current snapshot used for pack/model counts:
+## Catalog baseline
 
-- `spx-examples` `origin/develop` @ `518d631ed9649810445ac9f0c5474ecd22880167`
-- Commit date: `2026-05-16`
-- `spx-examples` version: `1.1.0-rc.48`
-
-## Current catalog summary
-
-Total model entries in `library/catalog/models.yaml`: **97**
-
-### By pack
-
-| Pack ID | Model entries | Default instances | Starter instances |
-| --- | ---: | ---: | ---: |
-| `smart_building_pack` | 39 | 33 | 5 |
-| `energy_pack` | 7 | 5 | 0 |
-| `embedded_lab_pack` | 32 | 9 | 5 |
-| `industrial_iiot_pack` | 31 | 28 | 6 |
-
-### By domain
-
-| Domain | Model entries |
-| --- | ---: |
-| `building` | 15 |
-| `energy` | 25 |
-| `environment` | 5 |
-| `industrial` | 22 |
-| `lab` | 30 |
-
-### By protocol tag
-
-| Protocol | Model entries |
-| --- | ---: |
-| `bacnet` | 3 |
-| `ble` | 2 |
-| `coap` | 1 |
-| `http` | 3 |
-| `knx` | 5 |
-| `lwm2m` | 1 |
-| `matter` | 2 |
-| `modbus` | 40 |
-| `mqtt` | 8 |
-| `ocpp` | 2 |
-| `opcua` | 6 |
-| `scpi` | 21 |
+Model counts and pack membership are generated in the [Device Catalog](device-catalog.md)
+from the exact public Examples revision recorded in `sources.json`. Use that
+page for current counts instead of duplicating numbers here. The installer
+RC115 baseline pins public Examples `be71a161e97eb7a112d0581136a7b702b34cd98a`;
+new public models need a later installer context update before appearing in a
+new packaged selection.
 
 ## Definitions
 
@@ -108,56 +71,13 @@ Industrial IIoT Pack starts:
 Energy Pack currently defines default instances but no dedicated
 `start_instances` subset.
 
-## Examples
+## Using the packs
 
-Smart Building quickstart bundle:
-
-```bash
-python -m installer generate \
-  --packages smart_building_pack \
-  --profile-ids bms_quickstart \
-  --with-ui \
-  --output build/spx-generated
-```
-
-Lab-only bundle for SCPI + Modbus:
-
-```bash
-python -m installer generate \
-  --packages embedded_lab_pack \
-  --profile-ids scpi_lab \
-  --no-ui \
-  --output build/spx-generated
-```
-
-Industrial Modbus master PLC demo:
-
-```bash
-python -m installer generate \
-  --packages industrial_iiot_pack \
-  --profile-ids modbus_master_plc_demo \
-  --no-ui \
-  --output build/spx-generated
-```
-
-Industrial Modbus master PLC demo:
-
-```bash
-python -m installer generate \
-  --packages industrial_iiot_pack \
-  --profile-ids modbus_master_plc_demo \
-  --no-ui
-```
-
-This profile demonstrates SPX as an active Modbus master/controller. See
-[Use SPX as a Modbus Client / PLC Controller](../getting-started/modbus-client-controller.md)
-for the guided workflow.
-
-For pack-specific details, see:
-
-- `library/industries/<pack>/README.md`
-- `library/industries/<pack>/MODELS.yaml`
-- `profiles/<pack>/*.yaml`
+Use [SPX Setup](../getting-started/installer-and-packs.md) to provision an installed
+bundle. Public Examples holds `library/industries/<pack>/{README.md,MODELS.yaml}`
+and `profiles/<pack>/*.yaml` for inspection and independent model development.
+For the active controller walkthrough, see
+[Modbus Client / PLC Controller](../getting-started/modbus-client-controller.md).
 
 ## How packs and profiles map to the installer
 
@@ -189,17 +109,10 @@ Integrator:
 - Verify `curl -fsS http://localhost:8000/health`.
 - Connect a client to one selected protocol.
 
-QA/CI:
-
-- `python -m installer generate --packages <pack> --output build/ci/<pack> --allow-missing-product-key --no-start`
-- `build/ci/<pack>/spx-start.sh`
-- `poetry run pytest -q tests/packs/<pack>`
-
-Developer:
-
-- Update `library/catalog/*.yaml` and `profiles/<pack>/*.yaml`.
-- Regenerate with `python -m installer generate --packages <pack> --output build/spx-generated`.
-- Update generated pack indexes with `python tools/render_pack_indexes.py`.
+Model contributors run the public repository validator, relevant pack tests and
+`tools/render_pack_indexes.py`. Installer maintainers separately generate and
+validate bundles in the private installer repository. Integration tests require
+a running stack, product key and the selected protocol services.
 
 ## Extending a pack
 

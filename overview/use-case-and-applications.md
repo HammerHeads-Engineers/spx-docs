@@ -18,7 +18,7 @@ Docs: [Add a communication protocol](../getting-started/add-communication-protoc
 * Your Software Under Test: instrument driver speaking SCPI over TCP
 * SPX role: instrument state machine + predictable waveforms/scenarios
 
-Docs: [ASCII / SCPI Adapter](/broken/pages/ZHfz8dNOl5kwq5lKEQy5), [Use in Unit Tests (MiL)](../getting-started/use-in-unit-tests-mil.md).
+Docs: [ASCII / SCPI Adapter](../spx-core/communications/ascii.md), [Use in Unit Tests (MiL)](../getting-started/use-in-unit-tests-mil.md).
 
 ## MQTT device telemetry regression tests
 
@@ -26,7 +26,7 @@ Docs: [ASCII / SCPI Adapter](/broken/pages/ZHfz8dNOl5kwq5lKEQy5), [Use in Unit T
 * Your Software Under Test: telemetry ingestion / rules engine / alerting
 * SPX role: controllable publish cadence, payload values, and fault injection
 
-Docs: [MQTT Adapter](/broken/pages/wQZmN7ix2NnrhI2FK9Mr).
+Docs: [MQTT Adapter](../spx-core/communications/mqtt.md).
 
 ## BLE device simulation for mobile apps and QA rigs
 

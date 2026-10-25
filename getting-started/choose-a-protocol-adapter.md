@@ -34,7 +34,7 @@ and integration tests under
 
 Protocol adapters listen on TCP/UDP ports **in the SPX Server container**. If your SUT runs on the host, you must expose the adapter port(s) in your `docker-compose.yml`.
 
-For a working baseline, `spx-examples/docker-compose.yml` already exposes common ports (API `8000`, Modbus `502`, SCPI/ASCII `5025`, ...).
+Use the generated `docker-compose.generated.yml` from the installed environment, or your own server-only Compose project. Public Examples does not ship the product Compose configuration. Publish only the selected adapter ports.
 
 ## Next steps
 

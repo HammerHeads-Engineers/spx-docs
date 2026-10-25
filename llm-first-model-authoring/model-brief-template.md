@@ -8,9 +8,9 @@ Copy this template into an issue/PR description before asking an LLM to generate
 
 ## 0) Branch and target
 
-* Working branch (docs automation): `codex/docs-sync-latest-commits-v1-0-0`
-* Rebase base branch: `origin/version-1.0.0`
-* PR target branch: `version-1.0.0`
+* Working branch (docs automation): `codex/sync-examples-catalog`
+* Rebase base branch: `origin/main`
+* PR target branch: `main`
 
 ## 1) Goal
 
@@ -31,9 +31,9 @@ Copy this template into an issue/PR description before asking an LLM to generate
 
 ## 3) Starting point (spx-examples template)
 
-* Template file: `library/domains/<domain>/<vendor|generic>/<template>.yaml`
-* Template URL: `https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/<domain>/<vendor|generic>/<template>.yaml`
-* New model path: `library/domains/<domain>/<vendor|generic>/<new_model>.yaml`
+* Template file: `library/domains/<domain_group>/<device_class>/<vendor|generic>/<template>.yaml`
+* Template URL: `https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/domains/<domain_group>/<device_class>/<vendor|generic>/<template>.yaml`
+* New model path: `library/domains/<domain_group>/<device_class>/<vendor|generic>/<new_model>.yaml`
 
 ## 4) Protocol mapping scope
 
@@ -69,7 +69,7 @@ Copy this template into an issue/PR description before asking an LLM to generate
 * Generated pages impacted:
   * `usage-scenarios-and-examples/device-catalog.md` (`yes/no`)
 * If yes, regeneration command:
-  * `python scripts/generate_device_catalog.py --spx-examples ../spx-examples --source-ref origin/develop --source-branch develop`
+  * `python scripts/generate_device_catalog.py --spx-examples ../spx-examples --source-ref <pinned-public-commit>`
 
 ## 8) Required output from automation
 

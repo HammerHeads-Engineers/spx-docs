@@ -20,29 +20,7 @@ If you want SPX UI + protocol services + packs, use the wizard flow instead:
 - A valid product key (`SPX_PRODUCT_KEY`) from `https://simplephysx.com`
 - Local port `8000` available (or choose another host port)
 
-## Option A: Use the personalized Compose from Product & Keys (if available)
-
-Some subscriptions provide a downloadable Compose file.
-
-1. Download it from **Product & Keys**.
-2. Save it as `docker-compose.yml`.
-3. Start the server:
-
-   ```bash
-   docker compose up -d
-   docker compose logs -f spx-server
-   ```
-
-4. Verify:
-
-   ```bash
-   curl -fsS http://localhost:8000/health
-   ```
-
-> Security: a personalized Compose file may embed your product key. Treat it as
-> a secret and do not share or commit it.
-
-## Option B: Your own Compose + `.env` (recommended)
+## Your own Compose and environment
 
 This keeps the product key out of YAML and works well for teams.
 
@@ -70,7 +48,7 @@ Minimal server-only template:
 ```yaml
 services:
   spx-server:
-    image: ${SPX_SERVER_IMAGE:-simplephysx/spx-server}
+    image: ${SPX_SERVER_IMAGE:-simplephysx/spx-server:v1.0.0-rc.76}
     container_name: spx-server
     ports:
       - "8000:8000"

@@ -1,71 +1,23 @@
 # Modules Container
 
-Modules (`spx_core/system/modules.py`) let you include reusable subsystems that were registered as templates. They are similar to instances, but they focus on higher-level building blocks—entire machines, test rigs, or collections of actions/conditions.
+Modules (`spx_core/system/modules.py`) instantiate reusable registered components.
+The RC76 container accepts a list. Each entry starts with an alias → registered
+model/class name, followed by optional sibling configuration sections.
 
-## Configuration Example
-
-{% tabs %}
-{% tab title="YAML" %}
 ```yaml
 modules:
-  - power_stage: library/power_stage
-  - ui_panel:
-      type: library/ui_panel
-      actions:
-        - override:
-            target: "#attr(backlight)"
-            value: 1
+  - power_stage: power_stage_model
+  - ui_panel: ui_panel_model
+    init_parameters:
+      $in(k__backlight_enabled): true
 ```
 
-{% endtab %}
+The referenced models must be registered first. Do not put a nested `type`
+object in place of the registered class name: that is a different instance
+configuration shape. Repeated aliases are disambiguated with numeric suffixes.
+Use `instances` for ordinary runtime device instances and `modules` for
+composition supported by your model. Validate the complete assembly, not only
+the individual fragments.
 
-{% tab title="JSON" %}
-```json
-{
-  "modules": [
-    {
-      "power_stage": "library/power_stage"
-    },
-    {
-      "ui_panel": {
-        "type": "library/ui_panel",
-        "actions": [
-          {
-            "override": {
-              "target": "#attr(backlight)",
-              "value": 1
-            }
-          }
-        ]
-      }
-    }
-  ]
-}
-
-```
-{% endtab %}
-{% endtabs %}
-
-### Configuration options
-
-| Pattern | Meaning |
-|---------|---------|
-| `- alias: template_name` | Creates a child using the registered template. |
-| `actions`, `conditions`, etc. | Optional sections merged into the module after instantiation. |
-
-### How it works
-
-- The container looks up each template in the class registry (`class_registry[template_name]["template"]`).
-- It materializes the module under the provided alias (`power_stage`, `ui_panel`, ...).
-- Additional sections (actions, conditions, communication) in the mapping are attached to the new module so you can specialize it without editing the base template.
-
-### Use cases
-
-- **Shared hardware**: Build a `library/scpi_multimeter.yaml` template, then include it wherever a project needs that instrument.
-- **Customer-specific variants**: Override only what changes (setpoints, labels, protocols) while keeping the base module unchanged.
-
-### Tips
-
-- Keep templates small and composable; use modules to assemble them into full systems.
-- Name modules by role (`power_stage`, `ui_panel`) rather than device type to make diagnostics easier to read.
-- Validate templates with the SDK before publishing them to the core—both use the same validation pipeline.
+See [Templates](templates.md), [Instances](instances.md) and the
+[model definition reference](../../simulation-and-modeling/model-definition-reference.md).

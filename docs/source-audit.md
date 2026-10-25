@@ -1,0 +1,193 @@
+# Documentation source audit
+
+## Baseline and scope
+
+The portal inventory below covers every Markdown page in SUMMARY. All local
+links, fragments, HTML image paths, navigation targets and model-serialization
+parity are checked by `scripts/check_docs.py`. Implementation sources were read
+from the exact released versions in `sources.json`; public catalog pinning is
+separate from the released installer context. This is an implementation and
+simulation audit, not physical device or manufacturer certification.
+
+## Executed technical checks
+
+- Server RC76 / SDK RC21 dependency lock exported from the tagged server tree.
+- 85 API/model/meta-parameter tests passed in one isolated run.
+- 27 connection tests passed in a separate process.
+- 15 OPC UA binding/export and OCPP generated-response tests passed.
+- `scripts/verify_runtime_sample.py`: identical YAML/JSON registration through
+  the real API v3 router and Python RC3, rejected missing/incorrect credentials,
+  RUNNING instances, deterministic input-to-telemetry propagation and cleanup.
+- OpenAPI regenerated from both released routers: 10 path templates, correct
+  product title/version, bearer security on API v3 and public health/version routes.
+- UI RC76: 13 Jest suites / 55 unit tests passed with locked dependencies
+  under the available Node 24 runtime; the application declares Node 22. This
+  verifies client/state utilities, not a fresh browser/hardware qualification.
+- Generator guards cover invalid/missing revisions, public-source allowlisting,
+  meaningful-content comparison and Markdown anchors.
+
+No physical BLE, PROFINET, Matter, KNX, BACnet or other hardware qualification
+was performed. Protocol pages describe implemented roles and optional bridges;
+source/test evidence does not establish physical conformance.
+
+## Corrections applied
+
+- Replace public-repository installer/Compose commands with installed SPX Setup
+  and explicitly separate private maintainer workflows.
+- Align download UI and EXE/PKG/TGZ delivery with the migrated release system.
+- Centralize YAML/JSON semantics, preserve complete offline model/MCP context,
+  and clarify persistent controls, commands, units, wrapper direction and ports.
+- Correct API v3 method/property routes, action shapes, initialization parameters,
+  module declarations, snapshot configuration and unsupported CLI claims.
+- Remove duplicated stale catalog counts and invalid GitBook page references.
+- Document current UI Settings/managed proxy and RC76 OPC UA write-direction policy.
+- Replace old version-branch instructions with main and two reviewed bot flows.
+
+## Runtime test issue observed (outside documentation scope)
+
+Combining API helper tests and connection tests in a single pytest process
+produced two connection failures because a test changed the global component
+registry. The same connection suite passed 27/27 in isolation; the API/model
+suite passed 85/85 separately. No runtime fix was introduced. Keep isolation
+until the shared registry fixture is restored reliably in the source test suite.
+
+## Page evidence inventory
+
+The source column identifies the implementation section used for the page's
+contract. Private source paths are maintainer evidence, not prerequisites for
+public readers. Historical editorial reports under `docs/` are retained as
+history and are not product-reference pages in SUMMARY.
+
+| Documentation page | Source section | Exact source commit | Verification scope |
+| --- | --- | --- | --- |
+| [README.md](../README.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [overview/introduction.md](../overview/introduction.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [overview/start-here.md](../overview/start-here.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [overview/purpose-and-key-features.md](../overview/purpose-and-key-features.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [overview/use-case-and-applications.md](../overview/use-case-and-applications.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [overview/system-requirements-and-capability.md](../overview/system-requirements-and-capability.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [getting-started/README.md](../getting-started/README.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [getting-started/installation-guide.md](../getting-started/installation-guide.md) | `spx-installer` `installer/compatibility.py` | `fed6e2ab3e21efd07b7307ad7a22dcef3cfece17` | Structural check; source contract review by section |
+| [getting-started/connect-llm-with-spx-mcp.md](../getting-started/connect-llm-with-spx-mcp.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [getting-started/mcp-reference.md](../getting-started/mcp-reference.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [getting-started/manual-docker-compose.md](../getting-started/manual-docker-compose.md) | `spx-installer` `installer/compatibility.py` | `fed6e2ab3e21efd07b7307ad7a22dcef3cfece17` | Structural check; source contract review by section |
+| [getting-started/first-run-smart-building-pack.md](../getting-started/first-run-smart-building-pack.md) | `spx-installer` `installer/compatibility.py` | `fed6e2ab3e21efd07b7307ad7a22dcef3cfece17` | Structural check; source contract review by section |
+| [getting-started/build-your-first-simulation.md](../getting-started/build-your-first-simulation.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [getting-started/choose-a-protocol-adapter.md](../getting-started/choose-a-protocol-adapter.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [getting-started/add-communication-protocol.md](../getting-started/add-communication-protocol.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [getting-started/modbus-client-controller.md](../getting-started/modbus-client-controller.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [getting-started/extend-with-custom-component.md](../getting-started/extend-with-custom-component.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [getting-started/advanced-setup.md](../getting-started/advanced-setup.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [getting-started/installer-and-packs.md](../getting-started/installer-and-packs.md) | `spx-installer` `installer/compatibility.py` | `fed6e2ab3e21efd07b7307ad7a22dcef3cfece17` | Structural check; source contract review by section |
+| [getting-started/code-defined-simulations.md](../getting-started/code-defined-simulations.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [getting-started/snapshots-guide.md](../getting-started/snapshots-guide.md) | `spx-server` `spx_core/snapshots/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [getting-started/use-in-unit-tests-mil.md](../getting-started/use-in-unit-tests-mil.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [getting-started/ci-cd-setup-github-actions.md](../getting-started/ci-cd-setup-github-actions.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [llm-first-model-authoring/README.md](../llm-first-model-authoring/README.md) | `spx-examples` `AGENTS.md` | `be71a161e97eb7a112d0581136a7b702b34cd98a` | Structural check; source contract review by section |
+| [llm-first-model-authoring/docs-automation-guidelines.md](../llm-first-model-authoring/docs-automation-guidelines.md) | `spx-examples` `AGENTS.md` | `be71a161e97eb7a112d0581136a7b702b34cd98a` | Structural check; source contract review by section |
+| [llm-first-model-authoring/repo-as-spec.md](../llm-first-model-authoring/repo-as-spec.md) | `spx-examples` `AGENTS.md` | `be71a161e97eb7a112d0581136a7b702b34cd98a` | Structural check; source contract review by section |
+| [llm-first-model-authoring/model-brief-template.md](../llm-first-model-authoring/model-brief-template.md) | `spx-examples` `AGENTS.md` | `be71a161e97eb7a112d0581136a7b702b34cd98a` | Structural check; source contract review by section |
+| [llm-first-model-authoring/workflow-generate-validate-iterate.md](../llm-first-model-authoring/workflow-generate-validate-iterate.md) | `spx-examples` `AGENTS.md` | `be71a161e97eb7a112d0581136a7b702b34cd98a` | Structural check; source contract review by section |
+| [llm-first-model-authoring/prompt-recipes.md](../llm-first-model-authoring/prompt-recipes.md) | `spx-examples` `AGENTS.md` | `be71a161e97eb7a112d0581136a7b702b34cd98a` | Structural check; source contract review by section |
+| [llm-first-model-authoring/definition-of-done.md](../llm-first-model-authoring/definition-of-done.md) | `spx-examples` `AGENTS.md` | `be71a161e97eb7a112d0581136a7b702b34cd98a` | Structural check; source contract review by section |
+| [usage-scenarios-and-examples/README.md](../usage-scenarios-and-examples/README.md) | `spx-examples` `library/catalog/models.yaml` | `be71a161e97eb7a112d0581136a7b702b34cd98a` | Structural check; source contract review by section |
+| [usage-scenarios-and-examples/common-use-cases.md](../usage-scenarios-and-examples/common-use-cases.md) | `spx-examples` `library/catalog/models.yaml` | `be71a161e97eb7a112d0581136a7b702b34cd98a` | Structural check; source contract review by section |
+| [usage-scenarios-and-examples/industry-packs.md](../usage-scenarios-and-examples/industry-packs.md) | `spx-examples` `library/catalog/models.yaml` | `be71a161e97eb7a112d0581136a7b702b34cd98a` | Structural check; source contract review by section |
+| [usage-scenarios-and-examples/device-catalog.md](../usage-scenarios-and-examples/device-catalog.md) | `spx-examples` `library/catalog/models.yaml` | `be71a161e97eb7a112d0581136a7b702b34cd98a` | Structural check; source contract review by section |
+| [spx-development-guide/README.md](../spx-development-guide/README.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [simulation-and-modeling/README.md](../simulation-and-modeling/README.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [simulation-and-modeling/core-concepts.md](../simulation-and-modeling/core-concepts.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [simulation-and-modeling/model-definition-reference.md](../simulation-and-modeling/model-definition-reference.md) | `spx-examples` `library/catalog/models.yaml` | `be71a161e97eb7a112d0581136a7b702b34cd98a` | Structural check; source contract review by section |
+| [simulation-and-modeling/model-in-the-loop.md](../simulation-and-modeling/model-in-the-loop.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [simulation-and-modeling/using-spx-python.md](../simulation-and-modeling/using-spx-python.md) | `spx-python` `spx_python/client.py` | `08e9bab29505b5e3fc6c35b068768cb6a99fdfa5` | Structural check; source contract review by section |
+| [simulation-and-modeling/extending-simulations/README.md](../simulation-and-modeling/extending-simulations/README.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [simulation-and-modeling/extending-simulations/protocol-adapters.md](../simulation-and-modeling/extending-simulations/protocol-adapters.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [simulation-and-modeling/extending-simulations/filters-and-signal-processing.md](../simulation-and-modeling/extending-simulations/filters-and-signal-processing.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [simulation-and-modeling/extending-simulations/custom-actions-and-logic.md](../simulation-and-modeling/extending-simulations/custom-actions-and-logic.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [simulation-and-modeling/extending-simulations/hardware-bridges-and-backends.md](../simulation-and-modeling/extending-simulations/hardware-bridges-and-backends.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [simulation-and-modeling/extending-simulations/ble-device-simulation.md](../simulation-and-modeling/extending-simulations/ble-device-simulation.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [simulation-and-modeling/extending-simulations/testing-and-hot-reload.md](../simulation-and-modeling/extending-simulations/testing-and-hot-reload.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-development-guide/spx-sdk/README.md](../spx-development-guide/spx-sdk/README.md) | `spx-sdk` `spx_sdk/` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` | Structural check; source contract review by section |
+| [spx-development-guide/quick-start-spx-sdk-in-5-minutes.md](../spx-development-guide/quick-start-spx-sdk-in-5-minutes.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-development-guide/spx-sdk/registry.md](../spx-development-guide/spx-sdk/registry.md) | `spx-sdk` `spx_sdk/` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` | Structural check; source contract review by section |
+| [spx-development-guide/spx-sdk/components/README.md](../spx-development-guide/spx-sdk/components/README.md) | `spx-sdk` `spx_sdk/` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` | Structural check; source contract review by section |
+| [spx-development-guide/spx-sdk/components/spxcomponent.md](../spx-development-guide/spx-sdk/components/spxcomponent.md) | `spx-sdk` `spx_sdk/` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` | Structural check; source contract review by section |
+| [spx-development-guide/spx-sdk/components/spxcontainer-the-smart-loader-that-wires-your-sub-components.md](../spx-development-guide/spx-sdk/components/spxcontainer-the-smart-loader-that-wires-your-sub-components.md) | `spx-sdk` `spx_sdk/` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` | Structural check; source contract review by section |
+| [spx-development-guide/spx-sdk/attributes.md](../spx-development-guide/spx-sdk/attributes.md) | `spx-sdk` `spx_sdk/` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` | Structural check; source contract review by section |
+| [spx-development-guide/spx-sdk/actions.md](../spx-development-guide/spx-sdk/actions.md) | `spx-sdk` `spx_sdk/` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` | Structural check; source contract review by section |
+| [spx-development-guide/spx-sdk/model.md](../spx-development-guide/spx-sdk/model.md) | `spx-sdk` `spx_sdk/` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` | Structural check; source contract review by section |
+| [spx-development-guide/spx-sdk/logic.md](../spx-development-guide/spx-sdk/logic.md) | `spx-sdk` `spx_sdk/` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` | Structural check; source contract review by section |
+| [spx-development-guide/spx-sdk/communication.md](../spx-development-guide/spx-sdk/communication.md) | `spx-sdk` `spx_sdk/` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` | Structural check; source contract review by section |
+| [spx-development-guide/spx-sdk/hooks.md](../spx-development-guide/spx-sdk/hooks.md) | `spx-sdk` `spx_sdk/` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` | Structural check; source contract review by section |
+| [spx-development-guide/spx-sdk/diagnostics.md](../spx-development-guide/spx-sdk/diagnostics.md) | `spx-sdk` `spx_sdk/` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` | Structural check; source contract review by section |
+| [spx-development-guide/spx-sdk/validation.md](../spx-development-guide/spx-sdk/validation.md) | `spx-sdk` `spx_sdk/` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` | Structural check; source contract review by section |
+| [spx-development-guide/spx-sdk/best-practices.md](../spx-development-guide/spx-sdk/best-practices.md) | `spx-sdk` `spx_sdk/` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` | Structural check; source contract review by section |
+| [spx-development-guide/spx-sdk/imports/README.md](../spx-development-guide/spx-sdk/imports/README.md) | `spx-sdk` `spx_sdk/` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` | Structural check; source contract review by section |
+| [spx-development-guide/spx-sdk/imports/pythonfile.md](../spx-development-guide/spx-sdk/imports/pythonfile.md) | `spx-sdk` `spx_sdk/` | `7f3d43887f3b81f27be2b2076d0172090db8b0dd` | Structural check; source contract review by section |
+| [spx-core/README.md](../spx-core/README.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/system/README.md](../spx-core/system/README.md) | `spx-server` `spx_core/system/__init__.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/system/model.md](../spx-core/system/model.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/system/instances.md](../spx-core/system/instances.md) | `spx-server` `spx_core/system/instances.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/system/modules.md](../spx-core/system/modules.md) | `spx-server` `spx_core/system/modules.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/system/parameters.md](../spx-core/system/parameters.md) | `spx-server` `spx_core/system/init_parameters.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/system/connections.md](../spx-core/system/connections.md) | `spx-server` `spx_core/system/connections.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/system/timer.md](../spx-core/system/timer.md) | `spx-server` `spx_core/system/timer.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/system/polling.md](../spx-core/system/polling.md) | `spx-server` `spx_core/system/polling.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/system/logs.md](../spx-core/system/logs.md) | `spx-server` `spx_core/system/logs.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/system/scenarios.md](../spx-core/system/scenarios.md) | `spx-server` `spx_core/system/scenarios.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/system/templates.md](../spx-core/system/templates.md) | `spx-server` `spx_core/system/templates.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/actions.md](../spx-core/actions.md) | `spx-server` `spx_core/actions/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/README.md](../spx-core/communications/README.md) | `spx-server` `spx_core/communications/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/ascii.md](../spx-core/communications/ascii.md) | `spx-server` `spx_core/communications/ascii/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/http.md](../spx-core/communications/http.md) | `spx-server` `spx_core/communications/http/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/mqtt.md](../spx-core/communications/mqtt.md) | `spx-server` `spx_core/communications/mqtt/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/modbus.md](../spx-core/communications/modbus.md) | `spx-server` `spx_core/communications/modbus_slave/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/ble.md](../spx-core/communications/ble.md) | `spx-server` `spx_core/communications/ble/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/bacnet.md](../spx-core/communications/bacnet.md) | `spx-server` `spx_core/communications/bacnet/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/knx.md](../spx-core/communications/knx.md) | `spx-server` `spx_core/communications/knx/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/opcua.md](../spx-core/communications/opcua.md) | `spx-server` `spx_core/communications/opcua/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/profinet.md](../spx-core/communications/profinet.md) | `spx-server` `spx_core/communications/profinet/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/dali.md](../spx-core/communications/dali.md) | `spx-server` `spx_core/communications/dali/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/mbus.md](../spx-core/communications/mbus.md) | `spx-server` `spx_core/communications/mbus/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/coap.md](../spx-core/communications/coap.md) | `spx-server` `spx_core/communications/coap/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/lwm2m.md](../spx-core/communications/lwm2m.md) | `spx-server` `spx_core/communications/lwm2m/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/matter.md](../spx-core/communications/matter.md) | `spx-server` `spx_core/communications/matter/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/ocpp.md](../spx-core/communications/ocpp.md) | `spx-server` `spx_core/communications/ocpp/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/snmp.md](../spx-core/communications/snmp.md) | `spx-server` `spx_core/communications/snmp/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/communications/redfish.md](../spx-core/communications/redfish.md) | `spx-server` `spx_core/communications/redfish/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/snapshots.md](../spx-core/snapshots.md) | `spx-server` `spx_core/snapshots/` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-core/extending.md](../spx-core/extending.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-development-guide/spx-python-client-wrapper/README.md](../spx-development-guide/spx-python-client-wrapper/README.md) | `spx-python` `spx_python/client.py` | `08e9bab29505b5e3fc6c35b068768cb6a99fdfa5` | Structural check; source contract review by section |
+| [spx-development-guide/spx-python-client-wrapper/overview-and-installation.md](../spx-development-guide/spx-python-client-wrapper/overview-and-installation.md) | `spx-python` `spx_python/client.py` | `08e9bab29505b5e3fc6c35b068768cb6a99fdfa5` | Structural check; source contract review by section |
+| [spx-development-guide/spx-python-client-wrapper/usage-and-examples.md](../spx-development-guide/spx-python-client-wrapper/usage-and-examples.md) | `spx-python` `spx_python/client.py` | `08e9bab29505b5e3fc6c35b068768cb6a99fdfa5` | Structural check; source contract review by section |
+| [spx-development-guide/spx-python-client-wrapper/testing-helpers-and-logging.md](../spx-development-guide/spx-python-client-wrapper/testing-helpers-and-logging.md) | `spx-python` `spx_python/client.py` | `08e9bab29505b5e3fc6c35b068768cb6a99fdfa5` | Structural check; source contract review by section |
+| [spx-development-guide/spx-python-client-wrapper/advanced-and-best-practices.md](../spx-development-guide/spx-python-client-wrapper/advanced-and-best-practices.md) | `spx-python` `spx_python/client.py` | `08e9bab29505b5e3fc6c35b068768cb6a99fdfa5` | Structural check; source contract review by section |
+| [tooling-and-ui/README.md](../tooling-and-ui/README.md) | `spx-ui` `app/` | `e339deb98b9f83e4bbd0333ae7406320805e5252` | Structural check; source contract review by section |
+| [ui-reference/README.md](../ui-reference/README.md) | `spx-ui` `app/` | `e339deb98b9f83e4bbd0333ae7406320805e5252` | Structural check; source contract review by section |
+| [ui-reference/general-view.md](../ui-reference/general-view.md) | `spx-ui` `app/` | `e339deb98b9f83e4bbd0333ae7406320805e5252` | Structural check; source contract review by section |
+| [ui-reference/instances.md](../ui-reference/instances.md) | `spx-ui` `app/` | `e339deb98b9f83e4bbd0333ae7406320805e5252` | Structural check; source contract review by section |
+| [ui-reference/models.md](../ui-reference/models.md) | `spx-ui` `app/` | `e339deb98b9f83e4bbd0333ae7406320805e5252` | Structural check; source contract review by section |
+| [ui-reference/connections.md](../ui-reference/connections.md) | `spx-ui` `app/` | `e339deb98b9f83e4bbd0333ae7406320805e5252` | Structural check; source contract review by section |
+| [ui-reference/logs.md](../ui-reference/logs.md) | `spx-ui` `app/` | `e339deb98b9f83e4bbd0333ae7406320805e5252` | Structural check; source contract review by section |
+| [ui-reference/timer-and-polling.md](../ui-reference/timer-and-polling.md) | `spx-ui` `app/` | `e339deb98b9f83e4bbd0333ae7406320805e5252` | Structural check; source contract review by section |
+| [ui-reference/snapshots.md](../ui-reference/snapshots.md) | `spx-ui` `app/` | `e339deb98b9f83e4bbd0333ae7406320805e5252` | Structural check; source contract review by section |
+| [ui-reference/settings.md](../ui-reference/settings.md) | `spx-ui` `app/` | `e339deb98b9f83e4bbd0333ae7406320805e5252` | Structural check; source contract review by section |
+| [spx-development-guide/quick-guide-connecting-vs-code-to-your-running-spx-server-container-in-5-minutes.md](../spx-development-guide/quick-guide-connecting-vs-code-to-your-running-spx-server-container-in-5-minutes.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [operations-and-support/README.md](../operations-and-support/README.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [spx-development-guide/server-api/README.md](../spx-development-guide/server-api/README.md) | `spx-server` `spx_server/api/api_v3.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [api-v3-reference/README.md](../api-v3-reference/README.md) | `spx-server` `spx_server/api/api_v3.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [api-v3-reference/code-examples.md](../api-v3-reference/code-examples.md) | `spx-server` `spx_server/api/api_v3.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [testing-and-validation.md](../testing-and-validation.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [performance-optimization.md](../performance-optimization.md) | `spx-server` `spx_core/system/polling.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [security-considerations.md](../security-considerations.md) | `spx-server` `spx_server/server.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [integration-with-other-systems.md](../integration-with-other-systems.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [troubleshooting-and-support/README.md](../troubleshooting-and-support/README.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [troubleshooting-and-support/common-issues-and-solutions.md](../troubleshooting-and-support/common-issues-and-solutions.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [troubleshooting-and-support/faqs.md](../troubleshooting-and-support/faqs.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [troubleshooting-and-support/how-to-get-support.md](../troubleshooting-and-support/how-to-get-support.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [release-notes.md](../release-notes.md) | `spx-installer` `installer/compatibility.py` | `fed6e2ab3e21efd07b7307ad7a22dcef3cfece17` | Structural check; source contract review by section |
+| [docs/DOCS_BACKLOG_V1_0_0_SYNC.md](../docs/DOCS_BACKLOG_V1_0_0_SYNC.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [appendices/README.md](../appendices/README.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [appendices/glossary-of-terms.md](../appendices/glossary-of-terms.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [appendices/licensing-information.md](../appendices/licensing-information.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |
+| [appendices/additional-resources-and-readings.md](../appendices/additional-resources-and-readings.md) | `spx-server` `spx_core/system/model.py` | `bc23bdb4fc6c9391981bb5e2180d24081993a3bf` | Structural check; source contract review by section |

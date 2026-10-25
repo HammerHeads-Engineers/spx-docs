@@ -10,7 +10,7 @@
 polling:
   interval: 0.05   # seconds between iterations
   jitter: 0.01     # random +/- jitter
-  max_iterations: 0  # 0 or inf = run forever
+  max_iterations: 1000  # omit for the default unlimited loop
 ```
 
 {% endtab %}
@@ -21,7 +21,7 @@ polling:
   "polling": {
     "interval": 0.05,
     "jitter": 0.01,
-    "max_iterations": 0
+    "max_iterations": 1000
   }
 }
 

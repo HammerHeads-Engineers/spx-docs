@@ -9,7 +9,7 @@ These prompts are split into two modes:
 * **Local-agent mode** (has local git/worktree access): recipe `0` for docs automation.
 * **Web-LLM mode** (internet + GitHub browsing, no local repo access): recipes `1+`.
 
-In both modes, treat `spx-examples` on GitHub as the canonical spec and convention source.
+In both modes, use the documentation portal for product semantics and `spx-examples` for repository conventions.
 
 Before generating any code, instruct the LLM to open and follow these files from the repo:
 
@@ -35,33 +35,33 @@ You are preparing a docs automation patch for:
 - Source repo: spx-examples
 
 Branch policy (mandatory):
-1) Work only on: codex/docs-sync-latest-commits-v1-0-0
-2) Rebase on: origin/version-1.0.0 before editing
-3) Keep PR target: version-1.0.0
+1) Work only on: codex/sync-examples-catalog
+2) Rebase on: origin/main before editing
+3) Keep PR target: main
 
 Start with:
 - git fetch origin
-- git checkout codex/docs-sync-latest-commits-v1-0-0
-- git rebase origin/version-1.0.0
+- git checkout codex/sync-examples-catalog
+- git rebase origin/main
 - git status --porcelain (must be empty before starting)
 
 Source checkout:
 - Prefer local source path: ../spx-examples
 - If missing, clone:
-  - git clone --depth 1 --branch develop https://github.com/HammerHeads-Engineers/spx-examples.git .tmp/spx-examples
+  - git clone --branch main https://github.com/HammerHeads-Engineers/spx-examples.git .tmp/spx-examples
 - Use the chosen path consistently in all commands below.
 
 Then pin and report source snapshot:
-- git -C <SPX_EXAMPLES_PATH> rev-parse origin/develop
+- git -C <SPX_EXAMPLES_PATH> rev-parse HEAD
 
 Task:
 - Update docs pages impacted by source changes.
 - Keep change boundary strict: no unrelated edits outside impacted docs + required navigation/generated files.
 - If generated pages are affected, regenerate them from script (no manual table edits):
-  - python scripts/generate_device_catalog.py --spx-examples <SPX_EXAMPLES_PATH> --source-ref origin/develop --source-branch develop
+  - python scripts/generate_device_catalog.py --spx-examples <SPX_EXAMPLES_PATH> --source-ref <pinned-public-commit>
 
 Validation:
-- python scripts/generate_device_catalog.py --spx-examples <SPX_EXAMPLES_PATH> --source-ref origin/develop --source-branch develop --check
+- python scripts/generate_device_catalog.py --spx-examples <SPX_EXAMPLES_PATH> --source-ref <pinned-public-commit> --check
 - any additional page-specific checks (links/examples/paths)
 - git diff --name-only (verify only intended files changed)
 
@@ -117,7 +117,7 @@ Target protocol:
 Hard requirements:
 - Do not invent protocol fields/registers/commands that are not in the documentation.
 - If the documentation is ambiguous/incomplete, stop and ask concrete questions; list assumptions explicitly.
-- Place the model under: library/domains/<domain>/<vendor|generic>/<new_model>.yaml
+- Place the model under: library/domains/<domain_group>/<device_class>/<vendor|generic>/<new_model>.yaml
 - File name and `name:` must be lower_snake_case and aligned.
 - Update library/catalog/models.yaml with a new entry for this model.
 - Add/extend tests under tests/ so pytest covers the new model behavior end-to-end via the protocol.
@@ -174,7 +174,7 @@ Hard requirements:
 - Follow these specs (read them first):
   - https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/LLM_SPEC.md
   - https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/docs/MODEL_LANGUAGE.md
-- Place the model under: library/domains/<domain>/<vendor|generic>/<new_model>.yaml
+- Place the model under: library/domains/<domain_group>/<device_class>/<vendor|generic>/<new_model>.yaml
 - File name and `name:` must be lower_snake_case and aligned.
 - Update library/catalog/models.yaml with a new entry for this model.
 - Add/extend tests under tests/ so pytest covers the new model behavior.

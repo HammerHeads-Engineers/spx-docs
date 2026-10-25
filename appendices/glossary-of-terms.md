@@ -25,7 +25,7 @@
 - **Domain**: a top-level category for models (as in `library/domains/<domain>/...`).
 - **Service**: an external dependency required by a model/profile (MQTT broker, BLE adapter, etc.); typically declared in catalogs.
 - **Catalog**: curated YAML lists that describe available models/domains/services and metadata for installers/profiles.
-- **Installer**: the spx-examples wizard that builds a runnable bundle from selected packs or profiles.
+- **Installer**: SPX Setup from the private spx-installer product that builds a runnable bundle from selected packs or profiles.
 - **Bundle**: the generated installer output (includes `bundle.json`, compose files, scripts, models, and assets).
 - **spx-start / spx-stop**: generated scripts that start and stop an installer bundle and run bootstrap steps.
 - **Assets**: supporting files copied into a bundle (configs for MQTT/KNX/Home Assistant, etc.).

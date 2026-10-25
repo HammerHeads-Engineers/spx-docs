@@ -57,6 +57,13 @@ communication:
       bindings: []
 ```
 
+## Transport scope
+
+The Snap7 transport uses the S7 protocol on TCP (typically 102). This does not
+implement or certify a full PROFINET IO real-time device stack. Confirm the
+transport required by your SUT; source-level adapter tests are not physical
+PROFINET conformance tests.
+
 ## Notes
 
 - `profinet_server` accepts either `bindings:` or legacy `mapping:` (auto-converted to bindings).

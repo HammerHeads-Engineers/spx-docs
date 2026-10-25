@@ -62,7 +62,7 @@ model:
 | `include_stack` | boolean | `false` | Preserve `stack_info` for records that capture it. |
 | `extra_fields` | sequence of strings | `[]` | Additional `LogRecord` attributes to persist (e.g., `correlation_id`). Non-JSON values are stringified. |
 
-You can adjust `max_entries` at runtime via the API (`PATCH /.../logs` with `{"attr": {"max_entries": {"value": 1000}}}`) and the component resizes its internal deque without dropping the most recent entries.
+You can adjust `max_entries` at runtime via the API (`PUT /api/v3/system/<path>/logs/attr/max_entries` with the property body from the OpenAPI schema) and the component resizes its internal deque without dropping the most recent entries.
 
 ## Entry schema
 

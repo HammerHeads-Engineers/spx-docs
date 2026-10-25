@@ -2,79 +2,34 @@
 
 Scenarios (`spx_core/system/scenarios.py`) let you script temporary changes to your simulation: inject noise, disconnect protocols, or override values for a limited time. They are essential for fault-injection tests and QA workflows.
 
-## Configuration Example
+## Configuration example
 
-{% tabs %}
-{% tab title="YAML" %}
 ```yaml
 scenarios:
-  voltage_spike:
-    enabled: true
+  temperature_spike:
+    enabled: false
     duration: 2.0
-    actions:
-      - override:
-          target: "#attr(voltage)"
-          value: 400.0
-    run_limit: 1
-  ascii_disconnect:
-    enabled: true
-    schedule:
-      period: 30.0
-      jitter: 5.0
-    call:
-      path: communication.ascii.detach
-      stop_path: communication.ascii.attach
+    overrides:
+      $in(temperature_c): 80.0
 ```
 
-{% endtab %}
-
-{% tab title="JSON" %}
-```json
-{
-  "scenarios": {
-    "voltage_spike": {
-      "enabled": true,
-      "duration": 2.0,
-      "actions": [
-        {
-          "override": {
-            "target": "#attr(voltage)",
-            "value": 400.0
-          }
-        }
-      ],
-      "run_limit": 1
-    },
-    "ascii_disconnect": {
-      "enabled": true,
-      "schedule": {
-        "period": 30.0,
-        "jitter": 5.0
-      },
-      "call": {
-        "path": "communication.ascii.detach",
-        "stop_path": "communication.ascii.attach"
-      }
-    }
-  }
-}
-
-```
-{% endtab %}
-{% endtabs %}
+Start `temperature_spike` explicitly on the chosen instance. `enabled: true`
+opts into automatic start with its parent; keep it false for opt-in fault
+injection. For actions, use the normal `actions` list. A lifecycle method call
+belongs inside that list as a `call` action with `path` and optional `stop_path`.
 
 ### Configuration fields
 
 | Field | Description |
 |-------|-------------|
-| `enabled` | Scenario must be enabled to run. |
+| `enabled` | Configured automatic-start policy; manual start can activate an opt-in scenario. |
 | `duration` | Seconds to stay active. Negative or `null` means run until stopped manually. |
 | `period` | When set, the scenario schedules its own run loop independent of the model tick. |
 | `jitter` | Random variation added to the period. |
 | `run_limit` | Number of times the scenario can activate before disabling itself. |
 | `actions` | Child actions to execute while active. |
-| `call.path` | Method to call when the scenario starts. |
-| `call.stop_path` | Method to call when the scenario stops (optional). |
+| `actions[].call.path` | Method invoked by a lifecycle call action. |
+| `actions[].call.stop_path` | Optional stop counterpart for that call action. |
 | `overrides` | Mapping of attribute/protocol values to apply temporarily. |
 
 You can also nest a `schedule` block; fields inside it mirror top-level keys and are merged for backward compatibility.
@@ -87,8 +42,8 @@ You can also nest a `schedule` block; fields inside it mirror top-level keys and
 
 ### Common patterns
 
-- **Protocol chaos**: Use `call.path` to detach or attach communication adapters.
-- **Signal overrides**: Apply transient `override` actions to attributes and let them revert automatically when the scenario stops.
+- **Protocol chaos**: Use an `actions` list containing a `call` action with `path` to detach or attach communication adapters.
+- **Signal overrides**: `overrides` restores previous values on stop. `set` and `function` actions materialize changes that remain after stop.
 - **Scheduled disturbances**: Combine `period` and `jitter` for recurring events (e.g., every 30 ±5 seconds).
 
 ### Tips for junior engineers / QA

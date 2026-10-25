@@ -10,12 +10,12 @@ The `Instances` container (`spx_core/system/instances.py`) creates and manages n
 instances:
   - sensor:
       type: library/temperature_sensor
-      parameters:
-        attributes.temperature.default: 25.0
+      init_parameters:
+        temperature: 25.0
   - controller:
       type: library/pid_controller
-      parameters:
-        parameters.setpoint: 80.0
+      init_parameters:
+        k__setpoint_c: 80.0
   - fleet:
       type: library/device_cluster
       instances:
@@ -32,16 +32,16 @@ instances:
     {
       "sensor": {
         "type": "library/temperature_sensor",
-        "parameters": {
-          "attributes.temperature.default": 25.0
+        "init_parameters": {
+          "temperature": 25.0
         }
       }
     },
     {
       "controller": {
         "type": "library/pid_controller",
-        "parameters": {
-          "parameters.setpoint": 80.0
+        "init_parameters": {
+          "k__setpoint_c": 80.0
         }
       }
     },
@@ -69,7 +69,7 @@ instances:
 | Field | Description |
 |-------|-------------|
 | `type` | Required class or template name registered in the core. |
-| `parameters` | Mapping applied after instantiation. Keys can reference nested attributes (see examples). |
+| `init_parameters` | Mapping applied after instantiation. Keys can reference nested attributes (see examples). |
 | `meta_parameters` | Values for template meta parameters. Useful when the template exposes `$param(...)` knobs (for example unit id, port, setpoint seeds). |
 | `instances` | Embedded list that creates grandchildren under this instance. |
 | (no `type`) | If an entry omits `type`, the container treats it as an update to an existing child. |
@@ -78,7 +78,7 @@ instances:
 
 - **List or dict**: You can provide a list of single-key dicts (recommended) or a plain mapping; the container normalizes the format internally.
 - **Limit enforcement**: You can set `instance_limit` when creating the container programmatically to prevent runaway instantiations.
-- **Updates**: Supplying an entry without `type` (only parameters) updates an existing child instead of creating a new one. This is useful for hot reconfiguration via API.
+- **Updates**: Supplying an entry without `type` (only configuration) updates an existing child instead of creating a new one. This is useful for hot reconfiguration via API.
 - **Nested sections**: Additional keys in the same mapping (after the first) are treated as sub-containers to attach under the new instance.
 - **Meta-parameter resolution**: If `meta_parameters` are provided, the runtime resolves template parameters before instantiation and stores resolved values in the instance definition for observability/snapshots.
 

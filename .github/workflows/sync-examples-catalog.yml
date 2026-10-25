@@ -1,0 +1,43 @@
+name: Propose public catalog update
+on:
+  schedule:
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: sync-examples-catalog
+  cancel-in-progress: false
+jobs:
+  propose:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install PyYAML==6.0.3
+      - run: python scripts/update_catalog.py
+      - run: python scripts/check_docs.py
+      - uses: peter-evans/create-pull-request@v7
+        id: pr
+        with:
+          branch: codex/sync-examples-catalog
+          base: main
+          title: 'docs(catalog): update public examples snapshot'
+          commit-message: 'docs(catalog): update public examples snapshot'
+          body: 'Updates only generated catalog content and its exact public input pin. The released runtime baseline is unchanged. Review and merge manually after documentation checks.'
+          add-paths: |
+            sources.json
+            usage-scenarios-and-examples/device-catalog.md
+      - name: Explicitly run read-only validation for the bot branch
+        if: steps.pr.outputs.pull-request-operation == 'created' || steps.pr.outputs.pull-request-operation == 'updated'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run generated-docs-check.yml --ref codex/sync-examples-catalog
