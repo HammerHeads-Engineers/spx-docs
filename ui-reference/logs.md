@@ -23,7 +23,7 @@ In the UI navigation, select **Logs**.
 * Refresh manually or keep live polling active.
 * Expand long log entries for full details.
 
-> Image placeholder: Logs page with source selector, level filter, and limit input.
+Choose the log source, level and result limit. Reproduce the operation, then verify that the displayed events refer to the intended instance and time range.
 
 ## Typical workflow
 
@@ -51,3 +51,5 @@ In the UI navigation, select **Logs**.
 * [Instances](instances.md) for per-instance tab-level troubleshooting.
 * [Settings](settings.md) for connection setup.
 * [Troubleshooting and Support](../troubleshooting-and-support/README.md) for escalation flow.
+
+These instructions describe UI RC76. Screenshots illustrate the controls; use the text and expected runtime state when the visual layout differs.

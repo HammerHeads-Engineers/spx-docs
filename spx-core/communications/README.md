@@ -70,3 +70,5 @@ Bind configurable hostnames, ports, device identifiers and topics using
 `meta_parameters`; keep these independent from model behavior attributes.
 The documentation audit records source review separately from protocol and
 hardware execution evidence.
+
+Before selecting an adapter, check [roles, backends and verification limits](capabilities.md).

@@ -1,21 +1,17 @@
 # Additional Resources and Readings
 
-Canonical repositories (used throughout this documentation):
+| Resource | Access | Purpose |
+| --- | --- | --- |
+| [spx-docs](https://github.com/HammerHeads-Engineers/spx-docs) | Public | Canonical product documentation on main |
+| [spx-examples](https://github.com/HammerHeads-Engineers/spx-examples) | Public | Models, catalogs, packs, tests, runtime MCP and agent guidance |
+| [spx-ble-adapter](https://github.com/HammerHeads-Engineers/spx-ble-adapter) | Public | Host BLE service; check OS/radio prerequisites |
+| spx-installer | Private, maintainer access | Setup, client provisioning, packaging/signing/releases |
+| spx-server, spx-sdk, spx-python, spx-ui source | Private, maintainer access | Product implementation; source access is not required for public tutorials |
 
-- `spx-docs` (this repo): documentation source
-- `spx-examples`: runnable models + MiL tests (treat as the contract for conventions)
-  - https://github.com/HammerHeads-Engineers/spx-examples
-- `spx-server`: SPX Server runtime
-  - https://github.com/HammerHeads-Engineers/spx-server
-- `spx-sdk`: SDK for authoring/extending models
-  - https://github.com/HammerHeads-Engineers/spx-sdk
-- `spx-python`: Python client wrapper for talking to SPX Server
-  - https://github.com/HammerHeads-Engineers/spx-python
-- `spx-ui`: UI frontend
-  - https://github.com/HammerHeads-Engineers/spx-ui
-- `spx-ble-adapter`: companion service used by BLE simulations
-  - https://github.com/HammerHeads-Engineers/spx-ble-adapter
+SDK/client packages are installed from the versions in the
+[compatibility matrix](../overview/system-requirements-and-capability.md).
+Product installers are obtained through [Downloads](../getting-started/installation-guide.md).
+Do not treat a private GitHub 404 as an installation failure.
 
-Product site:
-
-- https://simplephysx.com
+[Product website](https://simplephysx.com) ·
+[Support](../troubleshooting-and-support/how-to-get-support.md)

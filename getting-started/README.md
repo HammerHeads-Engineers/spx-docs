@@ -19,46 +19,18 @@ layout:
 
 # Getting Started
 
-This page helps you get up and running with the SPX simulation stack—the SPX Server (REST API for modeling & simulation) and the SPX-Python client (lightweight Python wrapper for that API). You’ll learn how to install the essentials, bring the server up locally with Docker, connect from Python, and perform the core operations you’ll use in day-to-day development and CI.
+Choose your workflow in [Start here](../overview/start-here.md). This page
+contains the browser/UI first-device walkthrough.
 
-By the end, you will be able to:
+Install with [SPX Setup](installation-guide.md), verify the UI/API, then follow
+the steps below. For agents use [MCP onboarding](connect-llm-with-spx-mcp.md);
+for code use the [client tutorial](../simulation-and-modeling/using-spx-python.md).
+The [version matrix](../overview/system-requirements-and-capability.md) explains
+which Python belongs to the installer, MCP, SDK or server container.
 
-* Start the SPX Server locally via Docker and verify it’s healthy.
-* Connect Codex, Claude Code, or another MCP-capable client to your local SPX runtime through the packaged SPX MCP server.
-* Initialize the SPX-Python client and talk to the server.
-* Create models and instances, read/write attributes, and run a basic simulation step.
-* Reuse the same flow in unit tests and CI pipelines.
-
-## Reference repository: spx-examples
-
-For the latest runnable models, installer profiles, generated bundle tooling,
-and MiL tests, use the public
-[spx-examples repository](https://github.com/HammerHeads-Engineers/spx-examples).
-
-Product installation and bundle generation are owned by private `spx-installer`.
-The public Examples repository does not contain the product installer or Compose bundle.
-
-What’s inside this page:
-
-* **Installation Guide** — sign in, download the platform installer, complete the native installation, use the automatically opened `SPX Setup` on macOS, and verify UI/API on localhost. RC qualification uses [staging Downloads](https://staging.simplephysx.com/downloads), channel **Development**, and a key from [Product Keys](https://staging.simplephysx.com/account/product-keys).
-* **Connect an LLM with SPX MCP** — run `SPX MCP Setup`, open the generated SPX MCP workspace, and use MCP tools against the local SPX server.
-* **Advanced: Manual Docker Compose** — run the SPX Server API via Compose without the wizard (server-only).
-* **Modbus Client / PLC Controller** — use SPX as an active Modbus master that polls and controls downstream Modbus devices.
-* **Quick Start Guide** — minimal, copy-paste recipes to connect to the server, do basic CRUD on models/instances, tweak attributes, run prepare()/run(), and wire these steps into your unit tests and CI.
-
-**Who is this for?**
-
-Developers, QA, and CI engineers who want a clear, repeatable path to stand up SPX locally and automate it in tests.
-
-Prerequisites (at a glance):
-
-* Docker & Docker Compose (to run the server)
-* Native macOS and Windows installers provide Python 3.12; no separate Python installation is needed for that path
-* Portable/Linux MCP requires host Python `>=3.10`; use Python 3.12 for public repository development
-* A valid `SPX_PRODUCT_KEY`
-* Network access to pull Docker images and install Python dependencies
-
-> Tip: Everything shown here is designed to work the same way locally and in CI, so the commands you practice on your laptop carry straight over to pipelines.
+Public [spx-examples](https://github.com/HammerHeads-Engineers/spx-examples)
+contains models, catalogs, profiles, examples and runtime MCP modules. Bundle
+generation and product installation belong to private `spx-installer`.
 
 ## First device in the UI
 

@@ -19,6 +19,12 @@ Start it from one of these supported places:
 The public Examples checkout contains models and scripts. Start SPX using the
 installed environment; it does not contain the product Compose bundle.
 
+For a complete program with explicit expected values and automatic cleanup,
+use the [verified client tutorial](../simulation-and-modeling/using-spx-python.md).
+The snippets below illustrate the broader workflow and the noise action; manual
+time control alone does not make noisy output repeatable. Use a disposable server
+and remove your demo instance/model when finished.
+
 ## Verify the server
 
 Set your product key for local scripts:
@@ -52,7 +58,7 @@ Expected response includes:
 Install the Python client and YAML dependency in your local virtual environment:
 
 ```bash
-pip install "spx-python==1.0.0rc3" pyyaml
+python -m pip install "spx-python==1.0.0rc3" PyYAML==6.0.3
 ```
 
 Quick client smoke test:

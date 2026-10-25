@@ -50,19 +50,26 @@ model_def = yaml.safe_load(pt_100_yaml)
 client["models"]["pt_100_modbus"] = model_def
 client["instances"]["pt100_mb_1"] = "pt_100_modbus"
 inst = client["instances"]["pt100_mb_1"]
-client.prepare()
+inst.real_time = False
+inst.prepare()
 modbus = inst["communication"]["modbus_slave"]
 modbus.start()
 # 4) Step deterministically (so external tools see changing readings)
 for k in range(1, 51):  # ~5 seconds with dt=0.1
-    inst["timer"]["time"] = k * 0.1
-    client.run()
+    inst["timer"].time = k * 0.1
+    inst.run(time_step=0.1)
     print("internal temperature:", inst["attributes"]["temperature"].internal_value)
     print("external temperature:", inst["attributes"]["temperature"].external_value)
     print("sensor_fault:", inst["attributes"]["sensor_fault"].internal_value)
 # A Modbus TCP client can now read temperature at holding registers 0–1 and sensor_fault at coil 4.
 ```
 {% endcode %}
+
+After the protocol read/write check, stop the adapter and remove the demo
+instance/model on your disposable server. This protocol recipe requires the
+mapped ports, dependencies and a real SUT check; it is not executed by the
+SDK-only documentation tests. The noise action is stochastic, so a fixed clock
+does not promise identical readings.
 
 ## Next steps on simplephysx.com
 
@@ -103,7 +110,7 @@ Then connect your SUT to `127.0.0.1:1502`.
 
 To verify the Modbus TCP server is working correctly, create a simple Python client that connects to your **host-exposed Modbus port** (for example `127.0.0.1:1502`), reads the mapped registers, and plots the temperature and fault flag. This example also demonstrates **Model‑in‑the‑Loop (MiL)**: the **Software Under Test (SUT)** is the Modbus TCP client (your real application code), while the **SPX model** plays the role of the plant/sensor. We use `spx-python` only as a control channel to start/stop the model so data capture stays in sync.
 
-**Note:** Unlike the deterministic stepping shown earlier (where you set `instance["timer"]["time"]` and call `run()`), here we call `start()`, which hands time progression to the server’s internal scheduler. The simulation advances autonomously according to `timer.dt` and the server loop—great for live protocol testing—while deterministic stepping remains preferable for strictly reproducible unit tests.
+**Note:** Unlike the deterministic stepping shown earlier (where you set `instance["timer"].time` and call `run()`), here we call `start()`, which hands time progression to the server’s internal scheduler. The simulation advances autonomously according to the configured polling interval and the runtime timer—great for live protocol testing—while deterministic stepping remains preferable for strictly reproducible unit tests.
 
 {% code title="sut_example.py" %}
 ```python

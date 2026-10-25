@@ -6,11 +6,15 @@ hidden: true
 
 Copy this template into an issue/PR description before asking an LLM to generate or modify a model.
 
-## 0) Branch and target
+## 0) Work mode and target
 
-* Working branch (docs automation): `codex/sync-examples-catalog`
-* Rebase base branch: `origin/main`
-* PR target branch: `main`
+* Work mode: `runtime_mcp` for a local result, or `repo_dev` for persistence.
+* For a durable model change: public `spx-examples`, base/PR target `develop`,
+  working branch `codex/<task>` (follow current repo instructions).
+* For a live task: workspace/server identity and requested completion result;
+  omit branch/catalog/test fields unless promotion is requested.
+* Documentation changes are a separate `spx-docs/main` contribution; do not use
+  the catalog-sync automation branch for ordinary model authoring.
 
 ## 1) Goal
 

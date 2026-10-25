@@ -41,3 +41,5 @@ Use the generated `docker-compose.generated.yml` from the installed environment,
 - Example tutorial: [Add Modbus TCP/IP to Your Simulation](add-communication-protocol.md)
 - Controller tutorial: [Use SPX as a Modbus Client / PLC Controller](modbus-client-controller.md)
 - Deterministic QA flow: [Use in Unit Tests (MiL)](use-in-unit-tests-mil.md)
+
+Before selecting an adapter, check [roles, backends and verification limits](../spx-core/communications/capabilities.md).

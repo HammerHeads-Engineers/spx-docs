@@ -29,7 +29,7 @@ This guide builds on SPX custom components to expose a virtual device as a Bluet
 
 ## 1. Start from a minimal model
 
-Copy or import the library template `spx-examples/library/domains/ble/generic/temperature_sensor__ble_gatt.yaml`. The relevant pieces:
+Copy or import the library template `spx-examples/library/domains/lab/sensor/generic/temperature_sensor__ble_gatt.yaml`. The relevant pieces:
 
 ```yaml
 attributes:
@@ -131,19 +131,20 @@ client = spx_python.init(
     product_key=os.environ.get("SPX_PRODUCT_KEY", ""),
 )
 
-with open("library/domains/ble/generic/temperature_sensor__ble_gatt.yaml", "r", encoding="utf-8") as f:
+with open("library/domains/lab/sensor/generic/temperature_sensor__ble_gatt.yaml", "r", encoding="utf-8") as f:
     model_def = yaml.safe_load(f)
 
 client["models"]["BleTemp"] = model_def
 client["instances"]["ble-temp"] = "BleTemp"
 inst = client["instances"]["ble-temp"]
 
-client.prepare()
+inst.real_time = False
+inst.prepare()
 
 # Advance the timer to produce data and trigger notifications.
 for step in range(1, 31):
-    inst["timer"]["time"] = step * inst["timer"].get("dt", 0.5)
-    client.run()
+    inst["timer"].time = step * 0.5
+    inst.run(time_step=0.5)
 ```
 
 During `prepare()` the `ble` protocol will:

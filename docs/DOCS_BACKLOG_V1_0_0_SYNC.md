@@ -1,3 +1,8 @@
+> **Historical archive — not current instructions.** This backlog described an
+> earlier documentation synchronization. Branches, versions and repository roles
+> below may be obsolete. Follow [Release Notes](../release-notes.md) and
+> [Agent Start Here](../llm-first-model-authoring/agent-start-here.md) for current work.
+
 # Docs backlog (v1.0.0 sync)
 
 This backlog was prepared after reviewing recent commits in:

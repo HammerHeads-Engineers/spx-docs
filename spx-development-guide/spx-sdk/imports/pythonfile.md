@@ -120,7 +120,7 @@ When your SPX model engine instantiates a PythonFile, the following attributes a
 
 ### Usage Example
 
-```python
+```text
 # In your SPX model definition YAML / dict:
 "python_file": {
   "extensions/voltage_source.py": {
