@@ -125,6 +125,8 @@ def main():
         try:
             status, destination, text = fetch(url)
             result = {'url': url, 'kind': kind, 'status': status, 'destination': destination}
+            if text.startswith('# Page Not Found'):
+                result['error'] = 'GitBook returned a missing-page document with HTTP 200'
             if target:
                 result['expected'] = at_site(target, site)
                 if normalize(destination, site) != normalize(target, site):
@@ -146,7 +148,7 @@ def main():
     for source, expected in REQUIRED.items():
         body = content.get(normalize(routes[source]['markdown_url'], site), '')
         for phrase in expected:
-            if phrase.casefold() not in body.casefold():
+            if phrase.casefold() not in body.replace('\\_', '_').casefold():
                 errors.append(f'Missing correction in {source}: {phrase}')
     for suffix in ('docs_backlog_v1_0_0_sync', 'docs-automation-guidelines'):
         if suffix in index.lower():

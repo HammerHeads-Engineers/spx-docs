@@ -2,7 +2,7 @@
 
 Canonical source: spx-docs/main. Product version inputs live in `sources.json`;
 changing a catalog pin does not change the runtime baseline. Current public
-entry point: [Start here](../overview/start-here.md).
+entry point: [Start here](../README.md).
 
 ## Page contract
 
@@ -84,3 +84,8 @@ exact merged Docs commit; never hand-edit generated MODEL_LANGUAGE/MCP exports.
 Check the pinned export, README catalog and docs tests, then release the context
 through the normal develop → main process. Do not change an installer pin or
 publish a product release as a side effect of refreshing documentation.
+
+Site redirect CSV imports use `source,destination,intent` (draft then publish).
+The reviewed map in `docs/navigation/legacy-pages.json` includes generated API
+URLs. Verify redirects after main publication: preview redirect resolution can
+differ from the live space. A 200 Markdown missing-page response is a failure.
