@@ -9,7 +9,7 @@ MCP is optional and is configured separately after this installation.
 
 ## Choose your operating system
 
-[Windows](#windows) · [macOS](#macos) · [Linux/Unix](#linux).
+[Windows](#windows) · [macOS](#macos) · [Linux/Unix](#linux-unix).
 First download the package below, then follow the instructions for your OS.
 
 ## Before you start
@@ -21,8 +21,7 @@ First download the package below, then follow the instructions for your OS.
 
 Do not share product keys or personalized generated configuration.
 
-<a id="id-1-download-the-installer"></a>
-## Download the installer
+## Download the installer {#id-1-download-the-installer}
 
 For release-candidate testing, sign in at [staging Downloads](https://staging.simplephysx.com/downloads)
 and select **Development**. Product keys are managed under
@@ -35,8 +34,7 @@ Check the version and SHA-256 shown on Downloads. `downloads.simplephysx.com`
 is the file-delivery host, not the sign-in or download-selection UI. Direct
 file links are authorized and temporary; use the portal for a fresh link.
 
-<a id="id-2-run-the-native-installer"></a>
-## Install for your operating system
+## Install for your operating system {#id-2-run-the-native-installer}
 
 ### Windows
 
@@ -60,8 +58,7 @@ Open `spx-installer-macos-<version>.pkg`.
   `SPX MCP Setup.app`, `SPX Stop.app`, `SPX Cleanup.app`, and
   `SPX Uninstall.app`.
 
-<a id="linux-unix"></a>
-### Linux
+### Linux {#linux-unix}
 
 Extract the portable archive and run its setup launcher:
 
@@ -74,8 +71,7 @@ cd spx-installer
 Use the actual extracted directory name. Generated `spx-start.sh` and
 `spx-stop.sh` helpers manage the environment after setup.
 
-<a id="id-3-run-spx-setup"></a>
-## Run SPX Setup
+## Run SPX Setup {#id-3-run-spx-setup}
 
 Use the automatically opened Setup on macOS. If it is absent, launch
 `SPX Setup` once from the location below.
@@ -100,8 +96,7 @@ The first UI exercise provides its own small model, so it does not require a
 pack, starter instances or a protocol client. If you choose a pack instead,
 explicitly decide whether Setup should install models and starter instances.
 
-<a id="id-4-verify-the-local-stack"></a>
-## Verify the local stack
+## Verify the local stack {#id-4-verify-the-local-stack}
 
 After `SPX Setup` starts the stack, or after running `SPX Start`, verify:
 

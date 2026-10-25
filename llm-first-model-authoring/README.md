@@ -15,7 +15,7 @@ installed environment, then read [Agent Start Here](agent-start-here.md).
   [runtime prompt](prompt-recipes.md#live-runtime-task). Stop at the requested
   live result; promote it to a repository only when asked.
 - **Durable contribution — repo_dev:** change public Examples. Use the
-  [repository prompt](prompt-recipes.md#durable-model-contribution),
+  [repository prompt](prompt-recipes.md#id-2-create-a-new-model-copy-the-closest-template),
   [model brief](model-brief-template.md) and
   [completion criteria](definition-of-done.md).
 

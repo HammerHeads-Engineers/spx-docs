@@ -81,4 +81,4 @@ parsing alone does not prove runtime or protocol behavior.
 ## Continue with…
 
 [Live runtime prompt](prompt-recipes.md#live-runtime-task) or
-[durable contribution prompt](prompt-recipes.md#durable-model-contribution).
+[durable contribution prompt](prompt-recipes.md#id-2-create-a-new-model-copy-the-closest-template).

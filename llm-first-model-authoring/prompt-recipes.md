@@ -31,8 +31,7 @@ Report the model ID, instance key, final state and relevant endpoint details.
 State what you actually verified and stop when the requested live result works.
 ```
 
-<a id="id-2-create-a-new-model-copy-the-closest-template"></a>
-## Durable model contribution
+## Durable model contribution {#id-2-create-a-new-model-copy-the-closest-template}
 
 **Mode:** repo_dev. **Requires:** a public Examples checkout and the input manual
 or behavior specification. **Completion:** a reviewable change and relevant checks.
@@ -51,8 +50,7 @@ then refresh offline exports through the existing synchronization mechanism.
 Report changed files, source revisions, actual checks and any remaining limits.
 ```
 
-<a id="id-1-generate-a-model--protocol-mapping-from-device-protocol-documentation"></a>
-## Adapt a device from its manual
+## Adapt a device from its manual {#id-1-generate-a-model--protocol-mapping-from-device-protocol-documentation}
 
 **Mode:** runtime_mcp for a local result, repo_dev only when persistence is requested.
 Provide the smallest useful register/topic/endpoint subset and cite manual sections.
@@ -81,8 +79,7 @@ run the connection and read back the target. Report state and observed values.
 Do not persist a model/catalog change unless I ask.
 ```
 
-<a id="id-4-add-faults--mil-tests-scenarios-are-the-contract"></a>
-## Add a fault and regression test
+## Add a fault and regression test {#id-4-add-faults--mil-tests-scenarios-are-the-contract}
 
 **Mode:** repo_dev for a persistent fault/test; use the live recipe for an experiment.
 
@@ -97,11 +94,7 @@ Run the relevant validation/tests if tools are available; otherwise provide exac
 commands and state that they were not run. Report evidence, not assumed success.
 ```
 
-<a id="id-3-add-protocol-mapping-to-an-existing-model"></a>
-<a id="id-5-generate-a-mil-integration-test-for-an-existing-model"></a>
-<a id="id-6-generate-client-software-integration-tests-against-an-spx-model-mil"></a>
-<a id="id-7-generate-production-device-tests--report-_test_logs"></a>
-## Check an existing protocol mapping
+## Check an existing protocol mapping {#id-3-add-protocol-mapping-to-an-existing-model}
 
 **Mode:** runtime_mcp for live verification, repo_dev for a saved regression test.
 
@@ -114,6 +107,21 @@ For repo_dev, save the smallest regression test and required metadata;
 for runtime_mcp, stop after the requested verification without repo hardening.
 ```
 
+### Test an existing model {#id-5-generate-a-mil-integration-test-for-an-existing-model}
+
+Use repo_dev to save the smallest model/protocol regression test. Reuse the
+existing SUT helpers and distinguish runtime API checks from protocol readback.
+
+### Test a production client {#id-6-generate-client-software-integration-tests-against-an-spx-model-mil}
+
+Record the client's expected exchange and test it against the simulation. Keep
+client, backend and model versions with the actual observed results.
+
+### Report device tests {#id-7-generate-production-device-tests--report-_test_logs}
+
+Derive reports from executed assertions and recorded values. Mark skipped or
+unavailable checks explicitly; do not turn generated code into a passing result.
+
 ## Prepare a patch without local tools
 
 **Access:** web-only. Choose the same task mode, but do not claim local execution.
@@ -121,8 +129,7 @@ Provide a file-by-file patch, source URLs/revisions and exact validation command
 List checks that remain unrun. Do not transform a local runtime request into a
 repository contribution simply because the assistant lacks MCP access.
 
-<a id="id-0-update-documentation-from-source-repos-single-branch-automation"></a>
-## Documentation maintenance
+## Documentation maintenance {#id-0-update-documentation-from-source-repos-single-branch-automation}
 
 Product documentation maintenance is a separate task for spx-docs. Maintainers
 use the [automation contract](https://github.com/HammerHeads-Engineers/spx-docs/blob/main/llm-first-model-authoring/docs-automation-guidelines.md)

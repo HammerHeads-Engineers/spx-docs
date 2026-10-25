@@ -965,5 +965,649 @@
     "appendices/README.md": "reference/README.md",
     "llm-first-model-authoring/docs-automation-guidelines.md": "appendices/additional-resources-and-readings.md",
     "tooling-and-ui/README.md": "ui-reference/README.md"
-  }
+  },
+  "current_routes": {
+    "README.md": {
+      "title": "Start here",
+      "markdown_url": "https://docs.simplephysx.com/readme.md",
+      "url": "https://docs.simplephysx.com/"
+    },
+    "getting-started/installation-guide.md": {
+      "title": "Install SPX",
+      "markdown_url": "https://docs.simplephysx.com/readme/installation-guide.md",
+      "url": "https://docs.simplephysx.com/readme/installation-guide"
+    },
+    "getting-started/README.md": {
+      "title": "First device in the UI",
+      "markdown_url": "https://docs.simplephysx.com/readme/getting-started.md",
+      "url": "https://docs.simplephysx.com/readme/getting-started"
+    },
+    "simulation-and-modeling/using-spx-python.md": {
+      "title": "First Python program",
+      "markdown_url": "https://docs.simplephysx.com/readme/using-spx-python.md",
+      "url": "https://docs.simplephysx.com/readme/using-spx-python"
+    },
+    "overview/system-requirements-and-capability.md": {
+      "title": "Requirements and versions",
+      "markdown_url": "https://docs.simplephysx.com/readme/system-requirements-and-capability.md",
+      "url": "https://docs.simplephysx.com/readme/system-requirements-and-capability"
+    },
+    "spx-development-guide/README.md": {
+      "title": "Guides",
+      "markdown_url": "https://docs.simplephysx.com/spx-development-guide.md",
+      "url": "https://docs.simplephysx.com/spx-development-guide"
+    },
+    "getting-started/build-your-first-simulation.md": {
+      "title": "Create your first model",
+      "markdown_url": "https://docs.simplephysx.com/spx-development-guide/build-your-first-simulation.md",
+      "url": "https://docs.simplephysx.com/spx-development-guide/build-your-first-simulation"
+    },
+    "simulation-and-modeling/core-concepts.md": {
+      "title": "Model concepts",
+      "markdown_url": "https://docs.simplephysx.com/spx-development-guide/core-concepts.md",
+      "url": "https://docs.simplephysx.com/spx-development-guide/core-concepts"
+    },
+    "guides/connect-instances.md": {
+      "title": "Connect instances",
+      "markdown_url": "https://docs.simplephysx.com/spx-development-guide/connect-instances.md",
+      "url": "https://docs.simplephysx.com/spx-development-guide/connect-instances"
+    },
+    "guides/run-scenarios.md": {
+      "title": "Run scenarios",
+      "markdown_url": "https://docs.simplephysx.com/spx-development-guide/run-scenarios.md",
+      "url": "https://docs.simplephysx.com/spx-development-guide/run-scenarios"
+    },
+    "simulation-and-modeling/model-in-the-loop.md": {
+      "title": "Model-in-the-Loop testing",
+      "markdown_url": "https://docs.simplephysx.com/spx-development-guide/model-in-the-loop.md",
+      "url": "https://docs.simplephysx.com/spx-development-guide/model-in-the-loop"
+    },
+    "getting-started/use-in-unit-tests-mil.md": {
+      "title": "Test a client over Modbus",
+      "markdown_url": "https://docs.simplephysx.com/spx-development-guide/use-in-unit-tests-mil.md",
+      "url": "https://docs.simplephysx.com/spx-development-guide/use-in-unit-tests-mil"
+    },
+    "getting-started/ci-cd-setup-github-actions.md": {
+      "title": "Run tests in CI",
+      "markdown_url": "https://docs.simplephysx.com/spx-development-guide/ci-cd-setup-github-actions.md",
+      "url": "https://docs.simplephysx.com/spx-development-guide/ci-cd-setup-github-actions"
+    },
+    "spx-development-guide/quick-start-spx-sdk-in-5-minutes.md": {
+      "title": "Local model with SDK",
+      "markdown_url": "https://docs.simplephysx.com/spx-development-guide/quick-start-spx-sdk-in-5-minutes.md",
+      "url": "https://docs.simplephysx.com/spx-development-guide/quick-start-spx-sdk-in-5-minutes"
+    },
+    "getting-started/extend-with-custom-component.md": {
+      "title": "Write a custom action",
+      "markdown_url": "https://docs.simplephysx.com/spx-development-guide/extend-with-custom-component.md",
+      "url": "https://docs.simplephysx.com/spx-development-guide/extend-with-custom-component"
+    },
+    "getting-started/code-defined-simulations.md": {
+      "title": "Load a Python class",
+      "markdown_url": "https://docs.simplephysx.com/spx-development-guide/code-defined-simulations.md",
+      "url": "https://docs.simplephysx.com/spx-development-guide/code-defined-simulations"
+    },
+    "simulation-and-modeling/extending-simulations/filters-and-signal-processing.md": {
+      "title": "Filter a signal",
+      "markdown_url": "https://docs.simplephysx.com/spx-development-guide/filters-and-signal-processing.md",
+      "url": "https://docs.simplephysx.com/spx-development-guide/filters-and-signal-processing"
+    },
+    "simulation-and-modeling/extending-simulations/custom-actions-and-logic.md": {
+      "title": "Custom actions and logic",
+      "markdown_url": "https://docs.simplephysx.com/spx-development-guide/custom-actions-and-logic.md",
+      "url": "https://docs.simplephysx.com/spx-development-guide/custom-actions-and-logic"
+    },
+    "simulation-and-modeling/extending-simulations/testing-and-hot-reload.md": {
+      "title": "Test and reload extensions",
+      "markdown_url": "https://docs.simplephysx.com/spx-development-guide/testing-and-hot-reload.md",
+      "url": "https://docs.simplephysx.com/spx-development-guide/testing-and-hot-reload"
+    },
+    "testing-and-validation.md": {
+      "title": "Testing practices",
+      "markdown_url": "https://docs.simplephysx.com/spx-development-guide/testing-and-validation.md",
+      "url": "https://docs.simplephysx.com/spx-development-guide/testing-and-validation"
+    },
+    "usage-scenarios-and-examples/README.md": {
+      "title": "Models & packs",
+      "markdown_url": "https://docs.simplephysx.com/usage-scenarios-and-examples.md",
+      "url": "https://docs.simplephysx.com/usage-scenarios-and-examples"
+    },
+    "usage-scenarios-and-examples/device-catalog.md": {
+      "title": "Device catalog",
+      "markdown_url": "https://docs.simplephysx.com/usage-scenarios-and-examples/device-catalog.md",
+      "url": "https://docs.simplephysx.com/usage-scenarios-and-examples/device-catalog"
+    },
+    "usage-scenarios-and-examples/industry-packs.md": {
+      "title": "Industry packs and profiles",
+      "markdown_url": "https://docs.simplephysx.com/usage-scenarios-and-examples/industry-packs.md",
+      "url": "https://docs.simplephysx.com/usage-scenarios-and-examples/industry-packs"
+    },
+    "getting-started/first-run-smart-building-pack.md": {
+      "title": "Smart Building walkthrough",
+      "markdown_url": "https://docs.simplephysx.com/usage-scenarios-and-examples/first-run-smart-building-pack.md",
+      "url": "https://docs.simplephysx.com/usage-scenarios-and-examples/first-run-smart-building-pack"
+    },
+    "overview/use-case-and-applications.md": {
+      "title": "Use cases",
+      "markdown_url": "https://docs.simplephysx.com/usage-scenarios-and-examples/use-case-and-applications.md",
+      "url": "https://docs.simplephysx.com/usage-scenarios-and-examples/use-case-and-applications"
+    },
+    "usage-scenarios-and-examples/common-use-cases.md": {
+      "title": "Scenario examples",
+      "markdown_url": "https://docs.simplephysx.com/usage-scenarios-and-examples/common-use-cases.md",
+      "url": "https://docs.simplephysx.com/usage-scenarios-and-examples/common-use-cases"
+    },
+    "spx-core/communications/README.md": {
+      "title": "Integrations",
+      "markdown_url": "https://docs.simplephysx.com/communications.md",
+      "url": "https://docs.simplephysx.com/communications"
+    },
+    "getting-started/choose-a-protocol-adapter.md": {
+      "title": "Choose a protocol",
+      "markdown_url": "https://docs.simplephysx.com/communications/choose-a-protocol-adapter.md",
+      "url": "https://docs.simplephysx.com/communications/choose-a-protocol-adapter"
+    },
+    "spx-core/communications/capabilities.md": {
+      "title": "Capabilities and prerequisites",
+      "markdown_url": "https://docs.simplephysx.com/communications/capabilities.md",
+      "url": "https://docs.simplephysx.com/communications/capabilities"
+    },
+    "getting-started/add-communication-protocol.md": {
+      "title": "Connect a Modbus client",
+      "markdown_url": "https://docs.simplephysx.com/communications/add-communication-protocol.md",
+      "url": "https://docs.simplephysx.com/communications/add-communication-protocol"
+    },
+    "getting-started/modbus-client-controller.md": {
+      "title": "Use SPX as a Modbus controller",
+      "markdown_url": "https://docs.simplephysx.com/communications/modbus-client-controller.md",
+      "url": "https://docs.simplephysx.com/communications/modbus-client-controller"
+    },
+    "simulation-and-modeling/extending-simulations/hardware-bridges-and-backends.md": {
+      "title": "Hardware bridges and backends",
+      "markdown_url": "https://docs.simplephysx.com/communications/hardware-bridges-and-backends.md",
+      "url": "https://docs.simplephysx.com/communications/hardware-bridges-and-backends"
+    },
+    "simulation-and-modeling/extending-simulations/ble-device-simulation.md": {
+      "title": "BLE walkthrough",
+      "markdown_url": "https://docs.simplephysx.com/communications/ble-device-simulation.md",
+      "url": "https://docs.simplephysx.com/communications/ble-device-simulation"
+    },
+    "simulation-and-modeling/extending-simulations/protocol-adapters.md": {
+      "title": "Protocol adapter patterns",
+      "markdown_url": "https://docs.simplephysx.com/communications/protocol-adapters.md",
+      "url": "https://docs.simplephysx.com/communications/protocol-adapters"
+    },
+    "integration-with-other-systems.md": {
+      "title": "Integrate external systems",
+      "markdown_url": "https://docs.simplephysx.com/communications/integration-with-other-systems.md",
+      "url": "https://docs.simplephysx.com/communications/integration-with-other-systems"
+    },
+    "spx-core/communications/ascii.md": {
+      "title": "ASCII / SCPI",
+      "markdown_url": "https://docs.simplephysx.com/communications/ascii.md",
+      "url": "https://docs.simplephysx.com/communications/ascii"
+    },
+    "spx-core/communications/http.md": {
+      "title": "HTTP endpoint",
+      "markdown_url": "https://docs.simplephysx.com/communications/http.md",
+      "url": "https://docs.simplephysx.com/communications/http"
+    },
+    "spx-core/communications/mqtt.md": {
+      "title": "MQTT",
+      "markdown_url": "https://docs.simplephysx.com/communications/mqtt.md",
+      "url": "https://docs.simplephysx.com/communications/mqtt"
+    },
+    "spx-core/communications/modbus.md": {
+      "title": "Modbus",
+      "markdown_url": "https://docs.simplephysx.com/communications/modbus.md",
+      "url": "https://docs.simplephysx.com/communications/modbus"
+    },
+    "spx-core/communications/ble.md": {
+      "title": "BLE",
+      "markdown_url": "https://docs.simplephysx.com/communications/ble.md",
+      "url": "https://docs.simplephysx.com/communications/ble"
+    },
+    "spx-core/communications/bacnet.md": {
+      "title": "BACnet",
+      "markdown_url": "https://docs.simplephysx.com/communications/bacnet.md",
+      "url": "https://docs.simplephysx.com/communications/bacnet"
+    },
+    "spx-core/communications/knx.md": {
+      "title": "KNX",
+      "markdown_url": "https://docs.simplephysx.com/communications/knx.md",
+      "url": "https://docs.simplephysx.com/communications/knx"
+    },
+    "spx-core/communications/opcua.md": {
+      "title": "OPC UA",
+      "markdown_url": "https://docs.simplephysx.com/communications/opcua.md",
+      "url": "https://docs.simplephysx.com/communications/opcua"
+    },
+    "spx-core/communications/profinet.md": {
+      "title": "PROFINET",
+      "markdown_url": "https://docs.simplephysx.com/communications/profinet.md",
+      "url": "https://docs.simplephysx.com/communications/profinet"
+    },
+    "spx-core/communications/dali.md": {
+      "title": "DALI",
+      "markdown_url": "https://docs.simplephysx.com/communications/dali.md",
+      "url": "https://docs.simplephysx.com/communications/dali"
+    },
+    "spx-core/communications/mbus.md": {
+      "title": "M-Bus",
+      "markdown_url": "https://docs.simplephysx.com/communications/mbus.md",
+      "url": "https://docs.simplephysx.com/communications/mbus"
+    },
+    "spx-core/communications/coap.md": {
+      "title": "CoAP",
+      "markdown_url": "https://docs.simplephysx.com/communications/coap.md",
+      "url": "https://docs.simplephysx.com/communications/coap"
+    },
+    "spx-core/communications/lwm2m.md": {
+      "title": "LwM2M",
+      "markdown_url": "https://docs.simplephysx.com/communications/lwm2m.md",
+      "url": "https://docs.simplephysx.com/communications/lwm2m"
+    },
+    "spx-core/communications/matter.md": {
+      "title": "Matter",
+      "markdown_url": "https://docs.simplephysx.com/communications/matter.md",
+      "url": "https://docs.simplephysx.com/communications/matter"
+    },
+    "spx-core/communications/ocpp.md": {
+      "title": "OCPP",
+      "markdown_url": "https://docs.simplephysx.com/communications/ocpp.md",
+      "url": "https://docs.simplephysx.com/communications/ocpp"
+    },
+    "spx-core/communications/snmp.md": {
+      "title": "SNMP",
+      "markdown_url": "https://docs.simplephysx.com/communications/snmp.md",
+      "url": "https://docs.simplephysx.com/communications/snmp"
+    },
+    "spx-core/communications/redfish.md": {
+      "title": "Redfish",
+      "markdown_url": "https://docs.simplephysx.com/communications/redfish.md",
+      "url": "https://docs.simplephysx.com/communications/redfish"
+    },
+    "llm-first-model-authoring/README.md": {
+      "title": "Agents & MCP",
+      "markdown_url": "https://docs.simplephysx.com/llm-first-model-authoring.md",
+      "url": "https://docs.simplephysx.com/llm-first-model-authoring"
+    },
+    "llm-first-model-authoring/agent-start-here.md": {
+      "title": "Agent Start Here",
+      "markdown_url": "https://docs.simplephysx.com/llm-first-model-authoring/agent-start-here.md",
+      "url": "https://docs.simplephysx.com/llm-first-model-authoring/agent-start-here"
+    },
+    "getting-started/connect-llm-with-spx-mcp.md": {
+      "title": "Connect your MCP client",
+      "markdown_url": "https://docs.simplephysx.com/llm-first-model-authoring/connect-llm-with-spx-mcp.md",
+      "url": "https://docs.simplephysx.com/llm-first-model-authoring/connect-llm-with-spx-mcp"
+    },
+    "llm-first-model-authoring/prompt-recipes.md": {
+      "title": "Prompt recipes: runtime and repository",
+      "markdown_url": "https://docs.simplephysx.com/llm-first-model-authoring/prompt-recipes.md",
+      "url": "https://docs.simplephysx.com/llm-first-model-authoring/prompt-recipes"
+    },
+    "llm-first-model-authoring/repo-as-spec.md": {
+      "title": "Contribute to Examples",
+      "markdown_url": "https://docs.simplephysx.com/llm-first-model-authoring/repo-as-spec.md",
+      "url": "https://docs.simplephysx.com/llm-first-model-authoring/repo-as-spec"
+    },
+    "llm-first-model-authoring/model-brief-template.md": {
+      "title": "Model task brief",
+      "markdown_url": "https://docs.simplephysx.com/llm-first-model-authoring/model-brief-template.md",
+      "url": "https://docs.simplephysx.com/llm-first-model-authoring/model-brief-template"
+    },
+    "llm-first-model-authoring/workflow-generate-validate-iterate.md": {
+      "title": "Generate, validate and iterate",
+      "markdown_url": "https://docs.simplephysx.com/llm-first-model-authoring/workflow-generate-validate-iterate.md",
+      "url": "https://docs.simplephysx.com/llm-first-model-authoring/workflow-generate-validate-iterate"
+    },
+    "llm-first-model-authoring/definition-of-done.md": {
+      "title": "Completion criteria",
+      "markdown_url": "https://docs.simplephysx.com/llm-first-model-authoring/definition-of-done.md",
+      "url": "https://docs.simplephysx.com/llm-first-model-authoring/definition-of-done"
+    },
+    "reference/README.md": {
+      "title": "Reference",
+      "markdown_url": "https://docs.simplephysx.com/reference.md",
+      "url": "https://docs.simplephysx.com/reference"
+    },
+    "simulation-and-modeling/model-definition-reference.md": {
+      "title": "Model language: YAML and JSON",
+      "markdown_url": "https://docs.simplephysx.com/reference/model-definition-reference.md",
+      "url": "https://docs.simplephysx.com/reference/model-definition-reference"
+    },
+    "getting-started/mcp-reference.md": {
+      "title": "MCP tools and runtime rules",
+      "markdown_url": "https://docs.simplephysx.com/reference/mcp-reference.md",
+      "url": "https://docs.simplephysx.com/reference/mcp-reference"
+    },
+    "api-v3-reference/README.md": {
+      "title": "Server API (v3)",
+      "markdown_url": "https://docs.simplephysx.com/reference/api-v3-reference.md",
+      "url": "https://docs.simplephysx.com/reference/api-v3-reference"
+    },
+    "api-v3-reference/code-examples.md": {
+      "title": "API examples",
+      "markdown_url": "https://docs.simplephysx.com/reference/api-v3-reference/code-examples.md",
+      "url": "https://docs.simplephysx.com/reference/api-v3-reference/code-examples"
+    },
+    "spx-development-guide/spx-sdk/README.md": {
+      "title": "SDK components",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-sdk.md",
+      "url": "https://docs.simplephysx.com/reference/spx-sdk"
+    },
+    "spx-development-guide/spx-sdk/registry.md": {
+      "title": "Registry",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-sdk/registry.md",
+      "url": "https://docs.simplephysx.com/reference/spx-sdk/registry"
+    },
+    "spx-development-guide/spx-sdk/components/spxcomponent.md": {
+      "title": "SpxComponent",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-sdk/spxcomponent.md",
+      "url": "https://docs.simplephysx.com/reference/spx-sdk/spxcomponent"
+    },
+    "spx-development-guide/spx-sdk/components/spxcontainer-the-smart-loader-that-wires-your-sub-components.md": {
+      "title": "SpxContainer \u2013 the \u201csmart loader\u201d that wires your sub-components",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-sdk/spxcontainer-the-smart-loader-that-wires-your-sub-components.md",
+      "url": "https://docs.simplephysx.com/reference/spx-sdk/spxcontainer-the-smart-loader-that-wires-your-sub-components"
+    },
+    "spx-development-guide/spx-sdk/attributes.md": {
+      "title": "Attributes",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-sdk/attributes.md",
+      "url": "https://docs.simplephysx.com/reference/spx-sdk/attributes"
+    },
+    "spx-development-guide/spx-sdk/actions.md": {
+      "title": "Actions",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-sdk/actions.md",
+      "url": "https://docs.simplephysx.com/reference/spx-sdk/actions"
+    },
+    "spx-development-guide/spx-sdk/model.md": {
+      "title": "Model",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-sdk/model.md",
+      "url": "https://docs.simplephysx.com/reference/spx-sdk/model"
+    },
+    "spx-development-guide/spx-sdk/logic.md": {
+      "title": "Logic",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-sdk/logic.md",
+      "url": "https://docs.simplephysx.com/reference/spx-sdk/logic"
+    },
+    "spx-development-guide/spx-sdk/communication.md": {
+      "title": "Communication",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-sdk/communication.md",
+      "url": "https://docs.simplephysx.com/reference/spx-sdk/communication"
+    },
+    "spx-development-guide/spx-sdk/hooks.md": {
+      "title": "Hooks",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-sdk/hooks.md",
+      "url": "https://docs.simplephysx.com/reference/spx-sdk/hooks"
+    },
+    "spx-development-guide/spx-sdk/diagnostics.md": {
+      "title": "Diagnostics",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-sdk/diagnostics.md",
+      "url": "https://docs.simplephysx.com/reference/spx-sdk/diagnostics"
+    },
+    "spx-development-guide/spx-sdk/validation.md": {
+      "title": "Validation",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-sdk/validation.md",
+      "url": "https://docs.simplephysx.com/reference/spx-sdk/validation"
+    },
+    "spx-development-guide/spx-sdk/best-practices.md": {
+      "title": "Best Practices",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-sdk/best-practices.md",
+      "url": "https://docs.simplephysx.com/reference/spx-sdk/best-practices"
+    },
+    "spx-development-guide/spx-sdk/imports/pythonfile.md": {
+      "title": "PythonFile",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-sdk/pythonfile.md",
+      "url": "https://docs.simplephysx.com/reference/spx-sdk/pythonfile"
+    },
+    "spx-core/README.md": {
+      "title": "Server runtime",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-core.md",
+      "url": "https://docs.simplephysx.com/reference/spx-core"
+    },
+    "spx-core/system/README.md": {
+      "title": "System Runtime",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-core/system.md",
+      "url": "https://docs.simplephysx.com/reference/spx-core/system"
+    },
+    "spx-core/system/model.md": {
+      "title": "Model Loader",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-core/model.md",
+      "url": "https://docs.simplephysx.com/reference/spx-core/model"
+    },
+    "spx-core/system/instances.md": {
+      "title": "Instances Container",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-core/instances.md",
+      "url": "https://docs.simplephysx.com/reference/spx-core/instances"
+    },
+    "spx-core/system/modules.md": {
+      "title": "Modules Container",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-core/modules.md",
+      "url": "https://docs.simplephysx.com/reference/spx-core/modules"
+    },
+    "spx-core/system/parameters.md": {
+      "title": "Parameters",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-core/parameters.md",
+      "url": "https://docs.simplephysx.com/reference/spx-core/parameters"
+    },
+    "spx-core/system/connections.md": {
+      "title": "Connections",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-core/connections.md",
+      "url": "https://docs.simplephysx.com/reference/spx-core/connections"
+    },
+    "spx-core/system/timer.md": {
+      "title": "Timer",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-core/timer.md",
+      "url": "https://docs.simplephysx.com/reference/spx-core/timer"
+    },
+    "spx-core/system/polling.md": {
+      "title": "Polling",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-core/polling.md",
+      "url": "https://docs.simplephysx.com/reference/spx-core/polling"
+    },
+    "spx-core/system/logs.md": {
+      "title": "Logs",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-core/logs.md",
+      "url": "https://docs.simplephysx.com/reference/spx-core/logs"
+    },
+    "spx-core/system/scenarios.md": {
+      "title": "Scenarios",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-core/scenarios.md",
+      "url": "https://docs.simplephysx.com/reference/spx-core/scenarios"
+    },
+    "spx-core/system/templates.md": {
+      "title": "Templates",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-core/templates.md",
+      "url": "https://docs.simplephysx.com/reference/spx-core/templates"
+    },
+    "spx-core/actions.md": {
+      "title": "Actions Library",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-core/actions.md",
+      "url": "https://docs.simplephysx.com/reference/spx-core/actions"
+    },
+    "spx-core/extending.md": {
+      "title": "Extending the Core",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-core/extending.md",
+      "url": "https://docs.simplephysx.com/reference/spx-core/extending"
+    },
+    "spx-development-guide/spx-python-client-wrapper/README.md": {
+      "title": "Python HTTP client",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-python-client-wrapper.md",
+      "url": "https://docs.simplephysx.com/reference/spx-python-client-wrapper"
+    },
+    "spx-development-guide/spx-python-client-wrapper/overview-and-installation.md": {
+      "title": "Overview & Installation",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-python-client-wrapper/overview-and-installation.md",
+      "url": "https://docs.simplephysx.com/reference/spx-python-client-wrapper/overview-and-installation"
+    },
+    "spx-development-guide/spx-python-client-wrapper/usage-and-examples.md": {
+      "title": "Usage & Examples",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-python-client-wrapper/usage-and-examples.md",
+      "url": "https://docs.simplephysx.com/reference/spx-python-client-wrapper/usage-and-examples"
+    },
+    "spx-development-guide/spx-python-client-wrapper/testing-helpers-and-logging.md": {
+      "title": "Testing Helpers & Logging Integration",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-python-client-wrapper/testing-helpers-and-logging.md",
+      "url": "https://docs.simplephysx.com/reference/spx-python-client-wrapper/testing-helpers-and-logging"
+    },
+    "spx-development-guide/spx-python-client-wrapper/advanced-and-best-practices.md": {
+      "title": "Advanced & Best Practices",
+      "markdown_url": "https://docs.simplephysx.com/reference/spx-python-client-wrapper/advanced-and-best-practices.md",
+      "url": "https://docs.simplephysx.com/reference/spx-python-client-wrapper/advanced-and-best-practices"
+    },
+    "ui-reference/README.md": {
+      "title": "Web UI",
+      "markdown_url": "https://docs.simplephysx.com/reference/ui-reference.md",
+      "url": "https://docs.simplephysx.com/reference/ui-reference"
+    },
+    "ui-reference/general-view.md": {
+      "title": "UI Overview UI",
+      "markdown_url": "https://docs.simplephysx.com/reference/ui-reference/general-view.md",
+      "url": "https://docs.simplephysx.com/reference/ui-reference/general-view"
+    },
+    "ui-reference/instances.md": {
+      "title": "Instances UI",
+      "markdown_url": "https://docs.simplephysx.com/reference/ui-reference/instances.md",
+      "url": "https://docs.simplephysx.com/reference/ui-reference/instances"
+    },
+    "ui-reference/models.md": {
+      "title": "Models UI",
+      "markdown_url": "https://docs.simplephysx.com/reference/ui-reference/models.md",
+      "url": "https://docs.simplephysx.com/reference/ui-reference/models"
+    },
+    "ui-reference/connections.md": {
+      "title": "Connections UI",
+      "markdown_url": "https://docs.simplephysx.com/reference/ui-reference/connections.md",
+      "url": "https://docs.simplephysx.com/reference/ui-reference/connections"
+    },
+    "ui-reference/logs.md": {
+      "title": "Logs UI",
+      "markdown_url": "https://docs.simplephysx.com/reference/ui-reference/logs.md",
+      "url": "https://docs.simplephysx.com/reference/ui-reference/logs"
+    },
+    "ui-reference/timer-and-polling.md": {
+      "title": "Timer & Polling UI",
+      "markdown_url": "https://docs.simplephysx.com/reference/ui-reference/timer-and-polling.md",
+      "url": "https://docs.simplephysx.com/reference/ui-reference/timer-and-polling"
+    },
+    "ui-reference/snapshots.md": {
+      "title": "Snapshots in the UI",
+      "markdown_url": "https://docs.simplephysx.com/reference/ui-reference/snapshots.md",
+      "url": "https://docs.simplephysx.com/reference/ui-reference/snapshots"
+    },
+    "ui-reference/settings.md": {
+      "title": "Settings UI",
+      "markdown_url": "https://docs.simplephysx.com/reference/ui-reference/settings.md",
+      "url": "https://docs.simplephysx.com/reference/ui-reference/settings"
+    },
+    "appendices/glossary-of-terms.md": {
+      "title": "Glossary",
+      "markdown_url": "https://docs.simplephysx.com/reference/glossary-of-terms.md",
+      "url": "https://docs.simplephysx.com/reference/glossary-of-terms"
+    },
+    "appendices/additional-resources-and-readings.md": {
+      "title": "Resources and repository access",
+      "markdown_url": "https://docs.simplephysx.com/reference/additional-resources-and-readings.md",
+      "url": "https://docs.simplephysx.com/reference/additional-resources-and-readings"
+    },
+    "operations-and-support/README.md": {
+      "title": "Operations & support",
+      "markdown_url": "https://docs.simplephysx.com/operations-and-support.md",
+      "url": "https://docs.simplephysx.com/operations-and-support"
+    },
+    "operations-and-support/spx-tools.md": {
+      "title": "SPX Tools and generated files",
+      "markdown_url": "https://docs.simplephysx.com/operations-and-support/spx-tools.md",
+      "url": "https://docs.simplephysx.com/operations-and-support/spx-tools"
+    },
+    "getting-started/snapshots-guide.md": {
+      "title": "Save configuration with Python",
+      "markdown_url": "https://docs.simplephysx.com/operations-and-support/snapshots-guide.md",
+      "url": "https://docs.simplephysx.com/operations-and-support/snapshots-guide"
+    },
+    "spx-core/snapshots.md": {
+      "title": "Snapshot runtime reference",
+      "markdown_url": "https://docs.simplephysx.com/operations-and-support/snapshots.md",
+      "url": "https://docs.simplephysx.com/operations-and-support/snapshots"
+    },
+    "getting-started/installer-and-packs.md": {
+      "title": "Configure bundles and packs",
+      "markdown_url": "https://docs.simplephysx.com/operations-and-support/installer-and-packs.md",
+      "url": "https://docs.simplephysx.com/operations-and-support/installer-and-packs"
+    },
+    "getting-started/manual-docker-compose.md": {
+      "title": "Manual Compose deployment",
+      "markdown_url": "https://docs.simplephysx.com/operations-and-support/manual-docker-compose.md",
+      "url": "https://docs.simplephysx.com/operations-and-support/manual-docker-compose"
+    },
+    "spx-development-guide/quick-guide-connecting-vs-code-to-your-running-spx-server-container-in-5-minutes.md": {
+      "title": "VS Code remote development",
+      "markdown_url": "https://docs.simplephysx.com/operations-and-support/quick-guide-connecting-vs-code-to-your-running-spx-server-container-in-5-minutes.md",
+      "url": "https://docs.simplephysx.com/operations-and-support/quick-guide-connecting-vs-code-to-your-running-spx-server-container-in-5-minutes"
+    },
+    "performance-optimization.md": {
+      "title": "Performance",
+      "markdown_url": "https://docs.simplephysx.com/operations-and-support/performance-optimization.md",
+      "url": "https://docs.simplephysx.com/operations-and-support/performance-optimization"
+    },
+    "security-considerations.md": {
+      "title": "Security",
+      "markdown_url": "https://docs.simplephysx.com/operations-and-support/security-considerations.md",
+      "url": "https://docs.simplephysx.com/operations-and-support/security-considerations"
+    },
+    "troubleshooting-and-support/README.md": {
+      "title": "Troubleshooting",
+      "markdown_url": "https://docs.simplephysx.com/operations-and-support/troubleshooting-and-support.md",
+      "url": "https://docs.simplephysx.com/operations-and-support/troubleshooting-and-support"
+    },
+    "troubleshooting-and-support/common-issues-and-solutions.md": {
+      "title": "Common issues",
+      "markdown_url": "https://docs.simplephysx.com/operations-and-support/troubleshooting-and-support/common-issues-and-solutions.md",
+      "url": "https://docs.simplephysx.com/operations-and-support/troubleshooting-and-support/common-issues-and-solutions"
+    },
+    "troubleshooting-and-support/faqs.md": {
+      "title": "FAQs",
+      "markdown_url": "https://docs.simplephysx.com/operations-and-support/troubleshooting-and-support/faqs.md",
+      "url": "https://docs.simplephysx.com/operations-and-support/troubleshooting-and-support/faqs"
+    },
+    "troubleshooting-and-support/how-to-get-support.md": {
+      "title": "Contact support",
+      "markdown_url": "https://docs.simplephysx.com/operations-and-support/troubleshooting-and-support/how-to-get-support.md",
+      "url": "https://docs.simplephysx.com/operations-and-support/troubleshooting-and-support/how-to-get-support"
+    },
+    "release-notes.md": {
+      "title": "Release notes and upgrades",
+      "markdown_url": "https://docs.simplephysx.com/operations-and-support/release-notes.md",
+      "url": "https://docs.simplephysx.com/operations-and-support/release-notes"
+    },
+    "appendices/licensing-information.md": {
+      "title": "Licensing",
+      "markdown_url": "https://docs.simplephysx.com/operations-and-support/licensing-information.md",
+      "url": "https://docs.simplephysx.com/operations-and-support/licensing-information"
+    },
+    "openapi:SPX Server API": {
+      "title": "SPX Server API",
+      "markdown_url": "https://docs.simplephysx.com/reference/api-v3-reference/spx-server-api.md",
+      "url": "https://docs.simplephysx.com/reference/api-v3-reference/spx-server-api"
+    },
+    "openapi:Models": {
+      "title": "Models",
+      "markdown_url": "https://docs.simplephysx.com/reference/api-v3-reference/models.md",
+      "url": "https://docs.simplephysx.com/reference/api-v3-reference/models"
+    }
+  },
+  "generated_api_redirects": [
+    {
+      "source": "/operations-and-support/server-api/api-v3-reference/spx-server-api",
+      "destination": "/reference/api-v3-reference/spx-server-api",
+      "title": "SPX Server API"
+    },
+    {
+      "source": "/operations-and-support/server-api/api-v3-reference/models",
+      "destination": "/reference/api-v3-reference/models",
+      "title": "Models"
+    }
+  ]
 }

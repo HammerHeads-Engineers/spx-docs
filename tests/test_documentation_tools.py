@@ -39,6 +39,7 @@ class DocumentationToolsTests(unittest.TestCase):
 
     def test_duplicate_heading_anchors_and_code_fences(self):
         self.assertEqual(anchors('# Hello `world`\n# Hello world\n```md\n# Hidden\n```\n'), {'hello-world', 'hello-world-1'})
+        self.assertEqual(anchors('## Before you start {#first-device-in-the-ui}\n'), {'first-device-in-the-ui'})
 
 
 if __name__ == '__main__':

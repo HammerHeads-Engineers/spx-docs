@@ -4,7 +4,6 @@ description: Choose UI, agent or Python and get your first SPX result.
 
 # Start here
 
-<a id="what-is-spx"></a>
 SPX simulates devices and systems on your computer. Use its browser UI, an AI
 agent or Python to create a simulation, change inputs and observe the result.
 
@@ -39,10 +38,9 @@ For local logic without a server, use [Local model with SDK](spx-development-gui
 [Read the reference](reference/README.md) ·
 [Get help](troubleshooting-and-support/README.md).
 
-<a id="where-to-start"></a>
-<a id="mental-model"></a>
-<a id="which-repository-or-workspace"></a>
 ## Documentation and repository responsibilities
+
+### Which repository or workspace?
 
 Product instructions live here. Public Examples contains models and agent
 contribution rules; its offline references identify their source revision.

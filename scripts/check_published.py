@@ -37,7 +37,7 @@ def normalize(url, site):
     """Compare a preview route and the corresponding canonical route."""
     path = urlsplit(url).path
     prefix = urlsplit(site).path.rstrip('/')
-    if prefix and path.startswith(prefix + '/'):
+    if prefix and (path == prefix or path.startswith(prefix + '/')):
         path = path[len(prefix):]
     path = path.rstrip('/') or '/'
     if path in ('/readme', '/readme.md'):
@@ -48,7 +48,7 @@ def normalize(url, site):
 def at_site(url, site):
     path = urlsplit(url).path
     prefix = urlsplit(site).path.rstrip('/')
-    if prefix and path.startswith(prefix + '/'):
+    if prefix and (path == prefix or path.startswith(prefix + '/')):
         path = path[len(prefix):]
     return site.rstrip('/') + path
 
@@ -131,7 +131,7 @@ def main():
                     result['error'] = 'Wrong redirect destination'
             # A preview check must not quietly read old production content.
             prefix = urlsplit(site).path.rstrip('/')
-            if prefix and not urlsplit(destination).path.startswith(prefix + '/'):
+            if prefix and not (urlsplit(destination).path == prefix or urlsplit(destination).path.startswith(prefix + '/')):
                 result['error'] = 'Redirect escaped the preview'
             return result, text
         except Exception as error:

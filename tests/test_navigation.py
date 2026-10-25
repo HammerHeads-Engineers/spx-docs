@@ -19,6 +19,8 @@ class NavigationContracts(unittest.TestCase):
     def test_preview_route_normalization_preserves_markdown_and_legacy_root(self):
         preview = 'https://docs.simplephysx.com/~/revisions/reviewed'
         self.assertEqual(normalize(preview + '/readme', preview), '/')
+        self.assertEqual(normalize(preview, preview), '/')
+        self.assertEqual(at_site(preview, preview), preview)
         self.assertEqual(normalize(preview + '/reference/model.md', preview), '/reference/model.md')
         self.assertEqual(at_site(preview + '/reference/model.md', preview), preview + '/reference/model.md')
 

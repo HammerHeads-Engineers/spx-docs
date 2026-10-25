@@ -529,5 +529,5 @@ fields: parsing and catalog validation are not proof of runtime or protocol succ
 internal write clears an external override; persistent faults must be reapplied
 at the intended point in execution. Snapshots restore structure/defaults, not
 live readings or elapsed time. Manual clock control does not seed randomness.
-For identifiers see the [glossary](https://docs.simplephysx.com/appendices/glossary-of-terms#model-identifiers);
-for verified stepping use the [client tutorial](https://docs.simplephysx.com/spx-development-guide/simulation-and-modeling/using-spx-python).
+For identifiers see the [glossary](https://docs.simplephysx.com/reference/glossary-of-terms#model-identifiers);
+for verified stepping use the [client tutorial](https://docs.simplephysx.com/readme/using-spx-python).
