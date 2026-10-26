@@ -15,6 +15,7 @@ it turns off. Between thresholds it retains its previous state. Prepare resets
 the action's state for a new experiment.
 The 21°C sample is inside the band: it must retain the preceding `True`
 state rather than switch off.
+
 <!-- tutorial:hysteresis.py:start -->
 ```python
 """Local SDK action with state: python hysteresis.py."""

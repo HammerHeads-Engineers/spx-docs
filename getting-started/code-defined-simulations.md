@@ -14,6 +14,7 @@ the importer links SPX's Internal attribute to that property. Each tick adds
 0.5°C; the example does not use wall-clock time.
 The next file maps this class into the SDK. Keep both files in the same
 directory; the runner resolves the class file relative to itself.
+
 <!-- tutorial:python_device.py:start -->
 ```python
 """Plain Python class loaded by the SDK PythonFile importer."""
@@ -38,6 +39,7 @@ class TemperatureDevice:
 ## 2. Declare the import and run it
 
 Save as **run_python_device.py** beside the first file.
+
 <!-- tutorial:run_python_device.py:start -->
 ```python
 """Run beside python_device.py: python run_python_device.py."""

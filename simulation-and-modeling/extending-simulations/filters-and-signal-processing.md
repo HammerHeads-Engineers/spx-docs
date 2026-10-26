@@ -14,6 +14,7 @@ constructed. Prepare clears the per-instance buffer; Run resolves the current
 source before adding it. During warmup average only the samples received so far.
 Each prepared action owns its own buffer. The table below makes warmup and
 the first discarded sample explicit.
+
 <!-- tutorial:moving_average.py:start -->
 ```python
 """Local SDK filter: python moving_average.py. Register before loading the model."""
