@@ -29,6 +29,7 @@ if necessary. The model binds `0.0.0.0` inside its server environment.
 ## 2. Run the integration test
 
 <figure><img src="../.gitbook/assets/mil-two-channels.svg" alt="Python controls the SPX temperature model through the API. The Modbus TCP client reads the same instance through its protocol adapter; the test compares readbacks with 28°C and 34°C."><figcaption><p>The API drives the model; the TCP client reads holding registers 0–1 after each model cycle.</p></figcaption></figure>
+
 <!-- tutorial:modbus_test.py:start -->
 ```python
 """Protocol integration test: python modbus_test.py -v (disposable server)."""
