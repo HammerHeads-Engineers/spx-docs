@@ -28,7 +28,7 @@ if necessary. The model binds `0.0.0.0` inside its server environment.
 
 ## 2. Run the integration test
 
-<figure><img src="../.gitbook/assets/guide-code-modbus-source.jpg" alt="Execution record identifying the Modbus test, mapped registers, controlled inputs and real TCP read."><figcaption><p>The protocol client reads two registers after each manual model cycle.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/mil-two-channels.svg" alt="Python controls the SPX temperature model through the API. The Modbus TCP client reads the same instance through its protocol adapter; the test compares readbacks with 28°C and 34°C."><figcaption><p>The API drives the model; the TCP client reads holding registers 0–1 after each model cycle.</p></figcaption></figure>
 <!-- tutorial:modbus_test.py:start -->
 ```python
 """Protocol integration test: python modbus_test.py -v (disposable server)."""
@@ -106,7 +106,10 @@ python modbus_test.py -v
 
 **Expected:** `test_temperature_readback ... ok` and final `OK`.
 The client decodes **28.0**, then **34.0**. Each read is checked within 0.001°C.
-<figure><img src="../.gitbook/assets/guide-code-modbus-result.jpg" alt="Execution record showing actual Modbus TCP readbacks 28.0 and 34.0 and resource cleanup."><figcaption><p>Verified against the released runtime with a real loopback TCP adapter. Docker routing is an additional deployment check.</p></figcaption></figure>
+The test asserts both decoded values within **0.001°C**. Successful output
+ends with `OK`; an assertion failure prints the register words, decoded value
+and expected temperature. The `unittest` runner also displays timing information
+that can vary between runs. Docker port routing remains a deployment check.
 
 ## 3. Interpret and finish
 

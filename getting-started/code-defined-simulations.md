@@ -12,7 +12,8 @@ Use a new directory for the two files below. No server or product key is needed.
 Save as **python_device.py**. Use a real property with getter and setter, because
 the importer links SPX's Internal attribute to that property. Each tick adds
 0.5°C; the example does not use wall-clock time.
-<figure><img src="../.gitbook/assets/guide-code-python-class-source.jpg" alt="Execution record for python_device.py and run_python_device.py, with a mapped temperature property and tick method."><figcaption><p>The runner resolves the Python file relative to itself, rather than assuming a container-specific path.</p></figcaption></figure>
+The next file maps this class into the SDK. Keep both files in the same
+directory; the runner resolves the class file relative to itself.
 <!-- tutorial:python_device.py:start -->
 ```python
 """Plain Python class loaded by the SDK PythonFile importer."""
@@ -86,7 +87,14 @@ python run_python_device.py
 [20.5, 21.0, 21.5]
 ```
 
-<figure><img src="../.gitbook/assets/guide-code-python-class-result.jpg" alt="Execution record containing the actual three property values after the mapped tick method runs."><figcaption><p>The embedded assertion confirms lifecycle calls reached the Python object and its property was readable through SPX.</p></figcaption></figure>
+| SPX operation | Python class mapping | Result checked |
+| --- | --- | --- |
+| `model.prepare()` | Construct `TemperatureDevice(start=20.0, increment=0.5)` and link the property. | Initial temperature is 20°C. |
+| `model.run()` | Call `tick()`. | Add 0.5°C per cycle. |
+| Read `temperature_c.internal_value` | Read the linked `temperature_c` property. | 20.5, 21.0, then 21.5°C. |
+
+The embedded assertion checks the three post-cycle readings before the runner
+destroys its local model.
 
 ## 3. Move to a server when needed
 

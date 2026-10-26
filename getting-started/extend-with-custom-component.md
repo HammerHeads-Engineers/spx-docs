@@ -4,7 +4,8 @@ This tutorial implements a repeatable contact-fault action in SDK RC21. First
 verify it locally, then import the same module into a disposable server RC76.
 Use Python 3.12 and the dependencies from the [SDK Quickstart](../spx-development-guide/quick-start-spx-sdk-in-5-minutes.md).
 
-<figure><img src="../.gitbook/assets/guide-code-fault-source.jpg" alt="Execution record showing the seeded contact-fault action and the local runner."><figcaption><p>Save the two source files before running the local experiment.</p></figcaption></figure>
+The experiment uses two files: `contact_fault.py` defines the action and
+`run_fault.py` prepares a local model, runs 20 cycles and destroys it.
 
 ## Save the extension
 
@@ -76,7 +77,20 @@ if __name__ == '__main__':
 ```
 <!-- tutorial:run_fault.py:end -->
 
-<figure><img src="../.gitbook/assets/guide-code-fault-result.jpg" alt="Execution record containing the repeatable seeded sequence of normal, dropped and spiking readings."><figcaption><p>The same seed produces the same sequence when a fresh model is prepared.</p></figcaption></figure>
+Expected output with seed **42**, in cycle order:
+
+```text
+[20.0, 0.0, 500.0, 20.0, 20.0, 0.0, 0.0, 20.0, 0.0, 20.0, 20.0, 500.0, 20.0, 500.0, 20.0, 0.0, 20.0, 0.0, 500.0, 20.0]
+```
+
+| Reading | Meaning in this example |
+| --- | --- |
+| 20.0°C | Normal input presented unchanged. |
+| 0.0°C | Simulated contact drop. |
+| 500.0°C | Simulated spike. |
+
+Compare the full ordered sequence, not just the presence of these three values.
+Use the same seed, parameters and a freshly prepared model.
 
 The internal value remains 20°C; this action writes the external wrapper. It
 reapplies a fault after each action execution. A later internal write clears the

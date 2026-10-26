@@ -14,7 +14,7 @@ Save `client_sensor.py` from that guide beside the script below; it supplies
 Save as **connect_sensors.py**. Source → connection → target is the explicit
 execution order. Starting this individual connection allows manual Run without
 starting the global background container.
-<figure><img src="../.gitbook/assets/guide-code-connections-source.jpg" alt="Execution record with connect_sensors.py, its exact resource names and manual source-to-target sequence."><figcaption><p>The same source/target distinction is visible in the UI connections exercise.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/python-connections-flow.svg" alt="Run docs_source to process its input. Run docs_temperature_link to copy docs_source.temperature_c External telemetry into docs_target.k__temperature_c Internal input. Run docs_target and assert its temperature_c. Repeat for 28°C and 34°C."><figcaption><p>One iteration is source Run → connection Run → target Run. The connection writes the target input; the target model cycle produces the telemetry being checked.</p></figcaption></figure>
 <!-- tutorial:connect_sensors.py:start -->
 ```python
 """Two HTTP-controlled sensors; refuses name collisions and cleans up its resources."""
@@ -87,7 +87,8 @@ python connect_sensors.py
 ```
 
 Each tuple is `(requested_input, target_telemetry)`.
-<figure><img src="../.gitbook/assets/guide-code-connections-result.jpg" alt="Execution record showing the two matching source/target pairs and empty demo resources after cleanup."><figcaption><p>Both changes propagate; a saved connection definition alone would not prove this.</p></figcaption></figure>
+For each requested input, the assertion checks the target telemetry after all
+three operations. A saved connection definition alone does not verify propagation.
 
 **Completion:** both pairs match. The script stops/deletes its link before its
 two instances and model. If a failure reports name collisions, inspect ownership

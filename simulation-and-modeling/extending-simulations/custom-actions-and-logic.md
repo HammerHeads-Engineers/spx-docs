@@ -13,7 +13,8 @@ This is a complete local example with no server or key.
 Save as **hysteresis.py**. At or above 22°C cooling turns on; at or below 18°C
 it turns off. Between thresholds it retains its previous state. Prepare resets
 the action's state for a new experiment.
-<figure><img src="../../.gitbook/assets/guide-code-hysteresis-source.jpg" alt="Execution record identifying the stateful hysteresis action and its four threshold test inputs."><figcaption><p>The middle 21°C sample checks retained state, not just a threshold comparison.</p></figcaption></figure>
+The 21°C sample is inside the band: it must retain the preceding `True`
+state rather than switch off.
 <!-- tutorial:hysteresis.py:start -->
 ```python
 """Local SDK action with state: python hysteresis.py."""
@@ -73,7 +74,12 @@ python hysteresis.py
 [False, True, True, False]
 ```
 
-<figure><img src="../../.gitbook/assets/guide-code-hysteresis-result.jpg" alt="Execution record showing the actual False, True, True, False cooling outputs."><figcaption><p>The assertion checks both transitions and the state retained inside the band.</p></figcaption></figure>
+| Input temperature | Decision | Expected `cooling_on` |
+| --- | --- | --- |
+| 20°C | Inside the band; retain the initial state. | `False` |
+| 23°C | At or above the 22°C high threshold. | `True` |
+| 21°C | Inside the band; retain the previous state. | `True` |
+| 17°C | At or below the 18°C low threshold. | `False` |
 
 **Completion:** the assertion passes; the finally block destroys the model.
 Call `super().run()` before reading dynamic source/threshold parameters, then
