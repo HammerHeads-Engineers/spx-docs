@@ -1,9 +1,15 @@
 # Model-in-the-Loop (MiL) with SPX
 
-<figure><img src="../.gitbook/assets/guide-code-modbus-result.jpg" alt="Execution record of real Modbus TCP readbacks from a controlled SPX temperature model."><figcaption><p>The API is the control channel; the verified TCP reads are the protocol channel.</p></figcaption></figure>
-
-
 Model-in-the-Loop (MiL) is a simulation-based testing approach where the system under test (SUT) interacts with a virtual model instead of physical hardware. This allows developers and testers to validate system behavior, control algorithms, and communication protocols in a controlled and repeatable environment.
+
+<figure><img src="../.gitbook/assets/mil-two-channels.svg" alt="A Python test controls a temperature sensor instance through the SPX API. The application under test sends Modbus TCP requests to the protocol adapter and receives values from that same instance. The test sets 28°C, then 34°C, and checks the protocol readbacks against those expected values."><figcaption><p>Two channels reach the same simulated device: the test controls its behavior through the API, while the application communicates through its device protocol. Modbus TCP is the example shown here.</p></figcaption></figure>
+
+**Read the diagram:** the Python test sets the sensor input to 28°C and advances
+the model. The application reads the resulting temperature over Modbus TCP, and
+the test checks that the readback is 28°C. Repeat with 34°C. These are logical
+roles; the orchestrator and protocol client can run in the same Python test.
+This verifies the temperature read path. Testing a controller also requires
+assertions about its decisions or outputs.
 
 ## Core Idea
 
