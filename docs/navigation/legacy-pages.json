@@ -1596,6 +1596,11 @@
       "title": "Models",
       "markdown_url": "https://docs.simplephysx.com/reference/api-v3-reference/models.md",
       "url": "https://docs.simplephysx.com/reference/api-v3-reference/models"
+    },
+    "ui-reference/system.md": {
+      "title": "System UI",
+      "markdown_url": "https://docs.simplephysx.com/reference/ui-reference/system.md",
+      "url": "https://docs.simplephysx.com/reference/ui-reference/system"
     }
   },
   "generated_api_redirects": [

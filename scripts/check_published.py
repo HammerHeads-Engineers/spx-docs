@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ORIGIN = 'https://docs.simplephysx.com'
 MANIFEST = ROOT / 'docs/navigation/legacy-pages.json'
 REQUIRED = {
+    'ui-reference/system.md': ['Power balance', 'Chart time', 'Add system attribute', 'Export CSV'],
     'README.md': ['Use the browser UI', 'Work with an agent', 'Write Python'],
     'getting-started/README.md': ['my_temperature_sensor', '31.25', 'k__temperature_c'],
     'getting-started/installation-guide.md': ['Installation complete', 'MCP is optional'],

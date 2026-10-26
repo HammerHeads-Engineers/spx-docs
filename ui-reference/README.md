@@ -10,6 +10,7 @@ Start here: [UI Overview](general-view.md).
 
 Use the UI to:
 
+* Compare signals from several instances in [System](system.md), with separate charts for different units.
 * Inspect loaded **Models** and running **Instances**.
 * Wire and verify **Connections** between instances.
 * Use **Logs** page to inspect system/instance logs with source and severity filters.

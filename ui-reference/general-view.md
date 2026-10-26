@@ -14,7 +14,7 @@ Use the UI for interactive inspection and debugging. It helps you confirm what i
 
 <figure><img src="../.gitbook/assets/Zrzut ekranu 2026-01-19 o 10.47.24.png" alt=""><figcaption></figcaption></figure>
 
-* **System**: build a combined chart from selected instance attributes; Timer and Polling are tabs here.
+* [System](system.md): compare attributes from several instances across named charts, export sampled data, and inspect the Timer and Polling tabs.
 * [Instances](instances.md): inspect running instances, attributes, communication, scenario triggers, and logs; each instance also has Timer and Polling tabs.
 * [Models](models.md): review loaded models and their definitions.
 * [Connections](connections.md): wire attribute data flow between instances; protocol adapters are shown in instance Communication.
