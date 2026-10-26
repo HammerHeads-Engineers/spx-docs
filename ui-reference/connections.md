@@ -79,6 +79,8 @@ It restores configuration/defaults, not the screenshot's live readings or layout
 Lower the weather station's `k__brightness_lux` and confirm PV power falls; lower
 `k__outdoor_temperature_c` and observe the building's HVAC response over time.
 Inspect `battery_grid` to verify the power balance and battery/grid response.
+Use [System](system.md#example-observe-the-building-energy-graph) to watch this
+same example on shared power charts and a separate daylight chart.
 
 ### Connections list
 

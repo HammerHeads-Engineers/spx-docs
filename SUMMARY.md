@@ -110,6 +110,7 @@
     * [Advanced & Best Practices](spx-development-guide/spx-python-client-wrapper/advanced-and-best-practices.md)
   * [Web UI](ui-reference/README.md)
     * [UI Overview UI](ui-reference/general-view.md)
+    * [System UI](ui-reference/system.md)
     * [Instances UI](ui-reference/instances.md)
     * [Models UI](ui-reference/models.md)
     * [Connections UI](ui-reference/connections.md)
