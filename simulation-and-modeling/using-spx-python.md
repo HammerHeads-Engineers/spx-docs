@@ -12,7 +12,7 @@ your environment and optionally `SPX_BASE_URL` (default `http://localhost:8000`)
 For managed workspaces use [MCP onboarding](../getting-started/connect-llm-with-spx-mcp.md);
 do not replace the workspace's private connection binding with a guessed `.env`.
 
-<figure><img src="../.gitbook/assets/guide-code-client-source.jpg" alt="Execution record identifying client_sensor.py and the controlled-clock lifecycle."><figcaption><p>Prepare the complete program below, then run it with your own environment credentials.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/python-server-lifecycle.svg" alt="Python drives a model on SPX Server through HTTP: create and prepare, set inputs and run cycles, read and assert telemetry, then clean up the demo resources."><figcaption><p>The Python client controls the server; each explicit cycle processes the current input before telemetry is read.</p></figcaption></figure>
 
 ## Complete program
 
@@ -114,6 +114,8 @@ reapply test inputs explicitly after import.
 Run server integration tests only when the configured test server and key are
 available; a skipped integration test is not a passing runtime verification.
 
-<figure><img src="../.gitbook/assets/guide-code-client-result.jpg" alt="Execution record with three 31.25°C samples at controlled times and cleanup."><figcaption><p>The program removes its demo resources before returning its samples.</p></figcaption></figure>
+Each output tuple is `(simulation_time_s, temperature_c)`. Require the three
+reported times and 31.25°C readings shown above. The program removes its demo
+resources before returning these samples.
 
 Continue with [Python connections](../guides/python-connections.md), or perform the [same task in the UI](../guides/ui-instance.md).

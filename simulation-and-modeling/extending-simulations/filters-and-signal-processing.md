@@ -12,7 +12,8 @@ This runs locally and needs no server or product key.
 Save as **moving_average.py**. Import registers the action before the model is
 constructed. Prepare clears the per-instance buffer; Run resolves the current
 source before adding it. During warmup average only the samples received so far.
-<figure><img src="../../.gitbook/assets/guide-code-filter-source.jpg" alt="Execution record showing moving_average.py, window 3 and its four input samples."><figcaption><p>A fresh model owns a fresh buffer; input writes precede each model cycle.</p></figcaption></figure>
+Each prepared action owns its own buffer. The table below makes warmup and
+the first discarded sample explicit.
 <!-- tutorial:moving_average.py:start -->
 ```python
 """Local SDK filter: python moving_average.py. Register before loading the model."""
@@ -70,7 +71,14 @@ python moving_average.py
 [0.0, 1.5, 3.0, 6.0]
 ```
 
-<figure><img src="../../.gitbook/assets/guide-code-filter-result.jpg" alt="Execution record showing the actual moving-average results 0.0, 1.5, 3.0 and 6.0."><figcaption><p>The final output averages the latest three samples, 3, 6 and 9.</p></figcaption></figure>
+| Input | Samples currently in the buffer | Expected output |
+| --- | --- | --- |
+| 0 | `[0]` | 0.0 |
+| 3 | `[0, 3]` | 1.5 |
+| 6 | `[0, 3, 6]` | 3.0 |
+| 9 | `[3, 6, 9]` | 6.0 |
+
+On the fourth cycle the oldest sample, 0, has left the three-sample buffer.
 
 **Completion:** the embedded assertion passes and the model is destroyed.
 An External output is a presentation result; another Internal write to the same

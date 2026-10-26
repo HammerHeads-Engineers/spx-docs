@@ -33,7 +33,7 @@ Save that program as **client_sensor.py**.
 | Set `inst['timer'].time`; Run | Process one model cycle at a controlled time. | `temperature_c.external_value` = 31.25. |
 | Stop and remove owned resources | Leave unrelated resources untouched. | Demo names are absent. |
 
-<figure><img src="../.gitbook/assets/guide-code-client-source.jpg" alt="Execution record showing the client_sensor.py lifecycle and the command used to run it."><figcaption><p>The complete source is provided in First Python program; this record identifies the script and lifecycle being exercised.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/python-server-lifecycle.svg" alt="Python drives a model on SPX Server through HTTP: create and prepare, set inputs and run cycles, read and assert telemetry, then clean up the demo resources."><figcaption><p>The Python client controls the server; each explicit cycle processes the current input before telemetry is read.</p></figcaption></figure>
 
 ## 3. Run and inspect the output
 
@@ -45,7 +45,8 @@ python client_sensor.py
 [(0.0, 31.25), (0.1, 31.25), (0.2, 31.25)]
 ```
 
-<figure><img src="../.gitbook/assets/guide-code-client-result.jpg" alt="Execution record containing the actual three time and temperature samples and successful cleanup."><figcaption><p>Three expected samples confirm processing; cleanup removes only the script’s reserved demo model and instance.</p></figcaption></figure>
+Each tuple is `(simulation_time_s, temperature_c)`. These are expected
+processed readings at three assigned times, rather than three input echoes.
 
 **Completion:** all three tuples match and cleanup succeeds. This uses a quiet
 copy-input model; adding noise would require tolerance-based assertions.

@@ -19,8 +19,10 @@ python moving_average.py
 
 Expected output is **[0.0, 1.5, 3.0, 6.0]**. The script prepares fresh filter
 state and checks its output before destroying the model.
-<figure><img src="../../.gitbook/assets/guide-code-filter-source.jpg" alt="Execution record identifying the exact moving-average module before running it."><figcaption><p>Start from the complete source used in the filter guide.</p></figcaption></figure>
-<figure><img src="../../.gitbook/assets/guide-code-filter-result.jpg" alt="Fresh-process execution record with the expected four filter outputs."><figcaption><p>This verifies the local extension. The following steps additionally verify server installation.</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/extension-reload-workflow.svg" alt="Verify the extension in a fresh local Python process. Install it in the configured server environment and reload modules. Recreate the demo instance and repeat the input-output assertions."><figcaption><p>Local output proves extension behavior. Repeating the check on a fresh server instance additionally verifies installation and loading.</p></figcaption></figure>
+Use the complete source in [Filter a signal](filters-and-signal-processing.md).
+This local result verifies the extension; the following steps check server
+installation and fresh-instance behavior.
 
 ## 2. Install the module where the server can load it
 

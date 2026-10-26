@@ -18,13 +18,17 @@ Read [Model-in-the-Loop concepts](../simulation-and-modeling/model-in-the-loop.m
 and [Testing practices](../testing-and-validation.md) for scope and assertions.
 The [UI path](ui.md) shows the equivalent manual operations.
 
-## Execution and screenshots
+## Read diagrams, run code and check results
 
 Use Python 3.12 and the [documented package versions](../release-notes.md).
 Reserve each script's demo names on a disposable server. Keep product keys in
 your environment; screenshots never need to contain a real key.
 
-The code-guide execution screenshots show reports captured from actual released
-SDK/client/runtime runs. They are labeled as execution records, rather than SPX
-application screens. Full commands and expected outputs remain copyable in text.
-Protocol proof is explicitly identified; a UI/API read does not prove Modbus.
+Diagrams explain execution order, data flow and the boundary between a local
+SDK model and a model on SPX Server. Their captions and alternative text describe
+the same relationships for agents and screen readers. Commands, complete source
+and expected results are copyable text; tables explain how outputs follow inputs.
+
+Run the example in your own environment and compare the values and completion
+checks. A diagram or expected-output block is not an execution record of your run.
+Protocol verification is explicitly identified; a UI/API read does not prove Modbus.
