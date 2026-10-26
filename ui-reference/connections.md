@@ -126,3 +126,5 @@ Use **Import** or **Export** to move a full system configuration (models, instan
 * Attribute list empty: select an instance first; verify the instance exposes attributes.
 * Connection does not update values: confirm **Enabled** is on and endpoints are correct.
 * Save fails: check for missing name, instance, or attribute.
+
+For a first connection use [Connect two instances](../guides/connect-instances.md); for the complete energy exercise use [Build a building-energy simulation](../guides/ui-building-energy.md).

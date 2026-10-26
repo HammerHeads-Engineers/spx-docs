@@ -116,3 +116,17 @@ redirects:
   appendices/glossary-of-terms: appendices/glossary-of-terms.md
   appendices/licensing-information: appendices/licensing-information.md
   appendices/additional-resources-and-readings: appendices/additional-resources-and-readings.md
+  spx-development-guide/build-your-first-simulation: getting-started/build-your-first-simulation.md
+  spx-development-guide/core-concepts: simulation-and-modeling/core-concepts.md
+  spx-development-guide/connect-instances: guides/connect-instances.md
+  spx-development-guide/run-scenarios: guides/run-scenarios.md
+  spx-development-guide/model-in-the-loop: simulation-and-modeling/model-in-the-loop.md
+  spx-development-guide/use-in-unit-tests-mil: getting-started/use-in-unit-tests-mil.md
+  spx-development-guide/ci-cd-setup-github-actions: getting-started/ci-cd-setup-github-actions.md
+  spx-development-guide/quick-start-spx-sdk-in-5-minutes: spx-development-guide/quick-start-spx-sdk-in-5-minutes.md
+  spx-development-guide/extend-with-custom-component: getting-started/extend-with-custom-component.md
+  spx-development-guide/code-defined-simulations: getting-started/code-defined-simulations.md
+  spx-development-guide/filters-and-signal-processing: simulation-and-modeling/extending-simulations/filters-and-signal-processing.md
+  spx-development-guide/custom-actions-and-logic: simulation-and-modeling/extending-simulations/custom-actions-and-logic.md
+  spx-development-guide/testing-and-hot-reload: simulation-and-modeling/extending-simulations/testing-and-hot-reload.md
+  spx-development-guide/testing-and-validation: testing-and-validation.md

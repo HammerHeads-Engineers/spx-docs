@@ -74,3 +74,5 @@ In the import dialog review the included configuration sections and instance-sta
 * Import/export fails: ensure the JSON file is valid and matches the expected schema.
 
 These instructions describe UI RC76. Screenshots illustrate the controls; use the text and expected runtime state when the visual layout differs.
+
+For a complete task with before/after checks, follow [Save and restore a configuration](../guides/ui-save-restore.md).

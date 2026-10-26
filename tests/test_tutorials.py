@@ -89,5 +89,19 @@ class TutorialContracts(unittest.TestCase):
         a.destroy(); b.destroy()
 
 
+class GuideExampleContracts(unittest.TestCase):
+    def test_filter_warmup_and_sliding_window(self):
+        from moving_average import simulate
+        self.assertEqual(simulate(), [0.0, 1.5, 3.0, 6.0])
+
+    def test_hysteresis_retains_state_inside_band(self):
+        from hysteresis import simulate
+        self.assertEqual(simulate(), [False, True, True, False])
+
+    def test_python_property_and_lifecycle_import(self):
+        from run_python_device import simulate
+        self.assertEqual(simulate(), [20.5, 21.0, 21.5])
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -97,6 +97,7 @@ class RuntimeContracts(unittest.TestCase):
         docs = Path(__file__).resolve().parents[1]
         text = (docs / 'getting-started/README.md').read_text()
         definition = yaml.safe_load(re.search(r'```yaml\n(.*?)\n```', text, re.S).group(1))
+        self.assertEqual(definition, yaml.safe_load((docs / 'examples/guides/temperature_sensor.yaml').read_text()))
         self.client['models']['my_temperature_model'] = definition
         self.client['instances']['my_temperature_sensor'] = 'my_temperature_model'
         instance = self.client['instances']['my_temperature_sensor']
@@ -114,6 +115,45 @@ class RuntimeContracts(unittest.TestCase):
         instance.stop()
         del self.client['instances']['my_temperature_sensor']
         del self.client['models']['my_temperature_model']
+
+    def test_python_connections_and_owned_cleanup(self):
+        from connect_sensors import simulate
+        self.assertEqual(simulate(self.client), [(28.0, 28.0), (34.0, 34.0)])
+        self.assertNotIn('docs_temperature_link', self.client['connections'])
+        self.assertNotIn('docs_link_model', self.client['models'])
+
+    def test_modbus_tcp_readbacks_and_owned_cleanup(self):
+        import socket
+        import spx_core.communications.modbus_slave.server  # Register released adapter.
+        from modbus_test import verify
+        with socket.socket() as sock:
+            sock.bind(('127.0.0.1', 0))
+            port = sock.getsockname()[1]
+        self.assertEqual(verify(self.client, port=port), [28.0, 34.0])
+        self.assertNotIn('docs_modbus_model', self.client['models'])
+        self.assertNotIn('docs_modbus_sensor', self.client['instances'])
+
+    def test_ui_scenario_override_restores_input_and_telemetry(self):
+        import yaml
+        docs = Path(__file__).resolve().parents[1]
+        definition = yaml.safe_load((docs / 'examples/guides/temperature_scenario.yaml').read_text())
+        self.client['models']['temperature_scenario'] = definition
+        self.client['instances']['scenario_sensor'] = 'temperature_scenario'
+        instance = self.client['instances']['scenario_sensor']
+        instance.real_time = False
+        instance.prepare()
+        instance.start()
+        instance.run(time_step=0.1)
+        attr = instance['attributes']['temperature_c']
+        self.assertEqual(attr.external_value, 20.0)
+        scenario = instance['scenarios']['temperature_spike']
+        scenario.start()
+        instance.run(time_step=0.1)
+        self.assertEqual(scenario.state, 'RUNNING')
+        self.assertEqual(attr.external_value, 80.0)
+        scenario.stop()
+        instance.run(time_step=0.1)
+        self.assertEqual(attr.external_value, 20.0)
 
     def test_auth_and_yaml_json_reference(self):
         self.assertEqual(self.http.get('/health').status_code, 200)

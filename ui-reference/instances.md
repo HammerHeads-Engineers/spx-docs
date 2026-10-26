@@ -117,3 +117,5 @@ In the Attributes table, use the UNIT column to interpret values. After a comman
 * Chart feels “too short”: the history buffer is large (up to 100000 entries), so use range controls to focus the view.
 
 These instructions describe UI RC76. Screenshots illustrate the controls; use the text and expected runtime state when the visual layout differs.
+
+For a step-by-step first device, follow [Create and control an instance](../guides/ui-instance.md).

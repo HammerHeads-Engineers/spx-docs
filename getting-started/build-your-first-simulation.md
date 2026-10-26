@@ -1,161 +1,56 @@
 ---
-description: >-
-  Start from a running SPX Server and perform a small PT100-style simulation
-  smoke test from Python.
-icon: python
+description: Create and control a server simulation with the verified Python client example.
 ---
+# Create and control a simulation with Python
 
-# Build your first simulation
+**Goal:** create a model and instance, apply **31.25°C**, advance the simulation
+clock explicitly and read the processed temperature.
+**Before you start:** Python 3.12, a disposable SPX Server RC76 and the
+[documented versions](../release-notes.md). Start the server using SPX Setup /
+SPX Start, or your [manual deployment](manual-docker-compose.md).
 
-This page assumes SPX Server is already running at `http://localhost:8000`.
-Start it from one of these supported places:
+The public Examples repository contains models and scripts. It does not contain
+the installed product's personalized Compose bundle.
 
-- Installed SPX environment: run `SPX Setup`, let it start the stack, or run
-  `SPX Start`.
-- Generated installer bundle: from the generated folder, run `./spx-start.sh`
-  on macOS/Linux or `pwsh ./spx-start.ps1` on Windows.
-- For a server-only setup, follow [Manual Docker Compose](manual-docker-compose.md).
+## 1. Prepare the client
 
-The public Examples checkout contains models and scripts. Start SPX using the
-installed environment; it does not contain the product Compose bundle.
+In your virtual environment install `spx-python==1.0.0rc3`. Set
+`SPX_PRODUCT_KEY` and optionally `SPX_BASE_URL`; the default is
+`http://localhost:8000`. Keep the key out of code and screenshots.
 
-For a complete program with explicit expected values and automatic cleanup,
-use the [verified client tutorial](../simulation-and-modeling/using-spx-python.md).
-The snippets below illustrate the broader workflow and the noise action; manual
-time control alone does not make noisy output repeatable. Use a disposable server
-and remove your demo instance/model when finished.
+For shell-specific environment setup and the full program use
+[First Python program](../simulation-and-modeling/using-spx-python.md).
+Save that program as **client_sensor.py**.
 
-## Verify the server
+## 2. Follow the lifecycle
 
-Set your product key for local scripts:
+| Program operation | Meaning | Completion check |
+| --- | --- | --- |
+| Register `docs_pt100` | Store the reusable definition. | Model key exists. |
+| Create `docs_sensor` | Create one live device from that definition. | Instance references the model. |
+| Set `real_time=False`; Prepare; Start | Use an explicit clock while keeping lifecycle state RUNNING. | No background time progression. |
+| Write `k__temperature_c.internal_value` | Change the persistent input. | Input = 31.25. |
+| Set `inst['timer'].time`; Run | Process one model cycle at a controlled time. | `temperature_c.external_value` = 31.25. |
+| Stop and remove owned resources | Leave unrelated resources untouched. | Demo names are absent. |
 
-macOS/Linux:
+<figure><img src="../.gitbook/assets/guide-code-client-source.jpg" alt="Execution record showing the client_sensor.py lifecycle and the command used to run it."><figcaption><p>The complete source is provided in First Python program; this record identifies the script and lifecycle being exercised.</p></figcaption></figure>
 
-```bash
-export SPX_PRODUCT_KEY="YOUR_REAL_KEY"
-export SPX_BASE_URL="${SPX_BASE_URL:-http://localhost:8000}"
-```
-
-Windows PowerShell:
-
-```powershell
-$env:SPX_PRODUCT_KEY = "YOUR_REAL_KEY"
-$env:SPX_BASE_URL = "http://localhost:8000"
-```
-
-Check health:
+## 3. Run and inspect the output
 
 ```bash
-curl -fsS http://localhost:8000/health
+python client_sensor.py
 ```
 
-Expected response includes:
-
-```json
-{"status":"ok","server_version":"<version>","api_version":"v3"}
+```text
+[(0.0, 31.25), (0.1, 31.25), (0.2, 31.25)]
 ```
 
-Install the Python client and YAML dependency in your local virtual environment:
+<figure><img src="../.gitbook/assets/guide-code-client-result.jpg" alt="Execution record containing the actual three time and temperature samples and successful cleanup."><figcaption><p>Three expected samples confirm processing; cleanup removes only the script’s reserved demo model and instance.</p></figcaption></figure>
 
-```bash
-python -m pip install "spx-python==1.0.0rc3" PyYAML==6.0.3
-```
+**Completion:** all three tuples match and cleanup succeeds. This uses a quiet
+copy-input model; adding noise would require tolerance-based assertions.
+Manual clock control alone does not seed randomness or synchronize a network SUT.
 
-Quick client smoke test:
-
-```python
-import os
-import spx_python
-
-client = spx_python.init(
-    address=os.environ.get("SPX_BASE_URL", "http://localhost:8000"),
-    product_key=os.environ["SPX_PRODUCT_KEY"],
-)
-
-print(client.keys())  # e.g. ['models', 'instances', 'timer', 'polling']
-```
-
-## Your first simulation: PT100-style temperature sensor
-
-The minimal simulation below registers a PT100-like temperature sensor model,
-creates one instance, advances deterministic time, and reads internal vs
-external temperature values.
-
-This is the documentation-sized version of the runnable
-`spx-examples/examples/core/first_simulation.py` example.
-
-```python
-import os
-import spx_python
-import yaml
-
-client = spx_python.init(
-    address=os.environ.get("SPX_BASE_URL", "http://localhost:8000"),
-    product_key=os.environ["SPX_PRODUCT_KEY"],
-)
-
-pt_100_yaml = """
-attributes:
-  temperature: 0.0
-actions:
-  - { ramp: $in(temperature), stop_value: 150, duration: 5, type: spline, overshoot: 5 }
-  - { noise: $out(temperature), std: 0.01, mode: proportional }
-"""
-
-model_def = yaml.safe_load(pt_100_yaml)
-client["models"]["pt_100"] = model_def
-
-client["instances"]["pt100_1"] = "pt_100"
-inst = client["instances"]["pt100_1"]
-temperature = inst["attributes"]["temperature"]
-timer = inst["timer"]
-
-client.prepare()
-for step in range(1, 101):
-    t = step * 0.1
-    timer.time = t
-    client.run()
-
-print("internal temperature:", temperature.internal_value)
-print("external temperature:", temperature.external_value)
-```
-
-The internal value is the deterministic simulation state. The external value is
-the value exposed after the `noise` action, which is useful for testing logic
-that must tolerate measurement variation.
-
-## Run the full example from spx-examples
-
-For plotting and a longer console trace, run the canonical example from
-`spx-examples`:
-
-```bash
-cd /path/to/spx-examples
-export SPX_PRODUCT_KEY="YOUR_REAL_KEY"
-poetry run python examples/core/first_simulation.py
-```
-
-The script writes an interactive Plotly chart to
-`examples/core/first_simulation.html`.
-
-## Browse model examples
-
-For the current reusable model library, browse
-[`spx-examples/library/domains`](https://github.com/HammerHeads-Engineers/spx-examples/tree/develop/library/domains).
-That catalog is the best starting point when you want to move beyond the small
-inline PT100 example and reuse a tested Modbus, MQTT, SCPI, BLE, BACnet, KNX, or
-OPC UA model.
-
-## Try protocol examples next
-
-Once the server is running, use the installer packs for protocol services:
-
-- Smart Building Pack for MQTT, BACnet, KNX, OPC UA, Matter, Home Assistant, and
-  Modbus examples.
-- Embedded Lab Pack with `scpi_lab` for SCPI/ASCII instruments and Modbus lab
-  devices.
-- Industrial IIoT Pack with `process_cell_quickstart` or
-  `modbus_master_plc_demo` for factory/process examples.
-
-See [Installer and packs](installer-and-packs.md) and
-[Industry packs and profiles](../usage-scenarios-and-examples/industry-packs.md).
+For the same task in the browser use [Create and control an instance](../guides/ui-instance.md).
+Next automate [connections](../guides/python-connections.md) or test an external
+[Modbus client](use-in-unit-tests-mil.md).

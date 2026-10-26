@@ -1,37 +1,29 @@
 ---
-description: Task guides for models, connections, scenarios, tests and extensions.
+description: Choose browser operation, Python automation or model development.
 ---
-
 # Guides
 
-Pick the result you need. For a first installation or first device, use
-[Start here](../README.md). These guides assume the stated prerequisites and
-link to the relevant reference when more detail is needed.
+Choose how you want to work. Each task states its starting conditions, exact
+resource names, expected results and cleanup. Screenshots retain the surrounding
+view; the text and runnable examples contain everything an agent needs too.
 
-## Build a simulation
+| Path | Start here | Use it for |
+| --- | --- | --- |
+| **Browser UI** | [Work with the UI](../guides/ui.md) | Create devices, connect them, inspect graphs/charts, run scenarios and save configuration. |
+| **Python** | [Automate with Python](../guides/python.md) | Repeat setup, drive the clock, assert results, test a protocol client and run CI. |
+| **Models and extensions** | [Develop models and extensions](../guides/modeling.md) | Write YAML/JSON, execute local SDK models and extend behavior in Python. |
 
-- [Create your first model](../getting-started/build-your-first-simulation.md)
-- [Understand model concepts](../simulation-and-modeling/core-concepts.md)
-- [Connect two instances](../guides/connect-instances.md)
-- [Run an existing scenario](../guides/run-scenarios.md)
+For your first installation use [Start here](../README.md). For agent setup and
+runtime/repository task boundaries use [Agents & MCP](../llm-first-model-authoring/agent-start-here.md).
 
-## Test behavior
+## One task, several ways to perform it
 
-- [Drive the server from Python](../simulation-and-modeling/using-spx-python.md)
-- [Model-in-the-Loop concepts](../simulation-and-modeling/model-in-the-loop.md)
-- [Test a client over Modbus](../getting-started/use-in-unit-tests-mil.md)
-- [Run tests in CI](../getting-started/ci-cd-setup-github-actions.md)
+Start with the UI if you want to see what is happening. A Python guide can then
+automate the same operation. Follow the “same task” links between guides;
+you do not have to complete all three paths.
 
-## Extend model logic
-
-- [Local model with SDK](quick-start-spx-sdk-in-5-minutes.md), without a server
-- [Write a custom action](../getting-started/extend-with-custom-component.md)
-- [Load a Python class](../getting-started/code-defined-simulations.md)
-- [Filter a signal](../simulation-and-modeling/extending-simulations/filters-and-signal-processing.md)
-- [Test and reload extensions](../simulation-and-modeling/extending-simulations/testing-and-hot-reload.md)
-
-## Continue with…
-
-[Models and packs](../usage-scenarios-and-examples/README.md) for reusable devices,
-[Integrations](../spx-core/communications/README.md) for SUT communication, or
-[Reference](../reference/README.md) for fields, methods and contracts.
+Guides explain a sequence that achieves a result. [Reference](../reference/README.md)
+explains the complete fields, methods and contracts. Reusable device definitions
+and agent repository context belong to public
+[spx-examples](https://github.com/HammerHeads-Engineers/spx-examples);
+this documentation is the canonical product guide.

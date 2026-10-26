@@ -1,0 +1,15 @@
+name: pt100_demo
+description: Minimal deterministic temperature sensor
+attributes:
+  k__temperature_c:
+    type: float
+    default: 20.0
+    unit: degC
+  temperature_c:
+    type: float
+    default: 20.0
+    unit: degC
+actions:
+  - function: $in(temperature_c)
+    name: update_temperature
+    call: $in(k__temperature_c)
