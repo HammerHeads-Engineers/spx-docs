@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="740" viewBox="0 0 1200 740" role="img" aria-labelledby="title desc">
+  <title id="title">Model-in-the-Loop: two channels, one virtual device</title>
+  <desc id="desc">A Python test orchestrator controls a simulated temperature device through the SPX API. The application under test sends Modbus TCP requests to the SPX protocol adapter and receives values from the same simulated device. In the example, the test sets 28 and then 34 degrees Celsius and checks that the protocol client reads those values.</desc>
+  <defs>
+    <marker id="teal-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 9 5 1 9Z" fill="#007f76"/></marker>
+    <marker id="blue-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 9 5 1 9Z" fill="#2459a6"/></marker>
+    <style>
+      text{font-family:Arial,Helvetica,sans-serif;fill:#18343d}
+      .title{font-size:32px;font-weight:700;letter-spacing:-.5px}
+      .subtitle{font-size:20px;fill:#526972}
+      .eyebrow{font-size:14px;font-weight:700;letter-spacing:1.6px}
+      .heading{font-size:23px;font-weight:700}
+      .body{font-size:18px;fill:#435f69}
+      .small{font-size:16px;fill:#526972}
+      .channel{font-size:20px;font-weight:700}
+      .teal{fill:#007f76}.blue{fill:#2459a6}
+      .line{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+    </style>
+  </defs>
+  <rect width="1200" height="740" rx="20" fill="#f5f8fa"/>
+  <text x="40" y="57" class="title">Two channels. One virtual device.</text>
+  <text x="40" y="92" class="subtitle">Control the simulation, then verify what your application receives.</text>
+
+  <rect x="40" y="165" width="280" height="160" rx="14" fill="#fff" stroke="#c8dedb" stroke-width="1.5"/>
+  <rect x="40" y="183" width="4" height="48" rx="2" fill="#007f76"/>
+  <text x="64" y="198" class="eyebrow teal">TEST ORCHESTRATOR</text>
+  <text x="64" y="236" class="heading">Python test</text>
+  <text x="64" y="267" class="body">spx-python</text>
+  <text x="64" y="299" class="small">Sets inputs and advances time</text>
+
+  <rect x="40" y="398" width="280" height="160" rx="14" fill="#fff" stroke="#cad7e9" stroke-width="1.5"/>
+  <rect x="40" y="416" width="4" height="48" rx="2" fill="#2459a6"/>
+  <text x="64" y="431" class="eyebrow blue">SYSTEM UNDER TEST</text>
+  <text x="64" y="469" class="heading">Your application</text>
+  <text x="64" y="500" class="body">Modbus TCP client</text>
+  <text x="64" y="532" class="small">Uses its device protocol</text>
+
+  <rect x="630" y="145" width="530" height="435" rx="18" fill="#fff" stroke="#bdcdd4" stroke-width="1.5"/>
+  <text x="658" y="183" class="eyebrow">SPX SERVER</text>
+  <rect x="668" y="212" width="150" height="90" rx="12" fill="#e9f5f2" stroke="#afcfc7"/>
+  <text x="743" y="248" text-anchor="middle" class="heading teal">SPX API</text>
+  <text x="743" y="276" text-anchor="middle" class="small">Control interface</text>
+
+  <rect x="668" y="426" width="150" height="90" rx="12" fill="#edf3fc" stroke="#bed0eb"/>
+  <text x="743" y="462" text-anchor="middle" class="heading blue">Modbus</text>
+  <text x="743" y="490" text-anchor="middle" class="small">Protocol adapter</text>
+
+  <rect x="898" y="270" width="220" height="175" rx="14" fill="#fff6e7" stroke="#e1c590" stroke-width="1.5"/>
+  <text x="920" y="303" class="eyebrow" style="fill:#896021">VIRTUAL DEVICE</text>
+  <text x="920" y="339" class="heading">Temperature</text>
+  <text x="920" y="368" class="heading">sensor instance</text>
+  <path d="M921 412H963V392H1008V400H1095" class="line" stroke="#b9812e"/>
+
+  <text x="350" y="198" class="channel teal">1  Control channel</text>
+  <text x="350" y="226" class="small">Set inputs · step the model</text>
+  <path d="M320 257H668" class="line" stroke="#007f76" marker-end="url(#teal-arrow)"/>
+  <path d="M818 257H858V313H898" class="line" stroke="#007f76" marker-end="url(#teal-arrow)"/>
+
+  <text x="350" y="397" class="channel blue">2  Protocol channel</text>
+  <text x="350" y="427" class="small">Read holding registers</text>
+  <path d="M320 450H668" class="line" stroke="#2459a6" marker-end="url(#blue-arrow)"/>
+  <path d="M668 496H320" class="line" stroke="#2459a6" marker-end="url(#blue-arrow)"/>
+  <text x="350" y="530" class="small">Receive simulated values</text>
+  <path d="M898 400H858V471H818" class="line" stroke="#2459a6" marker-end="url(#blue-arrow)"/>
+  <text x="658" y="552" class="small">Both channels use the same instance.</text>
+
+  <rect x="40" y="618" width="1120" height="90" rx="14" fill="#e9eff3"/>
+  <text x="64" y="650" class="eyebrow">EXAMPLE CHECK</text>
+  <text x="64" y="680" class="body">Set 28°C, then 34°C</text>
+  <path d="M328 665H380" class="line" stroke="#758b95" marker-end="url(#teal-arrow)"/>
+  <text x="412" y="650" class="eyebrow">READ OVER MODBUS</text>
+  <text x="412" y="680" class="body">Client receives 28°C, then 34°C</text>
+  <path d="M752 665H804" class="line" stroke="#758b95" marker-end="url(#teal-arrow)"/>
+  <text x="836" y="650" class="eyebrow">ASSERT</text>
+  <text x="836" y="680" class="body">Actual matches expected</text>
+</svg>
