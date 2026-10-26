@@ -27,6 +27,8 @@ Disable/delete only `temperature_link` when finished. Stop the second demo
 instance if you no longer need it. See the [Connections UI reference](../ui-reference/connections.md)
 and [runtime reference](../spx-core/system/connections.md) for all fields.
 
+For a larger worked example, see the [five-instance building energy graph](../ui-reference/connections.md#graph-example-building-energy-balance).
+
 ## Continue with…
 
 [Run a scenario](run-scenarios.md) for a temporary disturbance, or
