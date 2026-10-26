@@ -68,7 +68,7 @@ Selecting a connection highlights its path and endpoints; the table is the
 place to edit it. The `k__` prefix remains part of the actual attribute name even when the graph
 displays a shorter label and unit.
 
-**Try it:** [download the example bundle](../.gitbook/assets/building-energy-five-instances.zip),
+**Try it:** [download the example bundle](https://raw.githubusercontent.com/HammerHeads-Engineers/spx-docs/7c2db092df1b9a3257be5e32708f4967bf564984/.gitbook/assets/building-energy-five-instances.zip),
 extract the JSON file and use **Import configuration** in a disposable workspace
 with capacity for five models and five instances. Export your current system
 first: importing these sections replaces runtime configuration. Select models,
