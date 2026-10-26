@@ -5,8 +5,8 @@ from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
-MODEL_WORKFLOW_PATTERN = re.compile(r'<!-- workflow:spx-integration:start -->.*?<!-- workflow:spx-integration:end -->', re.S)
-PATTERN = re.compile(r'<!-- model:pt100:start -->.*?<!-- model:pt100:end -->', re.S)
+WORKFLOW_PATTERN = re.compile(r'<!-- workflow:spx-integration:start -->.*?<!-- workflow:spx-integration:end -->', re.S)
+MODEL_PATTERN = re.compile(r'<!-- model:pt100:start -->.*?<!-- model:pt100:end -->', re.S)
 PATTERN = re.compile(r'<!-- tutorial:([a-z_]+\.py):start -->.*?<!-- tutorial:\1:end -->', re.S)
 
 
