@@ -83,7 +83,7 @@ including real loopback Modbus reads. It is separate from the project Compose
 recipe above: your image pull, license and container port mapping must be checked
 in your own pipeline.
 
-<figure><img src="../.gitbook/assets/guide-ci-result.jpg" alt="GitHub Actions view of the documentation runtime contracts run, with the tested source revision, job and steps visible."><figcaption><p>A real documentation runtime verification run. Use the same job-and-step inspection in your own SPX integration run.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/guide-ci-result.jpg" alt="GitHub Actions view of the documentation runtime contracts run, with the successful job and checked steps visible."><figcaption><p>A real documentation runtime verification run. Use the same job-and-step inspection in your own SPX integration run.</p></figcaption></figure>
 
 **Completion:** setup, the actual TCP assertions and teardown succeed. API health
 alone is not sufficient. If your job is skipped, inspect the triggering event;

@@ -43,6 +43,8 @@ Instance View opens in another tab. Keep **Continuous** mode selected.
 **Check:** the header says **RUNNING**. Open **Attributes**; both input
 `k__temperature_c` and telemetry `temperature_c` initially read **20°C**.
 
+<figure><img src="../.gitbook/assets/guide-sensor-baseline.jpg" alt="Full my_temperature_sensor Instance View showing RUNNING, Attributes selected and both temperature rows at 20 before the edit."><figcaption><p>Baseline: the instance is running and both values read 20°C.</p></figcaption></figure>
+
 ## 4. Change the input
 
 Use **Set** on the yellow key-input row `k__temperature_c`, enter **31.25**, then

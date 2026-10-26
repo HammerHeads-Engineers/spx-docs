@@ -15,6 +15,17 @@ ROOT = Path(__file__).resolve().parents[1]
 ORIGIN = 'https://docs.simplephysx.com'
 MANIFEST = ROOT / 'docs/navigation/legacy-pages.json'
 REQUIRED = {
+    'guides/ui.md': ['Work with the UI', 'Create and control an instance', 'Run a scenario'],
+    'guides/python.md': ['Automate with Python', 'Modbus'],
+    'guides/modeling.md': ['Develop models and extensions', 'YAML', 'SDK'],
+    'guides/ui-instance.md': ['my_temperature_sensor', '31.25', 'Apply value'],
+    'guides/connect-instances.md': ['temperature_link', '28', 'External', 'Internal'],
+    'guides/ui-building-energy.md': ['weather_station', 'battery_grid', 'seven', 'RUNNING'],
+    'guides/ui-observe.md': ['6000', 'Daylight', 'Export CSV'],
+    'guides/run-scenarios.md': ['temperature_spike', '80', '20'],
+    'guides/ui-save-restore.md': ['temperature_baseline', '42', '20', 'INITIALIZED'],
+    'guides/model-authoring.md': ['authored_temperature_model', '31.25', 'Validation'],
+    'guides/python-connections.md': ['28.0', '34.0', 'connect_sensors.py'],
     'ui-reference/system.md': ['Power balance', 'Chart time', 'Add system attribute', 'Export CSV'],
     'README.md': ['Use the browser UI', 'Work with an agent', 'Write Python'],
     'getting-started/README.md': ['my_temperature_sensor', '31.25', 'k__temperature_c'],
