@@ -1,231 +1,123 @@
 ---
-icon: vial-circle-check
+description: Read a manually stepped temperature model with a real Modbus TCP client.
 ---
+# Test a client over Modbus
 
-# Use in Unit Tests (MiL)
+**Goal:** a real Modbus TCP client reads **28°C** and **34°C** from SPX holding
+registers 0–1 (float32, high word first).
+**Before you start:** [First Python program](../simulation-and-modeling/using-spx-python.md),
+SPX Server RC76 with the Modbus adapter available, Python 3.12 and a disposable
+server. This is a protocol integration test. The API sets up and drives the
+simulation; the TCP client performs the read being tested.
 
-This guide shows how to exercise your **Software Under Test (SUT)** against an SPX simulation inside **Python’s `unittest`**. The approach is **Model‑in‑the‑Loop (MiL)**: the SUT is your real client application (e.g., a Modbus TCP reader), while the SPX model acts as the plant/sensor.
+## 1. Prepare the network and files
 
-We will:
-- spin up a model (PT100‑style temperature sensor) and expose it over **Modbus TCP**,  
-- drive the simulation **deterministically** (no wall‑clock timing),  
-- read the measurements via the SUT and assert expected behavior.
+Save `client_sensor.py` from the first Python guide and the program below as
+**modbus_test.py** in the same directory. Install the test dependency:
 
-> For a hands‑on intro to wiring Modbus, see **“Add Modbus TCP/IP to Your Simulation”** in this Getting Started section.
-
----
-
-This is a protocol integration recipe for a disposable server, not an SDK-only
-unit test. Run the actual Modbus read/write checks before claiming protocol
-verification. The example uses noise, so assert ranges/tolerances rather than
-assuming exact repeatability from a controlled clock. Stop and delete its demo
-instance/model after the suite; do not overwrite names on a shared server.
-
-## Prerequisites
-
-- A running **SPX Server** (e.g., `http://localhost:8000`) and a valid `SPX_PRODUCT_KEY` in your environment.  
-- If SPX Server runs in Docker, expose Modbus TCP from the container (for example `- "1502:502"` in Compose) and point your SUT at `127.0.0.1:1502`.
-- Python packages:
-  ```bash
-  python -m pip install spx-python==1.0.0rc3 modbus-tk pyyaml
-  ```
-- The example uses **`modbus-tk`** in the SUT. You can adapt it to your own stack (`pymodbus`, embedded code, etc.).
-
----
-
-## Test structure at a glance
-
-- **`setUpClass`**: connect to SPX, register the model (YAML), create an instance, start the Modbus server.
-- **`setUp`**: create the SUT client (e.g., Modbus master).
-- **Tests**:
-  1) connectivity/read sanity,  
-  2) temperature evolution under deterministic stepping,  
-  3) fault flag round‑trip (write in SPX, read in SUT).
-- **`tearDown`**: close SUT connection.
-- **`tearDownClass`**: stop/cleanup the SPX instance.
-
----
-
-## Full example (`unittest`)
-
-> The model and mapping mirror the Modbus example from the previous guide.
-
-```python
-# test_sut_modbus_mil.py
-import os
-import time
-import unittest
-import yaml
-
-import spx_python
-from modbus_tk import modbus_tcp
-from modbus_tk import defines as C
-
-
-PT100_YAML = """
-attributes:
-  temperature: 25.0
-  sensor_fault: 0
-actions:
-  - { ramp: $in(temperature), stop_value: 150, duration: 5, type: overshoot, overshoot: 5 }
-  - { noise: $out(temperature), std: 0.01, mode: proportional }
-communication:
-  - modbus_slave:
-      # Bind inside the SPX Server container. Expose the port via docker compose for host-side SUTs.
-      host: 0.0.0.0
-      port: 502
-      unit_id: 1
-      mapping:
-        temperature: { address: [0, 1], group: h_r, type: float }
-        sensor_fault: { address: 4, group: c_o, type: bool }
-"""
-
-
-class SUTSensor:
-    """Software Under Test: minimal Modbus client used in assertions."""
-
-    def __init__(self, host="127.0.0.1", port=1502, unit=1, timeout=2.0):
-        self.host = host
-        self.port = port
-        self.unit = unit
-        self.timeout = timeout
-        self._mb = None
-
-    def connect(self):
-        self._mb = modbus_tcp.TcpMaster(self.host, self.port)
-        self._mb.set_timeout(self.timeout)
-
-    @staticmethod
-    def _float_from_two_u16_be(regs):
-        import struct
-        if len(regs) != 2:
-            raise ValueError(f"Expected 2 registers, got {len(regs)}")
-        payload = struct.pack(">HH", regs[0] & 0xFFFF, regs[1] & 0xFFFF)
-        return struct.unpack(">f", payload)[0]
-
-    def read_temperature(self):
-        regs = self._mb.execute(self.unit, C.READ_HOLDING_REGISTERS, 0, 2)
-        return self._float_from_two_u16_be(regs)
-
-    def read_fault(self):
-        coils = self._mb.execute(self.unit, C.READ_COILS, 4, 1)
-        return int(bool(coils[0]))
-
-    def close(self):
-        self._mb = None
-
-
-class TestSUT_MiL_Modbus(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        # 1) Control channel: connect to SPX Server
-        cls.client = spx_python.init(
-            address=os.environ.get("SPX_BASE_URL", "http://localhost:8000"),
-            product_key=os.environ.get("SPX_PRODUCT_KEY", ""),
-        )
-
-        # 2) Register model and create instance
-        model_def = yaml.safe_load(PT100_YAML)
-        cls.client["models"]["pt_100_modbus"] = model_def
-        cls.client["instances"]["pt100_mb_1"] = "pt_100_modbus"
-        cls.inst = cls.client["instances"]["pt100_mb_1"]
-
-        # Manual clock; start only the protocol transport below.
-        cls.inst.real_time = False
-        cls.inst.prepare()
-        # Start the Modbus TCP server inside the model after prepare() built binding contexts.
-        cls.inst["communication"]["modbus_slave"].start()
-
-    @classmethod
-    def tearDownClass(cls):
-        try:
-            cls.inst["communication"]["modbus_slave"].stop()
-        finally:
-            # Best-effort cleanup (optional)
-            pass
-
-    def setUp(self):
-        # Fresh SUT connection for each test
-        self.sut = SUTSensor()
-        self.sut.connect()
-
-    def tearDown(self):
-        self.sut.close()
-
-    # --- Helpers ---
-    def _step(self, seconds, dt=0.1):
-        """Deterministically advance the simulation by 'seconds'."""
-        steps = int(round(seconds / dt))
-        for _ in range(steps):
-            self.inst["timer"].time = self.inst["timer"].time + dt
-            self.inst.run(time_step=dt)
-
-    # --- Tests ---
-    def test_connectivity_and_first_read(self):
-        """SUT can read mapped points over Modbus TCP."""
-        temp = self.sut.read_temperature()
-        fault = self.sut.read_fault()
-        self.assertIsInstance(temp, (float, int))
-        self.assertIn(fault, (0, 1))
-
-    def test_temperature_increases_over_time(self):
-        """Temperature should change when we advance the model deterministically."""
-        before = self.sut.read_temperature()
-        self._step(1.0)  # ~1s (10 steps of 0.1)
-        after = self.sut.read_temperature()
-        # With ramp + noise the value should generally increase.
-        self.assertGreater(after, before, msg=f"after={after}, before={before}")
-
-    def test_fault_flag_roundtrip(self):
-        """Setting sensor_fault in the model is observable by the SUT."""
-        # Set fault in SPX
-        self.inst["attributes"]["sensor_fault"].value = 1
-        self._step(0.2)
-        self.assertEqual(self.sut.read_fault(), 1)
-
-        # Clear it again
-        self.inst["attributes"]["sensor_fault"].value = 0
-        self._step(0.2)
-        self.assertEqual(self.sut.read_fault(), 0)
-
-
-if __name__ == "__main__":
-    unittest.main()
+```bash
+python -m pip install spx-python==1.0.0rc3 modbus-tk==1.1.5
 ```
 
-### Why deterministic stepping?
-- **Repeatable**: `run()` advances the model one step, independent of machine load.
-- **Stable assertions**: you can reason about expected state after N steps.
-- **Protocol servers** still run in the background, so your SUT can poll/subscribe reliably.
+Set `SPX_PRODUCT_KEY` and `SPX_BASE_URL`. The example uses TCP **15020** for
+Modbus. With Docker expose that port on the server container (`15020:15020`)
+in your project-owned deployment. For a remote server set `SPX_MODBUS_HOST` to
+its reachable hostname. Keep host and container ports aligned for this example.
+Ensure the port is free; change `SPX_MODBUS_PORT` and the published port together
+if necessary. The model binds `0.0.0.0` inside its server environment.
 
-> Prefer `prepare()` + `run()` for **unit tests**. Reserve `start()` (real‑time scheduler) for **interactive/manual** testing or HIL‑like demonstrations.
+## 2. Run the integration test
 
----
+<figure><img src="../.gitbook/assets/guide-code-modbus-source.jpg" alt="Execution record identifying the Modbus test, mapped registers, controlled inputs and real TCP read."><figcaption><p>The protocol client reads two registers after each manual model cycle.</p></figcaption></figure>
+<!-- tutorial:modbus_test.py:start -->
+```python
+"""Protocol integration test: python modbus_test.py -v (disposable server)."""
+import copy
+import os
+import struct
+import unittest
+import spx_python
+from modbus_tk import defines as codes
+from modbus_tk.modbus_tcp import TcpMaster
+from client_sensor import DEFINITION
 
-## What to assert in MiL tests
 
-- **Connectivity**: your SUT can read at least once without errors.
-- **Monotonic/shape properties**: e.g., with a ramp action, later readings should exceed earlier ones.
-- **Round‑trips**: toggling flags/commands in the model is visible to the SUT (and vice versa if applicable).
-- **Tolerance windows**: when noise is enabled, compare with deltas (±ε), not exact equality.
+def verify(client, host='127.0.0.1', port=15020):
+    model, name = 'docs_modbus_model', 'docs_modbus_sensor'
+    if model in client['models'] or name in client['instances']:
+        raise RuntimeError('Demo names exist; use a disposable server')
+    definition = copy.deepcopy(DEFINITION)
+    definition['meta_parameters'] = {
+        'modbus_host': {'type': 'str', 'default': '0.0.0.0'},
+        'modbus_port': {'type': 'int', 'default': port},
+        'modbus_unit_id': {'type': 'int', 'default': 1},
+    }
+    definition['communication'] = [{'modbus_slave': {
+        'host': '$param(modbus_host)', 'port': '$param(modbus_port)',
+        'unit_id': '$param(modbus_unit_id)',
+        'mapping': {'temperature_c': {'address': [0, 1], 'group': 'h_r', 'type': 'float'}},
+    }}]
+    client['models'][model] = definition
+    master = TcpMaster(host=host, port=port, timeout_in_sec=3.0)
+    adapter = None
+    try:
+        client['instances'][name] = model
+        instance = client['instances'][name]
+        instance.real_time = False
+        instance.prepare()
+        adapter = instance['communication']['modbus_slave']
+        adapter.start()
+        result = []
+        for tick, expected in enumerate((28.0, 34.0)):
+            instance['timer'].time = tick / 10
+            instance['attributes']['k__temperature_c'].internal_value = expected
+            instance.run(time_step=0.1)
+            words = master.execute(1, codes.READ_HOLDING_REGISTERS, 0, 2)
+            actual = struct.unpack('>f', struct.pack('>HH', *words))[0]
+            assert abs(actual - expected) < 0.001, (words, actual, expected)
+            result.append(actual)
+        return result
+    finally:
+        master.close()
+        if name in client['instances']:
+            if adapter is not None:
+                adapter.stop()
+            client['instances'][name].stop()
+            del client['instances'][name]
+        del client['models'][model]
 
----
 
-## Troubleshooting
+class ModbusIntegration(unittest.TestCase):
+    def test_temperature_readback(self):
+        client = spx_python.init(address=os.environ.get('SPX_BASE_URL', 'http://localhost:8000'),
+                                 product_key=os.environ['SPX_PRODUCT_KEY'])
+        self.assertEqual(verify(client, host=os.environ.get('SPX_MODBUS_HOST', '127.0.0.1'),
+                                port=int(os.environ.get('SPX_MODBUS_PORT', '15020'))), [28.0, 34.0])
 
-- **“Connection refused”**: Ensure the SPX model’s Modbus server is started:  
-  `inst["communication"]["modbus_slave"].start()`.
-- **No change in values**: If you used deterministic stepping, make sure you call `client.run()` in your test loop, or explicitly advance model time if your system expects it.
-- **Racey reads with `start()`**: In real‑time mode, add small sleeps (e.g., `time.sleep(0.1)`) to observe the configured polling interval, or switch back to deterministic stepping for unit tests.
 
----
+if __name__ == '__main__':
+    unittest.main()
+```
+<!-- tutorial:modbus_test.py:end -->
 
-## Next: CI integration
+```bash
+python modbus_test.py -v
+```
 
-In the next article we’ll wire these tests into **GitHub Actions**: provisioning Python, exporting `SPX_PRODUCT_KEY` as a secret, starting the SPX Server service, and running the suite headlessly.
+**Expected:** `test_temperature_readback ... ok` and final `OK`.
+The client decodes **28.0**, then **34.0**. Each read is checked within 0.001°C.
+<figure><img src="../.gitbook/assets/guide-code-modbus-result.jpg" alt="Execution record showing actual Modbus TCP readbacks 28.0 and 34.0 and resource cleanup."><figcaption><p>Verified against the released runtime with a real loopback TCP adapter. Docker routing is an additional deployment check.</p></figcaption></figure>
 
-## Next steps on simplephysx.com
+## 3. Interpret and finish
 
-Explore the embedded testing workflow behind SPX MiL tests:
+The input API call is the control channel. `TcpMaster.execute` is the protocol
+channel. This model has no noise and uses a manual clock; a real external SUT may
+still run asynchronously. The test stops the adapter, removes its instance and
+then removes its model, including after failed assertions.
 
-- [Embedded Software Testing](https://www.simplephysx.com/embedded-software-testing)
+Connection refused: check the adapter, published port and client hostname.
+Wrong value: inspect word order, register addresses and whether the model cycle
+ran after the input write. A healthy HTTP endpoint alone does not verify Modbus.
+
+Continue with [Run tests in CI](ci-cd-setup-github-actions.md) and
+[MiL concepts](../simulation-and-modeling/model-in-the-loop.md).

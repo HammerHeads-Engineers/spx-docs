@@ -14,6 +14,8 @@ Create one temperature sensor, start it, set an input to **31.25°C** and read
 
 **[Start with installation](getting-started/installation-guide.md)** →
 [First device in the UI](getting-started/README.md).
+Continue with [step-by-step UI guides](guides/ui.md), including connections,
+a building-energy simulation, charts and configuration restore.
 
 ## Work with an agent
 

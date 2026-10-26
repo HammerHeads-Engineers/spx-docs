@@ -14,6 +14,12 @@ description: Create one temperature sensor in the browser and verify a 31.25 deg
 **31.25°C** produces a telemetry reading of **31.25°C**. No MCP, Python or external
 protocol client is needed. This is a simulation exercise, not a hardware check.
 
+For a screenshot-led workflow starting with a ready-made file, follow
+[Create and control an instance](../guides/ui-instance.md). The compact exercise
+below lets you paste the definition directly.
+
+<figure><img src="../.gitbook/assets/guide-sensor-readback.jpg" alt="Full running sensor view with both input and telemetry at 31.25°C."><figcaption><p>The completion result for this introductory exercise.</p></figcaption></figure>
+
 ## Create the model
 
 1. Open **Models** and create a new model. Set the model registry name to
@@ -70,5 +76,5 @@ also delete this instance and then `my_temperature_model`; keep unrelated
 models and instances intact.
 
 **You have completed the first UI exercise.** Continue with
-[Connect two instances](../guides/connect-instances.md), or choose an optional
+[the UI guide path](../guides/ui.md), or choose an optional
 [protocol walkthrough](choose-a-protocol-adapter.md) to test an external client.

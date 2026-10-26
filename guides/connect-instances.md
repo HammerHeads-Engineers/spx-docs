@@ -1,35 +1,61 @@
 ---
-description: Wire a telemetry output to another instance and verify propagation.
+description: Connect two sensors in the UI and prove propagation with a 28 degree input.
 ---
-
 # Connect two instances
 
-**Prerequisites:** complete [First device in the UI](../getting-started/README.md),
-then create a second instance of the same model named `second_temperature_sensor`
-and start it. Keep your original instance running.
+**Goal:** changing one sensor makes a second sensor read **28°C**.
+**Before you start:** complete [Create and control an instance](ui-instance.md).
+Keep `my_temperature_sensor` running. This exercise needs one model and two instances.
 
-**Result:** changing the first sensor's input changes the second sensor's telemetry.
-This connects runtime instances; it does not require editing model files.
+## 1. Create the second device
 
-1. Open **Connections** and choose **Add connection**.
-2. Select **From**: `my_temperature_sensor`, attribute `temperature_c`, External.
-3. Select **To**: `second_temperature_sensor`, attribute `k__temperature_c`, Internal.
-4. Save the connection as `temperature_link` and enable it.
-5. Set the first instance's internal `k__temperature_c` input to **28.0**.
-6. Confirm the second instance's input and `temperature_c` telemetry both become **28.0**.
+In **Instances → New instance**, use `my_temperature_model` again and name the
+new instance **second_temperature_sensor**. Create it, then click its **Start
+instance** control. Both sensor instances must be RUNNING.
 
-If values do not move, inspect the connection/container state and start them if
-initialized. Do not confuse **Enabled** with a running propagation container.
-For agent-driven work use the structured connection tools and lifecycle checks
-in the [MCP reference](../getting-started/mcp-reference.md).
+## 2. Configure the signal path
 
-Disable/delete only `temperature_link` when finished. Stop the second demo
-instance if you no longer need it. See the [Connections UI reference](../ui-reference/connections.md)
-and [runtime reference](../spx-core/system/connections.md) for all fields.
+Open **Connections → Add connection**. Fill the row as follows:
 
-For a larger worked example, see the [five-instance building energy graph](../ui-reference/connections.md#graph-example-building-energy-balance).
+| Field | Exact selection |
+| --- | --- |
+| Connection name | `temperature_link` |
+| From instance | `my_temperature_sensor` |
+| From attribute / value | `temperature_c` / **External** |
+| To instance | `second_temperature_sensor` |
+| To attribute / value | `k__temperature_c` / **Internal** |
 
-## Continue with…
+The attribute dropdown may shorten both names to “temperature [°C]”. Choose the
+ordinary telemetry as From and the yellow key input as To; use the full-name
+hover hint to distinguish them. Scroll horizontally to reach the remaining fields.
+<figure><img src="../.gitbook/assets/guide-connection-edit.jpg" alt="Connections page with temperature_link being edited, source and destination selectors and Internal/External controls."><figcaption><p>Read External telemetry from the first sensor and write the second sensor’s Internal key input.</p></figcaption></figure>
 
-[Run a scenario](run-scenarios.md) for a temporary disturbance, or
-[First Python program](../simulation-and-modeling/using-spx-python.md) for automated assertions.
+Choose **Save connection changes**. Keep **Enabled** on, then use **Start
+connections** in the page toolbar if the container is INITIALIZED.
+
+## 3. Check the graph and runtime state
+
+Choose **Fit graph to view**. Find the arrow from `my_temperature_sensor` to
+`second_temperature_sensor`.
+<figure><img src="../.gitbook/assets/guide-connection-active.jpg" alt="Full Connections page with RUNNING container, Active temperature_link, External-to-Internal table row and two-node graph."><figcaption><p>RUNNING starts the propagation container; Active confirms that this connection is propagating.</p></figcaption></figure>
+
+**Check:** the container is RUNNING and the row says **Active**. Enabled alone
+is not sufficient. Direction comes from From → To, not from the slot names.
+
+## 4. Prove propagation
+
+Return to the first sensor's Instance View. Under **Attributes**, Set the
+Internal `k__temperature_c` to **28** and apply. Open the second sensor's details
+from Instances and inspect its Attributes.
+<figure><img src="../.gitbook/assets/guide-connection-readback.jpg" alt="second_temperature_sensor Instance View showing RUNNING and input and telemetry values of 28."><figcaption><p>Both values on the second sensor become 28°C after the connection and model cycles.</p></figcaption></figure>
+
+**Completion check:** first telemetry = 28; second input = 28; second telemetry
+= 28. Allow model execution, propagation and browser refresh to complete.
+
+## Finish or continue
+
+Disable or delete only `temperature_link` when done; stop the second sensor if
+you no longer need it. Continue with the
+[five-instance energy example](ui-building-energy.md), whose import replaces
+this configuration, or use [Python connections](python-connections.md) on a
+separate disposable server. For all controls see [Connections reference](../ui-reference/connections.md).

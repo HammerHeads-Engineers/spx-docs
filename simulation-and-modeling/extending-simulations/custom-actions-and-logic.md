@@ -1,208 +1,83 @@
-# Custom Actions & Logic
-
-The built-in action catalog covers most control and signal-processing scenarios, but advanced projects often need tailor-made behaviours: bespoke trajectories, hardware-specific RPC calls, or complex validation before applying state changes. This guide shows how to author a reusable `Action` extension, borrow conventions from `spx-core/actions`, and integrate it into your models.
-
 ---
-
-## Action anatomy recap
-
-An action is a Python class derived from `spx_sdk.actions.Action` and registered with the SDK registry:
-
-- `_populate(definition)` — read configuration from YAML/JSON.
-- `prepare()` — allocate resources and reset state; called before the simulation step.
-- `run()` — invoked every tick. Must return `super().run(result=value)` when it produces an output.
-- `stop()` — optional clean-up hook.
-
-Action instances live inside the model tree; they can navigate to related components via `self.get_root()`, `self.parent`, and attribute wrappers resolved through the registry helpers.
-
-> Inspect existing implementations under `spx-server/spx_core/actions` (e.g., `call.py`, `ramps.py`, `suspend.py`) to see production-grade patterns.
-
+description: Build a stateful hysteresis action and check both threshold crossings and retained output.
 ---
+# Custom actions and logic
 
-## Example: `hysteresis_clamp` action
+**Goal:** cooling output follows **false → true → true → false** for temperature
+inputs **20 → 23 → 21 → 17°C**.
+**Before you start:** the [SDK environment](../../spx-development-guide/quick-start-spx-sdk-in-5-minutes.md).
+This is a complete local example with no server or key.
 
-Consider a scenario where you want to limit an attribute within a band and only propagate changes when the input leaves the band. This avoids chattering when noisy measurements hover around a threshold. The action reads an input attribute, applies hysteresis, and writes the result to an output attribute.
+## 1. Save the action
 
-### Implementation (`extensions/actions/hysteresis.py`)
-
+Save as **hysteresis.py**. At or above 22°C cooling turns on; at or below 18°C
+it turns off. Between thresholds it retains its previous state. Prepare resets
+the action's state for a new experiment.
+<figure><img src="../../.gitbook/assets/guide-code-hysteresis-source.jpg" alt="Execution record identifying the stateful hysteresis action and its four threshold test inputs."><figcaption><p>The middle 21°C sample checks retained state, not just a threshold comparison.</p></figcaption></figure>
+<!-- tutorial:hysteresis.py:start -->
 ```python
-# All comments in English only.
-from __future__ import annotations
-
-from typing import Any, Optional
-
+"""Local SDK action with state: python hysteresis.py."""
 from spx_sdk.actions import Action
 from spx_sdk.registry import register_class
-from spx_sdk.attributes.resolve_attribute import resolve_attribute_reference_hierarchical
+from spx_sdk.model import Model
 
 
-def _coerce_float(value: Any, default: float) -> float:
+@register_class(name='docs_hysteresis')
+class Hysteresis(Action):
+    def prepare(self, *args, **kwargs):
+        result = super().prepare(*args, **kwargs)
+        self.output = False
+        return result
+
+    def run(self):
+        super().run()
+        if self.source >= self.high:
+            self.output = True
+        elif self.source <= self.low:
+            self.output = False
+        return self.write_outputs(self.output)
+
+
+def simulate():
+    model = Model(name='hysteresis_sensor', definition={
+        'attributes': {'k__temperature_c': 20.0, 'cooling_on': False},
+        'actions': [{'docs_hysteresis': '$out(cooling_on)',
+                     'source': '$in(k__temperature_c)', 'low': 18.0, 'high': 22.0}],
+    })
     try:
-        return float(value)
-    except (TypeError, ValueError):
-        return default
+        model.prepare()
+        result = []
+        for tick, temperature in enumerate((20.0, 23.0, 21.0, 17.0)):
+            model['timer']['time'] = tick / 10
+            model['attributes']['k__temperature_c'].internal_value = temperature
+            model.run()
+            result.append(model['attributes']['cooling_on'].external_value)
+        assert result == [False, True, True, False], result
+        return result
+    finally:
+        model.destroy()
 
 
-@register_class(name="hysteresis_clamp")
-class HysteresisClamp(Action):
-    """Clamp an input attribute using upper/lower thresholds with hysteresis.
+if __name__ == '__main__':
+    print(simulate())
+```
+<!-- tutorial:hysteresis.py:end -->
 
-    YAML definition:
-      hysteresis_clamp:
-        input: "#attr(sensor.temperature)"
-        output: "#attr(controller.input)"
-        low: 18.0
-        high: 22.0
-        hysteresis: 0.3
-    """
+## 2. Execute and check
 
-    def _populate(self, definition: Optional[dict]) -> None:
-        if not isinstance(definition, dict):
-            raise ValueError("hysteresis_clamp definition must be a mapping")
-
-        self._input_ref = definition.get("input")
-        self._output_ref = definition.get("output")
-        if not self._input_ref or not self._output_ref:
-            raise ValueError("hysteresis_clamp requires 'input' and 'output' references")
-
-        self.low = _coerce_float(definition.get("low"), 0.0)
-        self.high = _coerce_float(definition.get("high"), 1.0)
-        if self.low > self.high:
-            raise ValueError("low threshold must be <= high threshold")
-
-        self.hysteresis = max(0.0, _coerce_float(definition.get("hysteresis"), 0.0))
-        self._last_output: Optional[float] = None
-        super()._populate(definition)
-
-    def prepare(self, *args, **kwargs) -> bool:
-        self._input_attr = resolve_attribute_reference_hierarchical(self.parent, self._input_ref)
-        self._output_attr = resolve_attribute_reference_hierarchical(self.parent, self._output_ref)
-        if self._input_attr is None or self._output_attr is None:
-            raise ValueError("Unable to resolve input/output attributes for hysteresis_clamp")
-        self._last_output = None
-        return super().prepare(*args, **kwargs)
-
-    def run(self, *args, **kwargs) -> bool:
-        value = self._read_input()
-        output = self._apply_hysteresis(value)
-        self._write_output(output)
-        return super().run(result=output)
-
-    # Internal helpers -------------------------------------------------
-    def _read_input(self) -> float:
-        if hasattr(self._input_attr, "external_value"):
-            return float(self._input_attr.external_value)
-        if hasattr(self._input_attr, "internal_value"):
-            return float(self._input_attr.internal_value)
-        return float(self._input_attr.get())
-
-    def _write_output(self, value: float) -> None:
-        if hasattr(self._output_attr, "internal_value"):
-            self._output_attr.internal_value = value
-        elif hasattr(self._output_attr, "set"):
-            self._output_attr.set(value)
-        else:
-            raise AttributeError("Output attribute does not support writing")
-
-    def _apply_hysteresis(self, value: float) -> float:
-        # First run: clamp directly
-        if self._last_output is None:
-            clamped = min(self.high, max(self.low, value))
-            self._last_output = clamped
-            return clamped
-
-        lower_band = self.low - self.hysteresis
-        upper_band = self.high + self.hysteresis
-
-        if value < lower_band:
-            self._last_output = self.low
-        elif value > upper_band:
-            self._last_output = self.high
-        # Otherwise keep previous output
-        return self._last_output
+```bash
+python hysteresis.py
 ```
 
-Key patterns adopted from existing actions:
-
-- Validation in `_populate` to fail fast when configuration is missing.
-- Attribute resolution using `resolve_attribute_reference_hierarchical` so `$in(...)`, `$out(...)`, or `#attr(...)` work interchangeably.
-- Writing through `internal_value` first, falling back to attribute wrappers for multi-layer components.
-- Returning `super().run(result=output)` so the action can feed its result into other components if wired via `function`.
-
----
-
-## Registering and wiring the action
-
-Ensure the Python module is importable by the SPX server (drop it into `extensions/actions` or similar and load it via `imports:` or environment hooks).
-
-### YAML snippet
-
-```yaml
-imports:
-  - extensions.actions.hysteresis
-
-actions:
-  - hysteresis_clamp:
-      input: $ext(sensor.temperature)
-      output: $ext(controller.input)
-      low: 18.0
-      high: 22.0
-      hysteresis: 0.3
+```text
+[False, True, True, False]
 ```
 
-- The action instance runs every simulation tick.
-- When temperature stays within `[18.0, 22.0]`, it preserves the previous output.
-- When the reading leaves the hysteresis band, it snaps to the nearest boundary (`low` or `high`).
+<figure><img src="../../.gitbook/assets/guide-code-hysteresis-result.jpg" alt="Execution record showing the actual False, True, True, False cooling outputs."><figcaption><p>The assertion checks both transitions and the state retained inside the band.</p></figcaption></figure>
 
-This wiring mirrors how built-in actions (`pid`, `ramp`, `call`) are declared in the library models under `spx-examples/library/domains`.
+**Completion:** the assertion passes; the finally block destroys the model.
+Call `super().run()` before reading dynamic source/threshold parameters, then
+use `write_outputs` to publish the result. Keep state on the action instance.
 
----
-
-## Testing the extension
-
-Leverage `spx-python.helpers` to load the action in integration tests:
-
-```python
-# All comments in English only.
-from pathlib import Path
-from spx_python.helpers import bootstrap_model_instance, wait_for_attribute_value
-
-client, instance, _ = bootstrap_model_instance(
-    spx_module=spx_python,
-    product_key=os.environ["SPX_PRODUCT_KEY"],
-    base_url="http://localhost:8000",
-    model_path=Path("models/hysteresis_demo.yaml"),
-    model_key="hysteresis_demo",
-    instance_key="hysteresis_demo_inst",
-)
-
-sensor = instance["attributes"]["temperature"]
-controller_input = instance["communication"]["pid"]["input"]
-
-sensor.internal_value = 25.0
-client.prepare()
-client.run()
-
-assert controller_input.internal_value == 22.0
-
-sensor.internal_value = 21.8  # inside hysteresis band → stays at 22.0
-client.run()
-assert controller_input.internal_value == 22.0
-
-sensor.internal_value = 17.5  # below lower band → snaps to 18.0
-client.run()
-assert wait_for_attribute_value(instance, "communication/pid/input", 18.0)
-```
-
-Unit tests can patch attribute wrappers directly, similar to the approach used in `spx_python/tests/test_client_unit.py`, ensuring the logic copes with `internal_value` and wrapper-based access.
-
----
-
-## Packaging tips
-
-- Place custom actions inside `extensions/actions` and list them under `imports:` in your model to keep definitions declarative.
-- Follow the logging conventions used in `spx-core/actions`: leverage `self.logger` for trace-level information, but avoid noisy logs in tight `run()` loops.
-- Document configuration fields alongside the class docstring; the YAML snippet above doubles as inline reference.
-- Consider exposing parameters as attributes (e.g., `attributes.hysteresis`) if you want to tune them at runtime via the API.
-
-By adhering to these conventions, custom actions integrate seamlessly with the SPX lifecycle, tooling, and diagnostics — just like the built-in library.***
+For a stochastic presentation effect see [Write a custom action](../../getting-started/extend-with-custom-component.md).
+For installation into a server see [Test and reload extensions](testing-and-hot-reload.md).

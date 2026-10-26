@@ -1,62 +1,81 @@
-# Filters & Signal Processing
+---
+description: Implement and verify a three-sample moving-average action in a local SDK model.
+---
+# Filter a signal
 
-Filters and derived signals are common in device models:
+**Goal:** inputs **0, 3, 6, 9** produce **0, 1.5, 3, 6** using a three-sample
+moving average. **Before you start:** the [SDK environment](../../spx-development-guide/quick-start-spx-sdk-in-5-minutes.md).
+This runs locally and needs no server or product key.
 
-- smooth noisy measurements (moving average / low-pass),
-- compute derived values (RMS, min/max windows, rate-of-change),
-- decimate/hold outputs for protocol constraints.
+## 1. Save the action and model
 
-In SPX you typically implement these as **custom actions** (or custom components) so they are testable and deterministic.
-
-## Pattern: “read input attribute → write output attribute”
-
-1. Read an input value (for example `$in(raw_signal)`).
-2. Keep internal filter state in the Python class (buffer, integrator, etc.).
-3. Write the filtered value to an output (often `$out(filtered_signal)` so presentation effects do not feed back into core logic).
-
-See also: [Extend with a Custom Component](../../getting-started/extend-with-custom-component.md), [Actions](../../spx-development-guide/spx-sdk/actions.md).
-
-## Minimal example: moving average
-
-**Python action** (place under a configured extensions directory, for example `./extensions/moving_average.py`):
-
+Save as **moving_average.py**. Import registers the action before the model is
+constructed. Prepare clears the per-instance buffer; Run resolves the current
+source before adding it. During warmup average only the samples received so far.
+<figure><img src="../../.gitbook/assets/guide-code-filter-source.jpg" alt="Execution record showing moving_average.py, window 3 and its four input samples."><figcaption><p>A fresh model owns a fresh buffer; input writes precede each model cycle.</p></figcaption></figure>
+<!-- tutorial:moving_average.py:start -->
 ```python
+"""Local SDK filter: python moving_average.py. Register before loading the model."""
 from collections import deque
-
 from spx_sdk.actions import Action
 from spx_sdk.registry import register_class
+from spx_sdk.model import Model
 
 
-@register_class(name="moving_average")
+@register_class(name='docs_moving_average')
 class MovingAverage(Action):
-    def _populate(self, definition):
-        super()._populate(definition)
-        self.window = int(getattr(self, "window", 8))
-        self._buf = deque(maxlen=self.window)
-
     def prepare(self, *args, **kwargs):
-        super().prepare(*args, **kwargs)
-        self._buf.clear()
+        result = super().prepare(*args, **kwargs)
+        self.samples = deque(maxlen=int(self.window))
+        return result
 
-    def run(self, *args, **kwargs):
-        self.apply_wrappers()
-        sample = getattr(self, "source", None)
-        if sample is None:
-            return False
-        self._buf.append(float(sample))
-        avg = sum(self._buf) / len(self._buf)
-        return self.write_outputs(avg)
+    def run(self):
+        super().run()
+        self.samples.append(float(self.source))
+        return self.write_outputs(sum(self.samples) / len(self.samples))
+
+
+def simulate():
+    model = Model(name='filtered_sensor', definition={
+        'attributes': {'k__raw_signal': 0.0, 'filtered_signal': 0.0},
+        'actions': [{'docs_moving_average': '$out(filtered_signal)',
+                     'source': '$in(k__raw_signal)', 'window': 3}],
+    })
+    try:
+        model.prepare()
+        result = []
+        for tick, value in enumerate((0.0, 3.0, 6.0, 9.0)):
+            model['timer']['time'] = tick / 10
+            model['attributes']['k__raw_signal'].internal_value = value
+            model.run()
+            result.append(model['attributes']['filtered_signal'].external_value)
+        assert result == [0.0, 1.5, 3.0, 6.0], result
+        return result
+    finally:
+        model.destroy()
+
+
+if __name__ == '__main__':
+    print(simulate())
+```
+<!-- tutorial:moving_average.py:end -->
+
+## 2. Run and check the values
+
+```bash
+python moving_average.py
 ```
 
-**YAML wiring** (use the registered class name `moving_average`):
-
-```yaml
-attributes:
-  raw_signal: 0.0
-  filtered_signal: 0.0
-
-actions:
-  - moving_average: $out(filtered_signal)
-    source: $in(raw_signal)
-    window: 8
+```text
+[0.0, 1.5, 3.0, 6.0]
 ```
+
+<figure><img src="../../.gitbook/assets/guide-code-filter-result.jpg" alt="Execution record showing the actual moving-average results 0.0, 1.5, 3.0 and 6.0."><figcaption><p>The final output averages the latest three samples, 3, 6 and 9.</p></figcaption></figure>
+
+**Completion:** the embedded assertion passes and the model is destroyed.
+An External output is a presentation result; another Internal write to the same
+attribute would clear an External override. Keep action ordering explicit.
+
+For server installation and fresh instances use
+[Test and reload extensions](testing-and-hot-reload.md). See
+[Actions reference](../../spx-development-guide/spx-sdk/actions.md) for the lifecycle.

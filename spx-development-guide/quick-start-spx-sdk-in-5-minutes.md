@@ -36,6 +36,8 @@ Do not clone the private SDK repository to follow this public tutorial.
 The package metadata allows Python >=3.9,<4; that is not a claim that the full
 SPX Server or public Examples works on every such version.
 
+<figure><img src="../.gitbook/assets/guide-code-sdk-source.jpg" alt="Execution record showing sdk_sensor.py and the YAML, JSON and dictionary alternatives."><figcaption><p>The local model needs only the SDK environment; no server connection is involved.</p></figcaption></figure>
+
 ## Run the sensor
 
 Save the complete program below as `sdk_sensor.py` in your working directory.
@@ -156,3 +158,7 @@ if __name__ == '__main__':
 
 The programs destroy their local model trees. Deactivate the virtual environment
 when finished; no server resources have been created.
+
+<figure><img src="../.gitbook/assets/guide-code-sdk-result.jpg" alt="Execution record with the local temperature curve starting at 25.00 and ending at 97.48°C."><figcaption><p>The three serialization formats produce the same verified curve.</p></figcaption></figure>
+
+Continue with [Write a custom action](../getting-started/extend-with-custom-component.md) or return to [model development](../guides/modeling.md).

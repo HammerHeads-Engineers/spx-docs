@@ -1,0 +1,21 @@
+name: temperature_scenario
+description: 'Opt-in temperature override: 20 to 80 degC until stopped.'
+attributes:
+  k__temperature_c:
+    type: float
+    default: 20.0
+    unit: degC
+  temperature_c:
+    type: float
+    default: 20.0
+    unit: degC
+actions:
+- function: $in(temperature_c)
+  name: update_temperature
+  call: $in(k__temperature_c)
+scenarios:
+  temperature_spike:
+    enabled: false
+    duration: -1
+    overrides:
+      $in(k__temperature_c): 80.0

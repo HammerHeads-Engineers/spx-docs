@@ -941,6 +941,104 @@
       "old_markdown_url": "https://docs.simplephysx.com/operations-and-support/server-api/api-v3-reference/models.md",
       "target_source": null,
       "kind": "generated-openapi"
+    },
+    {
+      "title": "Create your first model",
+      "source": "getting-started/build-your-first-simulation.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/build-your-first-simulation",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/build-your-first-simulation.md",
+      "target_source": "getting-started/build-your-first-simulation.md"
+    },
+    {
+      "title": "Model concepts",
+      "source": "simulation-and-modeling/core-concepts.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/core-concepts",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/core-concepts.md",
+      "target_source": "simulation-and-modeling/core-concepts.md"
+    },
+    {
+      "title": "Connect instances",
+      "source": "guides/connect-instances.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/connect-instances",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/connect-instances.md",
+      "target_source": "guides/connect-instances.md"
+    },
+    {
+      "title": "Run scenarios",
+      "source": "guides/run-scenarios.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/run-scenarios",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/run-scenarios.md",
+      "target_source": "guides/run-scenarios.md"
+    },
+    {
+      "title": "Model-in-the-Loop testing",
+      "source": "simulation-and-modeling/model-in-the-loop.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/model-in-the-loop",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/model-in-the-loop.md",
+      "target_source": "simulation-and-modeling/model-in-the-loop.md"
+    },
+    {
+      "title": "Test a client over Modbus",
+      "source": "getting-started/use-in-unit-tests-mil.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/use-in-unit-tests-mil",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/use-in-unit-tests-mil.md",
+      "target_source": "getting-started/use-in-unit-tests-mil.md"
+    },
+    {
+      "title": "Run tests in CI",
+      "source": "getting-started/ci-cd-setup-github-actions.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/ci-cd-setup-github-actions",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/ci-cd-setup-github-actions.md",
+      "target_source": "getting-started/ci-cd-setup-github-actions.md"
+    },
+    {
+      "title": "Local model with SDK",
+      "source": "spx-development-guide/quick-start-spx-sdk-in-5-minutes.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/quick-start-spx-sdk-in-5-minutes",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/quick-start-spx-sdk-in-5-minutes.md",
+      "target_source": "spx-development-guide/quick-start-spx-sdk-in-5-minutes.md"
+    },
+    {
+      "title": "Write a custom action",
+      "source": "getting-started/extend-with-custom-component.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/extend-with-custom-component",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/extend-with-custom-component.md",
+      "target_source": "getting-started/extend-with-custom-component.md"
+    },
+    {
+      "title": "Load a Python class",
+      "source": "getting-started/code-defined-simulations.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/code-defined-simulations",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/code-defined-simulations.md",
+      "target_source": "getting-started/code-defined-simulations.md"
+    },
+    {
+      "title": "Filter a signal",
+      "source": "simulation-and-modeling/extending-simulations/filters-and-signal-processing.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/filters-and-signal-processing",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/filters-and-signal-processing.md",
+      "target_source": "simulation-and-modeling/extending-simulations/filters-and-signal-processing.md"
+    },
+    {
+      "title": "Custom actions and logic",
+      "source": "simulation-and-modeling/extending-simulations/custom-actions-and-logic.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/custom-actions-and-logic",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/custom-actions-and-logic.md",
+      "target_source": "simulation-and-modeling/extending-simulations/custom-actions-and-logic.md"
+    },
+    {
+      "title": "Test and reload extensions",
+      "source": "simulation-and-modeling/extending-simulations/testing-and-hot-reload.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/testing-and-hot-reload",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/testing-and-hot-reload.md",
+      "target_source": "simulation-and-modeling/extending-simulations/testing-and-hot-reload.md"
+    },
+    {
+      "title": "Testing practices",
+      "source": "testing-and-validation.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/testing-and-validation",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/testing-and-validation.md",
+      "target_source": "testing-and-validation.md"
     }
   ],
   "sections": [

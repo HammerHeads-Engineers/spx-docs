@@ -114,3 +114,5 @@ time. Changing the chart rate does not change either runtime mechanism. See
 - Runtime import/replacement: recheck that watched instance/attribute names still
   exist. Use the [Connections example](connections.md#graph-example-building-energy-balance)
   to verify the expected wiring.
+
+For the complete exercise, follow [Observe signals and test behavior](../guides/ui-observe.md).

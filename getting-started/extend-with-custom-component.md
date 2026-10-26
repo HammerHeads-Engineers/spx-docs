@@ -4,6 +4,8 @@ This tutorial implements a repeatable contact-fault action in SDK RC21. First
 verify it locally, then import the same module into a disposable server RC76.
 Use Python 3.12 and the dependencies from the [SDK Quickstart](../spx-development-guide/quick-start-spx-sdk-in-5-minutes.md).
 
+<figure><img src="../.gitbook/assets/guide-code-fault-source.jpg" alt="Execution record showing the seeded contact-fault action and the local runner."><figcaption><p>Save the two source files before running the local experiment.</p></figcaption></figure>
+
 ## Save the extension
 
 Save the following as `contact_fault.py`. Each prepared action owns a separate
@@ -48,22 +50,33 @@ Save the following as `run_fault.py` beside `contact_fault.py` and run
 `python run_fault.py`. It prints 20 values containing normal readings, drops and
 spikes; running it again with seed 42 yields the same sequence.
 
+<!-- tutorial:run_fault.py:start -->
 ```python
+"""Run beside contact_fault.py: python run_fault.py."""
 from spx_sdk.model import Model
 from contact_fault import definition
 
-model = Model(name="fault_sensor", definition=definition(seed=42))
-try:
-    model.prepare()
-    values = []
-    for tick in range(20):
-        model["timer"]["time"] = tick / 10
-        model.run()
-        values.append(model["attributes"]["temperature_c"].external_value)
-    print(values)
-finally:
-    model.destroy()
+
+def simulate():
+    model = Model(name='fault_sensor', definition=definition(seed=42))
+    try:
+        model.prepare()
+        values = []
+        for tick in range(20):
+            model['timer']['time'] = tick / 10
+            model.run()
+            values.append(model['attributes']['temperature_c'].external_value)
+        return values
+    finally:
+        model.destroy()
+
+
+if __name__ == '__main__':
+    print(simulate())
 ```
+<!-- tutorial:run_fault.py:end -->
+
+<figure><img src="../.gitbook/assets/guide-code-fault-result.jpg" alt="Execution record containing the repeatable seeded sequence of normal, dropped and spiking readings."><figcaption><p>The same seed produces the same sequence when a fresh model is prepared.</p></figcaption></figure>
 
 The internal value remains 20°C; this action writes the external wrapper. It
 reapplies a fault after each action execution. A later internal write clears the

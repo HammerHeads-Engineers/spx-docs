@@ -1,5 +1,8 @@
 # Core Concepts
 
+<figure><img src="../.gitbook/assets/guide-connection-active.jpg" alt="Full Connections view distinguishing model names, runtime instances and a source-to-target connection."><figcaption><p>One reusable model has two live instances; the arrow transfers a telemetry value into an input.</p></figcaption></figure>
+
+
 A **model definition** describes attributes, behavior and communication. A
 **model registry key** identifies that definition on a server. An **instance**
 is a live copy with its own state. A **connection** transfers values between

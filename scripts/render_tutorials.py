@@ -5,7 +5,8 @@ from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
-MODEL_PATTERN = re.compile(r'<!-- model:pt100:start -->.*?<!-- model:pt100:end -->', re.S)
+MODEL_WORKFLOW_PATTERN = re.compile(r'<!-- workflow:spx-integration:start -->.*?<!-- workflow:spx-integration:end -->', re.S)
+PATTERN = re.compile(r'<!-- model:pt100:start -->.*?<!-- model:pt100:end -->', re.S)
 PATTERN = re.compile(r'<!-- tutorial:([a-z_]+\.py):start -->.*?<!-- tutorial:\1:end -->', re.S)
 
 
@@ -28,6 +29,10 @@ def main():
             definition = re.search(r'```yaml\n(.*?)\n```', canonical, re.S).group(1)
             result = MODEL_PATTERN.sub(lambda _: '<!-- model:pt100:start -->\n```yaml\n' + definition
                                        + '\n```\n<!-- model:pt100:end -->', result)
+        if WORKFLOW_PATTERN.search(result):
+            workflow = (ROOT / 'examples/guides/spx-integration.yml').read_text().rstrip()
+            result = WORKFLOW_PATTERN.sub(lambda _: '<!-- workflow:spx-integration:start -->\n```yaml\n' + workflow
+                                          + '\n```\n<!-- workflow:spx-integration:end -->', result)
         if result != original:
             changed.append(str(page.relative_to(ROOT)))
             if not args.check:
