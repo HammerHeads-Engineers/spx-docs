@@ -20,7 +20,7 @@ In the UI navigation, select **Connections**.
 * Browse and search connections by name or endpoint.
 * Create, edit, duplicate, or delete connections.
 * Toggle connections on/off with the **Enabled** switch.
-* Choose **Internal** or **External** value sources (`internal_value` / `external_value`) for each endpoint. Internal values are computed inside the model; External values represent data coming from outside (protocols, UI/tests) and exposed to integrations.
+* Choose the **Internal** or **External** value slot (`internal_value` / `external_value`) for each endpoint. **From** and **To** define propagation direction; the slot selectors do not.
 * Import/export full system configuration (models/instances/connections) and copy export data.
 
 ### Graph example: building energy balance
@@ -89,7 +89,7 @@ The table is grouped into **From** and **To** endpoints. Each connection has:
 * **To** — instance + attribute + value source.
 * **Enabled** — toggle to activate or disable the connection.
 
-Value sources are shown as chips in the list; when you edit a row, they become **Internal/External** toggles. Use **Internal** when you want simulation output, and **External** when the value should represent inbound or integration-facing data.
+Value sources are shown as chips in the list; when you edit a row, they become **Internal/External** toggles. Choose the slot required by your model. In the example above, the source exposes telemetry through **External** and the target receives it through **Internal**.
 
 <figure><img src="../.gitbook/assets/image (19).png" alt=""><figcaption><p>Connections list showing From/To columns + Enabled toggle</p></figcaption></figure>
 
