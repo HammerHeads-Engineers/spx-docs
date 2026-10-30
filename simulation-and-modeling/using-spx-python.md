@@ -5,19 +5,80 @@ not execute the model locally like `spx_sdk.model.Model`.
 
 ## Prerequisites
 
-Use a disposable SPX Server RC76 and the [documented bundle versions](../release-notes.md).
-Do not run introductory scripts against a shared system. Use Python 3.12 in a
-virtual environment and install `spx-python==1.0.0rc3`. Set `SPX_PRODUCT_KEY` in
-your environment and optionally `SPX_BASE_URL` (default `http://localhost:8000`).
+Use Python 3.12 and a disposable SPX Server RC76 with the
+[documented bundle versions](../release-notes.md). [Install SPX](../getting-started/installation-guide.md)
+and start it with **SPX Start** before running this program. Check that
+`http://localhost:8000/health` reports `status: ok`.
+Use a server without other users' simulations for this exercise.
 For managed workspaces use [MCP onboarding](../getting-started/connect-llm-with-spx-mcp.md);
 do not replace the workspace's private connection binding with a guessed `.env`.
+
+## Prepare a working directory
+
+Open a terminal and choose the commands for your shell. They create a new
+`spx-python-demo` directory and install the client into its own virtual environment.
+If `python3.12` or `py -3.12` is unavailable, install Python 3.12 first.
+
+### macOS/Linux
+
+```bash
+mkdir spx-python-demo
+cd spx-python-demo
+python3.12 -m venv .venv
+. .venv/bin/activate
+python -m pip install spx-python==1.0.0rc3
+```
+
+### Windows PowerShell
+
+```powershell
+mkdir spx-python-demo
+cd spx-python-demo
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install spx-python==1.0.0rc3
+```
+
+If your organization's policy blocks activation, use
+`.\.venv\Scripts\python.exe` instead of `python` in the installation and run
+commands. For example: `.\.venv\Scripts\python.exe client_sensor.py`.
+
+## Set your connection
+
+In the same terminal, replace `REPLACE_WITH_YOUR_PRODUCT_KEY` with the key used
+by your SPX installation. Keep the key out of the program and screenshots.
+These values apply to this terminal session; the program reads them from the
+environment rather than loading a `.env` file.
+
+macOS/Linux:
+
+```bash
+export SPX_PRODUCT_KEY='REPLACE_WITH_YOUR_PRODUCT_KEY'
+export SPX_BASE_URL='http://localhost:8000'
+```
+
+Windows PowerShell:
+
+```powershell
+$env:SPX_PRODUCT_KEY = 'REPLACE_WITH_YOUR_PRODUCT_KEY'
+$env:SPX_BASE_URL = 'http://localhost:8000'
+```
+
+Use your actual API address if it differs. A successful public health check
+confirms that the server is reachable; the program also needs an accepted key.
 
 <figure><img src="../.gitbook/assets/python-server-lifecycle.svg" alt="Python drives a model on SPX Server through HTTP: create and prepare, set inputs and run cycles, read and assert telemetry, then clean up the demo resources."><figcaption><p>The Python client controls the server; each explicit cycle processes the current input before telemetry is read.</p></figcaption></figure>
 
 ## Complete program
 
-Save as `client_sensor.py` in any working directory and run
-`python client_sensor.py`. It creates a model and instance with reserved demo
+Save as `client_sensor.py` in `spx-python-demo`, then run it from the terminal
+prepared above:
+
+```bash
+python client_sensor.py
+```
+
+It creates a model and instance with reserved demo
 names, refuses to overwrite existing objects, then stops and deletes only the
 objects it created. Expected output:
 
@@ -77,6 +138,11 @@ if __name__ == '__main__':
     print(simulate(client))
 ```
 <!-- tutorial:client_sensor.py:end -->
+
+If Python reports `ModuleNotFoundError: spx_python`, use the virtual environment's
+interpreter. For `KeyError: SPX_PRODUCT_KEY`, set the connection values in the
+same terminal that runs the program. For connection or authorization errors,
+check SPX Start, the API address and the installation's product key.
 
 ## Clock and lifecycle contract
 

@@ -14,13 +14,11 @@ the installed product's personalized Compose bundle.
 
 ## 1. Prepare the client
 
-In your virtual environment install `spx-python==1.0.0rc3`. Set
-`SPX_PRODUCT_KEY` and optionally `SPX_BASE_URL`; the default is
-`http://localhost:8000`. Keep the key out of code and screenshots.
-
-For shell-specific environment setup and the full program use
-[First Python program](../simulation-and-modeling/using-spx-python.md).
-Save that program as **client_sensor.py**.
+Follow [First Python program](../simulation-and-modeling/using-spx-python.md)
+to create the working directory and virtual environment, install the client,
+set the connection values for your shell, and save **client_sensor.py**.
+Keep using that directory and terminal for the steps below. If you have already
+run the program successfully, continue with the lifecycle explanation here.
 
 ## 2. Follow the lifecycle
 

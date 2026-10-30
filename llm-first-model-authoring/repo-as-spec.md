@@ -72,7 +72,7 @@ For larger updates, include a compact table in PR notes:
 
 When you add a new model file:
 
-1. Add a catalog entry in `library/catalog/models.yaml` (new `id`, `name`, `path`, `domain`, `protocols`, `services`, `packages`, `profiles`).
+1. Add a catalog entry in `library/catalog/models.yaml` with `id`, `name`, `path`, `domain`, `domain_group`, `device_class`, `vendor`, `protocols`, `services`, `packages` and `profiles`. See the [complete example entry](workflow-generate-validate-iterate.md).
 2. Add/update tests in `tests/` (shared tests or pack tests, depending on where the model belongs).
 3. Run validation and tests:
    - `python tools/validate_models.py` (prints `Model validation passed.` on success)

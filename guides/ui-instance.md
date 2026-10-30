@@ -8,6 +8,11 @@ description: Load a ready-made model, start one instance and verify an input cha
 for one model and one instance. Reserve the names below; use a fresh workspace
 if either already belongs to another exercise.
 
+If you saved `my_temperature_model` with the
+[paste-YAML alternative](../getting-started/README.md#create-the-model), continue
+at **step 2**. If you already verified the sensor's 31.25°C readback, keep it
+running and go directly to [Connect two instances](connect-instances.md).
+
 ## 1. Load the ready-made model
 
 Open **Models** in the sidebar and choose **Load model from file**. Save

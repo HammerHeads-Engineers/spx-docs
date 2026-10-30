@@ -15,12 +15,17 @@ instances and observe a small energy system. No Python or MCP client is required
 | 5 | [Run a scenario](run-scenarios.md) | A controlled 20 → 80 → 20°C disturbance. |
 | 6 | [Save and restore a configuration](ui-save-restore.md) | A restored structure that you explicitly restart and check. |
 
+If you have completed [First device in the UI](../getting-started/README.md),
+keep `my_temperature_sensor` running and continue at **2. Connect two instances**.
+
 ## Before the exercises
 
-[Install SPX](../getting-started/installation-guide.md) and select your server in
-[Settings](../ui-reference/settings.md). The normal installed UI address is
-`http://localhost:3000`. Screenshot ports belong to an isolated documentation
-workspace; keep your own installed connection settings.
+[Install SPX](../getting-started/installation-guide.md) and open
+`http://localhost:3000`. In [Settings](../ui-reference/settings.md), confirm
+**Ready**, the intended upstream target and **Authorization: Accepted by SPX server**.
+SPX Setup manages the connection; to change it, rerun Setup and start the
+updated environment, then choose **Retry** in Settings. Screenshot ports belong
+to an isolated documentation workspace; use your installation's configured address.
 
 Use a disposable workspace. Exercises 1–2 need one model and two instances;
 the energy example needs capacity for five models and five instances. Its import
