@@ -1,33 +1,46 @@
 # Workflow: Generate → Validate → Iterate
 
-This workflow assumes you are contributing to `spx-examples` (or mirroring its conventions in your own model repo).
+Use this workflow for a durable model contribution (`repo_dev`) to public
+`spx-examples`. For a live simulation, use the
+[runtime prompt](prompt-recipes.md#live-runtime-task).
 
 ## Branch synchronization
 
-Documentation changes target `spx-docs/main`; model changes target
-`spx-examples/develop`. Follow the [automation contract](../appendices/additional-resources-and-readings.md)
-for generated content. Capture source commits before reviewing semantic changes.
+Model changes target `spx-examples/develop`. All commands below run from the
+**Examples checkout root**. Product documentation changes use a separate
+`spx-docs/main` checkout and the
+[documentation maintenance guide](https://github.com/HammerHeads-Engineers/spx-docs/blob/main/docs/documentation-maintenance.md).
 
 ## Prereqs (one-time)
 
 ```bash
-git clone https://github.com/HammerHeads-Engineers/spx-examples.git
+git clone --branch develop https://github.com/HammerHeads-Engineers/spx-examples.git
 cd spx-examples
+git switch -c codex/multimeter-overrange
 ```
 
-Set your product key (pick one):
-
-- Edit `.env` and set `SPX_PRODUCT_KEY=...`
-- Or export it in your shell: `export SPX_PRODUCT_KEY=...`
-
-Install Python tooling:
+Choose an unused `codex/<task>` branch name for your own contribution. Read
+`AGENTS.md`, `docs/LLM_SPEC.md` and `docs/MODEL_LANGUAGE.md` in that checkout.
+Use Python 3.12 and Poetry to install the development dependencies:
 
 ```bash
-poetry install --with dev
+poetry env use python3.12
+poetry install --with dev --no-root
 ```
 
-Start the installed environment with **SPX Start**, or follow the
-[server-only Compose guide](../getting-started/manual-docker-compose.md).
+On Windows, use your Python 3.12 executable path in `poetry env use`.
+
+Repository validation does not need a running server or product key. Live
+integration tests do: start a disposable environment with **SPX Start** or the
+[server-only Compose guide](../getting-started/manual-docker-compose.md), then
+set the [connection environment variables](../simulation-and-modeling/using-spx-python.md#set-your-connection)
+in the terminal used for `poetry run pytest`.
+
+Record the Examples revision for the review:
+
+```bash
+git rev-parse HEAD
+```
 
 ## Generate
 
@@ -50,13 +63,7 @@ Expected success output:
 Model validation passed.
 ```
 
-If your change touches generated docs pages in `spx-docs`, also run:
-
-```bash
-python scripts/generate_device_catalog.py --spx-examples /path/to/public-examples --source-ref <pinned-public-commit> --check
-```
-
-And verify the change boundary before PR:
+Verify the change boundary before PR:
 
 ```bash
 git diff --name-only
@@ -87,7 +94,7 @@ Goal: create a SCPI multimeter variant with a new fault scenario and a regressio
 2) Copy it:
 
 ```bash
-cp library/domains/lab/instrument/generic/multimeter__scpi.yaml \\
+cp library/domains/lab/instrument/generic/multimeter__scpi.yaml \
   library/domains/lab/instrument/generic/multimeter_overrange__scpi.yaml
 ```
 
@@ -98,27 +105,45 @@ cp library/domains/lab/instrument/generic/multimeter__scpi.yaml \\
   - `name: multimeter_overrange__scpi`
   - Add a scenario under `scenarios:` (follow patterns in the source template)
 
-Example scenario shape:
+Add this scenario alongside the existing scenarios:
 
 ```yaml
 scenarios:
   overrange_spike:
-    enabled: true
+    enabled: false
     description: "Brief overrange voltage spike for driver robustness tests."
     duration: 1.0
     overrides:
       $out(voltage): 400.0
 ```
 
+Start `overrange_spike` explicitly in the test so it does not inject a fault
+during normal instance startup.
+
 4) Register it in the catalog:
 
 - File: `library/catalog/models.yaml`
 - https://github.com/HammerHeads-Engineers/spx-examples/blob/develop/library/catalog/models.yaml
-- Add a new entry with:
-  - `path: library/domains/lab/instrument/generic/multimeter_overrange__scpi.yaml`
-  - `domain: lab`
-  - `protocols: [scpi]`
-  - `services: [{id: scpi_tcp_stack}]` (match existing SCPI models)
+- Append this complete entry to the catalog's existing `models` list:
+
+```yaml
+- id: Lab.MultimeterOverrange.Scpi
+  name: SCPI Multimeter with Overrange Fault
+  path: library/domains/lab/instrument/generic/multimeter_overrange__scpi.yaml
+  domain: lab
+  domain_group: lab
+  device_class: instrument
+  vendor: generic
+  protocols: [scpi]
+  services:
+    - id: scpi_tcp_stack
+  packages: []
+  profiles: []
+```
+
+Use a unique `id` and keep the taxonomy aligned with the model's directory.
+This entry is standalone. If adding it to a pack or profile, also update that
+membership and its generated index according to Examples `AGENTS.md`.
 
 5) Add a MiL test:
 
@@ -152,6 +177,10 @@ Include these in your final update/PR description:
 - files changed,
 - commands executed for validation,
 - assumptions and open questions.
+
+Use the [model completion checklist](definition-of-done.md) before review.
+If the change also needs product documentation, make that a separate Docs
+contribution using its maintenance guide.
 
 ## Next steps on simplephysx.com
 

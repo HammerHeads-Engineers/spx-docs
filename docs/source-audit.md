@@ -43,6 +43,27 @@ source/test evidence does not establish physical conformance.
 - Document current UI Settings/managed proxy and RC76 OPC UA write-direction policy.
 - Replace old version-branch instructions with main and two reviewed bot flows.
 
+## Readability follow-up — 30 October 2026
+
+This change addresses the five instruction/structure findings against Docs
+baseline `67f0c8123fc309069b7a19c7870a3ca15164de32` (abbreviated `67f0c81`
+below). It keeps the public page locations, runtime version set and generated
+tutorial programs unchanged.
+
+| Changed instructions | Source / exact revision | Correction and evidence |
+| --- | --- | --- |
+| [First Python program](../simulation-and-modeling/using-spx-python.md) and its follow-up | Docs `requirements-tutorials.txt` and `examples/tutorials/client_sensor.py`, `67f0c81`; published `spx-python==1.0.0rc3` | Added working-directory, venv, installation and session-variable commands for macOS/Linux and PowerShell. The POSIX blocks were executed on macOS/Python 3.12 with a placeholder key and package-version assertions. PowerShell was reviewed, not executed on Windows. |
+| UI prerequisites in the [first exercise](../getting-started/README.md) and [UI path](../guides/ui.md) | Docs `ui-reference/settings.md`, `67f0c81`; UI baseline `e339deb98b9f83e4bbd0333ae7406320805e5252` | Replaced server-selection instructions with managed connection checks, Setup/start and Retry. This is a wording alignment with the existing reference, not a fresh browser run. |
+| First UI exercise and [main walkthrough](../guides/ui-instance.md) | Docs UI guides, `67f0c81` | One main instance walkthrough; paste-YAML prepares only the same model. Both paths continue to connections without recreating the sensor. |
+| [Agent contribution workflow](../llm-first-model-authoring/workflow-generate-validate-iterate.md), catalog guidance and completion checklist | Public Examples `AGENTS.md`, `library/catalog/models.yaml` and `tools/validate_models.py`, `be71a161e97eb7a112d0581136a7b702b34cd98a` | Fixed shell continuation and provided a complete standalone catalog entry. The exact copy command and YAML fragments were applied to a temporary copy of that public revision; its model/catalog validator passed. The fault is opt-in and started explicitly by its test. |
+| Model/Docs task boundaries and [Docs maintenance checklist](documentation-maintenance.md) | Docs maintenance/automation guides, `67f0c81`; public Examples `AGENTS.md`, `be71a161e97eb7a112d0581136a7b702b34cd98a` | Removed Docs generation commands from the model workflow/template and moved the Docs checklist to maintenance instructions. Examples and Docs commands identify their own checkout and PR target. |
+
+Validation on Python 3.12: 19 public tests passed; Markdown links/anchors/assets,
+navigation, generated tutorial blocks and the device catalog at the exact public
+pin passed. Publication verification applies after merge; local edits do not
+change the currently published site. No new live server or protocol exchange
+was required for these editorial corrections.
+
 ## Runtime test issue observed (outside documentation scope)
 
 Combining API helper tests and connection tests in a single pytest process

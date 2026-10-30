@@ -7,25 +7,33 @@ description: Create one temperature sensor in the browser and verify a 31.25 deg
 ## Before you start {#first-device-in-the-ui}
 
 **Prerequisites:** [SPX installed](installation-guide.md), UI open at
-`http://localhost:3000`, and a connection to your local server selected in
-[Settings](../ui-reference/settings.md).
+`http://localhost:3000`. In [Settings](../ui-reference/settings.md), confirm
+**Ready**, the intended upstream target and **Authorization: Accepted by SPX server**.
+SPX Setup manages this connection. To change it, rerun Setup and start the
+updated environment, then use **Retry** in Settings.
 
 **Result:** instance `my_temperature_sensor` is **RUNNING**; setting its input to
 **31.25°C** produces a telemetry reading of **31.25°C**. No MCP, Python or external
 protocol client is needed. This is a simulation exercise, not a hardware check.
 
-For a screenshot-led workflow starting with a ready-made file, follow
-[Create and control an instance](../guides/ui-instance.md). The compact exercise
-below lets you paste the definition directly.
+**Start with [Create and control an instance](../guides/ui-instance.md).**
+That is the main walkthrough: load the supplied model file, create the sensor,
+start it and verify the temperature. Then keep it running and continue directly
+with [Connect two instances](../guides/connect-instances.md).
 
-<figure><img src="../.gitbook/assets/guide-sensor-readback.jpg" alt="Full running sensor view with both input and telemetry at 31.25°C."><figcaption><p>The completion result for this introductory exercise.</p></figcaption></figure>
+If you prefer to paste YAML instead of downloading a file, use the alternative
+below to prepare the same model, then join the main walkthrough at step 2.
 
-## Create the model
+## Create the model {#create-the-model}
 
-1. Open **Models** and create a new model. Set the model registry name to
-   `my_temperature_model`. Use a different name if that name already exists.
+This is an alternative to step 1 of the main walkthrough. Use it before creating
+the sensor; if you already completed the walkthrough, continue to connections.
+
+1. Open **Models → New model**. In the new Model View, choose **Edit model name**,
+   enter `my_temperature_model` and save the name. Use a fresh exercise environment
+   if that name already belongs to another model.
 2. Select YAML in the editor and paste the complete definition below.
-3. Choose **Save** and check the Validation panel for success.
+3. Choose **Create model** and check the Validation panel for **OK**.
 
 <!-- model:pt100:start -->
 ```yaml
@@ -53,28 +61,21 @@ if these names differ in your project.
 
 ## Create and start an instance
 
-1. Open **Instances**, choose **New instance**, select `my_temperature_model`
-   and enter `my_temperature_sensor` (or another unused name).
-2. Create the instance and choose **Start** in Continuous mode.
-3. Open its details and confirm **RUNNING**. In **Attributes**, locate
-   `k__temperature_c` (input) and `temperature_c` (telemetry).
+Continue at **step 2: Create an instance** in
+[Create and control an instance](../guides/ui-instance.md). Your model is already
+saved, so skip its file-loading step. Follow steps 2–3 to create and start
+`my_temperature_sensor`.
 
 ## Change an input and verify the result
 
-1. Set the **internal value** of `k__temperature_c` to **31.25** and submit the edit.
-2. Wait for the next UI refresh. `temperature_c` should read **31.25**.
-3. Change the input to **18.0** and confirm telemetry follows to **18.0**.
-
-If the reading does not follow, confirm that the instance is RUNNING and the
-input was saved. See the [Instances UI reference](../ui-reference/instances.md)
-for the current controls. A successful edit alone is not proof of propagation.
+In step 4 of that walkthrough, set `k__temperature_c` to **31.25** and verify
+that `temperature_c` follows to **31.25**. A successful edit alone does not
+prove that the model processed the input; check the telemetry readback.
 
 ## Finish and continue
 
-Stop `my_temperature_sensor` when finished. On a disposable environment you can
-also delete this instance and then `my_temperature_model`; keep unrelated
-models and instances intact.
-
-**You have completed the first UI exercise.** Continue with
-[the UI guide path](../guides/ui.md), or choose an optional
-[protocol walkthrough](choose-a-protocol-adapter.md) to test an external client.
+Keep `my_temperature_sensor` running for
+[Connect two instances](../guides/connect-instances.md); both ways of preparing
+the model lead to that exercise. If you are finishing here, stop the sensor.
+To remove the exercise, delete its instance and then `my_temperature_model`.
+The [UI guide path](../guides/ui.md) lists the later exercises.

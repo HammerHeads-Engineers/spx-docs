@@ -4,6 +4,29 @@ Canonical source: spx-docs/main. Product version inputs live in `sources.json`;
 changing a catalog pin does not change the runtime baseline. Current public
 entry point: [Start here](../README.md).
 
+## Working directory and task boundary
+
+Use this guide for maintaining **spx-docs**. Every command below runs from the
+**Docs checkout root**, which contains `sources.json`, `SUMMARY.md` and `scripts/`.
+Use a Python 3.12 virtual environment for this checkout. A separate public Examples
+checkout supplies catalog input; it is not the working directory for Docs scripts.
+
+For model contributions use the
+[Examples workflow](../llm-first-model-authoring/workflow-generate-validate-iterate.md)
+and its `develop` target. Documentation branches start from `spx-docs/main`.
+
+## Review checklist
+
+- [ ] The Docs branch is based on `origin/main` and the PR targets `main`.
+- [ ] Ordinary changes use a task branch; `codex/sync-examples-catalog` is reserved for the generated catalog-sync workflow.
+- [ ] Source revisions and evidence for semantic changes are recorded in PR notes and `docs/source-audit.md`.
+- [ ] Navigation and chapter entry pages are updated when needed; existing public URLs remain reachable.
+- [ ] Generated content is regenerated through its script, including tutorial blocks and the device catalog when affected.
+- [ ] The public checks below pass; affected catalog content is checked against the exact manifest revision.
+- [ ] Device claims distinguish implemented behavior, executed tests and physical qualification.
+- [ ] Examples and images contain no real product keys or other secrets.
+- [ ] Publication and redirects are verified after the reviewed main merge.
+
 ## Page contract
 
 A task tutorial states its audience/execution layer, version prerequisites,
@@ -32,6 +55,25 @@ The CI also fetches the exact allowed public catalog revision and verifies
 regeneration. It does not access private server sources or real product keys.
 These checks distinguish links/parsing, generated source consistency and executed
 SDK/client contracts; they are not an all-protocol test suite.
+
+### Check the generated catalog
+
+From the **Docs root**, fetch the exact public input pinned by `sources.json`:
+
+```bash
+python scripts/check_sources.py --checkout .tmp/spx-examples
+```
+
+Read `catalog.commit` from `sources.json` and replace `<catalog-commit>` below
+with that full 40-character SHA:
+
+```bash
+python scripts/generate_device_catalog.py --spx-examples .tmp/spx-examples --source-ref <catalog-commit> --check
+```
+
+When intentionally updating generated catalog content, use the existing
+[catalog update flow](../llm-first-model-authoring/docs-automation-guidelines.md#two-independent-update-flows).
+Keep its input revision separate from the runtime baseline.
 
 ## Private runtime contracts
 

@@ -72,8 +72,9 @@ Copy this template into an issue/PR description before asking an LLM to generate
   * `<path/to/page.md>`
 * Generated pages impacted:
   * `usage-scenarios-and-examples/device-catalog.md` (`yes/no`)
-* If yes, regeneration command:
-  * `python scripts/generate_device_catalog.py --spx-examples ../spx-examples --source-ref <pinned-public-commit>`
+* For a separate Docs contribution, follow the
+  [documentation maintenance guide](https://github.com/HammerHeads-Engineers/spx-docs/blob/main/docs/documentation-maintenance.md)
+  from the `spx-docs` checkout. Model validation above runs in `spx-examples`.
 
 ## 8) Required output from automation
 
