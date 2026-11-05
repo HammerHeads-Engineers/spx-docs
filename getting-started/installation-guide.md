@@ -5,7 +5,8 @@ description: Install SPX for Windows, macOS or Linux and verify the browser UI a
 # Install SPX
 
 **Result:** the browser UI opens and API health reports `status: ok`.
-MCP is optional and is configured separately after this installation.
+Choose the ordinary setup wizard or install through a conversation with your
+own local AI agent. Browser use does not require an AI client.
 This guide targets the [SPX 1.0 stable bundle](../release-notes.md):
 installer **1.1.0**, Server **1.0.0** and UI **1.1.0**.
 
@@ -101,6 +102,12 @@ Where to find it:
 - writes helper scripts,
 - can start the stack immediately.
 
+Keep **Interactive (default)** selected for the ordinary wizard. For conversational
+installation, select **Configure with your own AI Agent** and follow the
+[four-step Agent Setup flow](connect-llm-with-spx-mcp.md#install-with-an-ai-agent-in-four-steps).
+Setup collects the key locally and prepares the agent workspace; the agent
+proposes a plan and waits for your approval. Keep product keys out of chat.
+
 Keep SPX UI enabled and LAN exposure disabled for the local first run.
 The first UI exercise provides its own small model, so it does not require a
 pack, starter instances or a protocol client. If you choose a pack instead,
@@ -152,6 +159,8 @@ complete. You do not need MCP for browser use.
 That exercise creates one sensor, reaches **RUNNING**, and verifies that setting
 `k__temperature_c` to **31.25** produces `temperature_c = 31.25°C`.
 For agent access, choose [Connect your MCP client](connect-llm-with-spx-mcp.md).
+Current native Setup already prepares the shared installation/runtime workspace.
+Continue in that folder; a second MCP Setup is only for repair or older installs.
 For code, choose [First Python program](../simulation-and-modeling/using-spx-python.md).
 
 ## Need a different setup?

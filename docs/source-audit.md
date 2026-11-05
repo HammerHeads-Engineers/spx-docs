@@ -11,6 +11,20 @@ simulation audit, not physical device or manufacturer certification.
 
 ## Stable bundle alignment — 5 November 2026
 
+### Conversational installation follow-up
+
+The installation and Connect an LLM articles now describe the same four-step
+Agent Setup path as the WWW staging guide. Source review used installer tag
+`v1.1.0`, commit `5752dde71f7a4a3bbaad13ae67e32ebda4f2d721`:
+`installer/wizard_modes.py` (exact menu label), `installer/setup_workspace.py`
+(generated INSTALLATION.md, prompt, local key and shared workspace), and
+`docs/CONVERSATIONAL_SETUP.md` (client support, plan approval and separate runtime
+requests). Native Setup prepares both setup/runtime MCP configurations before
+deployment. An additional MCP Setup or reconnect after success is not a normal
+installation step. This was a source review, not a fresh recorded installation
+or client-by-client execution test. WWW tracks eight missing publication shots
+in its `docs/installation-walkthrough-shot-list.md`.
+
 The current baseline is SPX 1.0: installer `5752dde71f7a4a3bbaad13ae67e32ebda4f2d721`
 (`v1.1.0`), Server `215b9214c48c6c787b9a68b89178916239a57452`
 (`v1.0.0`) and UI `b70c9ae521e40ef7d596f866d50707ba77d19728` (`v1.1.0`).
