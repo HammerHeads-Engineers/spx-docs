@@ -13,7 +13,7 @@ This guide shows how to **save**, **list**, and **load** system snapshots using 
 > * Instances (which instance uses which template)
 > * Connections (wiring between instances)
 >
-> **What RC76 does not capture**
+> **What Server 1.0.0 does not capture**
 >
 > * Runtime state (thread state, attribute runtime values, timers, …)\
 >   Snapshots currently rebuild structure; runtime state always starts “fresh”.

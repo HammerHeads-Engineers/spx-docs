@@ -15,6 +15,8 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements-tutorials.txt
+      - name: Check release manifest outputs
+        run: python scripts/render_release.py --check
       - name: Fetch pinned public examples
         run: python scripts/check_sources.py --checkout .tmp/spx-examples
       - name: Check generated catalog

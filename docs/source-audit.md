@@ -9,7 +9,38 @@ from the exact released versions in `sources.json`; public catalog pinning is
 separate from the released installer context. This is an implementation and
 simulation audit, not physical device or manufacturer certification.
 
-## Executed technical checks
+## Stable bundle alignment — 5 November 2026
+
+The current baseline is SPX 1.0: installer `5752dde71f7a4a3bbaad13ae67e32ebda4f2d721`
+(`v1.1.0`), Server `215b9214c48c6c787b9a68b89178916239a57452`
+(`v1.0.0`) and UI `b70c9ae521e40ef7d596f866d50707ba77d19728` (`v1.1.0`).
+Installer `installer/compatibility.py` supplies the exact image pair;
+`examples-source.json` pins public catalog `2026.11.05.1` at `f1b45456`.
+The tagged Server lock requires SDK 1.0.0. The installer intentionally retains
+Python client 1.0.0rc3. The reviewed stable UI diff against RC76 changes version
+and release/CI files; it does not replace the guide controls.
+
+Executed for this alignment:
+
+- 21 public documentation tests on Python 3.12 with the generated package pins.
+- Markdown links/anchors/assets, task navigation, release table/dependency
+  regeneration, tutorial block consistency and exact-pinned catalog regeneration.
+- OpenAPI regenerated through `scripts/export_openapi.py` from the pinned clean
+  server tree and its FastAPI 0.124.0 / SDK 1.0.0 dependencies: 10 path templates;
+  the only schema diff is the source commit provenance.
+- Eight existing runtime contracts passed in a separate disposable container
+  using `simplephysx/spx-server@sha256:4a6609c7ce12233d9e791a9e00dddf51c066e80e0265647a30e730f62bbcff2b`.
+  Docs were mounted read-only; Python client 1.0.0rc3 was supplied separately.
+  Synthetic test credentials, loopback Modbus and temporary snapshots were used.
+  This covers the UI exercise's RUNNING/31.25°C logic, Python cleanup,
+  connections, manual clock/lifecycle, snapshot defaults, scenario and API auth.
+
+The website consumes a generated manifest snapshot at an immutable Docs commit.
+Stable is the normal download channel on both portals. Explicitly labelled
+staging links remain as a migration bridge while the public host still serves
+the old website. Source updates do not publish or requalify installer binaries.
+
+## Historical RC76 audit — executed technical checks
 
 - Server RC76 / SDK RC21 dependency lock exported from the tagged server tree.
 - 85 API/model/meta-parameter tests passed in one isolated run.
@@ -88,7 +119,7 @@ provenance; existing agent/MCP guards, imports and tool inventory passed. The
 50 installer context/workspace documentation tests also passed. The released
 installer context pin was deliberately not changed by a documentation update.
 
-## Page evidence inventory
+## Historical RC76 page evidence inventory
 
 The source column identifies the implementation section used for the page's
 contract. Private source paths are maintainer evidence, not prerequisites for

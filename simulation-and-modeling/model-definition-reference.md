@@ -1,7 +1,7 @@
 # Model definition reference (YAML and JSON)
 
 This is the canonical SPX model-definition reference. It describes the released
-server RC76 / SDK RC21 baseline recorded in `sources.json`. Public examples and
+server 1.0.0 / SDK 1.0.0 baseline recorded in `sources.json`. Public examples and
 repository conventions live in [spx-examples](https://github.com/HammerHeads-Engineers/spx-examples).
 Its `docs/MODEL_LANGUAGE.md` is a generated offline copy of this page.
 

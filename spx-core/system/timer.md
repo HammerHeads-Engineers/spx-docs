@@ -68,7 +68,7 @@ Run while paused performs one admitted cycle and keeps the model paused.
 
 ## HTTP client versus local SDK
 
-For RC76/RC3 use `instance["timer"].time = t` to write an absolute clock value.
+For Server 1.0.0 / Python client 1.0.0rc3 use `instance["timer"].time = t` to write an absolute clock value.
 The proxy's mapping assignment is not that property setter. An absolute write
 suppresses the next increment, so the next `run(time_step=0.1)` evaluates at `t`;
 a subsequent step without a new absolute write advances to `t + 0.1`.
