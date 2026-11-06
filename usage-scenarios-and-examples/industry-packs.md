@@ -20,7 +20,7 @@ https://github.com/HammerHeads-Engineers/spx-examples
 Model counts and pack membership are generated in the [Device Catalog](device-catalog.md)
 from the exact public Examples revision recorded in `sources.json`. Use that
 page for current counts instead of duplicating numbers here. The installer
-RC115 baseline pins public Examples `be71a161e97eb7a112d0581136a7b702b34cd98a`;
+1.1.0 stable baseline pins public Examples `f1b454568614f829bc71899f898c7036c61692ca`;
 new public models need a later installer context update before appearing in a
 new packaged selection.
 

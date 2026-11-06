@@ -1,6 +1,6 @@
 # Protocol capabilities and verification scope
 
-This matrix describes adapter roles in server RC76, not certification or a claim
+This matrix describes adapter roles in server 1.0.0, not certification or a claim
 that every physical deployment has been tested. Reference review is evidence of
 configuration support; verify the selected transport with your SUT separately.
 The documentation contracts do not execute these protocol/hardware checks.

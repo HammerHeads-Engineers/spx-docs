@@ -5,7 +5,7 @@ description: Create and control a server simulation with the verified Python cli
 
 **Goal:** create a model and instance, apply **31.25°C**, advance the simulation
 clock explicitly and read the processed temperature.
-**Before you start:** Python 3.12, a disposable SPX Server RC76 and the
+**Before you start:** Python 3.12, a disposable SPX Server 1.0.0 and the
 [documented versions](../release-notes.md). Start the server using SPX Setup /
 SPX Start, or your [manual deployment](manual-docker-compose.md).
 

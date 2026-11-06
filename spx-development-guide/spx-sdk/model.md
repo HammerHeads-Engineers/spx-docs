@@ -1,10 +1,10 @@
 # Model
 
-`from spx_sdk.model import Model` imports SDK RC21's `BaseModel` alias. It is
+`from spx_sdk.model import Model` imports SDK 1.0.0's `BaseModel` alias. It is
 an in-process Python container with a `SimpleTimer` and `SimplePolling`, useful
 for testing actions and model logic without an HTTP server.
 
-SPX Server RC76 implements `spx_core` and `spx_server` in Python on top of SDK
+SPX Server 1.0.0 implements `spx_core` and `spx_server` in Python on top of SDK
 components. Its server packaging uses Cython compilation. Compilation does not
 mean that the runtime is written in Rust or Go. This release reference makes
 no promise of distributed clocks or multi-tenant orchestration.

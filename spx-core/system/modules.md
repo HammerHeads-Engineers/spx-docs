@@ -1,7 +1,7 @@
 # Modules Container
 
 Modules (`spx_core/system/modules.py`) instantiate reusable registered components.
-The RC76 container accepts a list. Each entry starts with an alias → registered
+The Server 1.0.0 container accepts a list. Each entry starts with an alias → registered
 model/class name, followed by optional sibling configuration sections.
 
 ```yaml

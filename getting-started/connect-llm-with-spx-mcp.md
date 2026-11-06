@@ -1,43 +1,59 @@
 ---
-description: Connect MCP-capable LLM clients to your local SPX runtime.
+description: Install SPX with your own AI agent or open the prepared workspace for runtime work.
 icon: brain-circuit
 ---
 
 # Connect an LLM with SPX MCP
 
-SPX MCP is the recommended path after `SPX Setup` has generated and started
-your local SPX stack. It gives MCP-capable LLM clients a local `stdio` server
-that understands the SPX catalog, profiles, packs, model validation rules,
-runtime logs, communication trees, protocol bindings, and the running
-`spx-server`.
-
-`SPX MCP Setup` creates an `SPX MCP Workspace` with ready client configuration
-for Codex and Claude Code. Other MCP-capable clients can use the same local
-`spx-mcp` server after you add that server to the client manually.
+The SPX 1.0 native installer prepares a shared workspace for installation and
+later runtime work. Use **Configure with your own AI Agent** in SPX Setup to
+install through a conversation, or open the prepared workspace after a normal
+wizard installation. A separate MCP Setup is not required for a new native install.
 
 ## Prerequisites
 
-- SPX is installed with the native installer.
-- `SPX Setup` has generated the local environment.
-- The SPX stack is running and `http://localhost:8000/health` returns
-  `"status":"ok"`.
-- Python 3.10+ is available for the MCP runtime.
-- Codex or Claude Code is installed if you want an auto-configured client.
+- Download the [stable native installer](installation-guide.md), currently 1.1.0.
+- Have Docker Desktop running and your SPX product key ready.
+- Use your own installed local agent with project MCP support. Native setup
+  prepares configurations for Codex, Claude Code and OpenCode v2; it does not
+  install or sign in to the AI client. Native packages provide Python 3.12.
+
+Setup tools work before the stack is running. Live runtime tools need a
+successfully started SPX environment. A web chat alone cannot launch the local
+tools; it needs a local execution bridge.
 
 ## Quick path
 
-1. Start SPX with `SPX Setup` or `SPX Start`.
-2. Verify the API at `http://localhost:8000/health`.
-3. Launch `SPX MCP Setup`.
-4. Choose `runtime_mcp` unless you intentionally need full repository work.
-5. Keep the default read/write MCP access for normal local runtime work.
-6. Open the generated `SPX MCP Workspace` in Codex, Claude Code, or another
-   MCP-capable client.
-7. Start a fresh session so the client reloads its local MCP configuration.
+Already installed with the native wizard? Open the shared workspace below in
+your local agent and use its SPX runtime tools. If your client does not load the
+project configuration initially, reload that configuration once. Continue in
+the same workspace and conversation after successful installation; no second
+MCP Setup or routine reconnect is needed.
+
+## Install with an AI agent in four steps
+
+1. **Get the installer and key.** Download the Stable package and obtain your
+   product key through the [installation guide](installation-guide.md).
+2. **Choose Agent Setup.** Run the package, open SPX Setup and select
+   **Configure with your own AI Agent**. Enter the key in Setup when asked.
+   Setup shows the prepared folder to open; do not paste the key into chat.
+3. **Describe your requirements.** Open that folder in your local agent and say
+   **“Complete SPX setup and installation.”** Describe your devices/protocols,
+   request SPX UI and startup, and review the agent's proposed configuration.
+4. **Approve and open SPX.** Approve the concrete plan in the conversation.
+   Wait for confirmed installation and startup, then open the reported UI
+   address (normally `http://localhost:3000`). Check Settings for **Ready** and
+   **Authorization: Accepted by SPX server**.
+
+Installation creates no simulation instances by default. After success, continue
+in the same conversation with a separate simulation request, or follow
+[First device in the UI](README.md). The Setup terminal monitors progress;
+before execution, **R** returns to the ordinary wizard if you prefer it.
 
 ## Launch SPX MCP Setup
 
-Use the launcher for your platform:
+Use this launcher for repair or an older installation whose workspace was not
+prepared. A current native installation already prepares the shared workspace.
 
 - Windows: open `SPX MCP Setup` from Windows Apps / Start Menu.
 - macOS: open `/Applications/SPX Tools/SPX MCP Setup.app`.
@@ -53,17 +69,11 @@ Default workspace locations:
 Older installs may still have a legacy `SPX Codex Workspace`. Treat that as an
 old workspace name, not the current default.
 
-The setup creates:
-
-- a local `.venv` prepared for `spx-mcp`,
-- `.codex/config.toml` pointing Codex at the local MCP server,
-- `.mcp.json` pointing Claude Code at the same local MCP server,
-- `CLAUDE.md` so Claude Code can follow `@AGENTS.md`,
-- `.spx/workspace_mode.toml` with the selected work mode,
-- `.spx-mcp-workspace.json` with workspace metadata,
-- an `.env` seeded from the generated SPX environment when available.
-
-Existing `.codex/workspace_mode.toml` files are still read as a legacy fallback.
+Native Setup writes project-local client configuration, shared instructions and
+installation/runtime launchers. It registers `spx_setup` for installation and
+`spx` for live work. Private key and connection state remain outside the agent
+workspace. See the [MCP reference](mcp-reference.md#bootstrap-mcp-client-configs)
+for binding, recovery and no-start behavior.
 
 ## Choose the work mode
 
@@ -84,8 +94,8 @@ access.
 
 ## First use in an MCP client
 
-Open the generated workspace in Codex, Claude Code, or another configured MCP
-client and start a fresh session. Then ask the client:
+After successful installation and startup, open the prepared workspace in your
+configured client, or continue the existing Agent Setup conversation. Then ask:
 
 ```text
 Use the SPX MCP tools from this workspace. First list the available SPX MCP
@@ -105,19 +115,20 @@ For normal local runtime work, a good result is short and concrete:
 
 ## Client support
 
-Codex and Claude Code are auto-configured by `SPX MCP Setup`. Other
-MCP-capable clients can use the same local `stdio` server, but you must add the
-MCP server entry to that client's configuration yourself.
-
-The command shape is the same one written into the generated client configs:
-run Python from the workspace `.venv`, execute `-m spx_mcp stdio`, and include
-`--allow-write` when you want runtime write tools.
+The native installer prepares project configuration for Codex, Claude Code and
+OpenCode v2. Other MCP-capable local clients can use the same local `stdio`
+servers with a project configuration appropriate to that client. Use the actual
+command and arguments from the generated workspace; do not replace them with
+instructions intended for a standalone repository clone.
 
 ## Troubleshooting
 
-- If the client does not show the SPX MCP tools, open the generated workspace
-  and start a fresh session so the local MCP configuration is reloaded.
-- If setup cannot find Python, install Python 3.10+ and rerun `SPX MCP Setup`.
+- If the client does not initially show the tools, verify that you opened the
+  generated folder and reload the project MCP configuration if necessary.
+  Successful installation does not require another reload.
+- For a damaged or legacy workspace, use SPX MCP Setup to repair it. Native
+  Windows/macOS packages provide the Python runtime; portable workflows have
+  the separate [host prerequisites](../overview/system-requirements-and-capability.md).
 - If runtime tools cannot reach SPX, start the stack with `SPX Start` and verify
   `http://localhost:8000/health`.
 - If you only need inspection, rerun the setup in read-only mode.

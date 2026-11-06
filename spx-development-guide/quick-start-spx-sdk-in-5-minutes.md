@@ -15,7 +15,7 @@ mkdir spx-sdk-demo
 cd spx-sdk-demo
 python3.12 -m venv .venv
 . .venv/bin/activate
-python -m pip install spx-sdk==1.0.0rc21 PyYAML==6.0.3
+python -m pip install spx-sdk==1.0.0 PyYAML==6.0.3
 ```
 
 ### Windows PowerShell
@@ -25,7 +25,7 @@ mkdir spx-sdk-demo
 cd spx-sdk-demo
 py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install spx-sdk==1.0.0rc21 PyYAML==6.0.3
+python -m pip install spx-sdk==1.0.0 PyYAML==6.0.3
 ```
 
 If your organization's policy does not allow activation scripts, run commands

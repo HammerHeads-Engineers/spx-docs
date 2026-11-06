@@ -1,6 +1,6 @@
 # API v3 reference
 
-The baseline is SPX Server **v1.0.0-rc.76**. Its hierarchy API is rooted at
+The baseline is SPX Server **v1.0.0**. Its hierarchy API is rooted at
 `http://localhost:8000/api/v3/system`. The existing GitBook OpenAPI integration
 is named `hammerheadsengineers-api`; keep this identity when importing an update.
 The reproducible [OpenAPI export](openapi.json) comes from the exact server

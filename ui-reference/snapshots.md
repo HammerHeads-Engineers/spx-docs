@@ -73,6 +73,6 @@ In the import dialog review the included configuration sections and instance-sta
 * Runtime values differ after restore: snapshot import resets defaults; reapply test inputs and warmup.
 * Import/export fails: ensure the JSON file is valid and matches the expected schema.
 
-These instructions describe UI RC76. Screenshots illustrate the controls; use the text and expected runtime state when the visual layout differs.
+These instructions target UI 1.1.0. Screenshots captured with UI RC76 illustrate the controls; use the text and expected runtime state when the visual layout differs.
 
 For a complete task with before/after checks, follow [Save and restore a configuration](../guides/ui-save-restore.md).

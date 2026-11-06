@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Maintainer smoke: run the documented YAML/JSON through the released API and Python client.
 
-Run with server RC76 sources on PYTHONPATH and the pinned server dependency
-lock, SDK RC21 and client RC3 installed. No real key, Docker or hardware needed.
+Run with server 1.0.0 sources on PYTHONPATH and the pinned server dependency
+lock, SDK 1.0.0 and client 1.0.0rc3 installed. No real key, Docker or hardware needed.
 """
 from pathlib import Path
 import json

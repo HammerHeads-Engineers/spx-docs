@@ -6,7 +6,7 @@ description: Read a manually stepped temperature model with a real Modbus TCP cl
 **Goal:** a real Modbus TCP client reads **28°C** and **34°C** from SPX holding
 registers 0–1 (float32, high word first).
 **Before you start:** [First Python program](../simulation-and-modeling/using-spx-python.md),
-SPX Server RC76 with the Modbus adapter available, Python 3.12 and a disposable
+SPX Server 1.0.0 with the Modbus adapter available, Python 3.12 and a disposable
 server. This is a protocol integration test. The API sets up and drives the
 simulation; the TCP client performs the read being tested.
 

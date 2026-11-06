@@ -19,8 +19,9 @@ a building-energy simulation, charts and configuration restore.
 
 ## Work with an agent
 
-Connect your MCP client to the installed SPX environment. Ask the agent to start
-one model instance and report its identity and **RUNNING** state.
+Install through a conversation using [Agent Setup in four steps](getting-started/connect-llm-with-spx-mcp.md#install-with-an-ai-agent-in-four-steps),
+or open the workspace prepared by the ordinary installer. After installation,
+ask the agent to start one model instance and report its identity and **RUNNING** state.
 
 **[Connect your MCP client](getting-started/connect-llm-with-spx-mcp.md)** →
 [Agent Start Here](llm-first-model-authoring/agent-start-here.md).

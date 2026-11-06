@@ -6,6 +6,10 @@ description: Create one temperature sensor in the browser and verify a 31.25 deg
 
 ## Before you start {#first-device-in-the-ui}
 
+Use the [SPX 1.0 stable bundle](../release-notes.md): installer **1.1.0**,
+Server **1.0.0** and UI **1.1.0**. This is the same first result linked from
+the website's Getting Started page.
+
 **Prerequisites:** [SPX installed](installation-guide.md), UI open at
 `http://localhost:3000`. In [Settings](../ui-reference/settings.md), confirm
 **Ready**, the intended upstream target and **Authorization: Accepted by SPX server**.

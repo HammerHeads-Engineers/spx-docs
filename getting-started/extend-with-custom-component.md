@@ -1,7 +1,7 @@
 # Extend with a Custom Component
 
-This tutorial implements a repeatable contact-fault action in SDK RC21. First
-verify it locally, then import the same module into a disposable server RC76.
+This tutorial implements a repeatable contact-fault action in SDK 1.0.0. First
+verify it locally, then import the same module into a disposable server 1.0.0.
 Use Python 3.12 and the dependencies from the [SDK Quickstart](../spx-development-guide/quick-start-spx-sdk-in-5-minutes.md).
 
 The experiment uses two files: `contact_fault.py` defines the action and

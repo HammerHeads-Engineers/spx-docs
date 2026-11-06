@@ -5,7 +5,7 @@ not execute the model locally like `spx_sdk.model.Model`.
 
 ## Prerequisites
 
-Use Python 3.12 and a disposable SPX Server RC76 with the
+Use Python 3.12 and a disposable SPX Server 1.0.0 with the
 [documented bundle versions](../release-notes.md). [Install SPX](../getting-started/installation-guide.md)
 and start it with **SPX Start** before running this program. Check that
 `http://localhost:8000/health` reports `status: ok`.

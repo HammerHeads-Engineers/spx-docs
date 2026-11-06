@@ -88,6 +88,6 @@ In Test model, provide the instance-specific meta parameters, inspect validation
 * Edit/Create opens in a new tab: allow pop-ups if your browser blocks them.
 * Definition looks stale: refresh the page or restart the stack after updates.
 
-These instructions describe UI RC76. Screenshots illustrate the controls; use the text and expected runtime state when the visual layout differs.
+These instructions target UI 1.1.0. Screenshots captured with UI RC76 illustrate the controls; use the text and expected runtime state when the visual layout differs.
 
 To author and execute a complete definition, follow [Create a YAML or JSON model](../guides/model-authoring.md).

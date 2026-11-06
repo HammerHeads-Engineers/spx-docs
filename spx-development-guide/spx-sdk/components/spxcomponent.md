@@ -88,7 +88,7 @@ Each lifecycle call:
 API states are uppercase strings. In local SDK code compare the enum or its
 string representation. `start` and `run` have separate implementations.
 
-The server RC76 **runtime Model** adds execution gates: a single `run()` while
+The server 1.0.0 **runtime Model** adds execution gates: a single `run()` while
 paused leaves the model PAUSED, while `start()` resumes preserved execution.
 With `real_time=False`, start does not launch a polling loop. A useful sequence
 is `prepare → start → pause → run → start → stop`; the state after the paused
