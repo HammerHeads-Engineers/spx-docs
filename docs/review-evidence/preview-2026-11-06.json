@@ -1,0 +1,60 @@
+{
+  "review_date": "2026-11-06",
+  "recorded_at": "2026-11-06T06:42:57.496079+00:00",
+  "reviewed_docs_commit": "ecac0b7dac475205c66c9a9c8bbde4bcac746452",
+  "preview": "https://docs.simplephysx.com/~/revisions/NVD3DImLsKAmgXHK2YTW",
+  "revision": "NVD3DImLsKAmgXHK2YTW",
+  "navigation_source": "Rendered GitBook sidebar, all sections/reference branches expanded",
+  "observed_routes": 136,
+  "current_markdown_checks": {
+    "count": 136,
+    "passed": 136,
+    "content_contract_errors": 0
+  },
+  "legacy_checks": {
+    "count": 296,
+    "within_preview": 240,
+    "escaped_preview": 56,
+    "affected_legacy_addresses": 28,
+    "wrong_normalized_destination_paths": 0
+  },
+  "strict_publication_check_passed": false,
+  "browser_review": [
+    {
+      "step": 1,
+      "name": "Start Here",
+      "status": "passed",
+      "screenshot": "01-start-here.jpg"
+    },
+    {
+      "step": 2,
+      "name": "Install SPX",
+      "status": "passed",
+      "screenshot": "02-install-spx.jpg"
+    },
+    {
+      "step": 3,
+      "name": "Agent Setup in four steps",
+      "status": "passed",
+      "screenshot": "03-agent-four-steps.jpg"
+    },
+    {
+      "step": 4,
+      "name": "First device in the UI",
+      "status": "passed",
+      "screenshot": "04-first-device.jpg"
+    }
+  ],
+  "mobile": {
+    "viewport_width": 390,
+    "document_scroll_width": 375,
+    "contents_menu": "passed",
+    "agent_deep_link": "passed"
+  },
+  "limits": [
+    "56 legacy requests leave the immutable preview for production; full redirect acceptance must be repeated after authorized publication.",
+    "No new installer execution, recording or client-by-client AI setup test was performed.",
+    "Eight publication-ready native installation shots remain missing.",
+    "Screenshot/DOM review does not establish full accessibility compliance."
+  ]
+}

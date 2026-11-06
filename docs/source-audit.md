@@ -9,6 +9,34 @@ from the exact released versions in `sources.json`; public catalog pinning is
 separate from the released installer context. This is an implementation and
 simulation audit, not physical device or manufacturer certification.
 
+## Preview acceptance — 6 November 2026
+
+Reviewed the real GitBook revision
+[`NVD3DImLsKAmgXHK2YTW`](https://docs.simplephysx.com/~/revisions/NVD3DImLsKAmgXHK2YTW/),
+which contains the customer-facing pages from Docs commit
+`ecac0b7dac475205c66c9a9c8bbde4bcac746452`. The rendered sidebar was expanded
+through all seven sections and the API/reference branches; its 136 observed
+routes match the existing migration map without changes. Start Here, installation,
+the four-step Agent Setup link and the first-device page were checked in the
+browser. At a 390px viewport, installation and Agent Setup remained readable
+without horizontal overflow; the mobile contents menu worked.
+
+The publication checker made 432 requests: 136 current Markdown endpoints and
+148 legacy URLs in HTML and Markdown forms. All current endpoints and required
+content corrections passed. Of 296 legacy requests, 240 remained in the preview;
+56 (28 addresses in both formats) redirected to production. Those 56 resolved to
+the expected canonical path, but escaped the reviewed revision, so the strict
+checker correctly remains unsuccessful. No missing-page responses or timeouts
+remained in the final run. See the compact
+[review evidence](review-evidence/preview-2026-11-06.json).
+
+The stale `MCP is optional` publication marker was replaced by the current
+browser/AI choice and four-step handoff contract. Matching ignores paragraph
+line wrapping while retaining the preview-scope and legacy redirect checks.
+The full redirect check must be repeated after an authorized publication; this
+preview review is not a production publication or a newly executed installer run.
+The eight native installation media shots remain outstanding in the WWW shot list.
+
 ## Stable bundle alignment — 5 November 2026
 
 ### Conversational installation follow-up

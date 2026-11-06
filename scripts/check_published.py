@@ -29,7 +29,8 @@ REQUIRED = {
     'ui-reference/system.md': ['Power balance', 'Chart time', 'Add system attribute', 'Export CSV'],
     'README.md': ['Use the browser UI', 'Work with an agent', 'Write Python'],
     'getting-started/README.md': ['my_temperature_sensor', '31.25', 'k__temperature_c'],
-    'getting-started/installation-guide.md': ['Installation complete', 'MCP is optional'],
+    'getting-started/installation-guide.md': ['Installation complete', 'Browser use does not require an AI client', 'Configure with your own AI Agent'],
+    'getting-started/connect-llm-with-spx-mcp.md': ['Install with an AI agent in four steps', 'Complete SPX setup and installation', 'no second MCP Setup or routine reconnect is needed'],
     'spx-development-guide/quick-start-spx-sdk-in-5-minutes.md': ['python sdk_sensor.py yaml', 'Activate.ps1', '97.48'],
     'simulation-and-modeling/using-spx-python.md': ["inst['timer'].time = tick / 10", 'PAUSED'],
     'getting-started/snapshots-guide.md': ['42', '20', 'not a checkpoint'],
@@ -159,8 +160,9 @@ def main():
                 errors.append(result)
     for source, expected in REQUIRED.items():
         body = content.get(normalize(routes[source]['markdown_url'], site), '')
+        searchable = ' '.join(body.replace('\\_', '_').split()).casefold()
         for phrase in expected:
-            if phrase.casefold() not in body.replace('\\_', '_').casefold():
+            if phrase.casefold() not in searchable:
                 errors.append(f'Missing correction in {source}: {phrase}')
     for suffix in ('docs_backlog_v1_0_0_sync', 'docs-automation-guidelines'):
         if suffix in index.lower():
