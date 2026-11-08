@@ -9,6 +9,19 @@ from the exact released versions in `sources.json`; public catalog pinning is
 separate from the released installer context. This is an implementation and
 simulation audit, not physical device or manufacturer certification.
 
+## Public release naming — 8 November 2026
+
+The public product release is **SPX 1.1.0**, matching the stable installer
+`v1.1.0`. This replaces the earlier public label "SPX 1.0" for the same reviewed
+bundle. Component versions, immutable source revisions, release date and
+installer binaries are unchanged. The manifest renderer rejects a public
+release label that differs from the stable installer version.
+
+WWW must regenerate its snapshot from the immutable Docs commit containing
+this change. Customer announcements use the same public version. Earlier
+preview and runtime evidence below remains historical evidence for the same
+artifact set; it is not a new publication or a new installer qualification.
+
 ## Preview acceptance — 6 November 2026
 
 Reviewed the real GitBook revision
@@ -53,7 +66,8 @@ installation step. This was a source review, not a fresh recorded installation
 or client-by-client execution test. WWW tracks eight missing publication shots
 in its `docs/installation-walkthrough-shot-list.md`.
 
-The current baseline is SPX 1.0: installer `5752dde71f7a4a3bbaad13ae67e32ebda4f2d721`
+The baseline reviewed on 5 November was labelled SPX 1.0 (now SPX 1.1.0):
+installer `5752dde71f7a4a3bbaad13ae67e32ebda4f2d721`
 (`v1.1.0`), Server `215b9214c48c6c787b9a68b89178916239a57452`
 (`v1.0.0`) and UI `b70c9ae521e40ef7d596f866d50707ba77d19728` (`v1.1.0`).
 Installer `installer/compatibility.py` supplies the exact image pair;

@@ -11,6 +11,9 @@ ARTIFACTS = ('spx-installer', 'spx-server', 'spx-ui', 'spx-sdk',
 
 
 def render(manifest):
+    installer_version = manifest['sources']['spx-installer']['version'].removeprefix('v')
+    if manifest['release']['version'] != installer_version:
+        raise ValueError('Public SPX release version must match the stable installer version')
     rows = ['| Artifact | Version | Exact commit |', '| --- | --- | --- |']
     for name in ARTIFACTS:
         source = manifest['sources'][name]

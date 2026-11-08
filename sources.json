@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "baseline": "SPX 1.0 stable bundle; installer v1.1.0",
+  "baseline": "SPX 1.1.0 stable bundle; installer v1.1.0",
   "release": {
     "product": "SPX",
-    "version": "1.0",
+    "version": "1.1.0",
     "channel": "stable",
     "released_at": "2026-11-05"
   },

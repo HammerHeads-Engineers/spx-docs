@@ -11,6 +11,11 @@ bundle table and tutorial dependency pins. WWW imports a snapshot of this
 manifest at a reviewed immutable Docs commit; it does not own another editable
 product version list. Keep historical source-audit evidence labelled separately.
 
+The public SPX release version must match the stable installer version (without
+the leading `v`). Keep this number consistent in the manifest, release notes,
+onboarding and customer announcements. Server, UI, SDK and Python client pins
+remain independent. A catalog-only update does not change the public release.
+
 ## Working directory and task boundary
 
 Use this guide for maintaining **spx-docs**. Every command below runs from the

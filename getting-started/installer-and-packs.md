@@ -21,7 +21,7 @@ and starter instances, UI, and whether to start the environment immediately.
 The installer pins a committed public Examples context in `examples-source.json`.
 Packaging stages that content before building the installers. A public checkout
 can move independently; updating it does not update an installed bundle or its
-server/UI images. See [Release Notes](../release-notes.md) for the stable SPX 1.0
+server/UI images. See [Release Notes](../release-notes.md) for the stable SPX 1.1.0
 baseline and the temporary staging portal during the website migration.
 
 ## Select a pack

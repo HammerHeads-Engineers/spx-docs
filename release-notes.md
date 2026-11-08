@@ -1,11 +1,13 @@
 # Release Notes
 
-## SPX 1.0 — 5 November 2026
+## SPX 1.1.0 — 5 November 2026
 
-SPX 1.0 is the stable product baseline. Its native/portable installer is
+SPX 1.1.0 is the stable product release. Its native/portable installer is
 version **1.1.0**, bundling **SPX Server 1.0.0** and **SPX UI 1.1.0**.
-These components have separate version series. A portal card labelled
-"SPX installer 1.1.0" and a website build version do not change the product baseline.
+The public SPX release number follows the stable installer version across the
+website, documentation and release announcements. Server, UI, SDK and Python
+client versions remain those of their actual releases; the website build has
+its own application version.
 
 ## Coherent documentation baseline
 

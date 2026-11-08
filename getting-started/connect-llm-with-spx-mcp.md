@@ -5,7 +5,7 @@ icon: brain-circuit
 
 # Connect an LLM with SPX MCP
 
-The SPX 1.0 native installer prepares a shared workspace for installation and
+The SPX 1.1.0 native installer prepares a shared workspace for installation and
 later runtime work. Use **Configure with your own AI Agent** in SPX Setup to
 install through a conversation, or open the prepared workspace after a normal
 wizard installation. A separate MCP Setup is not required for a new native install.

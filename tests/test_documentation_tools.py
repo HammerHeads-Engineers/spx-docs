@@ -16,6 +16,14 @@ import yaml
 
 
 class DocumentationToolsTests(unittest.TestCase):
+    def test_bundle_rejects_product_label_that_differs_from_installer(self):
+        root = Path(__file__).resolve().parents[1]
+        manifest = json.loads((root / 'sources.json').read_text())
+        changed = copy.deepcopy(manifest)
+        changed['release']['version'] = '1.0'
+        with self.assertRaisesRegex(ValueError, 'must match the stable installer'):
+            render(changed)
+
     def test_bundle_manifest_rejects_a_moving_source_reference(self):
         root = Path(__file__).resolve().parents[1]
         manifest = json.loads((root / 'sources.json').read_text())

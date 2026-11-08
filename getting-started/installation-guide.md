@@ -7,7 +7,7 @@ description: Install SPX for Windows, macOS or Linux and verify the browser UI a
 **Result:** the browser UI opens and API health reports `status: ok`.
 Choose the ordinary setup wizard or install through a conversation with your
 own local AI agent. Browser use does not require an AI client.
-This guide targets the [SPX 1.0 stable bundle](../release-notes.md):
+This guide targets the [SPX 1.1.0 stable bundle](../release-notes.md):
 installer **1.1.0**, Server **1.0.0** and UI **1.1.0**.
 
 ## Choose your operating system
