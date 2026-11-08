@@ -26,7 +26,7 @@ In the UI navigation, select **Connections**.
 ### Graph example: building energy balance
 
 The graph below shows **five simulation instances and seven active connections**
-in SPX UI RC76. It uses public Smart Building models with protocol adapters
+in SPX UI 1.1.0. It uses public Smart Building models with protocol adapters
 removed, so the example runs without a broker, gateway or physical device.
 
 <figure><img src="../.gitbook/assets/connections-building-energy-five-instances.jpg" alt="SPX Connections view with seven active connections between weather_station, building_physics, rooftop_pv, smart_plug and battery_grid. The graph routes weather inputs to the building and PV models, then combines HVAC demand, PV production and plug load in the battery/grid model."><figcaption><p>Five-instance building energy example in the real SPX UI. Yellow ports mark k__ control attributes; grey ports mark ordinary attributes. Arrows show source-to-target propagation. Node positions were arranged manually for this screenshot.</p></figcaption></figure>

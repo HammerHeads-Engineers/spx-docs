@@ -52,4 +52,4 @@ Choose the log source, level and result limit. Reproduce the operation, then ver
 * [Settings](settings.md) for connection setup.
 * [Troubleshooting and Support](../troubleshooting-and-support/README.md) for escalation flow.
 
-These instructions describe UI RC76. Screenshots illustrate the controls; use the text and expected runtime state when the visual layout differs.
+These instructions target UI 1.1.0. Screenshots captured with UI RC76 illustrate the controls; use the text and expected runtime state when the visual layout differs.

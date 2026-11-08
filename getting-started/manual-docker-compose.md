@@ -48,7 +48,7 @@ Minimal server-only template:
 ```yaml
 services:
   spx-server:
-    image: ${SPX_SERVER_IMAGE:-simplephysx/spx-server:v1.0.0-rc.76}
+    image: ${SPX_SERVER_IMAGE:-simplephysx/spx-server:v1.0.0}
     container_name: spx-server
     ports:
       - "8000:8000"

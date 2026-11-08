@@ -1,26 +1,32 @@
 {
   "schema_version": 1,
-  "baseline": "installer v1.1.0-rc.115 coherent release bundle",
+  "baseline": "SPX 1.1.0 stable bundle; installer v1.1.0",
+  "release": {
+    "product": "SPX",
+    "version": "1.1.0",
+    "channel": "stable",
+    "released_at": "2026-11-05"
+  },
   "sources": {
     "spx-installer": {
       "repository": "HammerHeads-Engineers/spx-installer",
-      "version": "v1.1.0-rc.115",
-      "commit": "fed6e2ab3e21efd07b7307ad7a22dcef3cfece17"
+      "version": "v1.1.0",
+      "commit": "5752dde71f7a4a3bbaad13ae67e32ebda4f2d721"
     },
     "spx-server": {
       "repository": "HammerHeads-Engineers/spx-server",
-      "version": "v1.0.0-rc.76",
-      "commit": "bc23bdb4fc6c9391981bb5e2180d24081993a3bf"
+      "version": "v1.0.0",
+      "commit": "215b9214c48c6c787b9a68b89178916239a57452"
     },
     "spx-ui": {
       "repository": "HammerHeads-Engineers/spx-ui",
-      "version": "v1.0.0-rc.76",
-      "commit": "e339deb98b9f83e4bbd0333ae7406320805e5252"
+      "version": "v1.1.0",
+      "commit": "b70c9ae521e40ef7d596f866d50707ba77d19728"
     },
     "spx-sdk": {
       "repository": "HammerHeads-Engineers/spx-sdk",
-      "version": "v1.0.0-rc.21",
-      "commit": "7f3d43887f3b81f27be2b2076d0172090db8b0dd"
+      "version": "v1.0.0",
+      "commit": "1d7bb611af077cfdd4fabefa6e782a8a7cb3253b"
     },
     "spx-python": {
       "repository": "HammerHeads-Engineers/spx-python",
@@ -29,11 +35,13 @@
     },
     "spx-examples": {
       "repository": "HammerHeads-Engineers/spx-examples",
-      "commit": "be71a161e97eb7a112d0581136a7b702b34cd98a"
+      "version": "catalog-2026.11.05.1",
+      "commit": "f1b454568614f829bc71899f898c7036c61692ca"
     }
   },
   "catalog": {
     "repository": "HammerHeads-Engineers/spx-examples",
-    "commit": "be71a161e97eb7a112d0581136a7b702b34cd98a"
+    "version": "catalog-2026.11.05.1",
+    "commit": "f1b454568614f829bc71899f898c7036c61692ca"
   }
 }

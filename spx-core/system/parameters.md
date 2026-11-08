@@ -22,7 +22,7 @@ Port zero permits runtime assignment for multi-instance ASCII devices.
 
 ## Initial attribute values
 
-`init_parameters` is the registered initialization container in the RC76 runtime
+`init_parameters` is the registered initialization container in the Server 1.0.0 runtime
 (`spx_core/system/init_parameters.py`). It assigns existing attribute wrappers
 when the definition is populated; it is not a generic `parameters` container.
 

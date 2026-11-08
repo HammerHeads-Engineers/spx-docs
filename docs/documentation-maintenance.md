@@ -4,6 +4,18 @@ Canonical source: spx-docs/main. Product version inputs live in `sources.json`;
 changing a catalog pin does not change the runtime baseline. Current public
 entry point: [Start here](../README.md).
 
+For a reviewed product baseline update, change the exact source revisions in
+`sources.json`, run `python scripts/render_release.py`, and regenerate the API
+and device catalog with their existing tools. The release renderer owns the
+bundle table and tutorial dependency pins. WWW imports a snapshot of this
+manifest at a reviewed immutable Docs commit; it does not own another editable
+product version list. Keep historical source-audit evidence labelled separately.
+
+The public SPX release version must match the stable installer version (without
+the leading `v`). Keep this number consistent in the manifest, release notes,
+onboarding and customer announcements. Server, UI, SDK and Python client pins
+remain independent. A catalog-only update does not change the public release.
+
 ## Working directory and task boundary
 
 Use this guide for maintaining **spx-docs**. Every command below runs from the
@@ -45,6 +57,7 @@ In a virtual environment from the Docs checkout:
 
 ```bash
 python -m pip install -r requirements-tutorials.txt
+python scripts/render_release.py --check
 python scripts/render_tutorials.py --check
 python scripts/check_docs.py
 python scripts/check_navigation.py

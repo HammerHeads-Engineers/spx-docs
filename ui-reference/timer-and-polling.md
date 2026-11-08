@@ -16,7 +16,7 @@ Back to UI Overview: [UI Overview](general-view.md).
 ## Where to find it
 
 Open **System** in the sidebar, then select **Timer** or **Polling** in the left
-panel. They are tabs, not separate sidebar entries in UI RC76. An individual
+panel. They are tabs, not separate sidebar entries in UI 1.1.0. An individual
 instance also has its own Timer and Polling tabs in [instance details](instances.md).
 Always check which scope you are inspecting.
 

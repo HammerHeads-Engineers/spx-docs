@@ -5,7 +5,10 @@ description: Install SPX for Windows, macOS or Linux and verify the browser UI a
 # Install SPX
 
 **Result:** the browser UI opens and API health reports `status: ok`.
-MCP is optional and is configured separately after this installation.
+Choose the ordinary setup wizard or install through a conversation with your
+own local AI agent. Browser use does not require an AI client.
+This guide targets the [SPX 1.1.0 stable bundle](../release-notes.md):
+installer **1.1.0**, Server **1.0.0** and UI **1.1.0**.
 
 ## Choose your operating system
 
@@ -23,11 +26,19 @@ Do not share product keys or personalized generated configuration.
 
 ## Download the installer {#id-1-download-the-installer}
 
-For release-candidate testing, sign in at [staging Downloads](https://staging.simplephysx.com/downloads)
-and select **Development**. Product keys are managed under
-[Product Keys](https://staging.simplephysx.com/account/product-keys).
-The main `simplephysx.com` site remains the public website; these instructions
-refer to the staging application.
+1. Sign in to the [SPX portal](https://www.simplephysx.com/sign-in) and select
+   the workspace with an active entitlement. Community supports five instances
+   for non-commercial evaluation; see the [licensing guide](../appendices/licensing-information.md).
+2. Open [Product Keys](https://www.simplephysx.com/account/product-keys).
+   A workspace owner or admin can reveal/copy the key for the intended license slot.
+3. Open [Downloads](https://www.simplephysx.com/downloads), keep **Stable** selected,
+   and choose installer **1.1.0** for your operating system.
+
+> **Website migration:** until the new portal is available on `www.simplephysx.com`,
+> use [staging Downloads](https://staging.simplephysx.com/downloads) and
+> [staging Product Keys](https://staging.simplephysx.com/account/product-keys).
+> Select **Stable** there as well. A staging website can distribute the stable
+> product; choosing **Development** is only for explicitly requested pre-release testing.
 
 Use the offered Windows `.exe`, macOS `.pkg`, or Linux/Unix portable `.tgz`.
 Check the version and SHA-256 shown on Downloads. `downloads.simplephysx.com`
@@ -91,6 +102,12 @@ Where to find it:
 - writes helper scripts,
 - can start the stack immediately.
 
+Keep **Interactive (default)** selected for the ordinary wizard. For conversational
+installation, select **Configure with your own AI Agent** and follow the
+[four-step Agent Setup flow](connect-llm-with-spx-mcp.md#install-with-an-ai-agent-in-four-steps).
+Setup collects the key locally and prepares the agent workspace; the agent
+proposes a plan and waits for your approval. Keep product keys out of chat.
+
 Keep SPX UI enabled and LAN exposure disabled for the local first run.
 The first UI exercise provides its own small model, so it does not require a
 pack, starter instances or a protocol client. If you choose a pack instead,
@@ -123,6 +140,10 @@ Record the installer version and the SPX Server/UI image tags from the generated
 `docker-compose.generated.yml`. They have separate version series. Use the supported pair recorded in [Release Notes](../release-notes.md);
 do not substitute independently newer image tags.
 
+In **Settings**, confirm **Ready**, the intended managed upstream target and
+**Authorization: Accepted by SPX server**. Rerun SPX Setup to correct the key or
+upstream configuration, start the updated environment, then select **Retry**.
+
 If Docker is unavailable, Setup explains whether the CLI, Engine or Compose is
 missing. Start or unpause Docker Desktop, wait for Engine to be running, and
 press Enter to retry. On macOS the tools search Docker Desktop's bundled CLI
@@ -135,7 +156,11 @@ When the UI opens and `/health` reports `status: ok`, the basic installation is
 complete. You do not need MCP for browser use.
 
 **Continue with [First device in the UI](README.md).**
+That exercise creates one sensor, reaches **RUNNING**, and verifies that setting
+`k__temperature_c` to **31.25** produces `temperature_c = 31.25°C`.
 For agent access, choose [Connect your MCP client](connect-llm-with-spx-mcp.md).
+Current native Setup already prepares the shared installation/runtime workspace.
+Continue in that folder; a second MCP Setup is only for repair or older installs.
 For code, choose [First Python program](../simulation-and-modeling/using-spx-python.md).
 
 ## Need a different setup?

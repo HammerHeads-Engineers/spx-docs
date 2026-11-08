@@ -9,7 +9,94 @@ from the exact released versions in `sources.json`; public catalog pinning is
 separate from the released installer context. This is an implementation and
 simulation audit, not physical device or manufacturer certification.
 
-## Executed technical checks
+## Public release naming — 8 November 2026
+
+The public product release is **SPX 1.1.0**, matching the stable installer
+`v1.1.0`. This replaces the earlier public label "SPX 1.0" for the same reviewed
+bundle. Component versions, immutable source revisions, release date and
+installer binaries are unchanged. The manifest renderer rejects a public
+release label that differs from the stable installer version.
+
+WWW must regenerate its snapshot from the immutable Docs commit containing
+this change. Customer announcements use the same public version. Earlier
+preview and runtime evidence below remains historical evidence for the same
+artifact set; it is not a new publication or a new installer qualification.
+
+## Preview acceptance — 6 November 2026
+
+Reviewed the real GitBook revision
+[`NVD3DImLsKAmgXHK2YTW`](https://docs.simplephysx.com/~/revisions/NVD3DImLsKAmgXHK2YTW/),
+which contains the customer-facing pages from Docs commit
+`ecac0b7dac475205c66c9a9c8bbde4bcac746452`. The rendered sidebar was expanded
+through all seven sections and the API/reference branches; its 136 observed
+routes match the existing migration map without changes. Start Here, installation,
+the four-step Agent Setup link and the first-device page were checked in the
+browser. At a 390px viewport, installation and Agent Setup remained readable
+without horizontal overflow; the mobile contents menu worked.
+
+The publication checker made 432 requests: 136 current Markdown endpoints and
+148 legacy URLs in HTML and Markdown forms. All current endpoints and required
+content corrections passed. Of 296 legacy requests, 240 remained in the preview;
+56 (28 addresses in both formats) redirected to production. Those 56 resolved to
+the expected canonical path, but escaped the reviewed revision, so the strict
+checker correctly remains unsuccessful. No missing-page responses or timeouts
+remained in the final run. See the compact
+[review evidence](review-evidence/preview-2026-11-06.json).
+
+The stale `MCP is optional` publication marker was replaced by the current
+browser/AI choice and four-step handoff contract. Matching ignores paragraph
+line wrapping while retaining the preview-scope and legacy redirect checks.
+The full redirect check must be repeated after an authorized publication; this
+preview review is not a production publication or a newly executed installer run.
+The eight native installation media shots remain outstanding in the WWW shot list.
+
+## Stable bundle alignment — 5 November 2026
+
+### Conversational installation follow-up
+
+The installation and Connect an LLM articles now describe the same four-step
+Agent Setup path as the WWW staging guide. Source review used installer tag
+`v1.1.0`, commit `5752dde71f7a4a3bbaad13ae67e32ebda4f2d721`:
+`installer/wizard_modes.py` (exact menu label), `installer/setup_workspace.py`
+(generated INSTALLATION.md, prompt, local key and shared workspace), and
+`docs/CONVERSATIONAL_SETUP.md` (client support, plan approval and separate runtime
+requests). Native Setup prepares both setup/runtime MCP configurations before
+deployment. An additional MCP Setup or reconnect after success is not a normal
+installation step. This was a source review, not a fresh recorded installation
+or client-by-client execution test. WWW tracks eight missing publication shots
+in its `docs/installation-walkthrough-shot-list.md`.
+
+The baseline reviewed on 5 November was labelled SPX 1.0 (now SPX 1.1.0):
+installer `5752dde71f7a4a3bbaad13ae67e32ebda4f2d721`
+(`v1.1.0`), Server `215b9214c48c6c787b9a68b89178916239a57452`
+(`v1.0.0`) and UI `b70c9ae521e40ef7d596f866d50707ba77d19728` (`v1.1.0`).
+Installer `installer/compatibility.py` supplies the exact image pair;
+`examples-source.json` pins public catalog `2026.11.05.1` at `f1b45456`.
+The tagged Server lock requires SDK 1.0.0. The installer intentionally retains
+Python client 1.0.0rc3. The reviewed stable UI diff against RC76 changes version
+and release/CI files; it does not replace the guide controls.
+
+Executed for this alignment:
+
+- 21 public documentation tests on Python 3.12 with the generated package pins.
+- Markdown links/anchors/assets, task navigation, release table/dependency
+  regeneration, tutorial block consistency and exact-pinned catalog regeneration.
+- OpenAPI regenerated through `scripts/export_openapi.py` from the pinned clean
+  server tree and its FastAPI 0.124.0 / SDK 1.0.0 dependencies: 10 path templates;
+  the only schema diff is the source commit provenance.
+- Eight existing runtime contracts passed in a separate disposable container
+  using `simplephysx/spx-server@sha256:4a6609c7ce12233d9e791a9e00dddf51c066e80e0265647a30e730f62bbcff2b`.
+  Docs were mounted read-only; Python client 1.0.0rc3 was supplied separately.
+  Synthetic test credentials, loopback Modbus and temporary snapshots were used.
+  This covers the UI exercise's RUNNING/31.25°C logic, Python cleanup,
+  connections, manual clock/lifecycle, snapshot defaults, scenario and API auth.
+
+The website consumes a generated manifest snapshot at an immutable Docs commit.
+Stable is the normal download channel on both portals. Explicitly labelled
+staging links remain as a migration bridge while the public host still serves
+the old website. Source updates do not publish or requalify installer binaries.
+
+## Historical RC76 audit — executed technical checks
 
 - Server RC76 / SDK RC21 dependency lock exported from the tagged server tree.
 - 85 API/model/meta-parameter tests passed in one isolated run.
@@ -88,7 +175,7 @@ provenance; existing agent/MCP guards, imports and tool inventory passed. The
 50 installer context/workspace documentation tests also passed. The released
 installer context pin was deliberately not changed by a documentation update.
 
-## Page evidence inventory
+## Historical RC76 page evidence inventory
 
 The source column identifies the implementation section used for the page's
 contract. Private source paths are maintainer evidence, not prerequisites for

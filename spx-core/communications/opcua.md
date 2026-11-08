@@ -39,7 +39,7 @@ communication:
 
 ## Access and write direction
 
-The RC76 server exposes client writes only on writable binding directions.
+Server 1.0.0 exposes client writes only on writable binding directions.
 Outbound telemetry is read-only to OPC UA clients; inbound/bidirectional
 bindings can carry client writes into the configured SPX attribute. Choose
 `read_attribute` and `write_attribute` deliberately and check the server's

@@ -6,7 +6,7 @@ icon: package
 # Installer and packs
 
 Start with the [Installation Guide](installation-guide.md). Download the released
-Windows EXE, macOS PKG or portable TGZ through [staging Downloads](https://staging.simplephysx.com/downloads),
+Windows EXE, macOS PKG or portable TGZ through [Downloads](https://www.simplephysx.com/downloads),
 then run **SPX Setup**. Select the pack or protocols, whether to include models
 and starter instances, UI, and whether to start the environment immediately.
 
@@ -21,7 +21,8 @@ and starter instances, UI, and whether to start the environment immediately.
 The installer pins a committed public Examples context in `examples-source.json`.
 Packaging stages that content before building the installers. A public checkout
 can move independently; updating it does not update an installed bundle or its
-server/UI images. See [Release Notes](../release-notes.md) for the coherent RC baseline.
+server/UI images. See [Release Notes](../release-notes.md) for the stable SPX 1.1.0
+baseline and the temporary staging portal during the website migration.
 
 ## Select a pack
 

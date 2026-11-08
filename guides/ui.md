@@ -31,7 +31,7 @@ Use a disposable workspace. Exercises 1–2 need one model and two instances;
 the energy example needs capacity for five models and five instances. Its import
 replaces models, instances and connections. Export any configuration you need first.
 
-Screenshots show the real released UI RC76. They retain the application view,
+The current bundle uses UI 1.1.0. Screenshots were captured with UI RC76 and retain the application view,
 page title or instance header, and the relevant selection. Open an image to
 inspect small labels. On narrower windows some tabs move into **More tabs** (…).
 The numbered text, exact runtime names and completion checks are the same on
