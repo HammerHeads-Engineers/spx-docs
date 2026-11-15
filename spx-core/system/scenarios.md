@@ -1,3 +1,7 @@
+---
+description: "Define SPX scenarios that temporarily override values, inject noise or disconnect protocols for repeatable fault tests."
+---
+
 # Scenarios
 
 Scenarios (`spx_core/system/scenarios.py`) let you script temporary changes to your simulation: inject noise, disconnect protocols, or override values for a limited time. They are essential for fault-injection tests and QA workflows.

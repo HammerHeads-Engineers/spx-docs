@@ -1,3 +1,7 @@
+---
+description: "Package reusable SPX model fragments as templates and reference them through modules or instances."
+---
+
 # Templates
 
 Templates (`spx_core/system/templates.py`) let you package reusable model fragments and register them in the class registry. Other models can then reference the template by name via the `modules` or `instances` containers.

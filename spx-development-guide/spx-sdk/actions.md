@@ -1,3 +1,7 @@
+---
+description: "Define SPX actions that read model inputs, transform attribute values and write results during each simulation tick."
+---
+
 # Actions Module
 
 Actions transform attribute values and push results back into the simulation. Each action is a component that reads inputs (for example `$in(...)`, `$attr(...)`, `$ext(...)`), performs logic, and writes to one or more outputs. Use the `actions` container inside a model to declare the steps that run every simulation tick.

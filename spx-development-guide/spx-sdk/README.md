@@ -1,4 +1,5 @@
 ---
+description: "Explore SPX SDK components for custom simulations: the registry, attributes, actions, logic, communication, hooks and diagnostics."
 icon: hammer-brush
 ---
 

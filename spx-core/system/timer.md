@@ -1,3 +1,7 @@
+---
+description: "Configure SPX simulated time for real-time execution or explicit manual stepping in deterministic tests."
+---
+
 # Timer
 
 The `Timer` component (`spx_core/system/timer.py`) keeps track of simulated time. It supports real-time and manual stepping, making it a key building block for deterministic tests.

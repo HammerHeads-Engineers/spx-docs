@@ -3,6 +3,7 @@
 import json
 from pathlib import Path
 import re
+from check_docs import frontmatter
 
 ROOT = Path(__file__).resolve().parents[1]
 SECTIONS = ['Start here', 'Guides', 'Models & packs', 'Integrations', 'Agents & MCP',
@@ -31,9 +32,21 @@ def navigation_errors(summary):
     return errors
 
 
+def metadata_errors(summary, root=ROOT):
+    errors = []
+    for source in {path for _, _, path in entries(summary)}:
+        path = root / source
+        if not path.is_file():
+            continue  # Report missing navigation targets in main().
+        description = frontmatter(path.read_text(encoding='utf-8')).get('description')
+        if not isinstance(description, str) or not description.strip():
+            errors.append('Published page needs a description: ' + source)
+    return errors
+
+
 def main():
     text = (ROOT / 'SUMMARY.md').read_text()
-    errors = navigation_errors(text)
+    errors = navigation_errors(text) + metadata_errors(text)
     sources = {p for _, _, p in entries(text)}
     migration = json.loads((ROOT / 'docs/navigation/legacy-pages.json').read_text())
     for row in migration['pages']:

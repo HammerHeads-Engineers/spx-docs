@@ -1,3 +1,7 @@
+---
+description: "Use the SPX Python client to navigate models and instances, read attributes and automate common simulation workflows."
+---
+
 # Usage & Examples
 
 This guide walks through common workflows using `spx_python.client.SpxClient` and the utilities in `spx_python.helpers`. The examples mirror the scenarios exercised in `tests/test_basic_spx_python.py`, `tests/test_helpers.py`, and the system-level tests inside `spx-examples`.

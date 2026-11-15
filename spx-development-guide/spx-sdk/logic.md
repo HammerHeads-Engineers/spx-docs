@@ -1,4 +1,5 @@
 ---
+description: "Express conditional SPX model behavior with conditions, actions, else branches and declarative control flow."
 icon: list-tree
 ---
 

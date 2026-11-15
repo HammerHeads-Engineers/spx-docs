@@ -1,3 +1,7 @@
+---
+description: "Validate SPX models with deterministic Python tests, scenario checks and protocol integration tests before sharing changes."
+---
+
 # Testing and Validation
 
 <figure><img src=".gitbook/assets/guide-scenario-stopped.jpg" alt="Full scenario_sensor view showing the observed 20 to 80 to 20°C disturbance and restored input."><figcaption><p>A complete check includes baseline, disturbance and the documented state after stopping.</p></figcaption></figure>

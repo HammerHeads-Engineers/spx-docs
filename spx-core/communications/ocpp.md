@@ -1,3 +1,7 @@
+---
+description: "Configure the SPX OCPP 1.6J adapter as a charge point or central system and map charging data to model attributes."
+---
+
 # OCPP 1.6J adapter
 
 **YAML key:** `ocpp`

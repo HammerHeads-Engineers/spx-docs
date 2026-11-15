@@ -1,3 +1,7 @@
+---
+description: "Connect SPX instances by propagating a source attribute value to a target input through runtime connection components."
+---
+
 # Connections
 
 Connections propagate a source attribute value into a target input. They are

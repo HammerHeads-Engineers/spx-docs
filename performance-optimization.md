@@ -1,3 +1,7 @@
+---
+description: "Tune SPX simulation tick rates, adapter polling, logs and custom code to reduce resource use and improve test reliability."
+---
+
 # Performance Optimization
 
 Use this checklist when simulations are slow, flaky, or resource-heavy.

@@ -1,3 +1,7 @@
+---
+description: "Check SPX installation requirements and compatible installer, server, UI, SDK and Python client versions before setup."
+---
+
 # System Requirements and Capability
 
 Use the coherent bundle in [Release Notes](../release-notes.md), not independent

@@ -1,3 +1,7 @@
+---
+description: "Check completion criteria for live SPX agent tasks and durable model contributions, including runtime results and repository validation."
+---
+
 # Definition of Done (DoD)
 
 This checklist is intentionally aligned with `spx-examples/docs/LLM_SPEC.md`:

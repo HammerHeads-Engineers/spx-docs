@@ -1,4 +1,5 @@
 ---
+description: "Prepare an AI-agent model brief with a clear runtime or repository task, device behavior, communication needs and completion criteria."
 hidden: false
 ---
 

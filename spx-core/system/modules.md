@@ -1,3 +1,7 @@
+---
+description: "Instantiate reusable registered SPX components through the modules container with aliases and per-module configuration."
+---
+
 # Modules Container
 
 Modules (`spx_core/system/modules.py`) instantiate reusable registered components.

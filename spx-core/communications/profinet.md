@@ -1,3 +1,7 @@
+---
+description: "Connect SPX attributes to PROFINET IO and record areas through the protocol adapter and its Snap7 transport configuration."
+---
+
 # PROFINET adapters
 
 SPX Server ships:

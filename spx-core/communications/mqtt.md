@@ -1,3 +1,7 @@
+---
+description: "Configure SPX MQTT publishing and subscriptions, topic bindings, payload codecs and optional Home Assistant discovery."
+---
+
 # MQTT adapter
 
 SPX Server ships two MQTT components:

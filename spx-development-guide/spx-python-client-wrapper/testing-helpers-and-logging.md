@@ -1,3 +1,7 @@
+---
+description: "Use SPX Python test helpers and logging integrations with unittest or pytest to capture assertions and diagnose test results."
+---
+
 # Testing Helpers & Logging Integration
 
 The `spx_python.helpers` and logging extensions are designed to make test code shorter, more robust, and observable. This guide shows how to:

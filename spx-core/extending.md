@@ -1,4 +1,5 @@
 ---
+description: "Package and register custom SPX runtime actions, protocols or modules, with deployment and dependency considerations."
 icon: arrows-from-line
 ---
 

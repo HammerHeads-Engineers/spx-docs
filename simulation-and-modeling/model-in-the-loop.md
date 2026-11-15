@@ -1,3 +1,7 @@
+---
+description: "Understand Model-in-the-Loop testing: control virtual devices through the SPX API while your application uses their device protocols."
+---
+
 # Model-in-the-Loop (MiL) with SPX
 
 Model-in-the-Loop (MiL) is a simulation-based testing approach where the system under test (SUT) interacts with a virtual model instead of physical hardware. This allows developers and testers to validate system behavior, control algorithms, and communication protocols in a controlled and repeatable environment.

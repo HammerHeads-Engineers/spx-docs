@@ -1,3 +1,7 @@
+---
+description: "Generate, validate and iterate on a durable SPX model contribution in spx-examples, with the correct branch and test workflow."
+---
+
 # Workflow: Generate → Validate → Iterate
 
 Use this workflow for a durable model contribution (`repo_dev`) to public

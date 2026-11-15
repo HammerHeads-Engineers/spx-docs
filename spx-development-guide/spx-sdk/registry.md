@@ -1,4 +1,5 @@
 ---
+description: "Register SPX component classes and resolve YAML definitions through the SDK class and instance registries."
 icon: cabinet-filing
 ---
 

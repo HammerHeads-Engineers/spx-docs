@@ -1,4 +1,5 @@
 ---
+description: "Navigate the SPX browser UI to inspect running instances, compare signals and debug simulation behavior."
 icon: browser
 ---
 

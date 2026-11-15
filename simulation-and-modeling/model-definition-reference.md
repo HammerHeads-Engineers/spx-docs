@@ -1,3 +1,7 @@
+---
+description: "Define SPX models in YAML or JSON: attributes, expressions, actions, communication and runtime structure for the released baseline."
+---
+
 # Model definition reference (YAML and JSON)
 
 This is the canonical SPX model-definition reference. It describes the released

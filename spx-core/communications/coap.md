@@ -1,3 +1,7 @@
+---
+description: "Expose CoAP resources over UDP and map requests to SPX attributes with resource and binding definitions."
+---
+
 # CoAP server adapter
 
 **YAML key:** `coap_server`

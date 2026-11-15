@@ -1,3 +1,7 @@
+---
+description: "Connect SPX simulations to instruments, PLCs and hardware backends while preserving explicit simulation steps and test repeatability."
+---
+
 # Hardware Bridges & Backends
 
 Sometimes your simulation needs to talk to the outside world:

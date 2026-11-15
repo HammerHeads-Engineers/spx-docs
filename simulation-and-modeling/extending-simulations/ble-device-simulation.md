@@ -1,3 +1,7 @@
+---
+description: "Expose an SPX temperature sensor as a BLE peripheral through the companion adapter and verify it with a mobile BLE client."
+---
+
 # BLE Device Simulation Walkthrough
 
 This guide builds on SPX custom components to expose a virtual device as a Bluetooth Low Energy (BLE) peripheral. You will wire a model to the `ble` communication protocol, drive a companion `spx-ble-adapter` process, and verify the interaction using a mobile BLE explorer. The walkthrough starts from the temperature sensor template and then expands toward the richer vital-signs demo.

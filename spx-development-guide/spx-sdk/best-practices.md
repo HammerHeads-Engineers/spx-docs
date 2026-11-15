@@ -1,3 +1,7 @@
+---
+description: "Keep SPX SDK models maintainable and testable with explicit time, reusable definitions and clear internal/external state boundaries."
+---
+
 # SDK Best Practices
 
 This page collects practical conventions for authoring models with the SDK and keeping them maintainable across a growing library.

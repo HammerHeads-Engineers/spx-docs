@@ -1,3 +1,7 @@
+---
+description: "Configure SPX SNMP client bindings over UDP or use the in-memory loopback server for tests and tooling."
+---
+
 # SNMP adapters
 
 SPX Server ships two SNMP components:

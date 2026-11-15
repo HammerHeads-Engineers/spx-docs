@@ -1,3 +1,7 @@
+---
+description: "Diagnose SPX installation, managed workspace and runtime issues using checks appropriate to your deployment shape."
+---
+
 # Common Issues and Solutions
 
 First identify the installation shape. Do not install dependencies into a random

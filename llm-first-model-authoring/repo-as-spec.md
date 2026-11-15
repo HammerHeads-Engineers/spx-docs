@@ -1,3 +1,7 @@
+---
+description: "Use spx-examples as the source for models, catalog conventions and contribution rules, alongside the canonical SPX documentation."
+---
+
 # Repo-as-spec (spx-examples)
 
 The [documentation portal](https://docs.simplephysx.com) defines the product

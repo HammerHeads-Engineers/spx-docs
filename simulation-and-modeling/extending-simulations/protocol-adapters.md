@@ -1,3 +1,7 @@
+---
+description: "Implement a custom SPX protocol adapter with lifecycle methods and attribute bindings for a transport your integration needs."
+---
+
 # Protocol Adapters
 
 Extending SPX with a new protocol adapter lets you bridge simulations to bespoke transports—legacy serial buses, proprietary gateways, or vendor-specific SDKs. This guide distils common patterns from the built-in adapters (`ascii`, `http_endpoint`, `modbus_slave`, `mqtt`, `ble`) so you can author your own protocol component with minimal guesswork.

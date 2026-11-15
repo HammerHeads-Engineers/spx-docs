@@ -1,3 +1,7 @@
+---
+description: "Configure BACnet/IP objects and property mappings backed by SPX model attributes for building-automation integrations."
+---
+
 # BACnet/IP adapter
 
 **YAML key:** `bacnet`

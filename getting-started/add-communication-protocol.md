@@ -1,4 +1,5 @@
 ---
+description: "Expose a simulated temperature sensor over Modbus TCP and connect a client to read its temperature and fault flag."
 icon: satellite-dish
 ---
 

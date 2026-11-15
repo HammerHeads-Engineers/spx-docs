@@ -1,3 +1,7 @@
+---
+description: "Expose SPX model attributes as OPC UA nodes with an endpoint, namespace and configurable read/write mappings."
+---
+
 # OPC UA server adapter
 
 **YAML key:** `opcua_server`

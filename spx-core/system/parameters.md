@@ -1,3 +1,7 @@
+---
+description: "Configure SPX deployment parameters for hostnames, ports and protocol wiring while keeping simulation tuning in model attributes."
+---
+
 # Parameters
 
 SPX distinguishes deployment inputs from initial model state.

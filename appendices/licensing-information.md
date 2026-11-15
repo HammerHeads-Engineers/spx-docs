@@ -1,3 +1,7 @@
+---
+description: "Get and handle an SPX product key safely for local use or CI, without committing credentials to models or repositories."
+---
+
 # Licensing Information
 
 SPX Server typically requires a product key to run authenticated operations. In this documentation and the reference repos it is always treated as a secret:

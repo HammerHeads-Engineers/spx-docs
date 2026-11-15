@@ -1,3 +1,7 @@
+---
+description: "Load SPX model definitions into the server runtime and understand their containers, lifecycle and optional runtime components."
+---
+
 # Model Loader
 
 `spx_core/system/model.py` defines the `Model` class that the server instantiates for every YAML document. It is responsible for:

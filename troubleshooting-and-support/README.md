@@ -1,3 +1,7 @@
+---
+description: "Find SPX troubleshooting runbooks, frequently asked questions and the diagnostic information needed for support."
+---
+
 # Troubleshooting and Support
 
 Start here when something is failing in local runs or CI.

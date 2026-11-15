@@ -1,3 +1,7 @@
+---
+description: "Look up SPX terminology for models, instances, the SDK, server, Python client, registry and simulation testing."
+---
+
 # Glossary of Terms
 
 - **SPX Server**: the runtime that hosts Models and runs Instances, exposing the REST API (default `http://localhost:8000`).

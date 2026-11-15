@@ -1,3 +1,7 @@
+---
+description: "Find SPX documentation, public model examples and companion resources, with clear repository access boundaries."
+---
+
 # Additional Resources and Readings
 
 | Resource | Access | Purpose |

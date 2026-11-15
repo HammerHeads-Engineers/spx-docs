@@ -1,3 +1,7 @@
+---
+description: "Review the stable SPX release, compatible component bundle and upgrade guidance for installer, server, UI, SDK and client."
+---
+
 # Release Notes
 
 ## SPX 1.1.0 — 5 November 2026

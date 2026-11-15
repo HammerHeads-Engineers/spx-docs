@@ -1,3 +1,7 @@
+---
+description: "Use the SPX Server API v3 reference for authentication, hierarchy routes and the OpenAPI specification of the released server."
+---
+
 # API v3 reference
 
 The baseline is SPX Server **v1.0.0**. Its hierarchy API is rooted at

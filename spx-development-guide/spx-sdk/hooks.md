@@ -1,3 +1,7 @@
+---
+description: "Attach SPX hooks to lifecycle events and refresh derived model values when attributes change."
+---
+
 # Hooks Module
 
 Hooks let you attach extra behavior (refreshing models, firing custom logic, raising alerts) whenever a component emits lifecycle events such as `on_set`, `on_run`, or `on_error`. The SDK treats hooks as child components: you describe them declaratively, and the `Hooks` container registers each hook class on the parent component.

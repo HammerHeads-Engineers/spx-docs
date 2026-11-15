@@ -1,3 +1,7 @@
+---
+description: "Integrate external software with SPX through device protocols and validate the connection using Model-in-the-Loop tests."
+---
+
 # Integration with Other Systems
 
 SPX integrates with external systems through the same interfaces your real devices use. In most projects, the integration boundary is a protocol adapter:

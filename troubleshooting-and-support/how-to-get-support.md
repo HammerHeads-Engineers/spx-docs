@@ -1,3 +1,7 @@
+---
+description: "Contact SPX support with a reproducible example, component versions and sanitized diagnostics without exposing credentials."
+---
+
 # How to Get Support
 
 Contact [info@simplephysx.com](mailto:info@simplephysx.com) with the subject

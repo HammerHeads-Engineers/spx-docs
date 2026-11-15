@@ -1,4 +1,5 @@
 ---
+description: "Configure built-in SPX actions for model behavior, including ramps, functions and overrides of existing attributes."
 icon: react
 ---
 
