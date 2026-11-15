@@ -1,3 +1,7 @@
+---
+description: "Understand SPX models, registry keys, live instances and attribute connections, and how they work together in a simulation."
+---
+
 # Core Concepts
 
 <figure><img src="../.gitbook/assets/guide-connection-active.jpg" alt="Full Connections view distinguishing model names, runtime instances and a source-to-target connection."><figcaption><p>One reusable model has two live instances; the arrow transfers a telemetry value into an input.</p></figcaption></figure>

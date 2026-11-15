@@ -1,3 +1,7 @@
+---
+description: "Reference SPX MCP tools, local workspace requirements and runtime rules for inspecting models and controlling a running server."
+---
+
 # MCP tools and runtime rules
 
 `spx-examples` includes a local MCP tool intended for code-oriented LLM workflows.

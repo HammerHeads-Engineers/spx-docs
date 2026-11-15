@@ -1,15 +1,31 @@
 import sys
 from pathlib import Path
 import unittest
+import tempfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from check_navigation import navigation_errors
+from check_navigation import navigation_errors, metadata_errors
 from check_published import normalize, at_site, index_routes
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class NavigationContracts(unittest.TestCase):
+    def test_published_pages_have_search_descriptions(self):
+        summary = (ROOT / 'SUMMARY.md').read_text()
+        self.assertEqual(metadata_errors(summary), [])
+
+    def test_metadata_check_uses_navigation_and_rejects_missing_or_nontext_descriptions(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'hidden.md').write_text('# Maintainer notes\n', encoding='utf-8')
+            summary = '* [Visible](visible.md)\n'
+            for text in ['# Visible\n', '---\ndescription: 12\n---\n# Visible\n', '---\ndescription: " "\n---\n# Visible\n']:
+                (root / 'visible.md').write_text(text, encoding='utf-8')
+                self.assertEqual(metadata_errors(summary, root), ['Published page needs a description: visible.md'])
+            (root / 'visible.md').write_text('---\ndescription: Configure a device.\n---\n# Visible\n', encoding='utf-8')
+            self.assertEqual(metadata_errors(summary, root), [])
+
     def test_user_navigation_has_one_place_per_page(self):
         summary = (ROOT / 'SUMMARY.md').read_text()
         self.assertEqual(navigation_errors(summary), [])

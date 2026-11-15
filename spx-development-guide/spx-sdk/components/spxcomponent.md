@@ -1,4 +1,5 @@
 ---
+description: "Build on SpxComponent to manage configuration, child components and lifecycle calls within an SPX component tree."
 icon: block-brick
 ---
 

@@ -1,3 +1,7 @@
+---
+description: "Configure SPX Redfish client bindings over HTTP or use the in-memory loopback server for tests and tooling."
+---
+
 # Redfish adapters
 
 SPX Server ships two Redfish components:

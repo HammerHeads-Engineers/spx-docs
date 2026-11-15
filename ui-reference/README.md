@@ -1,4 +1,5 @@
 ---
+description: "Inspect and operate a running SPX Server in the browser: models, instances, connections, charts, logs and scenarios."
 icon: display-chart-up
 ---
 

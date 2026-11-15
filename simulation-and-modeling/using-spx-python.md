@@ -1,3 +1,7 @@
+---
+description: "Control a running SPX Server from Python: load a model, create an instance and verify simulated values through the HTTP client."
+---
+
 # Using spx-python for Simulation
 
 `spx-python` RC3 is an HTTP client. It controls a running SPX Server; it does

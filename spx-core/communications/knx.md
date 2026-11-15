@@ -1,3 +1,7 @@
+---
+description: "Configure KNXnet/IP attribute bindings through a gateway, or use the local in-memory KNX bus simulator for tests."
+---
+
 # KNX/IP adapters
 
 SPX Server ships two KNX components:

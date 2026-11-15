@@ -1,3 +1,7 @@
+---
+description: "Expose SPX attributes through HTTP endpoints with path parameters, JSON responses and configurable request handling."
+---
+
 # HTTP endpoint adapter
 
 **YAML key:** `http_endpoint`

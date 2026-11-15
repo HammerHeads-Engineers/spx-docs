@@ -1,3 +1,7 @@
+---
+description: "Map SPX attributes to DALI-IP gateway frames and configure optional reply decoding for lighting integrations."
+---
+
 # DALI-IP client adapter
 
 **YAML key:** `dali`

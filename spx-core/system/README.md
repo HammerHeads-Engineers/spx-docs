@@ -1,4 +1,5 @@
 ---
+description: "Understand how the SPX system runtime loads models, instantiates components, connects attributes and advances simulations."
 icon: solar-system
 ---
 

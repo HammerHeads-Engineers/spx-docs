@@ -1,3 +1,7 @@
+---
+description: "Run a local SPX SDK model in Python without a server or Docker, using explicit time steps and equivalent YAML or JSON definitions."
+---
+
 # Local model with SDK
 
 Run a local SDK model without Docker, a server or a product key. This is the

@@ -1,3 +1,7 @@
+---
+description: "Handle SPX Python client faults, correlation IDs and transport errors when building resilient simulation tests."
+---
+
 # Advanced & Best Practices
 
 The client exposes extensibility points for fault handling, custom transports, and resilient integration tests. This page distils lessons from `tests/test_client_exceptions.py`, `tests/test_transport.py`, and the regression suites in `spx-examples`.

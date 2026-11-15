@@ -1,4 +1,5 @@
 ---
+description: "Define SPX attributes and understand internal and external values, read/write access and hooks on state changes."
 icon: square-x
 ---
 

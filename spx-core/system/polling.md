@@ -1,3 +1,7 @@
+---
+description: "Configure SPX real-time polling intervals and the background loop that advances a running model."
+---
+
 # Polling
 
 `Polling` (`spx_core/system/polling.py`) drives the simulation loop in real time. It runs in a background thread, repeatedly calling `model.run()` and sleeping between iterations.

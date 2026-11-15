@@ -1,3 +1,7 @@
+---
+description: "Validate SPX component definitions with JSON Schema and custom validators before loading or registering a model."
+---
+
 # Validation Module
 
 The validation layer checks raw component definitions before you instantiate or register them. It combines JSON Schema, SPX-specific extensions, and custom Python validators so user-provided YAML fails fast with actionable messages instead of blowing up halfway through a simulation.

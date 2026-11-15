@@ -1,3 +1,7 @@
+---
+description: "Use SPX API examples to check health, authenticate and work with a disposable server using the released component versions."
+---
+
 # Code Examples
 
 These recipes target the [released version set](../release-notes.md). Use a

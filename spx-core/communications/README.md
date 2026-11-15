@@ -1,4 +1,5 @@
 ---
+description: "Choose an SPX device protocol, check adapter roles and prerequisites, and connect your software to a running simulation."
 icon: satellite-dish
 ---
 
@@ -35,7 +36,7 @@ For your first result without an external protocol client, use
 
 **Automation / industrial**
 
-- [BACnet (`bacnet`)](https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/bacnet) — BACnet/IP objects, schedules, alarms.
+- [BACnet (`bacnet`)](bacnet.md) — BACnet/IP objects, schedules, alarms.
 - [KNX IP (`knx_ip`, `knx_ip_simulator`)](knx.md) — KNXnet/IP routing + local simulator.
 - [OPC UA server (`opcua_server`)](opcua.md) — exposes nodes via `opc.tcp://...`.
 - [PROFINET (`profinet_server`, `profinet_snap7_adapter`)](profinet.md) — PROFINET server and Snap7-based adapter.

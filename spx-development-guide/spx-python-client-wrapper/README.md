@@ -1,4 +1,5 @@
 ---
+description: "Control SPX Server API v3 from Python with a dictionary-like client, lifecycle helpers and integrations for automated tests."
 icon: python
 ---
 

@@ -1,3 +1,7 @@
+---
+description: "Configure SPX M-Bus client bindings over serial, TCP or loopback, with the in-memory server available for local tests."
+---
+
 # M-Bus adapters
 
 SPX Server ships two M-Bus components:

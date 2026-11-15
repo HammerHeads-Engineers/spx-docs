@@ -1,3 +1,7 @@
+---
+description: "Find answers about SPX UI requirements, deterministic simulation, snapshots, communication and testing workflows."
+---
+
 # FAQs
 
 ## Do I need the UI to run tests?

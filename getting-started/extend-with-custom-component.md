@@ -1,3 +1,7 @@
+---
+description: "Implement a repeatable contact-fault action, test it with the SPX SDK and load the same custom component into a disposable server."
+---
+
 # Extend with a Custom Component
 
 This tutorial implements a repeatable contact-fault action in SDK 1.0.0. First

@@ -1,3 +1,7 @@
+---
+description: "Configure an SPX ASCII or SCPI endpoint: map commands to attributes, choose transport settings and control reply timing."
+---
+
 # ASCII / SCPI Adapter
 
 **YAML key:** `ascii`

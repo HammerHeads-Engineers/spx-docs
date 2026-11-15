@@ -1,3 +1,7 @@
+---
+description: "Run an SPX SDK Model locally in Python with its timer and polling components, separately from the HTTP server runtime."
+---
+
 # Model
 
 `from spx_sdk.model import Model` imports SDK 1.0.0's `BaseModel` alias. It is

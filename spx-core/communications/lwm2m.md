@@ -1,3 +1,7 @@
+---
+description: "Configure an SPX LwM2M device to register with a server and expose model attributes through CoAP resources."
+---
+
 # LwM2M client adapter
 
 **YAML key:** `lwm2m`

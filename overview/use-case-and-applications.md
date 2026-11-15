@@ -1,3 +1,7 @@
+---
+description: "Explore SPX use cases for device-driver testing, protocol integration and deterministic simulations using models from spx-examples."
+---
+
 # Use Case and Applications
 
 SPX is typically used as a deterministic “plant/device” behind your real client code. The **quality gate** is a test suite (MiL tests) that drives time explicitly and asserts behavior.

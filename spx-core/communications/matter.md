@@ -1,3 +1,7 @@
+---
+description: "Connect SPX attributes to Matter cluster attributes and commands through a python-matter-server controller."
+---
+
 # Matter adapter
 
 **YAML key:** `matter`

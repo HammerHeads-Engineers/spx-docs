@@ -1,3 +1,7 @@
+---
+description: "Inspect SPX system and instance logs through bounded runtime buffers, the REST API and the browser UI."
+---
+
 # Logs Buffer
 
 `spx_core/system/logs.py` adds a `logs` component to every model and instance. It captures records emitted by the component’s logger into an in-memory deque so that the REST API and UI can stream diagnostics per instance without tailing external files.

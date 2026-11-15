@@ -1,3 +1,7 @@
+---
+description: "Configure SPX Modbus TCP adapters with register addresses, value codecs and attribute bindings for server or client roles."
+---
+
 # Modbus adapters
 
 SPX Server provides three Modbus components:

@@ -1,3 +1,7 @@
+---
+description: "Handle SPX product keys, restrict network exposure and configure browser origins for development and CI environments."
+---
+
 # Security Considerations
 
 This page is a practical checklist for running SPX safely in dev and CI environments.

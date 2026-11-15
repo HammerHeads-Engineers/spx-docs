@@ -1,3 +1,7 @@
+---
+description: "Compare SPX protocol adapter roles, required services and hardware, and the limits of the documented verification scope."
+---
+
 # Protocol capabilities and verification scope
 
 This matrix describes adapter roles in server 1.0.0, not certification or a claim

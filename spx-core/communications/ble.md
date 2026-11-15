@@ -1,3 +1,7 @@
+---
+description: "Bridge SPX model attributes to a BLE peripheral using the companion adapter, GATT definitions and HTTP state synchronization."
+---
+
 # BLE Adapter
 
 The BLE adapter bridges SPX simulations with the standalone [`spx-ble-adapter`](https://github.com/HammerHeads-Engineers/spx-ble-adapter). It pushes your GATT layout and live attribute values over HTTP, exposing the simulation as a Bluetooth Low Energy peripheral that mobile apps can pair with.

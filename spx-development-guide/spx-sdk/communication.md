@@ -1,4 +1,5 @@
 ---
+description: "Declare communication adapters in SPX models and extend the SDK Protocol base class for custom transports."
 icon: satellite-dish
 ---
 

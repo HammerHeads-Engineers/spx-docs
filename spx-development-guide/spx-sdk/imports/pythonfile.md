@@ -1,4 +1,5 @@
 ---
+description: "Load custom Python classes into SPX models from local files using the PythonFile component and its import configuration."
 icon: python
 ---
 

@@ -1,3 +1,7 @@
+---
+description: "Follow practical SPX scenarios for virtual device testing, fault injection and integrations using the public examples repository."
+---
+
 # Guided Use Cases & Scenarios
 
 This page focuses on scenario-driven engineering workflows (integrators/dev/QA), grounded in the runnable reference repo: [`spx-examples`](https://github.com/HammerHeads-Engineers/spx-examples).

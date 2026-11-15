@@ -1,3 +1,7 @@
+---
+description: "Capture SPX component failures with structured fault events, guard decorators, trace contexts and diagnostic logs."
+---
+
 # Diagnostics Module
 
 The diagnostics helpers catch failures in SPX components, turn them into rich `FaultEvent` objects, and emit structured logs without forcing you to wire your own error plumbing. Use them whenever a component touches unpredictable inputs (fieldbus traffic, file IO, third-party SDKs) or when you want reproducible breadcrumbs in support tickets.
