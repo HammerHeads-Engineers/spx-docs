@@ -1,7 +1,7 @@
 ---
-description: Choose browser operation, Python automation or model development.
+description: Follow SPX guides to create virtual devices, connect models, run fault scenarios and automate tests with Python. Each guide includes checks and cleanup.
 ---
-# Guides
+# SPX User Guides
 
 Choose how you want to work. Each task states its starting conditions, exact
 resource names, expected results and cleanup. Screenshots retain the surrounding
