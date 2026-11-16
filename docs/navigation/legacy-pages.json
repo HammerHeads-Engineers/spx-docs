@@ -1039,6 +1039,110 @@
       "old_url": "https://docs.simplephysx.com/spx-development-guide/testing-and-validation",
       "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/testing-and-validation.md",
       "target_source": "testing-and-validation.md"
+    },
+    {
+      "title": "BACnet",
+      "source": "spx-core/communications/bacnet.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/bacnet",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/bacnet.md",
+      "target_source": "spx-core/communications/bacnet.md",
+      "discovered_by": "Google Search Console legacy coverage export, 2026-11-16"
+    },
+    {
+      "title": "KNX",
+      "source": "spx-core/communications/knx.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/knx",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/knx.md",
+      "target_source": "spx-core/communications/knx.md",
+      "discovered_by": "Google Search Console legacy coverage export, 2026-11-16"
+    },
+    {
+      "title": "OCPP",
+      "source": "spx-core/communications/ocpp.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/ocpp",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/ocpp.md",
+      "target_source": "spx-core/communications/ocpp.md",
+      "discovered_by": "Google Search Console legacy coverage export, 2026-11-16"
+    },
+    {
+      "title": "ASCII / SCPI",
+      "source": "spx-core/communications/ascii.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/ascii",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/ascii.md",
+      "target_source": "spx-core/communications/ascii.md",
+      "discovered_by": "Google Search Console legacy coverage export, 2026-11-16"
+    },
+    {
+      "title": "OPC UA",
+      "source": "spx-core/communications/opcua.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/opcua",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/opcua.md",
+      "target_source": "spx-core/communications/opcua.md",
+      "discovered_by": "Google Search Console legacy coverage export, 2026-11-16"
+    },
+    {
+      "title": "BLE",
+      "source": "spx-core/communications/ble.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/ble",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/ble.md",
+      "target_source": "spx-core/communications/ble.md",
+      "discovered_by": "Google Search Console legacy coverage export, 2026-11-16"
+    },
+    {
+      "title": "Modbus",
+      "source": "spx-core/communications/modbus.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/modbus",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/modbus.md",
+      "target_source": "spx-core/communications/modbus.md",
+      "discovered_by": "Google Search Console legacy coverage export, 2026-11-16"
+    },
+    {
+      "title": "MQTT",
+      "source": "spx-core/communications/mqtt.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/mqtt",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications/mqtt.md",
+      "target_source": "spx-core/communications/mqtt.md",
+      "discovered_by": "Google Search Console legacy coverage export, 2026-11-16"
+    },
+    {
+      "title": "Integrations",
+      "source": "spx-core/communications/README.md",
+      "old_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-development-guide/spx-core/system/templates/communications.md",
+      "target_source": "spx-core/communications/README.md",
+      "discovered_by": "Google Search Console legacy coverage export, 2026-11-16"
+    },
+    {
+      "title": "BACnet",
+      "source": "spx-core/communications/bacnet.md",
+      "old_url": "https://docs.simplephysx.com/spx-core/communications/bacnet",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-core/communications/bacnet.md",
+      "target_source": "spx-core/communications/bacnet.md",
+      "discovered_by": "Google Search Console legacy coverage export, 2026-11-16"
+    },
+    {
+      "title": "MQTT",
+      "source": "spx-core/communications/mqtt.md",
+      "old_url": "https://docs.simplephysx.com/spx-core/communications/mqtt",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-core/communications/mqtt.md",
+      "target_source": "spx-core/communications/mqtt.md",
+      "discovered_by": "Google Search Console legacy coverage export, 2026-11-16"
+    },
+    {
+      "title": "OPC UA",
+      "source": "spx-core/communications/opcua.md",
+      "old_url": "https://docs.simplephysx.com/spx-core/communications/opcua",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-core/communications/opcua.md",
+      "target_source": "spx-core/communications/opcua.md",
+      "discovered_by": "Google Search Console legacy coverage export, 2026-11-16"
+    },
+    {
+      "title": "Modbus",
+      "source": "spx-core/communications/modbus.md",
+      "old_url": "https://docs.simplephysx.com/spx-core/communications/modbus",
+      "old_markdown_url": "https://docs.simplephysx.com/spx-core/communications/modbus.md",
+      "target_source": "spx-core/communications/modbus.md",
+      "discovered_by": "Google Search Console legacy coverage export, 2026-11-16"
     }
   ],
   "sections": [
