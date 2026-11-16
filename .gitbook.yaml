@@ -3,6 +3,18 @@ structure:
   readme: README.md
   summary: SUMMARY.md
 redirects:
+  spx-development-guide/spx-core/system/templates/communications/bacnet: spx-core/communications/bacnet.md
+  spx-development-guide/spx-core/system/templates/communications/knx: spx-core/communications/knx.md
+  spx-development-guide/spx-core/system/templates/communications/ocpp: spx-core/communications/ocpp.md
+  spx-development-guide/spx-core/system/templates/communications/ascii: spx-core/communications/ascii.md
+  spx-development-guide/spx-core/system/templates/communications/opcua: spx-core/communications/opcua.md
+  spx-development-guide/spx-core/system/templates/communications/ble: spx-core/communications/ble.md
+  spx-development-guide/spx-core/system/templates/communications/modbus: spx-core/communications/modbus.md
+  spx-development-guide/spx-core/system/templates/communications/mqtt: spx-core/communications/mqtt.md
+  spx-development-guide/spx-core/system/templates/communications: spx-core/communications/README.md
+  spx-core/communications/mqtt: spx-core/communications/mqtt.md
+  spx-core/communications/opcua: spx-core/communications/opcua.md
+  spx-core/communications/modbus: spx-core/communications/modbus.md
   spx-core/communications/bacnet: spx-core/communications/bacnet.md
   spx-core/communications/bacnet/: spx-core/communications/bacnet.md
   operations-and-support/docs_backlog_v1_0_0_sync: release-notes.md
