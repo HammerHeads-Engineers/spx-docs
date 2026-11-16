@@ -76,7 +76,7 @@
     * [API examples](api-v3-reference/code-examples.md)
     * ```yaml
       props:
-        models: true
+        models: false
       type: builtin:openapi
       dependencies:
         spec:
@@ -84,6 +84,7 @@
             kind: openapi
             spec: hammerheadsengineers-api
       ```
+    * [Models](api-v3-reference/models.md)
   * [SDK components](spx-development-guide/spx-sdk/README.md)
     * [Registry](spx-development-guide/spx-sdk/registry.md)
     * [SpxComponent](spx-development-guide/spx-sdk/components/spxcomponent.md)

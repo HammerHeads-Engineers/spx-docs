@@ -18,7 +18,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "SPX Server API"
+        ]
       }
     },
     "/api": {
@@ -34,7 +37,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "SPX Server API"
+        ]
       }
     },
     "/api/versions": {
@@ -50,7 +56,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "SPX Server API"
+        ]
       }
     },
     "/": {
@@ -66,7 +75,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "SPX Server API"
+        ]
       }
     },
     "/health": {
@@ -83,7 +95,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "SPX Server API"
+        ]
       }
     },
     "/api/v3/system": {
@@ -165,7 +180,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "SPX Server API"
+        ]
       },
       "put": {
         "summary": "Bulk update root of System hierarchy",
@@ -215,7 +233,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "SPX Server API"
+        ]
       }
     },
     "/api/v3/system/{path}/attr/{attr_name}": {
@@ -267,7 +288,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "SPX Server API"
+        ]
       },
       "put": {
         "summary": "Set Attribute",
@@ -327,7 +351,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "SPX Server API"
+        ]
       }
     },
     "/api/v3/system/{path}": {
@@ -418,7 +445,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "SPX Server API"
+        ]
       },
       "put": {
         "summary": "Bulk update attributes on a component",
@@ -479,7 +509,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "SPX Server API"
+        ]
       },
       "delete": {
         "summary": "Delete a component node",
@@ -520,7 +553,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "SPX Server API"
+        ]
       }
     },
     "/api/v3/system/method/{method_name}": {
@@ -582,7 +618,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "SPX Server API"
+        ]
       }
     },
     "/api/v3/system/{path}/method/{method_name}": {
@@ -653,7 +692,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "SPX Server API"
+        ]
       }
     }
   },
@@ -713,5 +755,11 @@
       }
     }
   },
-  "x-spx-source-commit": "215b9214c48c6c787b9a68b89178916239a57452"
+  "x-spx-source-commit": "215b9214c48c6c787b9a68b89178916239a57452",
+  "tags": [
+    {
+      "name": "SPX Server API",
+      "x-page-description": "SPX Server API v3 endpoints for health checks, version discovery and authenticated access to the simulation system hierarchy."
+    }
+  ]
 }

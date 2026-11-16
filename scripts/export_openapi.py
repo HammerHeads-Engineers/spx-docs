@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tarfile
 import tempfile
+from render_openapi_docs import documented_spec, render_models
 
 
 def main():
@@ -35,9 +36,10 @@ print(json.dumps(spec, indent=2))
         import os
         env = dict(os.environ, PYTHONPATH=directory)
         result = subprocess.check_output([sys.executable, '-c', program, sha], cwd=directory, env=env, text=True)
-        spec = json.loads(result)
+        spec = documented_spec(json.loads(result))
         target = root / 'api-v3-reference/openapi.json'
         target.write_text(json.dumps(spec, indent=2) + '\n')
+        (root / 'api-v3-reference/models.md').write_text(render_models(spec), encoding='utf-8')
         print(f'Exported {len(spec["paths"])} path templates from {sha}')
 
 

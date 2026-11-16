@@ -58,6 +58,7 @@ In a virtual environment from the Docs checkout:
 ```bash
 python -m pip install -r requirements-tutorials.txt
 python scripts/render_release.py --check
+python scripts/render_openapi_docs.py --check
 python scripts/render_tutorials.py --check
 python scripts/check_docs.py
 python scripts/check_navigation.py
@@ -144,3 +145,26 @@ Site redirect CSV imports use `source,destination,intent` (draft then publish).
 The reviewed map in `docs/navigation/legacy-pages.json` includes generated API
 URLs. Verify redirects after main publication: preview redirect resolution can
 differ from the live space. A 200 Markdown missing-page response is a failure.
+
+### OpenAPI page descriptions
+
+`scripts/export_openapi.py` exports the pinned released server, then applies
+the presentation-only tags from `scripts/render_openapi_docs.py`. The single
+`SPX Server API` tag keeps the existing page title/path and supplies GitBook's
+supported `x-page-description`. It does not alter endpoint contracts or versions.
+Run `python scripts/render_openapi_docs.py --check` in public CI without private
+server access. The renderer rejects unreviewed existing tag groups.
+
+The built-in generated Models page has no documented description override.
+Keep `models: false` in the computed reference and publish the generated
+`api-v3-reference/models.md` wrapper instead. Its schema blocks still use the
+registered `hammerheadsengineers-api` specification. This retains the existing
+Models URL and schema headings while providing frontmatter metadata. These are
+validation response schemas, not simulation model definitions. Check the actual
+GitBook preview routes and rendered blocks before publishing changes.
+
+For permanent site redirects, use the documented API `permanent: true` option
+or the manual Permanent toggle. CSV does not document a permanence column.
+Generate operations from `docs/navigation/legacy-pages.json`, retain a backup
+of existing site rules, and verify anonymous live HTML and Markdown responses.
+Authenticated previews can intentionally return 307 for a permanent rule.
