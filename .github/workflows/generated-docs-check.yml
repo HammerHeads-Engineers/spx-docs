@@ -17,6 +17,8 @@ jobs:
       - run: python -m pip install -r requirements-tutorials.txt
       - name: Check release manifest outputs
         run: python scripts/render_release.py --check
+      - name: Check OpenAPI presentation metadata and schema wrapper
+        run: python scripts/render_openapi_docs.py --check
       - name: Fetch pinned public examples
         run: python scripts/check_sources.py --checkout .tmp/spx-examples
       - name: Check generated catalog
