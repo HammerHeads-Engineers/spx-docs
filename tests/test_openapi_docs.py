@@ -44,6 +44,7 @@ class OpenAPIPresentation(unittest.TestCase):
             self.assertIn(f'spec="hammerheadsengineers-api" schemas="{name}"', page)
         self.assertIn('description:', page)
         self.assertIn('not device definitions', page)
+        self.assertNotIn('## The ', page)  # Schema blocks supply their own headings.
 
 
 if __name__ == '__main__':
