@@ -4,13 +4,24 @@ import unittest
 import tempfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from check_navigation import navigation_errors, metadata_errors
+from check_navigation import entries, navigation_errors, metadata_errors
 from check_published import normalize, at_site, index_routes
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class NavigationContracts(unittest.TestCase):
+    def test_gitbook_link_titles_preserve_navigation_and_source_paths(self):
+        summary = '* [SPX Documentation](README.md "Start here")\n'
+        self.assertEqual(entries(summary), [(0, 'Start here', 'README.md')])
+        self.assertEqual(entries(summary, page_titles=True), [(0, 'SPX Documentation', 'README.md')])
+        for label in ['SPX Documentation', 'Start here']:
+            index = (f'- [{label}](https://docs.simplephysx.com/readme.md)\n'
+                     '- [SPX Server API](https://docs.simplephysx.com/api/spx-server-api.md)\n'
+                     '- [Models](https://docs.simplephysx.com/api/models.md)\n')
+            _, routes = index_routes(index, summary, 'https://docs.simplephysx.com')
+            self.assertEqual(routes['README.md']['url'], 'https://docs.simplephysx.com/')
+
     def test_published_pages_have_search_descriptions(self):
         summary = (ROOT / 'SUMMARY.md').read_text()
         self.assertEqual(metadata_errors(summary), [])
@@ -54,7 +65,7 @@ class NavigationContracts(unittest.TestCase):
 
     def test_technical_and_maintainer_trees_cannot_take_over_main_navigation(self):
         summary = (ROOT / 'SUMMARY.md').read_text()
-        broken = summary.replace('* [Guides]', '* [SPX-SDK]', 1)
+        broken = summary.replace('* [Models & packs]', '* [SPX-SDK]', 1)
         self.assertIn('Expected seven task sections in the agreed order', navigation_errors(broken))
         deep = summary + '\n      * [Deep API](reference/deep.md)\n'
         self.assertIn('Navigation exceeds two levels below a section', navigation_errors(deep))
