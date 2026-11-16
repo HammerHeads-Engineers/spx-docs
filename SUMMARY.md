@@ -1,11 +1,11 @@
 # Table of contents
 
-* [SPX Documentation](README.md "Start here")
-  * [SPX Installation Guide](getting-started/installation-guide.md "Install SPX")
+* [Digital Twin Documentation](README.md "Start here")
+  * [Installation Guide for Windows, macOS & Linux](getting-started/installation-guide.md "Install SPX")
   * [First device in the UI](getting-started/README.md)
   * [First Python program](simulation-and-modeling/using-spx-python.md)
   * [Requirements and versions](overview/system-requirements-and-capability.md)
-* [SPX User Guides](spx-development-guide/README.md "Guides")
+* [Device Simulation & Automation Guides](spx-development-guide/README.md "Guides")
   * [Work with the UI](guides/ui.md)
     * [Create and control an instance](guides/ui-instance.md)
     * [Connect two instances](guides/connect-instances.md)
