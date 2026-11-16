@@ -10,9 +10,10 @@ SECTIONS = ['Start here', 'Guides', 'Models & packs', 'Integrations', 'Agents & 
             'Reference', 'Operations & support']
 
 
-def entries(summary):
-    return [(len(m[1]) // 2, m[2], m[3]) for m in
-            re.finditer(r'^( *)\* \[([^]]+)\]\(([^)]+)\)', summary, re.M)]
+def entries(summary, *, page_titles=False):
+    # GitBook supports a longer page title plus a short navigation link title.
+    return [(len(m[1]) // 2, m[2] if page_titles else (m[4] or m[2]), m[3]) for m in
+            re.finditer(r'^( *)\* \[([^]]+)\]\(([^)\s]+)(?: "([^"]+)")?\)', summary, re.M)]
 
 
 def navigation_errors(summary):

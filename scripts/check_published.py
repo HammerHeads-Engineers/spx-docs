@@ -72,8 +72,10 @@ def index_routes(index, summary, site):
     for title, url in links:
         labels.setdefault(title.casefold(), []).append(url)
     routes = {}
-    for _, title, source in entries(summary):
-        matches = labels.get(title.casefold(), [])
+    for (_, title, source), (_, link_title, _) in zip(
+            entries(summary, page_titles=True), entries(summary)):
+        # llms.txt uses page titles; a rendered preview sidebar uses link titles.
+        matches = labels.get(title.casefold(), []) or labels.get(link_title.casefold(), [])
         if len(matches) != 1:
             raise ValueError(f'Missing/ambiguous published title {title!r}: {matches}')
         path = normalize(matches[0], site)

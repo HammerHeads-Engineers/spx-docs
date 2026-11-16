@@ -1,7 +1,7 @@
 ---
 description: Follow SPX guides to create virtual devices, connect models, run fault scenarios and automate tests with Python. Each guide includes checks and cleanup.
 ---
-# SPX User Guides
+# Device Simulation & Automation Guides
 
 Choose how you want to work. Each task states its starting conditions, exact
 resource names, expected results and cleanup. Screenshots retain the surrounding
