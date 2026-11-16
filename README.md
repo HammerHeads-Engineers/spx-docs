@@ -1,8 +1,8 @@
 ---
-description: Choose UI, agent or Python and get your first SPX result.
+description: Install SPX, run your first virtual device and test live behavior. Explore browser workflows, AI agents, Python automation and protocol API references.
 ---
 
-# Start here
+# SPX Documentation
 
 SPX simulates devices and systems on your computer. Use its browser UI, an AI
 agent or Python to create a simulation, change inputs and observe the result.

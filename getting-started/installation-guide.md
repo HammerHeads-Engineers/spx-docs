@@ -1,8 +1,8 @@
 ---
-description: Install SPX for Windows, macOS or Linux and verify the browser UI and API.
+description: Install SPX on Windows, macOS or Linux with Docker. Configure your workspace with an AI agent or interactive setup, then verify the browser UI and API.
 ---
 
-# Install SPX
+# SPX Installation Guide
 
 **Result:** the browser UI opens and API health reports `status: ok`.
 Choose the ordinary setup wizard or install through a conversation with your
